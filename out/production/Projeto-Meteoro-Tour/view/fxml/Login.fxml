@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="369.0" prefWidth="332.0" style="-fx-base: #262626;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
+   <children>
+      <Label layoutX="121.0" layoutY="25.0" prefHeight="45.0" prefWidth="192.0" text="Meteoro Tour" textFill="#460404" AnchorPane.leftAnchor="121.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="25.0">
+         <font>
+            <Font name="Candara Bold Italic" size="28.0" />
+         </font>
+      </Label>
+      <Label layoutX="155.0" layoutY="61.0" prefHeight="19.0" prefWidth="151.0" text="Transportando com rapidez" textFill="#B33037" AnchorPane.leftAnchor="141.0" AnchorPane.rightAnchor="34.0" />
+
+      <Label layoutX="139.0" layoutY="99.0" text="Login to" textFill="#B33037" AnchorPane.leftAnchor="139.0" AnchorPane.rightAnchor="138.0">
+         <font>
+            <Font name="System Italic" size="14.0" />
+         </font></Label>
+      <ComboBox fx:id="cbTipo" layoutX="92.0" layoutY="128.0" prefHeight="26.0" prefWidth="146.0" promptText="        Você é um..." visibleRowCount="15" AnchorPane.leftAnchor="92.0" AnchorPane.rightAnchor="94.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></ComboBox>
+      <TextField fx:id="txtUser" disable="true" layoutX="108.0" layoutY="185.0" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="138.0" promptText="Usuário" />
+      <PasswordField fx:id="txtSenha" layoutX="108.0" layoutY="226.0" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="138.0" promptText="Senha" />
+      <Button fx:id="btEntrar" layoutX="111.0" layoutY="291.0" mnemonicParsing="false" onAction="#login" prefHeight="45.0" prefWidth="97.0" style="-fx-background-color: #B33037;" text="Entrar" textFill="WHITE">
+         <font>
+            <Font size="16.0" />
+         </font></Button>
+      <ImageView fitHeight="60.0" fitWidth="85.0" layoutX="51.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="275.0" AnchorPane.leftAnchor="51.0" AnchorPane.rightAnchor="215.0" AnchorPane.topAnchor="25.0">
+         <Image url="@../../resources/onibus.png" />
+      </ImageView>
+      <ImageView fx:id="imgEntrar" fitHeight="30.0" fitWidth="32.0" layoutX="77.0" layoutY="185.0" pickOnBounds="true" preserveRatio="true">
+         <Image url="@../../resources/contato.png" />
+      </ImageView>
+      <ImageView fx:id="imgCadeado" fitHeight="30.0" fitWidth="32.0" layoutX="77.0" layoutY="226.0" pickOnBounds="true" preserveRatio="true">
+         <Image url="@../../resources/cadeado.png" />
+      </ImageView>
+      <Label fx:id="lbIncorreto" layoutX="73.0" layoutY="162.0" text="Ops! Sua senha está incorreta." textFill="#B33037" AnchorPane.leftAnchor="73.0" AnchorPane.rightAnchor="65.0">
+         <font>
+            <Font name="Candara Bold Italic" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbTeste" layoutX="59.0" layoutY="264.0" text="Vendedor ou adm entrou aee parabens" textFill="#B33037">
+         <font>
+            <Font name="System Italic" size="14.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
