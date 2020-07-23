@@ -1,16 +1,13 @@
 package controller;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import model.Administrador;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -20,9 +17,12 @@ public class LoginController implements Initializable {
     @FXML public TextField txtUser;
     @FXML public Button btEntrar;
     @FXML public Label lbIncorreto;
-    @FXML public ComboBox cbTipo;
     @FXML public ImageView imgEntrar;
     @FXML public ImageView imgCadeado;
+    @FXML public RadioButton rbAdm;
+    @FXML public RadioButton rbVend;
+    private ToggleGroup toggleGroup = new ToggleGroup();
+
     @FXML public Label lbTeste;
     private Administrador adm = new Administrador();
 
@@ -34,8 +34,8 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setAdminTeste();
-        fillComboBox();
-        checkTipes();
+        rbAdm.setToggleGroup(toggleGroup);
+        rbVend.setToggleGroup(toggleGroup);
         txtSenha.setVisible(false);
         lbIncorreto.setVisible(false);
         txtUser.setVisible(false);
@@ -45,41 +45,6 @@ public class LoginController implements Initializable {
         imgEntrar.setVisible(false);
         lbTeste.setVisible(false);
 
-    }
-
-    private void checkTipes() {
-        cbTipo.valueProperty().addListener(new ChangeListener<String>() {
-
-            public void changed(ObservableValue<? extends String> observableValue, String s, String s1) {
-                 if (s1.equals("Administrador")){
-                     txtUser.setVisible(true);
-                     txtUser.setText("ADMINISTRADOR");
-                     txtSenha.setVisible(true);
-                     btEntrar.setVisible(true);
-                     imgCadeado.setVisible(true);
-                     imgEntrar.setVisible(true);
-                     lbTeste.setVisible(false);
-            }
-                 if (s1.equals("Vendedor")){
-                     lbIncorreto.setVisible(false);
-                     txtUser.setVisible(false);
-                     txtSenha.setVisible(false);
-                     btEntrar.setVisible(false);
-                     imgCadeado.setVisible(false);
-                     imgEntrar.setVisible(false);
-                     lbTeste.setVisible(true);
-                     //Chama tela de vendedor aqui?Não sei, ai
-                     // O Q TÔ FAZENDO?
-                 }
-            }
-        });
-    }
-
-    private void fillComboBox() {
-        ObservableList<String> tipos = FXCollections.observableArrayList();
-        tipos.add("Vendedor");
-        tipos.add("Administrador");
-        cbTipo.setItems(tipos);
     }
 
     public void login(ActionEvent actionEvent) {
@@ -93,5 +58,38 @@ public class LoginController implements Initializable {
         }
     }
 
+    public void onAdmin(ActionEvent actionEvent) {
+        //toggleGroup.getSelectedToggle();
+        boolean radioAdm = rbAdm.isSelected();
+        if ( radioAdm == true){
+            txtUser.setVisible(true);
+            txtUser.setText("ADMINISTRADOR");
+            txtSenha.setVisible(true);
+            btEntrar.setVisible(true);
+            imgEntrar.setVisible(true);
+            imgCadeado.setVisible(true);
+            lbTeste.setVisible(false);
+        }
+    }
 
+    public void onVend(ActionEvent actionEvent) {
+        //toggleGroup.getSelectedToggle();
+        boolean radioVend = rbVend.isSelected();
+        if(radioVend == true){
+            lbIncorreto.setVisible(false);
+            txtUser.setVisible(false);
+            txtSenha.setVisible(false);
+            btEntrar.setVisible(false);
+            imgCadeado.setVisible(false);
+            imgEntrar.setVisible(false);
+            lbTeste.setVisible(true);
+            //Chama tela de vendedor aqui?Não sei, ai
+            // O Q TÔ FAZENDO?
+        }
+    }
+
+    public void close(MouseEvent mouseEvent) {
+        Platform.exit();
+        System.exit(0);
+    }
 }
