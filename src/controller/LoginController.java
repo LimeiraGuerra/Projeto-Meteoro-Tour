@@ -7,7 +7,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import model.Administrador;
+import model.Vendedor;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -21,35 +24,32 @@ public class LoginController implements Initializable {
     @FXML public ImageView imgCadeado;
     @FXML public RadioButton rbAdm;
     @FXML public RadioButton rbVend;
+    @FXML public Pane paneLogin;
     private ToggleGroup toggleGroup = new ToggleGroup();
+    private Administrador adm;
+    private Vendedor vend;
+
 
     @FXML public Label lbTeste;
-    private Administrador adm = new Administrador();
 
-    public void setAdminTeste(){
-        adm.setNome("Adm");
-        adm.setSenha("1234");
+
+    public void setAdmin(){
+        adm = new Administrador("ADMINISTRADOR", "1234");
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        setAdminTeste();
         rbAdm.setToggleGroup(toggleGroup);
         rbVend.setToggleGroup(toggleGroup);
-        txtSenha.setVisible(false);
-        lbIncorreto.setVisible(false);
-        txtUser.setVisible(false);
-        txtUser.setVisible(false);
-        btEntrar.setVisible(false);
-        imgCadeado.setVisible(false);
-        imgEntrar.setVisible(false);
         lbTeste.setVisible(false);
-
+        lbIncorreto.setVisible(false);
+        paneLogin.setVisible(false);
     }
 
     public void login(ActionEvent actionEvent) {
         if (txtSenha.getText().equals(adm.getSenha())){
             //chama outra tela aqui de vendaaa, a inicial
+            //Chama tela de vendedor aqui!
             lbTeste.setVisible(true);
         }
         else{
@@ -59,32 +59,21 @@ public class LoginController implements Initializable {
     }
 
     public void onAdmin(ActionEvent actionEvent) {
-        //toggleGroup.getSelectedToggle();
+        setAdmin();
         boolean radioAdm = rbAdm.isSelected();
         if ( radioAdm == true){
-            txtUser.setVisible(true);
-            txtUser.setText("ADMINISTRADOR");
-            txtSenha.setVisible(true);
-            btEntrar.setVisible(true);
-            imgEntrar.setVisible(true);
-            imgCadeado.setVisible(true);
-            lbTeste.setVisible(false);
+            paneLogin.setVisible(true);
         }
     }
 
     public void onVend(ActionEvent actionEvent) {
-        //toggleGroup.getSelectedToggle();
+        vend = new Vendedor();
         boolean radioVend = rbVend.isSelected();
         if(radioVend == true){
-            lbIncorreto.setVisible(false);
-            txtUser.setVisible(false);
-            txtSenha.setVisible(false);
-            btEntrar.setVisible(false);
-            imgCadeado.setVisible(false);
-            imgEntrar.setVisible(false);
+            paneLogin.setVisible(false);
             lbTeste.setVisible(true);
-            //Chama tela de vendedor aqui?Não sei, ai
-            // O Q TÔ FAZENDO?
+            //Chama tela de vendedor aqui!
+
         }
     }
 
