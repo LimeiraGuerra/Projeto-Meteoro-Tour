@@ -24,10 +24,8 @@ public class WindowTrecho {
             TrechoController trechoController = loader.getController();
 
             stage.setScene(cena);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
+            stage.show();
 
-            trechoController.initialize();
         } catch (IOException e) {
             e.printStackTrace();
         }

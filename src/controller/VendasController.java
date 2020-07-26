@@ -1,11 +1,14 @@
 package controller;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import model.Passagem;
 import model.Viagem;
+import view.loader.WindowTrecho;
 
 public class VendasController {
 
@@ -64,5 +67,12 @@ public class VendasController {
         testePassagem.setViagem(testeViagem);
         this.passagemReagendamento = testePassagem;
         this.setModeReagendamento();
+    }
+
+    public void openTrecho(ActionEvent actionEvent) {
+        WindowTrecho janelaTrecho = new WindowTrecho();
+        janelaTrecho.start();
+        Stage stage = (Stage) txtFieldDestino.getScene().getWindow();
+        stage.close();
     }
 }

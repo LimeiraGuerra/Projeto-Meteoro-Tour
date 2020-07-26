@@ -91,9 +91,5 @@ public class LoginController implements Initializable {
         System.exit(0);
     }
 
-    public void trecho(ActionEvent actionEvent) {
-        WindowTrecho janelaTrecho = new WindowTrecho();
-        janelaTrecho.start();
-    }
 
 }

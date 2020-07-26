@@ -19,8 +19,6 @@ public class TrechoController {
     @FXML private TableColumn<Trecho, String> cDestino;
     @FXML private TableColumn<Trecho, Double> cQuilometragem;
     @FXML private TableColumn<Trecho, Double> cValorTotal;
-    @FXML private TableColumn<Trecho, Double> cSeguro;
-    @FXML private TableColumn<Trecho, Double> cTempo;
     @FXML private TextField tfOrigem;
     @FXML private TextField tfDestino;
     @FXML private Label lbValorTotal;
@@ -31,7 +29,9 @@ public class TrechoController {
     @FXML private TextField tfQuilometragem;
     @FXML private TextField tfTaxaEmbarque;
     @FXML private Pane paneTrecho;
+    @FXML private Pane paneImg;
     @FXML private Button btDeleteTrecho;
+    @FXML private Button btSalvaTrecho;
 
     private ObservableList<Trecho> trechos= FXCollections.observableArrayList();
 
@@ -40,9 +40,8 @@ public class TrechoController {
         cOrigem.setCellValueFactory(new PropertyValueFactory<>("cidadeOrigem"));
         cQuilometragem.setCellValueFactory(new PropertyValueFactory<>("quilometragem"));
         cValorTotal.setCellValueFactory(new PropertyValueFactory<>("valorTotal"));
-        cSeguro.setCellValueFactory(new PropertyValueFactory<>("valorSeguro"));
-        cTempo.setCellValueFactory(new PropertyValueFactory<>("tempoDuracao"));
         tabelaTrecho.setItems(loadTable());
+        setVisibleImgTrecho(true);
 
     }
 
@@ -54,6 +53,8 @@ public class TrechoController {
     }
 
     public void initialize(){
+        btDeleteTrecho.setVisible(false);
+        btSalvaTrecho.setVisible(false);
         paneTrecho.setVisible(false);
         bind();
     }
@@ -107,7 +108,7 @@ public class TrechoController {
             trechos.add(t);
             setValorTotal(t.getValorTotal());
             lbSalvo.setText("Salvo");
-            limpaCampos();
+
             }
         else if (buscarTrechoTabela() != null && verificaTextField()) {
             Trecho x = buscarTrechoList(tfOrigem.getText(), tfDestino.getText());
@@ -115,26 +116,35 @@ public class TrechoController {
             x.setValorTotal();
             setValorTotal(x.getValorTotal());
             lbSalvo.setText("Salvo");
-            limpaCampos();
+
         }
         else{
             lbSalvo.setText("NÃO Salvo");
-            criarTrecho();
         }
+        limpaCampos();
         tabelaTrecho.refresh();
+        btDeleteTrecho.setVisible(false);
+        btSalvaTrecho.setVisible(false);
         paneTrecho.setVisible(false);
+        setVisibleImgTrecho(true);
         }
 
     public void deleteTrecho(ActionEvent actionEvent) {
+
        Trecho t = buscarTrechoTabela();
-       trechos.remove(t);
-       tabelaTrecho.refresh();
+       if (t != null){
+           trechos.remove(t);
+           tabelaTrecho.refresh();
+       }
+
        paneTrecho.setVisible(false);
+       btDeleteTrecho.setVisible(false);
+       btSalvaTrecho.setVisible(false);
+       setVisibleImgTrecho(true);
        limpaCampos();
     }
 
     public void verTrecho(ActionEvent actionEvent) {
-        setDisableOrigemDestino(true);
         Trecho t = buscarTrechoTabela();
         if (t != null){
             Trecho x = buscarTrechoList(t.getCidadeOrigem(), t.getCidadeDestino());
@@ -147,8 +157,13 @@ public class TrechoController {
                 tfTaxaEmbarque.setText(String.valueOf(x.getTaxaEmbarque()));
                 tfValorSeguro.setText(String.valueOf(x.getValorSeguro()));
                 setValorTotal(x.getValorTotal());
+                setDisableOrigemDestino(true);
+                btDeleteTrecho.setVisible(true);
+                btSalvaTrecho.setVisible(true);
+                setVisibleImgTrecho(false);
+                paneTrecho.setVisible(true);
             }
-            paneTrecho.setVisible(true);
+
         }
     }
     public void limpaCampos(){
@@ -165,7 +180,14 @@ public class TrechoController {
         lbValorTotal.setText("O Valor total do trecho é: " + valor);
     }
 
+    public void setVisibleImgTrecho(boolean bool) {
+        paneImg.setVisible(bool);
+    }
     public void criarTrecho() {
+        limpaCampos();
+        btDeleteTrecho.setVisible(false);
+        btSalvaTrecho.setVisible(true);
+        setVisibleImgTrecho(false);
         setDisableOrigemDestino(false);
         paneTrecho.setVisible(true);
     }
