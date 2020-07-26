@@ -11,6 +11,11 @@ import model.Administrador;
 import model.Vendedor;
 import view.loader.WindowTrecho;
 
+import javafx.stage.Stage;
+
+import view.loader.VendasLoader;
+
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -41,17 +46,21 @@ public class LoginController implements Initializable {
         paneLogin.setVisible(false);
     }
 
+
     public void login(ActionEvent actionEvent) {
         if (txtSenha.getText().equals(adm.getSenha())){
-            //chama outra tela aqui de vendaaa, a inicial
-            //Chama tela de vendedor aqui!
-            lbTeste.setVisible(true);
+
+            VendasLoader janelaVendas = new VendasLoader(adm);
+            janelaVendas.start();
+            Stage stage = (Stage) lbTeste.getScene().getWindow();
+            stage.close();
+
         }
         else{
-            lbTeste.setVisible(false);
             lbIncorreto.setVisible(true);
         }
     }
+
 
     public void onAdmin(ActionEvent actionEvent) {
         setAdmin();
@@ -67,7 +76,12 @@ public class LoginController implements Initializable {
         if(radioVend){
             paneLogin.setVisible(false);
             lbTeste.setVisible(true);
-            //Chama tela de vendedor aqui!
+            VendasLoader janelaVendas = new VendasLoader(vend);
+            janelaVendas.start();
+            Stage stage = (Stage) lbTeste.getScene().getWindow();
+            stage.close();
+
+
 
         }
     }
@@ -81,4 +95,5 @@ public class LoginController implements Initializable {
         WindowTrecho janelaTrecho = new WindowTrecho();
         janelaTrecho.start();
     }
+
 }

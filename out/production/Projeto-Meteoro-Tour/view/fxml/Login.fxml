@@ -2,10 +2,10 @@
 
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+        <?import javafx.scene.effect.*?>
+        <?import javafx.scene.image.*?>
+        <?import javafx.scene.layout.*?>
+        <?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="313.0" prefWidth="332.0" style="-fx-base: #696969;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
    <children>
@@ -80,3 +80,4 @@
       <Button fx:id="trecho" layoutX="282.0" layoutY="311.0" mnemonicParsing="false" onAction="#trecho" text="Trecho" />
    </children>
 </AnchorPane>
+
