@@ -13,6 +13,11 @@ public class Linha {
         this.nome = nome;
     }
 
+    public void addTrecho(Trecho trecho){
+        trechos.add(trecho);
+        trecho.setLinha(this);
+    }
+
     public Linha() {
     }
 }

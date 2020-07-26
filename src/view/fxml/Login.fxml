@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
@@ -26,6 +28,19 @@
       </ImageView>
       <ImageView fx:id="imgFechar" fitHeight="19.0" fitWidth="14.0" layoutX="314.0" layoutY="4.0" onMouseClicked="#close" pickOnBounds="true" preserveRatio="true">
          <Image url="@../../resources/fechar.png" />
+         <cursor>
+            <Cursor fx:constant="CLOSED_HAND" />
+         </cursor>
+         <effect>
+            <Lighting>
+               <bumpInput>
+                  <Shadow />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect>
       </ImageView>
       <RadioButton fx:id="rbAdm" layoutX="73.0" layoutY="123.0" mnemonicParsing="false" onAction="#onAdmin" prefHeight="30.0" prefWidth="103.0" text="Administrador">
          <font>
@@ -62,5 +77,6 @@
             <Font name="Candara Bold Italic" size="14.0" />
          </font>
       </Label>
+      <Button fx:id="trecho" layoutX="282.0" layoutY="311.0" mnemonicParsing="false" onAction="#trecho" text="Trecho" />
    </children>
 </AnchorPane>

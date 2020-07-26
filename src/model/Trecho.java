@@ -8,6 +8,8 @@ public class Trecho {
     private double valorPassagem;
     private double taxaEmbarque;
     private double valorSeguro;
+    private double valorTotal;
+    private Linha linha;
 
     public Trecho() {
     }
@@ -20,6 +22,24 @@ public class Trecho {
         this.valorPassagem = valorPassagem;
         this.taxaEmbarque = taxaEmbarque;
         this.valorSeguro = valorSeguro;
+        this.valorTotal = valorPassagem + taxaEmbarque  + valorSeguro;
+    }
+
+
+    public void setValorTotal() {
+        this.valorTotal = valorPassagem + valorSeguro + taxaEmbarque;
+    }
+
+    public Linha getLinha() {
+        return linha;
+    }
+
+    public void setLinha(Linha linha) {
+        this.linha = linha;
+    }
+
+    public double getValorTotal() {
+        return valorTotal;
     }
 
     public String getCidadeOrigem() {
