@@ -9,7 +9,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 import model.Administrador;
+import model.Vendedor;
+import view.loader.VendasLoader;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -68,8 +71,10 @@ public class LoginController implements Initializable {
                      imgCadeado.setVisible(false);
                      imgEntrar.setVisible(false);
                      lbTeste.setVisible(true);
-                     //Chama tela de vendedor aqui?Não sei, ai
-                     // O Q TÔ FAZENDO?
+                     VendasLoader janelaVendas = new VendasLoader(new Vendedor());
+                     janelaVendas.start();
+                     Stage stage = (Stage) lbTeste.getScene().getWindow();
+                     stage.close();
                  }
             }
         });
@@ -84,7 +89,8 @@ public class LoginController implements Initializable {
 
     public void login(ActionEvent actionEvent) {
         if (txtSenha.getText().equals(adm.getSenha())){
-            //chama outra tela aqui de vendaaa, a inicial
+            VendasLoader janelaVendas = new VendasLoader(new Administrador());
+            janelaVendas.start();
             lbTeste.setVisible(true);
         }
         else{
@@ -92,6 +98,4 @@ public class LoginController implements Initializable {
             lbIncorreto.setVisible(true);
         }
     }
-
-
 }
