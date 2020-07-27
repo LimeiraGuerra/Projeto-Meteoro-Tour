@@ -1,6 +1,5 @@
 package controller;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -8,7 +7,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.Passagem;
 import model.Viagem;
-import view.loader.WindowTrecho;
+import view.loader.LinhaLoader;
+import view.loader.TrechoLoader;
 
 public class VendasController {
 
@@ -70,8 +70,15 @@ public class VendasController {
     }
 
     public void openTrecho(ActionEvent actionEvent) {
-        WindowTrecho janelaTrecho = new WindowTrecho();
+        TrechoLoader janelaTrecho = new TrechoLoader();
         janelaTrecho.start();
+        Stage stage = (Stage) txtFieldDestino.getScene().getWindow();
+        stage.close();
+    }
+
+    public void openLinha(ActionEvent actionEvent) {
+        LinhaLoader janelaLinha = new LinhaLoader();
+        janelaLinha.start();
         Stage stage = (Stage) txtFieldDestino.getScene().getWindow();
         stage.close();
     }

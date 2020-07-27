@@ -12,7 +12,7 @@ import java.io.IOException;
 
 import static javafx.fxml.FXMLLoader.*;
 
-public class WindowTrecho {
+public class TrechoLoader {
     public void start(){
         FXMLLoader loader = new FXMLLoader();
         try{

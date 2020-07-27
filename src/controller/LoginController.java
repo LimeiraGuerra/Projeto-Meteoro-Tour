@@ -9,7 +9,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import model.Administrador;
 import model.Vendedor;
-import view.loader.WindowTrecho;
 
 import javafx.stage.Stage;
 

@@ -35,7 +35,7 @@
                   <MenuItem mnemonicParsing="false" text="Ônibus" />
                   <MenuItem mnemonicParsing="false" text="Funcionários" />
                   <MenuItem fx:id="btTrecho" mnemonicParsing="false" onAction="#openTrecho" text="Trechos" />
-                  <MenuItem mnemonicParsing="false" text="Linhas" />
+                  <MenuItem mnemonicParsing="false" onAction="#openLinha" text="Linhas" />
                      </items></Menu>
             <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem fx:id="menuOptPassagens" mnemonicParsing="false" onAction="#openBuscarPassagens" text="Buscar Passagens" />
