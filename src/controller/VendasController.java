@@ -5,8 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import model.Passagem;
-import model.Viagem;
+import model.entities.Passagem;
+import model.entities.Viagem;
 import view.loader.LinhaLoader;
 import view.loader.TrechoLoader;
 

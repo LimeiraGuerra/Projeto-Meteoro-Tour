@@ -5,8 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import model.Administrador;
-import model.Vendedor;
+import model.entities.Administrador;
+import model.entities.Vendedor;
 
 import java.io.IOException;
 

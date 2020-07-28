@@ -7,8 +7,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import model.Administrador;
-import model.Vendedor;
+import model.entities.Administrador;
+import model.entities.Vendedor;
 
 import javafx.stage.Stage;
 
