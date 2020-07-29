@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import model.entities.Passagem;
 import model.entities.Viagem;
 import view.loader.LinhaLoader;
+import view.loader.PassagemLoader;
 import view.loader.TrechoLoader;
 
 public class VendasController {
@@ -23,8 +24,6 @@ public class VendasController {
     @FXML AnchorPane popupReagendamento;
     @FXML TextField txtFieldOrigem, txtFieldDestino;
     @FXML MenuItem menuOptPassagens;
-
-    private Passagem passagemReagendamento;
 
     @FXML
     private void initialize(){
@@ -45,8 +44,8 @@ public class VendasController {
     }
 
     private void setInfoInFields(){
-        txtFieldOrigem.setText(this.passagemReagendamento.getViagem().getCidadeOrigem());
-        txtFieldDestino.setText(this.passagemReagendamento.getViagem().getCidadeDestino());
+        //txtFieldOrigem.setText(this.passagemReagendamento.getViagem().getCidadeOrigem());
+        //txtFieldDestino.setText(this.passagemReagendamento.getViagem().getCidadeDestino());
     }
 
     private void toggleModeReagendamento(boolean mode) {
@@ -56,16 +55,11 @@ public class VendasController {
     }
 
     public void openBuscarPassagens(ActionEvent actionEvent) {
-        System.out.println("aaaaaaa");
-        //todo
+        PassagemLoader janelaPassagens = new PassagemLoader();
+        janelaPassagens.start();
         //Abre a modal Buscar Passagem
         //Apenas teste
-        Viagem testeViagem = new Viagem();
-        testeViagem.setCidadeOrigem("Descalvado");
-        testeViagem.setCidadeDestino("São Carlos");
-        Passagem testePassagem = new Passagem();
-        testePassagem.setViagem(testeViagem);
-        this.passagemReagendamento = testePassagem;
+
         this.setModeReagendamento();
     }
 

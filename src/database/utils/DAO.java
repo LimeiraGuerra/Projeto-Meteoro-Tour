@@ -1,6 +1,7 @@
 package database.utils;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface DAO<E, I> {
 
@@ -10,7 +11,7 @@ public interface DAO<E, I> {
 
     void delete(E model);
 
-    List<E> selectById(I id);
+    E selectById(I id);
 
     List<E> selectByArgs();/* todo, tem que fazer pra receber parametros diferenciados, tipo strings para o trecho */
 }
