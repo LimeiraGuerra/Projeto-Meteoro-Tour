@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import model.Passagem;
 import model.Viagem;
 import view.loader.LinhaLoader;
+import view.loader.OnibusLoader;
 import view.loader.TrechoLoader;
 
 public class VendasController {
@@ -79,6 +80,12 @@ public class VendasController {
     public void openLinha(ActionEvent actionEvent) {
         LinhaLoader janelaLinha = new LinhaLoader();
         janelaLinha.start();
+        Stage stage = (Stage) txtFieldDestino.getScene().getWindow();
+        stage.close();
+    }
+    public void openOnibus(ActionEvent actionEvent){
+        OnibusLoader janelaOnibus = new OnibusLoader();
+        janelaOnibus.start();
         Stage stage = (Stage) txtFieldDestino.getScene().getWindow();
         stage.close();
     }
