@@ -1,13 +1,11 @@
 package view.loader;
 
 import controller.FuncionarioController;
-import controller.TrechoController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import model.Funcionario;
 
 import java.io.IOException;
 

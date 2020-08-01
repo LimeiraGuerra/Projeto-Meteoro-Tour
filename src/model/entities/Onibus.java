@@ -1,4 +1,4 @@
-package model;
+package model.entities;
 
 public class Onibus {
     String renavam, placa;

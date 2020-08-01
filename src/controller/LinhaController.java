@@ -12,8 +12,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import model.Linha;
-import model.Trecho;
+import model.entities.Linha;
+import model.entities.Trecho;
 
 
 import java.net.URL;
