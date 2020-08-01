@@ -92,14 +92,23 @@ public class OnibusController {
     }
 
     public void deleteOnibus(ActionEvent actionEvent) {
-        Alert alert= new Alert(Alert.AlertType.CONFIRMATION);
+        /*Alert alert= new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText("Tem certeza que deseja excluir esse ônibus?");
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
             onibus.remove(getIndexOfSelectedRow());
-        }
+        }*/
+        if (verificationAlert()) onibus.remove(getIndexOfSelectedRow());
 
+    }
+
+    private boolean verificationAlert(){
+        Alert alert= new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText("Tem certeza que deseja excluir esse ônibus?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        return result.get() == ButtonType.OK;
     }
 
     public void addOnibus(ActionEvent actionEvent) {

@@ -4,6 +4,7 @@ import controller.TrechoController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -23,7 +24,8 @@ public class OnibusLoader {
             TrechoController trechoController = loader.getController();
 
             stage.setScene(scene);
-            stage.show();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
 
         } catch (IOException e) {
             e.printStackTrace();
