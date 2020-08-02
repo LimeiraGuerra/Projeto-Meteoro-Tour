@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="463.0" prefWidth="785.0" style="-fx-background-color: #FEEF80;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LinhaController">
+<AnchorPane prefHeight="463.0" prefWidth="785.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LinhaController">
     <TableView fx:id="tabelaLinha" layoutX="14.0" layoutY="29.0" prefHeight="366.0" prefWidth="414.0">
         <columns>
             <TableColumn fx:id="cNome" prefWidth="240.0" text="Nome" />
