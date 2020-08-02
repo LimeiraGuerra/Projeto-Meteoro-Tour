@@ -7,11 +7,11 @@ import model.entities.Passagem;
 public class ConsultarPassagensVendidasUC {
     private DAO<Passagem, String> daoPassagem;
 
-    public ConsultarPassagensVendidasUC(){
-        this.daoPassagem = new PassagemDAO();
+    public ConsultarPassagensVendidasUC(DAO<Passagem, String> daoPassagem){
+        this.daoPassagem = daoPassagem;
     }
 
-    public Passagem searchViagensByNumber(String numeroPassagem){
-        return daoPassagem.selectById(numeroPassagem);
+    public Passagem searchPassagensByNumber(String numeroPassagem){
+        return this.daoPassagem.selectById(numeroPassagem);
     }
 }

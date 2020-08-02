@@ -1,15 +1,14 @@
 package controller;
 
+import database.dao.PassagemDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import model.entities.Passagem;
 import model.usecases.ConsultarPassagensVendidasUC;
-import view.loader.ModalAvisoLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,12 +26,12 @@ public class PassagemController {
     private ConsultarPassagensVendidasUC ucPassagensVendidas;
 
     public PassagemController() {
-        this.ucPassagensVendidas = new ConsultarPassagensVendidasUC();
+        this.ucPassagensVendidas = new ConsultarPassagensVendidasUC(new PassagemDAO());
     }
 
     @FXML
     private void initialize() {
-        bindTableColumnsToSource();
+        this.bindTableColumnsToSource();
     }
 
     private void bindTableColumnsToSource() {
@@ -44,12 +43,11 @@ public class PassagemController {
     }
 
     public void searchForViagens(ActionEvent actionEvent) {
-        boolean choice = verifyRadioChoices();
-        String searchKey = verifyTextField(choice);
+        boolean choice = this.verifyRadioChoices();
+        String searchKey = this.verifyTextField(choice);
         if (searchKey != null){
-            if (choice) searchByNumber(searchKey);
+            if (choice) this.searchByNumber(searchKey);
             else {}//todo pesquisa cpf
-            unlockOptions();
         }
         else {
 
@@ -59,19 +57,20 @@ public class PassagemController {
     }
 
     private void unlockOptions() {
-        btnDevolucao.setDisable(false);
-        btnReagendamento.setDisable(false);
-        btnReemicao.setDisable(false);
+        this.btnDevolucao.setDisable(false);
+        this.btnReagendamento.setDisable(false);
+        this.btnReemicao.setDisable(false);
     }
 
     private void searchByNumber(String number) {
-        Passagem result = ucPassagensVendidas.searchViagensByNumber(number);
+        Passagem result = ucPassagensVendidas.searchPassagensByNumber(number);
         if (result != null) {
             this.passagensEncontradas = new ArrayList<>();
             this.passagensEncontradas.add(result);
+            this.unlockOptions();
         }
         else {
-            new ModalAvisoLoader("mensagemTeste");
+            //todo modal aviso
         }
     }
 

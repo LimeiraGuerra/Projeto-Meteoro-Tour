@@ -13,5 +13,5 @@ public interface DAO<E, I> {
 
     E selectById(I id);
 
-    List<E> selectByArgs();/* todo, tem que fazer pra receber parametros diferenciados, tipo strings para o trecho */
+    List<E> selectByArgs(I... args);/* todo, tem que fazer pra receber parametros diferenciados, tipo strings para o trecho */
 }

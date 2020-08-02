@@ -14,7 +14,7 @@ public class LoginLoader extends Application {
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader();
         Pane sceneGraph = loader.load(getClass().getResource("../fxml/Login.fxml"));
-        primaryStage.initStyle(StageStyle.UNDECORATED);
+        //primaryStage.initStyle(StageStyle.UNDECORATED);
         Scene scene = new Scene(sceneGraph);
         primaryStage.setScene(scene);
         primaryStage.show();

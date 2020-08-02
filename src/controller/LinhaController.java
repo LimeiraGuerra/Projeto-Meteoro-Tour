@@ -62,8 +62,8 @@ public class LinhaController implements Initializable {
         Trecho t1 = new Trecho("Ibaté", "São Carlos", 16.4, 15, 3.65, 0.8, 0.2);
         trechos.add(t);
         trechos.add(t1);
-        linha.addTrecho(t);
-        linha.addTrecho(t1);
+        //linha.addTrecho(t);
+        //linha.addTrecho(t1);
         return trechosTabela;
     }
 

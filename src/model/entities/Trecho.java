@@ -11,6 +11,8 @@ public class Trecho {
     private double valorTotal;
     private Linha linha;
 
+    private TrechoLinha trechoLinha;
+
     public Trecho() {
     }
 

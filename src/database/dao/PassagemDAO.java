@@ -39,7 +39,7 @@ public class PassagemDAO implements DAO<Passagem, String> {
     }
 
     @Override
-    public List<Passagem> selectByArgs() {
+    public List<Passagem> selectByArgs(String... args) {
         return null;
     }
 }
