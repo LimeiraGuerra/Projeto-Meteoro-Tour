@@ -10,13 +10,13 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import view.loader.FuncionarioLoader;
 import model.entities.Viagem;
 import model.usecases.GerarViagensUC;
 import view.loader.LinhaLoader;
 import view.loader.PassagemLoader;
+import view.loader.OnibusLoader;
 import view.loader.TrechoLoader;
-
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -213,5 +213,15 @@ public class VendasController {
 
     public void setScene(Scene scene) {
         this.scene = scene;
+    }
+    public void openOnibus(ActionEvent actionEvent){
+        OnibusLoader janelaOnibus = new OnibusLoader();
+        janelaOnibus.start();
+
+    }
+
+    public void openFunc(ActionEvent actionEvent) {
+        FuncionarioLoader janelaFunc = new FuncionarioLoader();
+        janelaFunc.start();
     }
 }

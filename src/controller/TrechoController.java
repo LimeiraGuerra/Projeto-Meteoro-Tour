@@ -98,10 +98,12 @@ public class TrechoController {
         x.setValorPassagem(Double.parseDouble(tfValorPassagem.getText()));
         return x;
     }
+
     public void setDisableOrigemDestino(boolean bool){
         tfOrigem.setDisable(bool);
         tfDestino.setDisable(bool);
     }
+
     public void salvarTrecho(ActionEvent actionEvent) {
         if (buscarTrechoList(tfOrigem.getText(), tfDestino.getText()) == null && verificaTextField()){
             Trecho t = criarNovoTrecho();
@@ -166,6 +168,7 @@ public class TrechoController {
 
         }
     }
+
     public void limpaCampos(){
         tfOrigem.clear();
         tfDestino.clear();
@@ -176,6 +179,7 @@ public class TrechoController {
         tfValorSeguro.clear();
         lbValorTotal.setText("");
     }
+
     public void setValorTotal(double valor){
         lbValorTotal.setText("O Valor total do trecho é: " + valor);
     }
@@ -183,6 +187,7 @@ public class TrechoController {
     public void setVisibleImgTrecho(boolean bool) {
         paneImg.setVisible(bool);
     }
+
     public void criarTrecho() {
         limpaCampos();
         btDeleteTrecho.setVisible(false);
