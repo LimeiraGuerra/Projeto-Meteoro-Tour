@@ -19,7 +19,7 @@ public class TrechoLoader {
             Pane grafico = load(getClass().getResource("../fxml/Trecho.fxml"));
             Scene cena = new Scene(grafico);
             Stage stage = new Stage();
-            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setResizable(false);
             stage.setTitle("Trechos");
             TrechoController trechoController = loader.getController();
 

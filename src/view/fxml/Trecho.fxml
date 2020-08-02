@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
@@ -37,20 +36,12 @@
       </TableView>
       <Button fx:id="criarTrecho" layoutX="174.0" layoutY="353.0" mnemonicParsing="false" onAction="#criarTrecho" prefHeight="25.0" prefWidth="135.0" text="Criar novo trecho" />
       <Button fx:id="verTrecho" layoutX="325.0" layoutY="353.0" mnemonicParsing="false" onAction="#verTrecho" prefHeight="25.0" prefWidth="171.0" text="Visualizar trecho selecionado" />
-      <ImageView fitHeight="17.0" fitWidth="16.0" layoutX="768.0" layoutY="6.0" onMouseClicked="#close" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../resources/fechar.png" />
-         </image>
-         <cursor>
-            <Cursor fx:constant="CLOSED_HAND" />
-         </cursor>
-      </ImageView>
       <Label fx:id="lbSalvo" layoutX="397.0" layoutY="410.0" />
       <Button fx:id="btDeleteTrecho" layoutX="565.0" layoutY="353.0" mnemonicParsing="false" onAction="#deleteTrecho" prefHeight="25.0" prefWidth="101.0" text="Excluir trecho" />
       <Button fx:id="btSalvaTrecho" layoutX="680.0" layoutY="353.0" mnemonicParsing="false" onAction="#salvarTrecho" prefHeight="25.0" prefWidth="98.0" text="Salvar trecho" />
       <Pane fx:id="paneImg" blendMode="SRC_ATOP" layoutX="498.0" layoutY="28.0" prefHeight="364.0" prefWidth="280.0">
          <children>
-            <ImageView fitHeight="252.0" fitWidth="252.0" layoutX="12.0" layoutY="22.0"  pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="252.0" fitWidth="252.0" layoutX="12.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../resources/trecho.png" />
                </image>

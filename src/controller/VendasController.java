@@ -74,15 +74,15 @@ public class VendasController {
     public void openTrecho(ActionEvent actionEvent) {
         TrechoLoader janelaTrecho = new TrechoLoader();
         janelaTrecho.start();
-        Stage stage = (Stage) txtFieldDestino.getScene().getWindow();
-        stage.close();
+        //Stage stage = (Stage) txtFieldDestino.getScene().getWindow();
+       // stage.close();
     }
 
     public void openLinha(ActionEvent actionEvent) {
         LinhaLoader janelaLinha = new LinhaLoader();
         janelaLinha.start();
-        Stage stage = (Stage) txtFieldDestino.getScene().getWindow();
-        stage.close();
+       // Stage stage = (Stage) txtFieldDestino.getScene().getWindow();
+       // stage.close();
     }
     public void openOnibus(ActionEvent actionEvent){
         OnibusLoader janelaOnibus = new OnibusLoader();

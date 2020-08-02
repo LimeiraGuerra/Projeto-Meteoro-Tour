@@ -29,18 +29,10 @@ public class LoginController implements Initializable {
     private Administrador adm;
     private Vendedor vend;
 
-
-    @FXML public Label lbTeste;
-
-    public void setAdmin(){
-        adm = new Administrador("ADMINISTRADOR", "1234");
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         rbAdm.setToggleGroup(toggleGroup);
         rbVend.setToggleGroup(toggleGroup);
-        lbTeste.setVisible(false);
         lbIncorreto.setVisible(false);
         paneLogin.setVisible(false);
     }
@@ -51,7 +43,7 @@ public class LoginController implements Initializable {
 
             VendasLoader janelaVendas = new VendasLoader(adm);
             janelaVendas.start();
-            Stage stage = (Stage) lbTeste.getScene().getWindow();
+            Stage stage = (Stage) lbIncorreto.getScene().getWindow();
             stage.close();
 
         }
@@ -60,6 +52,9 @@ public class LoginController implements Initializable {
         }
     }
 
+    public void setAdmin(){
+        adm = new Administrador("ADMINISTRADOR", "1234");
+    }
 
     public void onAdmin(ActionEvent actionEvent) {
         setAdmin();
@@ -74,10 +69,9 @@ public class LoginController implements Initializable {
         boolean radioVend = rbVend.isSelected();
         if(radioVend){
             paneLogin.setVisible(false);
-            lbTeste.setVisible(true);
             VendasLoader janelaVendas = new VendasLoader(vend);
             janelaVendas.start();
-            Stage stage = (Stage) lbTeste.getScene().getWindow();
+            Stage stage = (Stage) lbIncorreto.getScene().getWindow();
             stage.close();
 
 
