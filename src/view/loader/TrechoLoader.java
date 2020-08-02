@@ -20,6 +20,7 @@ public class TrechoLoader {
             Scene cena = new Scene(grafico);
             Stage stage = new Stage();
             stage.setResizable(false);
+
             stage.setTitle("Trechos");
             TrechoController trechoController = loader.getController();
 

@@ -13,7 +13,6 @@ import model.entities.Linha;
 import model.entities.Trecho;
 import model.usecases.UCGerenciarLinha;
 import model.usecases.UCGerenciarTrecho;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,18 +89,6 @@ public class LinhaController{
         cbTrechos.setItems(trechoLinha);
     }
 
-    private void checkComboBox(){
-        cbTrechos.valueProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-               if (newValue.equals("Adicionar um novo trecho?")){
-                   paneLinhaTrecho.setVisible(false);
-                   setVisibleButtonTxtLinha(false);
-               }
-            }
-        });
-    }
-
     private Linha buscaLinhaTabela(){
         return tabelaLinha.getSelectionModel().getSelectedItem();
     }
@@ -123,7 +110,6 @@ public class LinhaController{
             carregaCombobox();
         }
 
-        //checkComboBox();
     }
 
     private void carregaCombobox(){

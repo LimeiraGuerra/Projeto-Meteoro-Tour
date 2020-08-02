@@ -10,6 +10,8 @@ public class Trecho {
     private double valorSeguro;
     private double valorTotal;
 
+    private TrechoLinha trechoLinha;
+
     public Trecho() {
     }
 

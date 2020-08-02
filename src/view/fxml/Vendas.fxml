@@ -14,19 +14,23 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.VendasController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.VendasController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
         <Menu mnemonicParsing="false" text="Opções">
           <items>
-            <Menu mnemonicParsing="false" text="Gerenciar">
+            <Menu fx:id="menuGerenciar" disable="true" mnemonicParsing="false" text="Gerenciar">
                      <items>
                   <MenuItem mnemonicParsing="false" text="Ônibus" />
                   <MenuItem mnemonicParsing="false" text="Funcionários" />
@@ -34,21 +38,22 @@
                   <MenuItem mnemonicParsing="false" onAction="#openLinha" text="Linhas" />
                      </items></Menu>
             <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Buscar Passagens" />
+                  <MenuItem fx:id="menuOptPassagens" mnemonicParsing="false" onAction="#openBuscarPassagens" text="Buscar Passagens" />
           </items>
         </Menu>
       </menus>
     </MenuBar>
-    <SplitPane dividerPositions="0.353" VBox.vgrow="SOMETIMES">
+    <SplitPane dividerPositions="0.3507795100222717" VBox.vgrow="SOMETIMES">
       <items>
         <AnchorPane minWidth="-Infinity">
           <children>
+                  <Rectangle arcHeight="30.0" arcWidth="50.0" blendMode="MULTIPLY" fill="TRANSPARENT" height="509.0" layoutX="16.0" layoutY="40.0" opacity="0.4" stroke="BLACK" strokeLineCap="ROUND" strokeLineJoin="ROUND" width="255.0" />
             <Label alignment="CENTER" layoutX="14.0" layoutY="6.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Mapa de Assentos" textAlignment="CENTER" wrapText="false" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="6.0">
               <font>
                 <Font size="18.0" fx:id="x1" />
               </font>
             </Label>
-                  <Button contentDisplay="CENTER" layoutX="37.0" layoutY="52.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="1">
+                  <Button id="btnAssento01" fx:id="btnAssento01" contentDisplay="CENTER" layoutX="30.0" layoutY="71.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="01">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -59,8 +64,14 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="90.0" layoutY="52.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="2">
+                  <Button id="btnAssento02" fx:id="btnAssento02" contentDisplay="CENTER" layoutX="80.0" layoutY="71.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="02">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -71,8 +82,11 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="37.0" layoutY="98.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="1">
+                  <Button id="btnAssento05" fx:id="btnAssento05" contentDisplay="CENTER" layoutX="30.0" layoutY="112.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="05">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -83,8 +97,11 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="90.0" layoutY="98.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="2">
+                  <Button id="btnAssento06" fx:id="btnAssento06" contentDisplay="CENTER" layoutX="80.0" layoutY="112.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="06">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -95,8 +112,11 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="37.0" layoutY="144.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="1">
+                  <Button id="btnAssento09" fx:id="btnAssento09" contentDisplay="CENTER" layoutX="30.0" layoutY="154.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="09">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -107,8 +127,11 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="90.0" layoutY="144.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="2">
+                  <Button id="btnAssento10" fx:id="btnAssento10" contentDisplay="CENTER" layoutX="80.0" layoutY="154.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="10">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -119,8 +142,11 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="37.0" layoutY="190.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="1">
+                  <Button id="btnAssento13" fx:id="btnAssento13" contentDisplay="CENTER" layoutX="30.0" layoutY="196.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="13">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -131,8 +157,11 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="90.0" layoutY="190.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="2">
+                  <Button id="btnAssento14" fx:id="btnAssento14" contentDisplay="CENTER" layoutX="80.0" layoutY="196.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="14">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -143,8 +172,11 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="37.0" layoutY="236.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="1">
+                  <Button id="btnAssento17" fx:id="btnAssento17" contentDisplay="CENTER" layoutX="30.0" layoutY="238.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="17">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -155,8 +187,11 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="90.0" layoutY="236.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="2">
+                  <Button id="btnAssento18" fx:id="btnAssento18" contentDisplay="CENTER" layoutX="80.0" layoutY="238.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="18">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -167,8 +202,11 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="37.0" layoutY="282.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="1">
+                  <Button id="btnAssento21" fx:id="btnAssento21" contentDisplay="CENTER" layoutX="30.0" layoutY="280.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="21">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -179,8 +217,11 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="90.0" layoutY="282.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="2">
+                  <Button id="btnAssento22" fx:id="btnAssento22" contentDisplay="CENTER" layoutX="80.0" layoutY="280.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="22">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -191,8 +232,11 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="37.0" layoutY="328.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="1">
+                  <Button id="btnAssento25" fx:id="btnAssento25" contentDisplay="CENTER" layoutX="30.0" layoutY="322.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="25">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -203,8 +247,11 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="90.0" layoutY="328.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="2">
+                  <Button id="btnAssento26" fx:id="btnAssento26" contentDisplay="CENTER" layoutX="80.0" layoutY="322.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="26">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -215,8 +262,11 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="37.0" layoutY="374.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="1">
+                  <Button id="btnAssento29" fx:id="btnAssento29" contentDisplay="CENTER" layoutX="30.0" layoutY="364.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="29">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -227,8 +277,11 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="90.0" layoutY="374.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="2">
+                  <Button id="btnAssento30" fx:id="btnAssento30" contentDisplay="CENTER" layoutX="80.0" layoutY="364.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="30">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -239,8 +292,11 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="37.0" layoutY="420.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="1">
+                  <Button id="btnAssento33" fx:id="btnAssento33" contentDisplay="CENTER" layoutX="30.0" layoutY="406.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="33">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -251,8 +307,11 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="90.0" layoutY="420.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="2">
+                  <Button id="btnAssento34" fx:id="btnAssento34" contentDisplay="CENTER" layoutX="80.0" layoutY="406.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="34">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -263,8 +322,11 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="37.0" layoutY="466.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="1">
+                  <Button id="btnAssento37" fx:id="btnAssento37" contentDisplay="CENTER" layoutX="30.0" layoutY="448.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="37">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -275,8 +337,11 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="90.0" layoutY="466.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="2">
+                  <Button id="btnAssento38" fx:id="btnAssento38" contentDisplay="CENTER" layoutX="80.0" layoutY="448.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="38">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -287,8 +352,11 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="37.0" layoutY="512.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="1">
+                  <Button id="btnAssento41" fx:id="btnAssento41" contentDisplay="CENTER" layoutX="30.0" layoutY="490.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="41">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -299,8 +367,11 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="90.0" layoutY="512.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="2">
+                  <Button id="btnAssento42" fx:id="btnAssento42" contentDisplay="CENTER" layoutX="80.0" layoutY="490.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="42">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -311,8 +382,11 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="168.0" layoutY="52.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="1">
+                  <Button id="btnAssento04" fx:id="btnAssento04" contentDisplay="CENTER" disable="true" layoutX="158.0" layoutY="71.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(240, 213, 14);" styleClass="assentoPref" text="04">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -323,8 +397,11 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="221.0" layoutY="52.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="2">
+                  <Button id="btnAssento03" fx:id="btnAssento03" contentDisplay="CENTER" disable="true" layoutX="208.0" layoutY="71.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(240, 213, 14);" styleClass="assentoPref" text="03">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -335,8 +412,11 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="168.0" layoutY="98.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="1">
+                  <Button id="btnAssento08" fx:id="btnAssento08" contentDisplay="CENTER" layoutX="158.0" layoutY="112.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="08">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -347,8 +427,11 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="221.0" layoutY="98.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="2">
+                  <Button id="btnAssento07" fx:id="btnAssento07" contentDisplay="CENTER" layoutX="208.0" layoutY="112.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="07">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -359,8 +442,11 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="168.0" layoutY="144.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="1">
+                  <Button id="btnAssento12" fx:id="btnAssento12" contentDisplay="CENTER" layoutX="158.0" layoutY="154.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="12">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -371,8 +457,11 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="221.0" layoutY="144.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="2">
+                  <Button id="btnAssento11" fx:id="btnAssento11" contentDisplay="CENTER" layoutX="208.0" layoutY="154.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="11">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -383,8 +472,11 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="168.0" layoutY="190.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="1">
+                  <Button id="btnAssento16" fx:id="btnAssento16" contentDisplay="CENTER" layoutX="158.0" layoutY="196.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="16">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -395,8 +487,11 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="221.0" layoutY="190.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="2">
+                  <Button id="btnAssento15" fx:id="btnAssento15" contentDisplay="CENTER" layoutX="208.0" layoutY="196.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="15">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -407,8 +502,11 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="168.0" layoutY="236.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="1">
+                  <Button id="btnAssento20" fx:id="btnAssento20" contentDisplay="CENTER" layoutX="158.0" layoutY="238.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="20">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -419,8 +517,11 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="221.0" layoutY="236.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="2">
+                  <Button id="btnAssento19" fx:id="btnAssento19" contentDisplay="CENTER" layoutX="208.0" layoutY="238.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="19">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -431,8 +532,11 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="168.0" layoutY="282.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="1">
+                  <Button id="btnAssento24" fx:id="btnAssento24" contentDisplay="CENTER" layoutX="158.0" layoutY="280.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="24">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -443,8 +547,11 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="221.0" layoutY="282.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="2">
+                  <Button id="btnAssento23" fx:id="btnAssento23" contentDisplay="CENTER" layoutX="208.0" layoutY="280.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="23">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -455,8 +562,11 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="168.0" layoutY="328.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="1">
+                  <Button id="btnAssento28" fx:id="btnAssento28" contentDisplay="CENTER" layoutX="158.0" layoutY="322.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="28">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -467,8 +577,11 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="221.0" layoutY="328.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="2">
+                  <Button id="btnAssento27" fx:id="btnAssento27" contentDisplay="CENTER" layoutX="208.0" layoutY="322.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="27">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -479,8 +592,11 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="168.0" layoutY="374.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="1">
+                  <Button id="btnAssento32" fx:id="btnAssento32" contentDisplay="CENTER" layoutX="158.0" layoutY="364.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="32">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -491,8 +607,11 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="221.0" layoutY="374.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="2">
+                  <Button id="btnAssento31" fx:id="btnAssento31" contentDisplay="CENTER" layoutX="208.0" layoutY="364.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="31">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -503,8 +622,11 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="168.0" layoutY="420.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="1">
+                  <Button id="btnAssento36" fx:id="btnAssento36" contentDisplay="CENTER" layoutX="158.0" layoutY="406.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="36">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -515,8 +637,11 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="221.0" layoutY="420.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="2">
+                  <Button id="btnAssento35" fx:id="btnAssento35" contentDisplay="CENTER" layoutX="208.0" layoutY="406.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="35">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -527,8 +652,11 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="168.0" layoutY="466.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="1">
+                  <Button id="btnAssento40" fx:id="btnAssento40" contentDisplay="CENTER" layoutX="158.0" layoutY="448.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="40">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -539,8 +667,11 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="221.0" layoutY="466.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="2">
+                  <Button id="btnAssento39" fx:id="btnAssento39" contentDisplay="CENTER" layoutX="208.0" layoutY="448.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="39">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -551,8 +682,11 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="168.0" layoutY="512.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="1">
+                  <Button id="btnAssento44" fx:id="btnAssento44" contentDisplay="CENTER" layoutX="158.0" layoutY="490.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="44">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -563,8 +697,11 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button contentDisplay="CENTER" layoutX="221.0" layoutY="512.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4;" text="2">
+                  <Button id="btnAssento43" fx:id="btnAssento43" contentDisplay="CENTER" layoutX="208.0" layoutY="490.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="43">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -575,34 +712,71 @@
                            </viewport>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="136.0" layoutY="33.0" opacity="0.4" text="Frente" textAlignment="CENTER" />
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="136.0" layoutY="551.0" opacity="0.4" text="Fundo" textAlignment="CENTER" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="126.0" layoutY="38.0" opacity="0.4" text="Frente" textAlignment="CENTER" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="126.0" layoutY="531.0" opacity="0.4" text="Fundo" textAlignment="CENTER" />
           </children>
         </AnchorPane>
-      <AnchorPane id="Content" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="580.0">
+      <AnchorPane id="Content" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="605.0">
         <children>
-          <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="6.0" style="&#10;" text="Tabela de Viagens" textAlignment="CENTER" wrapText="false" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="6.0" />
-                  <TableView layoutX="13.0" layoutY="41.0" prefHeight="422.0" prefWidth="554.0" AnchorPane.bottomAnchor="110.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="41.0">
+                  <AnchorPane fx:id="popupReagendamento" layoutX="375.0" layoutY="206.0" prefHeight="36.0" prefWidth="230.0" style="-fx-background-color: rgb(235, 252, 104);" visible="false">
+                     <children>
+                        <Label alignment="TOP_LEFT" graphicTextGap="0.0" layoutX="14.0" layoutY="6.0" prefHeight="2.0" prefWidth="146.0" text="Reagendamento">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                           <tooltip>
+                              <Tooltip text="O reagendamento de passagem &#10;só é permitido para a mesma &#10;cidade origem e destino." wrapText="true" />
+                           </tooltip>
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/alert.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Label>
+                        <Button layoutX="150.0" layoutY="5.0" mnemonicParsing="false" onAction="#cancelModeReagendamento" prefHeight="25.0" prefWidth="62.0" text="Cancelar" />
+                     </children>
+                  </AnchorPane>
+          <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="6.0" style="&#10;" text="Busca de Viagens" textAlignment="CENTER" wrapText="false" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="6.0" />
+                  <TextField fx:id="txtFieldOrigem" layoutX="394.0" layoutY="274.0" prefHeight="25.0" prefWidth="193.0" AnchorPane.bottomAnchor="274.0" AnchorPane.leftAnchor="394.0" />
+                  <TextField fx:id="txtFieldDestino" layoutX="394.0" layoutY="342.0" prefHeight="25.0" prefWidth="193.0" AnchorPane.bottomAnchor="206.0" AnchorPane.leftAnchor="394.0" />
+                  <DatePicker fx:id="datePickerSaida" layoutX="476.0" layoutY="389.0" prefHeight="25.0" prefWidth="111.0" AnchorPane.bottomAnchor="159.0" AnchorPane.rightAnchor="18.0" />
+                  <Label layoutX="394.0" layoutY="253.0" text="Cidade Origem:" AnchorPane.bottomAnchor="303.0" AnchorPane.leftAnchor="394.0" />
+                  <Label layoutX="394.0" layoutY="321.0" text="Cidade Destino:" AnchorPane.bottomAnchor="235.0" />
+                  <Label layoutX="394.0" layoutY="393.0" text="Data de Saida:" AnchorPane.bottomAnchor="163.0" AnchorPane.rightAnchor="135.0" />
+                  <Label layoutX="394.0" layoutY="435.0" text="Cliente Especial:" AnchorPane.bottomAnchor="121.0" AnchorPane.leftAnchor="394.0" />
+                  <RadioButton fx:id="rdNao" layoutX="393.0" layoutY="457.0" mnemonicParsing="false" onAction="#checkToggle" selected="true" text="Não" AnchorPane.bottomAnchor="99.0" AnchorPane.leftAnchor="393.0">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="clienteEspecial" />
+                     </toggleGroup></RadioButton>
+                  <RadioButton fx:id="rdIdoso" layoutX="449.0" layoutY="457.0" mnemonicParsing="false" onAction="#checkToggle" text="Idoso" toggleGroup="$clienteEspecial" AnchorPane.bottomAnchor="99.0" AnchorPane.leftAnchor="449.0" />
+                  <RadioButton fx:id="rdDeficiente" layoutX="513.0" layoutY="457.0" mnemonicParsing="false" onAction="#checkToggle" text="Deficiente" toggleGroup="$clienteEspecial" AnchorPane.bottomAnchor="99.0" AnchorPane.leftAnchor="513.0" />
+                  <Button layoutX="393.0" layoutY="496.0" mnemonicParsing="false" onAction="#searchForViagens" prefHeight="42.0" prefWidth="193.0" text="Encontrar Viagem" AnchorPane.bottomAnchor="35.0" AnchorPane.rightAnchor="19.0" />
+                  <Line endX="131.0" layoutX="490.0" layoutY="242.0" opacity="0.41" startX="-137.0" stroke="#6b758294" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="OUTSIDE" />
+                  <Line endX="100.0" layoutX="490.0" layoutY="310.0" opacity="0.31" startX="-100.0" stroke="#8a94a195" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="OUTSIDE" />
+                  <Line endX="100.0" layoutX="490.0" layoutY="378.0" opacity="0.31" startX="-100.0" stroke="#8a94a195" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="OUTSIDE" />
+                  <Line endX="100.0" layoutX="490.0" layoutY="425.0" opacity="0.31" startX="-100.0" stroke="#8a94a195" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="OUTSIDE" />
+                  <Line endX="100.0" layoutX="490.0" layoutY="485.0" opacity="0.31" startX="-100.0" stroke="#8a94a194" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="OUTSIDE" />
+                  <Line endX="141.0" layoutX="476.0" layoutY="549.0" opacity="0.41" startX="-117.0" stroke="#6b7582d9" strokeLineCap="ROUND" strokeLineJoin="ROUND" />
+                  <TableView fx:id="tableViagens" layoutX="14.0" layoutY="40.0" onMouseClicked="#selectViagemForSale" prefHeight="510.0" prefWidth="361.0" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="230.0" AnchorPane.topAnchor="40.0">
                     <columns>
-                      <TableColumn prefWidth="352.0" text="Linha" />
-                      <TableColumn prefWidth="198.0" text="Horário de Saída" />
+                      <TableColumn fx:id="colLinha" prefWidth="236.0" text="Linha" />
+                      <TableColumn fx:id="colHorarioSaida" prefWidth="123.0" text="Horário de Saída" />
                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
-                  <TextField layoutX="234.0" layoutY="488.0" prefHeight="25.0" prefWidth="213.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="234.0" />
-                  <TextField layoutX="14.0" layoutY="488.0" prefHeight="25.0" prefWidth="213.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="14.0" />
-                  <DatePicker layoutX="455.0" layoutY="488.0" prefHeight="25.0" prefWidth="111.0" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="14.0" />
-                  <Label layoutX="14.0" layoutY="467.0" text="Cidade Origem:" AnchorPane.bottomAnchor="89.0" AnchorPane.leftAnchor="14.0" />
-                  <Label layoutX="234.0" layoutY="467.0" text="Cidade Destino:" AnchorPane.bottomAnchor="89.0" />
-                  <Label layoutX="455.0" layoutY="468.0" text="Data de Saida:" AnchorPane.bottomAnchor="88.0" AnchorPane.rightAnchor="49.0" />
-                  <Button layoutX="322.0" layoutY="520.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="244.0" text="Encontrar Viagem" AnchorPane.bottomAnchor="11.0" AnchorPane.rightAnchor="14.0" />
-                  <Label layoutX="14.0" layoutY="533.0" text="Cliente Especial:" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="14.0" />
-                  <RadioButton layoutX="107.0" layoutY="533.0" mnemonicParsing="false" text="Não" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="107.0" />
-                  <RadioButton layoutX="163.0" layoutY="533.0" mnemonicParsing="false" text="Idoso" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="163.0" />
-                  <RadioButton layoutX="227.0" layoutY="533.0" mnemonicParsing="false" text="Deficiente" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="227.0" />
+                  <ImageView fitHeight="191.0" fitWidth="146.0" layoutX="415.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/onibus.png" />
+                     </image>
+                  </ImageView>
         </children>
       </AnchorPane>
       </items>

@@ -21,16 +21,15 @@ public class VendasLoader {
 
     public void start(){
         try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/Vendas_temp.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/Vendas.fxml"));
             VBox graph = loader.load();
             VendasController ctrl = loader.getController();
 
-            if(isVendedorAdmin()) {
-                ctrl.setAdminPrivileges();
-            }
+            if(isVendedorAdmin()) {ctrl.setAdminPrivileges();}
 
             Stage stage = new Stage();
             stage.setScene(new Scene(graph, 890, 590));
+            ctrl.setScene(stage.getScene()); //Passo a cena para o controle para usar css selector
             stage.setTitle("Meteoro Tour - Venda de Passagens");
             stage.setResizable(false);
             stage.show();
