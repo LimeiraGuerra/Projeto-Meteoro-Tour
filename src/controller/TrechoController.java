@@ -8,8 +8,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import model.entities.Trecho;
-import model.usecases.UCGerenciarTrecho;
-import view.util.VerificaInputs;
+import model.usecases.GerenciarTrechoUC;
+import view.util.TextFieldValidator;
 
 
 public class TrechoController {
@@ -34,7 +34,7 @@ public class TrechoController {
     @FXML private Label lbSalvo;
 
     private ObservableList<Trecho> trechos = FXCollections.observableArrayList();
-    private UCGerenciarTrecho ucTrecho = UCGerenciarTrecho.getInstancia();
+    private GerenciarTrechoUC ucTrecho = new GerenciarTrechoUC();
 
     public void initialize(){
         bind();
@@ -55,11 +55,11 @@ public class TrechoController {
         return trechos;
     }
 
-    private Trecho buscarTrechoTabela(){
+    private Trecho searchTrechoTable(){
         return tabelaTrecho.getSelectionModel().getSelectedItem();
     }
 
-    private void limpaCampos(){
+    private void cleanFields(){
         tfOrigem.clear();
         tfDestino.clear();
         tfQuilometragem.clear();
@@ -69,42 +69,52 @@ public class TrechoController {
         tfValorSeguro.clear();
         lbValorTotal.setText("");
     }
+    private Trecho createTrecho(){
+        Trecho trecho = ucTrecho.createTrecho(tfOrigem.getText(), tfDestino.getText(), Double.parseDouble(tfQuilometragem.getText()),
+                Double.parseDouble(tfTempoDuracao.getText()), Double.parseDouble(tfValorPassagem.getText()),
+                Double.parseDouble(tfTaxaEmbarque.getText()), Double.parseDouble(tfValorSeguro.getText()));
+
+        return trecho;
+    }
+
+    private Trecho searchTrechoOrigemDestino(){
+        return ucTrecho.searchForOrigemDestino(tfOrigem.getText(), tfDestino.getText());
+    }
+
+    private void updateTrecho(){
+        Trecho trecho = searchTrechoOrigemDestino();
+        ucTrecho.updateTrecho(Double.parseDouble(tfQuilometragem.getText()),Double.parseDouble(tfTempoDuracao.getText()),
+                Double.parseDouble(tfValorPassagem.getText()), Double.parseDouble(tfTaxaEmbarque.getText()),Double.parseDouble(tfValorSeguro.getText()), trecho);
+
+        trecho.setValorTotal();
+        setValorTotal(trecho.getValorTotal());
+    }
 
     @FXML
-    private void salvarTrecho(ActionEvent actionEvent) {
-        if (ucTrecho.buscarTrechoOrigemDestino(tfOrigem.getText(), tfDestino.getText()) == null && verificaTextField()){
+    private void saveOrUpdateTrecho(ActionEvent actionEvent) {
+        if (searchTrechoOrigemDestino() == null && checkTextField()){
 
-            Trecho t = ucTrecho.criarTrecho(tfOrigem.getText(), tfDestino.getText(), Double.parseDouble(tfQuilometragem.getText()),
-                    Double.parseDouble(tfTempoDuracao.getText()), Double.parseDouble(tfValorPassagem.getText()),
-                    Double.parseDouble(tfTaxaEmbarque.getText()), Double.parseDouble(tfValorSeguro.getText()));
-
-            trechos.add(t);
-            lbSalvo.setText("Salvo");
-            }
-
-        else if (buscarTrechoTabela() != null && verificaTextField()) {
-            Trecho x = ucTrecho.buscarTrechoOrigemDestino(tfOrigem.getText(), tfDestino.getText());
-
-            ucTrecho.editarTrecho(Double.parseDouble(tfQuilometragem.getText()),Double.parseDouble(tfTempoDuracao.getText()),
-                                Double.parseDouble(tfValorPassagem.getText()), Double.parseDouble(tfTaxaEmbarque.getText()),Double.parseDouble(tfValorSeguro.getText()), x);
-
-            x.setValorTotal();
-            setValorTotal(x.getValorTotal());
+           Trecho trecho = createTrecho();
+           trechos.add(trecho);
+           lbSalvo.setText("Salvo");
+        }
+        if (searchTrechoTable() != null && checkTextField()) {
+            updateTrecho();
             lbSalvo.setText("Salvo");
 
         }
         else{
             lbSalvo.setText("NÃO SALVO");
         }
-        limpaCampos();
+        cleanFields();
         tabelaTrecho.refresh();
         setVisibleButtonPane(false);
         setVisiblePaneImg(true);
         }
 
     @FXML
-    private void criarTrecho() {
-        limpaCampos();
+    private void viewCreateTrecho() {
+        cleanFields();
         btDeleteTrecho.setVisible(false);
         btSalvaTrecho.setVisible(true);
         setVisiblePaneImg(false);
@@ -114,33 +124,36 @@ public class TrechoController {
 
     public void deleteTrecho(ActionEvent actionEvent) {
 
-       Trecho t = buscarTrechoTabela();
+       Trecho trecho = searchTrechoTable();
 
-       if (t != null){
-           ucTrecho.removeTrecho(t);
-           trechos.remove(t);
+       if (trecho != null){
+           ucTrecho.deleteTrecho(trecho);
+           trechos.remove(trecho);
            tabelaTrecho.refresh();
        }
-
        setVisibleButtonPane(false);
        setVisiblePaneImg(true);
-       limpaCampos();
+       cleanFields();
+    }
+
+    private void setFieldsTrecho(Trecho trecho){
+        tfOrigem.setText(trecho.getCidadeOrigem());
+        tfDestino.setText(trecho.getCidadeDestino());
+        tfQuilometragem.setText(String.valueOf(trecho.getQuilometragem()));
+        tfTempoDuracao.setText(String.valueOf(trecho.getTempoDuracao()));
+        tfValorPassagem.setText(String.valueOf(trecho.getValorPassagem()));
+        tfTaxaEmbarque.setText(String.valueOf(trecho.getTaxaEmbarque()));
+        tfValorSeguro.setText(String.valueOf(trecho.getValorSeguro()));
+        setValorTotal(trecho.getValorTotal());
     }
 
     @FXML
-    private void verTrecho(ActionEvent actionEvent) {
-        Trecho t = buscarTrechoTabela();
+    private void seeTrecho(ActionEvent actionEvent) {
+        Trecho t = searchTrechoTable();
         if (t != null){
-            Trecho x = ucTrecho.buscarTrechoOrigemDestino(t.getCidadeOrigem(), t.getCidadeDestino());
-            if (x.equals(t)) {
-                tfOrigem.setText(x.getCidadeOrigem());
-                tfDestino.setText(x.getCidadeDestino());
-                tfQuilometragem.setText(String.valueOf(x.getQuilometragem()));
-                tfTempoDuracao.setText(String.valueOf(x.getTempoDuracao()));
-                tfValorPassagem.setText(String.valueOf(x.getValorPassagem()));
-                tfTaxaEmbarque.setText(String.valueOf(x.getTaxaEmbarque()));
-                tfValorSeguro.setText(String.valueOf(x.getValorSeguro()));
-                setValorTotal(x.getValorTotal());
+            Trecho trecho = ucTrecho.searchTrecho(t);
+            if (trecho.equals(t)) {
+                setFieldsTrecho(trecho);
                 setDisableOrigemDestino(true);
                 setVisibleButtonPane(true);
                 setVisiblePaneImg(false);
@@ -150,7 +163,7 @@ public class TrechoController {
     }
 
     private void setValorTotal(double valor){
-        lbValorTotal.setText("O Valor total do trecho é: " + valor);
+        lbValorTotal.setText("O valor total do trecho é: " + valor);
     }
 
     private void setVisiblePaneImg(boolean bool) {
@@ -158,13 +171,13 @@ public class TrechoController {
     }
 
 
-    public boolean verificaTextField(){
-        return VerificaInputs.isVazio(tfDestino.getText()) && VerificaInputs.isVazio(tfOrigem.getText()) &&
-                VerificaInputs.isDouble(tfQuilometragem.getText()) &&
-                VerificaInputs.isDouble(tfTempoDuracao.getText()) &&
-                VerificaInputs.isDouble(tfValorPassagem.getText()) &&
-                VerificaInputs.isDouble(tfTaxaEmbarque.getText()) &&
-                VerificaInputs.isDouble(tfValorSeguro.getText());
+    public boolean checkTextField(){
+        return !TextFieldValidator.isDate(tfDestino) && !TextFieldValidator.isDate(tfOrigem) &&
+                TextFieldValidator.isDouble(tfQuilometragem) &&
+                TextFieldValidator.isDouble(tfTempoDuracao) &&
+                TextFieldValidator.isDouble(tfValorPassagem) &&
+                TextFieldValidator.isDouble(tfTaxaEmbarque) &&
+                TextFieldValidator.isDouble(tfValorSeguro);
     }
 
     public void setDisableOrigemDestino(boolean bool){

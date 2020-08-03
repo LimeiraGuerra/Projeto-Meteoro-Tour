@@ -43,14 +43,14 @@ public class ViagemDAO implements DAO<Viagem, String> {
         /* todo */
         /* Retorno pra teste */
         List<Viagem> viagens = new ArrayList<>();
-        DAO<Linha, String> daoLinha = new LinhaDAO();
+        LinhaDAO daoLinha = LinhaDAO.getInstancia();
 
         for (String[] tl : this.keysCidadesTest) {
             if (tl[0].equals(args[0])) {
                 for (String[] tl2 : this.keysCidadesTest) {
                     if (tl2[1].equals(args[1]) && tl[2].equals(tl2[2])) {
                         Linha linha = daoLinha.selectById(tl[2]);
-                        linha.addAllTrechosLinha(new TrechoDAO().selectTrechosByLinha(linha, args[2]));
+                        linha.addAllTrechosLinha(TrechoDAO.getInstancia().selectTrechosByLinha(linha, args[2]));
                         viagens.add(new Viagem(tl[0], tl2[1], linha));
                         break;
                     }

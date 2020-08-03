@@ -1,8 +1,10 @@
 package view.util;
 
-public class StringValidator {
+import javafx.scene.control.TextField;
 
+public class StringValidator {
     public static boolean isCurrency(String str){
+
         return str.matches("-?\\d+|\\d+.\\d+");
     }
 

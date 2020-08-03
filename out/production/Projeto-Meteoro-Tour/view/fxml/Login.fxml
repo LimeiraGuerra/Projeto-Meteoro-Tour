@@ -7,11 +7,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<<<<<<< HEAD
+
 <AnchorPane prefHeight="313.0" prefWidth="332.0" style="-fx-background-color: #FEED84" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
-=======
-<AnchorPane prefHeight="313.0" prefWidth="332.0" style="-fx-background-color: #696969;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
->>>>>>> 9a85cc5f86e63189ca9b5da36ba1e34cf2ab4c13
    <children>
       <Label layoutX="121.0" layoutY="25.0" prefHeight="45.0" prefWidth="192.0" text="Meteoro Tour" textFill="#171717" AnchorPane.leftAnchor="121.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="25.0">
          <font>

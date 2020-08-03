@@ -1,7 +1,5 @@
 package controller;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,8 +9,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import model.entities.Linha;
 import model.entities.Trecho;
-import model.usecases.UCGerenciarLinha;
-import model.usecases.UCGerenciarTrecho;
+import model.usecases.GerenciarLinhaUC;
+import model.usecases.GerenciarTrechoUC;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,16 +39,17 @@ public class LinhaController{
     @FXML private TextField tfQuilometragem;
     @FXML private TextField tfTaxaEmbarque;
     @FXML private Pane paneImg;
+    @FXML private TextField txtHorarioTrecho;
 
 
     private ObservableList<Trecho> trechosListTabela = FXCollections.observableArrayList();
     private ObservableList<Linha> linhasListTabela = FXCollections.observableArrayList();
-    private UCGerenciarTrecho ucTrecho = UCGerenciarTrecho.getInstancia();
-    private UCGerenciarLinha ucLinha = UCGerenciarLinha.getInstancia();
+    private GerenciarTrechoUC ucTrecho = new GerenciarTrechoUC();
+    private GerenciarLinhaUC ucLinha = new GerenciarLinhaUC();
 
     public void initialize() {
         bindLinha();
-        setVisibleButtonTxtLinha(false);
+        setImgVisible();
     }
 
     private void bindLinha(){
@@ -81,110 +80,107 @@ public class LinhaController{
 
     private void fillComboBox(List<Trecho> trechos){
         ObservableList<String> trechoLinha = FXCollections.observableArrayList();
-
         for (Trecho t:trechos) {
             trechoLinha.add(t.getCidadeOrigem() + " - " + t.getCidadeDestino());
         }
-        trechoLinha.add("Adicionar um novo trecho?");
         cbTrechos.setItems(trechoLinha);
     }
 
-    private Linha buscaLinhaTabela(){
+    private Linha searchLinhaTable(){
         return tabelaLinha.getSelectionModel().getSelectedItem();
     }
 
-    private void limpaTxtNome(){
+    private void cleanTxtNome(){
         txtNomeLinha.clear();
     }
 
     @FXML
-    private void verLinha(ActionEvent actionEvent) {
+    private void seeLinha(ActionEvent actionEvent) {
 
-        Linha linha = buscaLinhaTabela();
+        Linha linha = searchLinhaTable();
         if (linha != null){
-            paneImg.setVisible(false);
             bindLinhaTrecho(linha);
-            paneLinhaTrecho.setVisible(true);
-            setVisibleButtonTxtLinha(true);
+            fixVisionPane();
             btAdicionarLinha.setVisible(false);
-            carregaCombobox();
+            loadCombobox();
         }
 
     }
 
-    private void carregaCombobox(){
+    private void loadCombobox(){
         if (trechosListTabela.size() == 0){
             fillComboBox(ucTrecho.getListTrechos());
         }
         else{
             Trecho t = trechosListTabela.get(trechosListTabela.size() - 1);
-            fillComboBox(atualizarComboBox(t.getCidadeDestino()));
+            fillComboBox(updateComboBox(t.getCidadeDestino()));
         }
     }
     @FXML
-    private void criarLinha(ActionEvent actionEvent) {
-        limpaTxtNome();
-        paneImg.setVisible(false);
+    private void viewCreateLinha(ActionEvent actionEvent) {
+        cleanTxtNome();
+
         setVisibleButtonTxtLinha(true);
         paneLinhaTrecho.setVisible(false);
     }
 
     @FXML
-    private void excluirTrecho(ActionEvent actionEvent) {
-        Linha linha = buscaLinhaTabela();
+    private void deleteTrecho(ActionEvent actionEvent) {
+        Linha linha = searchLinhaTable();
         Trecho trecho = tabelaLinhaTrecho.getSelectionModel().getSelectedItem();
         if (trecho != null && linha != null){
             linha.removeTrecho(trecho);
             loadTableLinhaTrecho(linha);
         }
-        carregaCombobox();
+        loadCombobox();
     }
 
     @FXML
-    private void excluirLinha(ActionEvent actionEvent) {
-        Linha linha = buscaLinhaTabela();
+    private void deleteLinha(ActionEvent actionEvent) {
+        Linha linha = searchLinhaTable();
         if (linha != null){
-            ucLinha.removerLinha(linha);
-            paneLinhaTrecho.setVisible(false);
-            setVisibleButtonTxtLinha(false);
-            atualizarTabelaLinha();
-            paneImg.setVisible(true);
+            ucLinha.deleteLinha(linha);
+            updateTableLinha();
+            setImgVisible();
         }
     }
 
     @FXML
-    private void salvarAlteracao(ActionEvent actionEvent) {
+    private void saveChange(ActionEvent actionEvent) {
 
-        if (buscaLinhaTabela() != null){
-            ucLinha.editarLinha(txtNomeLinha.getText(), buscaLinhaTabela());
-            loadTableLinhaTrecho(buscaLinhaTabela());
+        if (searchLinhaTable() != null){
+            ucLinha.updateLinha(txtNomeLinha.getText(), searchLinhaTable());
+            loadTableLinhaTrecho(searchLinhaTable());
         }
-        atualizarTabelaLinha();
+        updateTableLinha();
+        setImgVisible();
+    }
+    private String[] returnCidades(){
+        String origemDestino = (String) cbTrechos.getValue();
+        String[] cidades = splitOrigemDestino(origemDestino);
+        return cidades;
+    }
+
+    private void setImgVisible(){
         paneLinhaTrecho.setVisible(false);
+        paneCriaTrecho.setVisible(false);
         setVisibleButtonTxtLinha(false);
         paneImg.setVisible(true);
     }
 
-    public void adicionarTrecho(ActionEvent actionEvent) {
-        Linha linha = buscaLinhaTabela();
-        String origemDestino = (String) cbTrechos.getValue();
-        if (origemDestino.equals("Adicionar um novo trecho?")){
-            paneLinhaTrecho.setVisible(false);
-            setVisibleButtonTxtLinha(false);
-            limpaCamposTrecho();
-            paneCriaTrecho.setVisible(true);
-        }
-        else{
-            String[] cidades = splitOrigemDestino(origemDestino);
-            Trecho trecho = ucTrecho.buscarTrechoOrigemDestino(cidades[0], cidades[1]);
-            linha.addTrecho(trecho);
-            ucLinha.adicionarLinha(linha);
-            loadTableLinhaTrecho(linha);
-            carregaCombobox();
-        }
+    @FXML
+    private void addTrecho(ActionEvent actionEvent) {
+        Linha linha = searchLinhaTable();
+        String[] cidades = returnCidades();
+        Trecho trecho = ucTrecho.searchForOrigemDestino(cidades[0], cidades[1]);
+        linha.addTrecho(trecho);
+        ucLinha.addLinha(linha);
+        loadTableLinhaTrecho(linha);
+        loadCombobox();
+
     }
 
-    public List<Trecho> atualizarComboBox(String destino){
+    private List<Trecho> updateComboBox(String destino){
         List<Trecho> trechosLinha = new ArrayList<>();
         for (Trecho trecho : ucTrecho.getListTrechos()) {
             if (trecho.getCidadeOrigem().equals(destino)){
@@ -193,13 +189,13 @@ public class LinhaController{
         }
         return trechosLinha;
     }
-    public String[] splitOrigemDestino(String cidade){
+    private String[] splitOrigemDestino(String cidade){
         String[] cidades = cidade.split("-");
         cidades[0] = cidades[0].trim();
         cidades[1] = cidades[1].trim();
         return cidades;
     }
-    public void atualizarTabelaLinha(){
+    public void updateTableLinha(){
         linhasListTabela.clear();
         linhasListTabela.addAll(ucLinha.getListLinha());
         tabelaLinha.refresh();
@@ -209,38 +205,42 @@ public class LinhaController{
         lbLinha.setVisible(bool);
         btAdicionarLinha.setVisible(bool);
         txtNomeLinha.setVisible(bool);
+        paneImg.setVisible(false);
     }
 
-    public void adicionarLinha(ActionEvent actionEvent) {
-        if (buscaLinhaTabela() == null){
-            ucLinha.criarLinha(txtNomeLinha.getText());
+    public void addLinha(ActionEvent actionEvent) {
+        if (searchLinhaTable() == null){
+            ucLinha.createLinha(txtNomeLinha.getText());
             setVisibleButtonTxtLinha(false);
-            atualizarTabelaLinha();
+            updateTableLinha();
             paneImg.setVisible(true);
         }
     }
 
-    public void salvarTrecho(ActionEvent actionEvent) {
-        ucTrecho.criarTrecho(tfOrigem.getText(), tfDestino.getText(), Double.parseDouble(tfQuilometragem.getText()),
+    public void saveTrecho(ActionEvent actionEvent) {
+        ucTrecho.createTrecho(tfOrigem.getText(), tfDestino.getText(), Double.parseDouble(tfQuilometragem.getText()),
                 Double.parseDouble(tfTempoDuracao.getText()), Double.parseDouble(tfValorPassagem.getText()),
                 Double.parseDouble(tfTaxaEmbarque.getText()), Double.parseDouble(tfValorSeguro.getText()));
 
-        paneCriaTrecho.setVisible(false);
-        setVisibleButtonTxtLinha(true);
-        carregaCombobox();
-        paneLinhaTrecho.setVisible(true);
+        fixVisionPane();
 
     }
 
-    public void cancelarTrecho(ActionEvent actionEvent) {
-        limpaCamposTrecho();
+    private void fixVisionPane(){
         paneCriaTrecho.setVisible(false);
         setVisibleButtonTxtLinha(true);
         paneLinhaTrecho.setVisible(true);
-        carregaCombobox();
+        paneImg.setVisible(false);
+        loadCombobox();
     }
 
-    private void limpaCamposTrecho(){
+    @FXML
+    private void cancelTrecho(ActionEvent actionEvent) {
+        clearFieldsTrecho();
+        fixVisionPane();
+    }
+
+    private void clearFieldsTrecho(){
         tfOrigem.clear();
         tfDestino.clear();
         tfQuilometragem.clear();
@@ -250,4 +250,10 @@ public class LinhaController{
         tfValorSeguro.clear();
     }
 
+    public void viewRegistrerNewTrecho(ActionEvent actionEvent) {
+        paneLinhaTrecho.setVisible(false);
+        setVisibleButtonTxtLinha(false);
+        paneCriaTrecho.setVisible(true);
+        clearFieldsTrecho();
+    }
 }
