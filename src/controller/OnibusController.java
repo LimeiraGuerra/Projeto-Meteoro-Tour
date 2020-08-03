@@ -99,6 +99,8 @@ public class OnibusController {
         if (result.get() == ButtonType.OK) {
             onibus.remove(getIndexOfSelectedRow());
         }*/
+
+
         if (verificationAlert()) onibus.remove(getIndexOfSelectedRow());
 
     }
@@ -106,7 +108,6 @@ public class OnibusController {
     private boolean verificationAlert(){
         Alert alert= new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText("Tem certeza que deseja excluir esse ônibus?");
-
         Optional<ButtonType> result = alert.showAndWait();
         return result.get() == ButtonType.OK;
     }

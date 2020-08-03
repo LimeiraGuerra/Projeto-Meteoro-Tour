@@ -10,11 +10,12 @@ import java.sql.Time;
 import java.util.*;
 
 public class TrechoDAO implements DAO<Trecho, String> {
+    private static TrechoDAO instancia;
     private List<Trecho> trechos = new ArrayList<>();
     private List<int[]> trechosLinhaScuff = new ArrayList<>();
     private List<AssentoTrechoLinha> assentosVendScuff = new ArrayList<>();
 
-    public TrechoDAO(){
+    private TrechoDAO(){
         trechos.add(new Trecho("Descalvado", "São Carlos", 40.0, 30.0, 10.0, 1.0, 0.2));
         trechos.add(new Trecho("São Carlos", "Ibaté", 15.0, 5.0, 5.0, 0.5, 0.2));
         trechos.add(new Trecho("São Carlos", "Araraquara", 30.0, 20.0, 7.0, 0.8, 0.2));
@@ -35,17 +36,24 @@ public class TrechoDAO implements DAO<Trecho, String> {
 
     @Override
     public void save(Trecho model) {
-
+        trechos.add(model);
     }
 
     @Override
     public void update(Trecho model) {
-
+        Trecho trecho = searchTrecho(model);
+        if (trecho != null){
+            trecho.setTaxaEmbarque(model.getTaxaEmbarque());
+            trecho.setQuilometragem(model.getQuilometragem());
+            trecho.setTempoDuracao(model.getTempoDuracao());
+            trecho.setValorSeguro(model.getValorSeguro());
+            trecho.setValorPassagem(model.getValorPassagem());
+        }
     }
 
     @Override
     public void delete(Trecho model) {
-
+        trechos.remove(model);
     }
 
     @Override
@@ -55,7 +63,21 @@ public class TrechoDAO implements DAO<Trecho, String> {
 
     @Override
     public List<Trecho> selectByArgs(String... args) {
+
         return null;
+    }
+    public  Trecho searchTrecho(Trecho trecho){
+        for (Trecho t : trechos){
+            if (t.equals(trecho)){
+                return  trecho;
+            }
+        }
+        return  null;
+    }
+
+
+    public List<Trecho> getListTrechos() {
+        return trechos;
     }
 
     public List<TrechoLinha> selectTrechosByLinha(Linha linha, String data){
@@ -73,4 +95,14 @@ public class TrechoDAO implements DAO<Trecho, String> {
         }
         return trechosLinha;
     }
+
+
+
+    public static TrechoDAO getInstancia(){
+        if (instancia == null){
+            instancia = new TrechoDAO();
+        }
+        return instancia;
+    }
+
 }

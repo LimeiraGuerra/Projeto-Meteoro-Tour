@@ -10,7 +10,9 @@ import java.util.List;
 public class ViagemDAO implements DAO<Viagem, String> {
     private List<String[]> keysCidadesTest = new ArrayList<>();
 
-    public ViagemDAO(){
+    private static ViagemDAO instancia;
+
+    private ViagemDAO(){
         this.keysCidadesTest.add(new String[]{"Descalvado", "São Carlos", "1"});
         this.keysCidadesTest.add(new String[]{"São Carlos", "Ibaté", "1"});
         this.keysCidadesTest.add(new String[]{"Descalvado", "São Carlos", "2"});
@@ -43,14 +45,14 @@ public class ViagemDAO implements DAO<Viagem, String> {
         /* todo */
         /* Retorno pra teste */
         List<Viagem> viagens = new ArrayList<>();
-        DAO<Linha, String> daoLinha = new LinhaDAO();
+        LinhaDAO daoLinha = LinhaDAO.getInstancia();
 
         for (String[] tl : this.keysCidadesTest) {
             if (tl[0].equals(args[0])) {
                 for (String[] tl2 : this.keysCidadesTest) {
                     if (tl2[1].equals(args[1]) && tl[2].equals(tl2[2])) {
                         Linha linha = daoLinha.selectById(tl[2]);
-                        linha.addAllTrechosLinha(new TrechoDAO().selectTrechosByLinha(linha, args[2]));
+                        linha.addAllTrechosLinha(TrechoDAO.getInstancia().selectTrechosByLinha(linha, args[2]));
                         viagens.add(new Viagem(tl[0], tl2[1], linha));
                         break;
                     }
@@ -59,4 +61,12 @@ public class ViagemDAO implements DAO<Viagem, String> {
         }
         return viagens;
     }
+
+    public static ViagemDAO getInstancia(){
+        if (instancia == null){
+            instancia = new ViagemDAO();
+        }
+        return instancia;
+    }
+
 }

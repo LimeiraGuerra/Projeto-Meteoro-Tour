@@ -7,6 +7,8 @@ import model.entities.Viagem;
 import java.util.List;
 
 public class PassagemDAO implements DAO<Passagem, String> {
+
+    private static PassagemDAO instancia;
     @Override
     public void save(Passagem model) {
 
@@ -41,5 +43,15 @@ public class PassagemDAO implements DAO<Passagem, String> {
     @Override
     public List<Passagem> selectByArgs(String... args) {
         return null;
+    }
+
+    public static PassagemDAO getInstancia(){
+        if (instancia == null){
+            instancia = new PassagemDAO();
+        }
+        return instancia;
+    }
+
+    private PassagemDAO() {
     }
 }

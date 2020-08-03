@@ -7,7 +7,6 @@ import java.util.Objects;
 public class TrechoLinha {
     private Time horarioSaida;
     private int ordem;
-
     private AssentoTrechoLinha assentoTrechoLinha;
     private Trecho trecho;
     private Linha linha;
@@ -20,7 +19,10 @@ public class TrechoLinha {
         this.ordem = ordem;
         this.trecho = trecho;
         this.linha = linha;
+        trecho.setTrechoLinha(this);
+        linha.setTrechoList(this);
     }
+
 
     public AssentoTrechoLinha getAssentoTrechoLinha() {
         return assentoTrechoLinha;
