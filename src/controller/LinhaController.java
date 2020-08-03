@@ -9,9 +9,15 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import model.entities.Linha;
 import model.entities.Trecho;
+import model.entities.TrechoLinha;
 import model.usecases.GerenciarLinhaUC;
 import model.usecases.GerenciarTrechoUC;
+
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class LinhaController{
@@ -39,7 +45,8 @@ public class LinhaController{
     @FXML private TextField tfQuilometragem;
     @FXML private TextField tfTaxaEmbarque;
     @FXML private Pane paneImg;
-    @FXML private TextField txtHorarioTrecho;
+    @FXML private TextField txtHoraTrecho;
+    @FXML private TextField txtMinTrecho;
 
 
     private ObservableList<Trecho> trechosListTabela = FXCollections.observableArrayList();
@@ -74,7 +81,7 @@ public class LinhaController{
 
     private ObservableList loadTableLinhaTrecho(Linha linha) {
         trechosListTabela.clear();
-        trechosListTabela.addAll(linha.getTrechos());
+        trechosListTabela.addAll(linha.getListTrechos());
         return trechosListTabela;
     }
 
@@ -128,8 +135,10 @@ public class LinhaController{
     private void deleteTrecho(ActionEvent actionEvent) {
         Linha linha = searchLinhaTable();
         Trecho trecho = tabelaLinhaTrecho.getSelectionModel().getSelectedItem();
+        TrechoLinha trechoLinha = linha.getTrechoLinha(trecho);
         if (trecho != null && linha != null){
-            linha.removeTrecho(trecho);
+
+            linha.removeTrecho(trechoLinha);
             loadTableLinhaTrecho(linha);
         }
         loadCombobox();
@@ -169,15 +178,26 @@ public class LinhaController{
     }
 
     @FXML
-    private void addTrecho(ActionEvent actionEvent) {
+    private void addTrecho(ActionEvent actionEvent) throws ParseException {
         Linha linha = searchLinhaTable();
         String[] cidades = returnCidades();
+        int ordem = calcOrdemLinha();
+        Time horario = converteTempo();
         Trecho trecho = ucTrecho.searchForOrigemDestino(cidades[0], cidades[1]);
-        linha.addTrecho(trecho);
+        TrechoLinha trechoLinha = new TrechoLinha(ordem, horario, trecho, linha);
         ucLinha.addLinha(linha);
         loadTableLinhaTrecho(linha);
         loadCombobox();
-
+    }
+    private int calcOrdemLinha(){
+        return 0;
+    }
+    private Time converteTempo() throws ParseException {
+       String str =  txtHoraTrecho.getText().trim() + ":" +txtMinTrecho.getText().trim();
+       SimpleDateFormat formatador = new SimpleDateFormat("HH:mm");
+       Date data = formatador.parse(str);
+       Time time = new Time(data.getTime());
+       return time;
     }
 
     private List<Trecho> updateComboBox(String destino){

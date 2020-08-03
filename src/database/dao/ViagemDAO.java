@@ -10,7 +10,9 @@ import java.util.List;
 public class ViagemDAO implements DAO<Viagem, String> {
     private List<String[]> keysCidadesTest = new ArrayList<>();
 
-    public ViagemDAO(){
+    private static ViagemDAO instancia;
+
+    private ViagemDAO(){
         this.keysCidadesTest.add(new String[]{"Descalvado", "São Carlos", "1"});
         this.keysCidadesTest.add(new String[]{"São Carlos", "Ibaté", "1"});
         this.keysCidadesTest.add(new String[]{"Descalvado", "São Carlos", "2"});
@@ -59,4 +61,12 @@ public class ViagemDAO implements DAO<Viagem, String> {
         }
         return viagens;
     }
+
+    public static ViagemDAO getInstancia(){
+        if (instancia == null){
+            instancia = new ViagemDAO();
+        }
+        return instancia;
+    }
+
 }

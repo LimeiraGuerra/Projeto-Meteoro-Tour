@@ -48,7 +48,7 @@ public class VendasController {
     private Viagem selectedViagem;
 
     public VendasController() {
-        this.gerarViagensUC = new GerarViagensUC(new ViagemDAO());
+        this.gerarViagensUC = new GerarViagensUC(ViagemDAO.getInstancia());
     }
 
     @FXML

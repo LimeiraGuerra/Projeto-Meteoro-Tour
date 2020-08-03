@@ -19,7 +19,10 @@ public class TrechoLinha {
         this.ordem = ordem;
         this.trecho = trecho;
         this.linha = linha;
+        trecho.setTrechoLinha(this);
+        linha.setTrechoList(this);
     }
+
 
     public AssentoTrechoLinha getAssentoTrechoLinha() {
         return assentoTrechoLinha;

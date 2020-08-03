@@ -1,5 +1,6 @@
 package model.entities;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,11 +8,10 @@ public class Linha {
 
     private long id;
     private String nome;
-    private List<Trecho> trechos = new ArrayList<>();
     private double quilometragemTotal;
     private double valorTotalLinha;
 
-    private ArrayList<TrechoLinha> trechosLinha;
+    private ArrayList<TrechoLinha> trechosLinha = new ArrayList<>();;
 
 
     public String getNome() {
@@ -25,8 +25,8 @@ public class Linha {
     }
 
 
-    public void addTrecho(Trecho trecho){
-        trechos.add(trecho);
+    public void addTrechoLinha(TrechoLinha trecho){
+        trechosLinha.add(trecho);
         setValorTotalLinha();
         setQuilometragem();
 
@@ -34,25 +34,41 @@ public class Linha {
 
     public void setQuilometragem(){
         quilometragemTotal = 0;
-        for (Trecho trecho:trechos) {
-            quilometragemTotal+=trecho.getQuilometragem();
+        for (TrechoLinha trechoLinha : trechosLinha) {
+            quilometragemTotal += trechoLinha.getTrecho().getQuilometragem();
         }
     }
 
     public  void setValorTotalLinha(){
         valorTotalLinha = 0;
-        for (Trecho trecho:trechos) {
-            valorTotalLinha+=trecho.getValorTotal();
+        for (TrechoLinha trecho:trechosLinha) {
+            valorTotalLinha+=trecho.getTrecho().getValorTotal();
         }
     }
-    public List<Trecho> getTrechos(){
-        return trechos;
+    public TrechoLinha getTrechoLinha(Trecho trecho){
+        for (TrechoLinha trechoLinha : trechosLinha){
+            if (trechoLinha.getTrecho().equals(trecho)){
+                return trechoLinha;
+            }
+        }
+        return null;
+    }
+    public List<TrechoLinha> getLisTrechosLinha(){
+        return trechosLinha;
     }
 
-    public void removeTrecho(Trecho trecho){
-        trechos.remove(trecho);
+    public void removeTrecho(TrechoLinha trecho){
+        trechosLinha.remove(trecho);
         setValorTotalLinha();
         setQuilometragem();
+    }
+
+    public List<Trecho> getListTrechos(){
+        List<Trecho> trechos = new ArrayList<>();
+        for (TrechoLinha x: trechosLinha) {
+            trechos.add(x.getTrecho());
+        }
+        return trechos;
     }
     public Linha() {
 
@@ -95,5 +111,9 @@ public class Linha {
 
     public void setNome(String nomeNovo) {
         nome = nomeNovo;
+    }
+
+    public void setTrechoList(TrechoLinha trechoLinha){
+        trechosLinha.add(trechoLinha);
     }
 }

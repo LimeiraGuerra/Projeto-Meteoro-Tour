@@ -26,7 +26,7 @@ public class PassagemController {
     private ConsultarPassagensVendidasUC ucPassagensVendidas;
 
     public PassagemController() {
-        this.ucPassagensVendidas = new ConsultarPassagensVendidasUC(new PassagemDAO());
+        this.ucPassagensVendidas = new ConsultarPassagensVendidasUC(PassagemDAO.getInstancia());
     }
 
     @FXML

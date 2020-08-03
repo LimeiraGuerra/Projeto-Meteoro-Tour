@@ -22,7 +22,7 @@
     </TableView>
     <Button fx:id="btCriarLinha" layoutX="99.0" layoutY="447.0" mnemonicParsing="false" onAction="#viewCreateLinha" prefHeight="25.0" prefWidth="135.0" text="Criar Linha" />
     <Button fx:id="btVerLinha" layoutX="257.0" layoutY="447.0" mnemonicParsing="false" onAction="#seeLinha" prefHeight="25.0" prefWidth="171.0" text="Visualizar linha" />
-   <Pane fx:id="paneLinhaTrecho" layoutX="442.0" layoutY="57.0" prefHeight="422.0" prefWidth="329.0" style="visibility: false;">
+   <Pane fx:id="paneLinhaTrecho" layoutX="442.0" layoutY="57.0" prefHeight="422.0" prefWidth="329.0" style="visibility: true;">
       <children>
          <Button fx:id="btExcluirLinha" layoutX="14.0" layoutY="388.0" mnemonicParsing="false" onAction="#deleteLinha" prefHeight="25.0" prefWidth="149.0" text="Excluir linha" />
          <TableView fx:id="tabelaLinhaTrecho" layoutX="-2.0" layoutY="75.0" prefHeight="259.0" prefWidth="329.0">
@@ -32,24 +32,30 @@
            </columns>
          </TableView>
          <Button fx:id="btExcluirTrecho" layoutX="205.0" layoutY="340.0" mnemonicParsing="false" onAction="#deleteTrecho" prefHeight="25.0" prefWidth="109.0" text="Excluir trecho" />
-         <ComboBox fx:id="cbTrechos" layoutX="60.0" layoutY="2.0" prefHeight="25.0" prefWidth="210.0" />
-         <Label fx:id="lbTrecho" layoutY="5.0" prefHeight="20.0" prefWidth="55.0" text="Trechos">
+         <ComboBox fx:id="cbTrechos" layoutX="67.0" layoutY="13.0" prefHeight="25.0" prefWidth="261.0" />
+         <Label fx:id="lbTrecho" layoutX="-2.0" layoutY="16.0" prefHeight="20.0" prefWidth="55.0" text="Trechos">
             <font>
                <Font size="14.0" />
             </font>
          </Label>
-         <Button fx:id="btAdicionarTrecho" layoutX="278.0" layoutY="7.0" mnemonicParsing="false" onAction="#addTrecho" prefHeight="58.0" prefWidth="49.0" text="OK!" />
+         <Button fx:id="btAdicionarTrecho" layoutX="207.0" layoutY="40.0" mnemonicParsing="false" onAction="#addTrecho" prefHeight="25.0" prefWidth="120.0" text="Adicionar Trecho" />
          <Button fx:id="btSalvarAlteracao" layoutX="181.0" layoutY="388.0" mnemonicParsing="false" onAction="#saveChange" prefHeight="25.0" prefWidth="135.0" text="Salvar" />
          <Button fx:id="btCadastrarTrecho" layoutX="88.0" layoutY="340.0" mnemonicParsing="false" onAction="#viewRegistrerNewTrecho" prefHeight="25.0" prefWidth="109.0" text="Cadastrar trecho" />
-         <TextField fx:id="txtHorarioTrecho" layoutX="121.0" layoutY="41.0" prefHeight="25.0" prefWidth="149.0" />
+         <TextField fx:id="txtHoraTrecho" layoutX="113.0" layoutY="42.0" prefHeight="25.0" prefWidth="37.0" />
          <Label layoutY="44.0" prefHeight="20.0" prefWidth="120.0" text="Horário - Trecho">
             <font>
                <Font size="14.0" />
             </font>
          </Label>
+         <TextField fx:id="txtMinTrecho" layoutX="163.0" layoutY="42.0" prefHeight="25.0" prefWidth="37.0" />
+         <Label layoutX="156.0" layoutY="42.0" prefHeight="17.0" prefWidth="7.0" text=":">
+            <font>
+               <Font size="16.0" />
+            </font>
+         </Label>
       </children>
    </Pane>
-   <Label fx:id="lbLinha" layoutX="442.0" layoutY="32.0" prefHeight="20.0" prefWidth="49.0" style="visibility: false;" text="Linha">
+   <Label fx:id="lbLinha" layoutX="442.0" layoutY="32.0" prefHeight="20.0" prefWidth="49.0" style="visibility: true;" text="Linha">
       <font>
          <Font size="14.0" />
       </font>
@@ -82,7 +88,7 @@
          <Button fx:id="btCancelarTrecho" layoutX="93.0" layoutY="348.0" mnemonicParsing="false" onAction="#cancelTrecho" prefHeight="25.0" prefWidth="101.0" text="Cancelar Trecho" />
     </children>
    </Pane>
-   <Pane fx:id="paneImg" layoutX="448.0" layoutY="27.0" prefHeight="410.0" prefWidth="323.0" style="visibility: true;">
+   <Pane fx:id="paneImg" layoutX="448.0" layoutY="27.0" prefHeight="410.0" prefWidth="323.0" style="visibility: false;">
       <children>
          <ImageView fitHeight="303.0" fitWidth="302.0" layoutX="11.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true">
             <image>

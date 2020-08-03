@@ -1,5 +1,8 @@
 package model.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Trecho {
     private String cidadeOrigem;
     private String cidadeDestino;
@@ -10,7 +13,7 @@ public class Trecho {
     private double valorSeguro;
     private double valorTotal;
 
-    private TrechoLinha trechoLinha;
+    private List<TrechoLinha> trechoLinha = new ArrayList<>();
 
     public Trecho() {
     }
@@ -89,5 +92,9 @@ public class Trecho {
 
     public void setValorSeguro(double valorSeguro) {
         this.valorSeguro = valorSeguro;
+    }
+
+    public void setTrechoLinha(TrechoLinha trechoL){
+        trechoLinha.add(trechoL);
     }
 }
