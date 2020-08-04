@@ -2,10 +2,11 @@ package model.entities;
 
 
 import java.sql.Time;
+import java.util.Date;
 import java.util.Objects;
 
 public class TrechoLinha {
-    private Time horarioSaida;
+    private Date horarioSaida;
     private int ordem;
     private AssentoTrechoLinha assentoTrechoLinha;
     private Trecho trecho;
@@ -14,7 +15,7 @@ public class TrechoLinha {
     public TrechoLinha() {
     }
 
-    public TrechoLinha(int ordem, Time horarioSaida, Trecho trecho, Linha linha) {
+    public TrechoLinha(int ordem, Date horarioSaida, Trecho trecho, Linha linha) {
         this.horarioSaida = horarioSaida;
         this.ordem = ordem;
         this.trecho = trecho;
@@ -48,11 +49,11 @@ public class TrechoLinha {
         this.trecho = trecho;
     }
 
-    public Time getHorarioSaida() {
+    public Date getHorarioSaida() {
         return horarioSaida;
     }
 
-    public void setHorarioSaida(Time horarioSaida) {
+    public void setHorarioSaida(Date horarioSaida) {
         this.horarioSaida = horarioSaida;
     }
 

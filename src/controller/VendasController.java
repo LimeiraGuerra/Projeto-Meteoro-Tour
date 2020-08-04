@@ -10,27 +10,19 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import view.loader.FuncionarioLoader;
+import view.loader.*;
 import model.entities.Viagem;
 import model.usecases.GerarViagensUC;
-import view.loader.LinhaLoader;
-import view.loader.PassagemLoader;
-import view.loader.OnibusLoader;
-import view.loader.TrechoLoader;
+import view.util.TextFieldValidator;
+import view.util.TipoEspecial;
+
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.time.LocalTime;
+import java.util.*;
 
 public class VendasController {
-
-    @FXML Button btnAssento01, btnAssento02, btnAssento03, btnAssento04, btnAssento05, btnAssento06,
-            btnAssento07, btnAssento08, btnAssento09, btnAssento10, btnAssento11, btnAssento12, btnAssento13,
-            btnAssento14, btnAssento15, btnAssento16, btnAssento17, btnAssento18, btnAssento19, btnAssento20,
-            btnAssento21, btnAssento22, btnAssento23, btnAssento24, btnAssento25, btnAssento26, btnAssento27,
-            btnAssento28, btnAssento29, btnAssento30, btnAssento31, btnAssento32, btnAssento33, btnAssento34,
-            btnAssento35, btnAssento36, btnAssento37, btnAssento38, btnAssento39, btnAssento40, btnAssento41,
-            btnAssento42, btnAssento43, btnAssento44;
+    
     @FXML Menu menuGerenciar;
     @FXML AnchorPane popupReagendamento;
     @FXML TextField txtFieldOrigem, txtFieldDestino;
@@ -41,11 +33,12 @@ public class VendasController {
     @FXML TableColumn<Viagem, String> colLinha, colHorarioSaida;
 
     private Scene scene;
-    private enum TipoEspecial {NÃO, IDOSO, DEFICIENTE}
     private TipoEspecial clientType = TipoEspecial.NÃO;
     private GerarViagensUC gerarViagensUC;
     private ObservableList<Viagem> tableDataViagens;
     private Viagem selectedViagem;
+    private String messageHead;
+    private String messageBody;
 
     public VendasController() {
         this.gerarViagensUC = new GerarViagensUC(ViagemDAO.getInstancia());
@@ -127,30 +120,69 @@ public class VendasController {
     }
 
     private void toggleSpecialSits(boolean mode){
-        this.btnAssento03.setDisable(mode);
-        this.btnAssento04.setDisable(mode);
+        this.getButtonByCSSId("#btnAssento03").setDisable(mode);
+        this.getButtonByCSSId("#btnAssento04").setDisable(mode);
         this.disableUnavailableSits();
     }
 
     public void searchForViagens(ActionEvent actionEvent) {
-        Date data = this.LocalDateConverter(this.datePickerSaida.getValue());
-        String cidadeOrigem = this.txtFieldOrigem.getText();
-        String cidadeDestino = this.txtFieldDestino.getText();
+        Date data = TextFieldValidator.LocalDateConverter(this.datePickerSaida.getValue());
+        String cidadeOrigem = TextFieldValidator.txtInputVerifier(this.txtFieldOrigem.getText());
+        String cidadeDestino = TextFieldValidator.txtInputVerifier(this.txtFieldDestino.getText());
         if (this.checkInputsValues(data, cidadeOrigem, cidadeDestino)) {
             List<Viagem> viagens = this.gerarViagensUC.searchForViagens(data, cidadeOrigem, cidadeDestino);
-            this.showResultsToTable(viagens);
+            this.verifyTimeOfResults(viagens);
+        }
+        else {
+            this.messageHead = "Parâmetros de pesquisa inválidos ou nulos!";
+            this.errorAlert();
         }
     }
 
-    private boolean checkInputsValues(Date data, String cidadeOrigem, String cidadeDestino) {
-        return  data != null && cidadeOrigem != null && cidadeDestino != null;
+    private void errorAlert(){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Erro!");
+        this.modalAlert(alert);
     }
 
-    private Date LocalDateConverter(LocalDate localDate){
-        /**
-         * Metodo temporário, deve fazer parte do verificador de inputs
-         */
-        return localDate != null ? java.sql.Date.valueOf(localDate) : null;
+    private void informationAlert(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Aviso!");
+        this.modalAlert(alert);
+    }
+
+    private void modalAlert(Alert alert){
+        alert.setHeaderText(this.messageHead);
+        alert.setContentText(this.messageBody);
+        alert.showAndWait();
+    }
+
+    private void verifyTimeOfResults(List<Viagem> viagens){
+        List<Viagem> viagensTimeFilter = new ArrayList<>();
+        for (Viagem v : viagens) {
+            if (this.getSystemTime().compareTo(v.getData()) <= 0) {
+                viagensTimeFilter.add(v);
+            }
+        }
+        this.showResultsToTable(viagensTimeFilter);
+        if (viagensTimeFilter.isEmpty()) {
+            this.messageHead = "Busca não encontrou nenhum resultado válido!";
+            this.messageBody = "Reveja os parâmetros informados.";
+            this.informationAlert();
+        }
+    }
+
+    private Date getSystemTime(){
+        return Calendar.getInstance().getTime();
+    }
+
+    private boolean checkInputsValues(Date data, String cidadeOrigem, String cidadeDestino) {
+        StringBuilder st = new StringBuilder();
+        if (data == null){st.append("Campo data inválido.\n");}
+        if (cidadeOrigem == null){st.append("Campo cidade origem inválido.\n");}
+        if (cidadeDestino == null){st.append("Campo cidade destino inválido.");}
+        this.messageBody = st.toString();
+        return st.length() == 0;
     }
 
     private void showResultsToTable(List<Viagem> viagens){
@@ -158,7 +190,6 @@ public class VendasController {
     }
 
     private void resetSits(){
-        String color;
         for (int i = 1; i < 45; i++) {
             Button bt = this.getButtonByCSSId("#btnAssento" + String.format("%02d", i));
             bt.setDisable(false);
@@ -194,9 +225,12 @@ public class VendasController {
     }
 
     public void purchaseClickedSit(ActionEvent actionEvent) {
-        Button btn = (Button) actionEvent.getSource();
-        System.out.println(btn.getId());
-        //todo compra a partir do assento
+        if (this.selectedViagem != null) {
+            Button btn = (Button) actionEvent.getSource();
+            System.out.println(btn.getId());
+            FinalizacaoVendaLoader janelaFinal = new FinalizacaoVendaLoader();
+            janelaFinal.start(this.selectedViagem, this.getClientType());
+        }
     }
 
     public TipoEspecial getClientType() {
@@ -214,6 +248,7 @@ public class VendasController {
     public void setScene(Scene scene) {
         this.scene = scene;
     }
+
     public void openOnibus(ActionEvent actionEvent){
         OnibusLoader janelaOnibus = new OnibusLoader();
         janelaOnibus.start();

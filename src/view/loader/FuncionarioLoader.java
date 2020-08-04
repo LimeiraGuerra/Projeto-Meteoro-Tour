@@ -16,9 +16,8 @@ public class FuncionarioLoader {
         FXMLLoader loader = new FXMLLoader();
         try{
             Pane graph = load(getClass().getResource("../fxml/Funcionario.fxml"));
-            Scene scene = new Scene(graph);
+            Scene scene = new Scene(graph, 900, 440);
             Stage stage = new Stage();
-            //stage.initStyle(StageStyle.UNDECORATED);
             stage.setTitle("Onibus");
             FuncionarioController trechoController = loader.getController();
 

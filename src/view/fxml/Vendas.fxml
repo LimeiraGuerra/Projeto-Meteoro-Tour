@@ -32,8 +32,8 @@
           <items>
             <Menu fx:id="menuGerenciar" disable="true" mnemonicParsing="false" text="Gerenciar">
                      <items>
-                  <MenuItem mnemonicParsing="false" text="Ônibus" />
-                  <MenuItem mnemonicParsing="false" text="Funcionários" />
+                  <MenuItem mnemonicParsing="false" onAction="#openOnibus" text="Ônibus" />
+                  <MenuItem mnemonicParsing="false" onAction="#openFunc" text="Funcionários" />
                   <MenuItem fx:id="btTrecho" mnemonicParsing="false" onAction="#openTrecho" text="Trechos" />
                   <MenuItem mnemonicParsing="false" onAction="#openLinha" text="Linhas" />
                      </items></Menu>
@@ -772,9 +772,9 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
-                  <ImageView fitHeight="191.0" fitWidth="146.0" layoutX="415.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView blendMode="COLOR_BURN" fitHeight="147.0" fitWidth="202.0" layoutX="386.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../resources/onibus.png" />
+                        <Image url="@../../resources/logo.png" />
                      </image>
                   </ImageView>
         </children>

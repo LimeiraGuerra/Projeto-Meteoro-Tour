@@ -63,16 +63,11 @@ public class TrechoDAO implements DAO<Trecho, String> {
 
     @Override
     public List<Trecho> selectByArgs(String... args) {
-
         return null;
     }
+
     public  Trecho searchTrecho(Trecho trecho){
-        for (Trecho t : trechos){
-            if (t.equals(trecho)){
-                return  trecho;
-            }
-        }
-        return  null;
+        return trechos.contains(trecho) ? trecho : null;
     }
 
 
