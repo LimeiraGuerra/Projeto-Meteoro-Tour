@@ -31,7 +31,7 @@ public class Trecho {
 
 
     public void setValorTotal() {
-        this.valorTotal = valorPassagem + valorSeguro + taxaEmbarque;
+        this.valorTotal = valorPassagem + taxaEmbarque;
     }
 
     public double getValorTotal() {

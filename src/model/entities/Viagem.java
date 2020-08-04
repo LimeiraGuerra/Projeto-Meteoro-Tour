@@ -10,6 +10,8 @@ public class Viagem {
 
     private Linha linha;
     private List<TrechoLinha> trechosLinha;
+    private Double valueViagem = 0.0;
+    private Double valueSeguroViagem = 0.0;
     /* todo methods */
 
     public Viagem() {
@@ -20,10 +22,10 @@ public class Viagem {
         this.cidadeDestino = cidadeDestino;
         this.linha = linha;
         this.trechosLinha = linha.generateTrechosViagem(cidadeOrigem, cidadeDestino);
-        this.data = dateTimeunion(data, this.trechosLinha.get(0).getHorarioSaida());
+        this.data = dateTimeUnion(data, this.trechosLinha.get(0).getHorarioSaida());
     }
 
-    private Date dateTimeunion(Date data, Date time){
+    private Date dateTimeUnion(Date data, Date time){
         /**Une horario com data, em uma mesma classe tipo Data*/
         Calendar calendarA = Calendar.getInstance();
         calendarA.setTime(data);
@@ -42,6 +44,8 @@ public class Viagem {
         Set<String> assentosVendidos = new LinkedHashSet<>();
         for(TrechoLinha tl: trechosLinha){
             if (tl.getAssentoTrechoLinha() != null)
+                //this.valueViagem += tl.getTrecho().getValorTotal();
+                //this.valueSeguroViagem += tl.getTrecho().getValorSeguro();
                 assentosVendidos.addAll(tl.getAssentoTrechoLinha().getAssentosVendidos());
         }
         return assentosVendidos;
@@ -53,6 +57,11 @@ public class Viagem {
 
     public Linha getLinha() {
         return linha;
+    }
+
+    public String getHorarioSaida(){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+        return dateFormat.format(data);
     }
 
     public void setLinha(Linha linha) {
@@ -81,5 +90,13 @@ public class Viagem {
 
     public void setCidadeDestino(String cidadeDestino) {
         this.cidadeDestino = cidadeDestino;
+    }
+
+    public Double getValueViagem() {
+        return valueViagem;
+    }
+
+    public Double getValueSeguroViagem() {
+        return valueSeguroViagem;
     }
 }

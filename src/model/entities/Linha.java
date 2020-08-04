@@ -82,9 +82,7 @@ public class Linha {
                 viagemOrigin = true;
                 trechosViagem.add(tl);
             }
-            if(tl.equals(cidadeDestino)) {
-                break;
-            }
+            if(tl.equals(cidadeDestino)) { break; }
         }
         return trechosViagem;
     }

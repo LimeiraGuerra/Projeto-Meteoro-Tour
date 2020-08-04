@@ -10,14 +10,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import view.loader.FuncionarioLoader;
+import view.loader.*;
 import model.entities.Viagem;
 import model.usecases.GerarViagensUC;
-import view.loader.LinhaLoader;
-import view.loader.PassagemLoader;
-import view.loader.OnibusLoader;
-import view.loader.TrechoLoader;
 import view.util.TextFieldValidator;
+import view.util.TipoEspecial;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -36,7 +33,6 @@ public class VendasController {
     @FXML TableColumn<Viagem, String> colLinha, colHorarioSaida;
 
     private Scene scene;
-    private enum TipoEspecial {NÃO, IDOSO, DEFICIENTE}
     private TipoEspecial clientType = TipoEspecial.NÃO;
     private GerarViagensUC gerarViagensUC;
     private ObservableList<Viagem> tableDataViagens;
@@ -168,12 +164,12 @@ public class VendasController {
                 viagensTimeFilter.add(v);
             }
         }
+        this.showResultsToTable(viagensTimeFilter);
         if (viagensTimeFilter.isEmpty()) {
             this.messageHead = "Busca não encontrou nenhum resultado válido!";
             this.messageBody = "Reveja os parâmetros informados.";
             this.informationAlert();
         }
-        this.showResultsToTable(viagensTimeFilter);
     }
 
     private Date getSystemTime(){
@@ -229,9 +225,12 @@ public class VendasController {
     }
 
     public void purchaseClickedSit(ActionEvent actionEvent) {
-        Button btn = (Button) actionEvent.getSource();
-        System.out.println(btn.getId());
-        //todo compra a partir do assento
+        if (this.selectedViagem != null) {
+            Button btn = (Button) actionEvent.getSource();
+            System.out.println(btn.getId());
+            FinalizacaoVendaLoader janelaFinal = new FinalizacaoVendaLoader();
+            janelaFinal.start(this.selectedViagem, this.getClientType());
+        }
     }
 
     public TipoEspecial getClientType() {
