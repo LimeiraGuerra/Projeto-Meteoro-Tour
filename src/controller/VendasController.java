@@ -1,16 +1,26 @@
 package controller;
 
+import database.dao.ViagemDAO;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 import view.loader.FuncionarioLoader;
-import model.entities.Passagem;
 import model.entities.Viagem;
+import model.usecases.GerarViagensUC;
 import view.loader.LinhaLoader;
+import view.loader.PassagemLoader;
 import view.loader.OnibusLoader;
 import view.loader.TrechoLoader;
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 public class VendasController {
 
@@ -24,17 +34,41 @@ public class VendasController {
     @FXML Menu menuGerenciar;
     @FXML AnchorPane popupReagendamento;
     @FXML TextField txtFieldOrigem, txtFieldDestino;
+    @FXML DatePicker datePickerSaida;
     @FXML MenuItem menuOptPassagens;
+    @FXML ToggleGroup clienteEspecial;
+    @FXML TableView<Viagem> tableViagens;
+    @FXML TableColumn<Viagem, String> colLinha, colHorarioSaida;
 
-    private Passagem passagemReagendamento;
+    private Scene scene;
+    private enum TipoEspecial {NÃO, IDOSO, DEFICIENTE}
+    private TipoEspecial clientType = TipoEspecial.NÃO;
+    private GerarViagensUC gerarViagensUC;
+    private ObservableList<Viagem> tableDataViagens;
+    private Viagem selectedViagem;
+
+    public VendasController() {
+        this.gerarViagensUC = new GerarViagensUC(ViagemDAO.getInstancia());
+    }
 
     @FXML
     private void initialize(){
-        /* todo tabela*/
+        this.bindDataListToTable();
+        this.bindColumnsToValues();
+    }
+
+    private void bindDataListToTable() {
+        this.tableDataViagens = FXCollections.observableArrayList();
+        this.tableViagens.setItems(this.tableDataViagens);
+    }
+
+    private void bindColumnsToValues(){
+        this.colLinha.setCellValueFactory(new PropertyValueFactory<>("linhaName"));
+        this.colHorarioSaida.setCellValueFactory(new PropertyValueFactory<>("horarioSaida"));
     }
 
     public void setAdminPrivileges() {
-        menuGerenciar.setDisable(false);
+        this.menuGerenciar.setDisable(false);
     }
 
     public void setModeReagendamento() {
@@ -47,43 +81,140 @@ public class VendasController {
     }
 
     private void setInfoInFields(){
-        txtFieldOrigem.setText(this.passagemReagendamento.getViagem().getCidadeOrigem());
-        txtFieldDestino.setText(this.passagemReagendamento.getViagem().getCidadeDestino());
+        //txtFieldOrigem.setText(this.passagemReagendamento.getViagem().getCidadeOrigem());
+        //txtFieldDestino.setText(this.passagemReagendamento.getViagem().getCidadeDestino());
     }
 
     private void toggleModeReagendamento(boolean mode) {
-        txtFieldOrigem.setDisable(mode);
-        txtFieldDestino.setDisable(mode);
-        popupReagendamento.setVisible(mode);
+        this.txtFieldOrigem.setDisable(mode);
+        this.txtFieldDestino.setDisable(mode);
+        this.popupReagendamento.setVisible(mode);
     }
 
     public void openBuscarPassagens(ActionEvent actionEvent) {
-        System.out.println("aaaaaaa");
-        //todo
+        PassagemLoader janelaPassagens = new PassagemLoader();
+        janelaPassagens.start();
         //Abre a modal Buscar Passagem
         //Apenas teste
-        Viagem testeViagem = new Viagem();
-        testeViagem.setCidadeOrigem("Descalvado");
-        testeViagem.setCidadeDestino("São Carlos");
-        Passagem testePassagem = new Passagem();
-        testePassagem.setViagem(testeViagem);
-        this.passagemReagendamento = testePassagem;
         this.setModeReagendamento();
     }
 
     public void openTrecho(ActionEvent actionEvent) {
         TrechoLoader janelaTrecho = new TrechoLoader();
         janelaTrecho.start();
-        Stage stage = (Stage) txtFieldDestino.getScene().getWindow();
-        stage.close();
     }
 
     public void openLinha(ActionEvent actionEvent) {
         LinhaLoader janelaLinha = new LinhaLoader();
         janelaLinha.start();
-        Stage stage = (Stage) txtFieldDestino.getScene().getWindow();
-        stage.close();
     }
+
+    public void checkToggle() {
+        RadioButton selectedRadioButton = (RadioButton) clienteEspecial.getSelectedToggle();
+        this.toggleClientType(selectedRadioButton.getId());
+    }
+    private void toggleClientType(String id){
+        if (id.equals("rdIdoso")){
+            this.setClientType(TipoEspecial.IDOSO);
+            this.toggleSpecialSits(false);
+        }else {
+            if (id.equals("rdDeficiente"))
+                this.setClientType(TipoEspecial.DEFICIENTE);
+            else
+                this.setClientType(TipoEspecial.NÃO);
+            this.toggleSpecialSits(true);
+        }
+    }
+
+    private void toggleSpecialSits(boolean mode){
+        this.btnAssento03.setDisable(mode);
+        this.btnAssento04.setDisable(mode);
+        this.disableUnavailableSits();
+    }
+
+    public void searchForViagens(ActionEvent actionEvent) {
+        Date data = this.LocalDateConverter(this.datePickerSaida.getValue());
+        String cidadeOrigem = this.txtFieldOrigem.getText();
+        String cidadeDestino = this.txtFieldDestino.getText();
+        if (this.checkInputsValues(data, cidadeOrigem, cidadeDestino)) {
+            List<Viagem> viagens = this.gerarViagensUC.searchForViagens(data, cidadeOrigem, cidadeDestino);
+            this.showResultsToTable(viagens);
+        }
+    }
+
+    private boolean checkInputsValues(Date data, String cidadeOrigem, String cidadeDestino) {
+        return  data != null && cidadeOrigem != null && cidadeDestino != null;
+    }
+
+    private Date LocalDateConverter(LocalDate localDate){
+        /**
+         * Metodo temporário, deve fazer parte do verificador de inputs
+         */
+        return localDate != null ? java.sql.Date.valueOf(localDate) : null;
+    }
+
+    private void showResultsToTable(List<Viagem> viagens){
+        this.tableDataViagens.setAll(viagens);
+    }
+
+    private void resetSits(){
+        String color;
+        for (int i = 1; i < 45; i++) {
+            Button bt = this.getButtonByCSSId("#btnAssento" + String.format("%02d", i));
+            bt.setDisable(false);
+        }
+    }
+
+    private void disableUnavailableSits(){
+        if(this.selectedViagem != null) {
+            Set<String> assentosVendidos = this.selectedViagem.verifyDisponibility();
+            for (String numID : assentosVendidos) {
+                Button bt = this.getButtonByCSSId("#btnAssento" + numID);
+                bt.setDisable(true);
+            }
+        }
+    }
+
+    private void toggleStateAndVisualOfSits(){
+        this.resetSits();
+        this.disableUnavailableSits();
+        this.checkToggle();
+    }
+
+    public void selectViagemForSale(MouseEvent mouseEvent) {
+        if(mouseEvent.getClickCount() == 1) {
+            this.selectedViagem = this.tableViagens.getSelectionModel().getSelectedItem();
+            if (this.selectedViagem != null)
+                this.toggleStateAndVisualOfSits();
+        }
+    }
+
+    private Button getButtonByCSSId(String selector){
+        return (Button) this.scene.lookup(selector);
+    }
+
+    public void purchaseClickedSit(ActionEvent actionEvent) {
+        Button btn = (Button) actionEvent.getSource();
+        System.out.println(btn.getId());
+        //todo compra a partir do assento
+    }
+
+    public TipoEspecial getClientType() {
+        return clientType;
+    }
+
+    public void setClientType(TipoEspecial clientType) {
+        this.clientType = clientType;
+    }
+
+    public Scene getScene() {
+        return scene;
+    }
+
+    public void setScene(Scene scene) {
+        this.scene = scene;
+    }
+
     public void openOnibus(ActionEvent actionEvent){
         OnibusLoader janelaOnibus = new OnibusLoader();
         janelaOnibus.start();

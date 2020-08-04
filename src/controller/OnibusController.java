@@ -32,6 +32,8 @@ public class OnibusController {
         cRenavam.setCellValueFactory(new PropertyValueFactory<>("renavam"));
         cPlaca.setCellValueFactory(new PropertyValueFactory<>("placa"));
         tabelaOnibus.setItems(loadTable());
+        tabelaOnibus.getSelectionModel().select(0);
+        setTextField();
     }
 
     private ObservableList<Onibus> loadTable() {
@@ -87,7 +89,7 @@ public class OnibusController {
 
     private void informationAlert(String msg){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText(msg);
+        alert.setContentText(msg);
         alert.showAndWait();
     }
 

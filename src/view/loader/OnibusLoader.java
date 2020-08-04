@@ -19,7 +19,6 @@ public class OnibusLoader {
             Pane graph = load(getClass().getResource("../fxml/Onibus.fxml"));
             Scene scene = new Scene(graph, 840,400);
             Stage stage = new Stage();
-            //stage.initStyle(StageStyle.UNDECORATED);
             stage.setTitle("Onibus");
             TrechoController trechoController = loader.getController();
 

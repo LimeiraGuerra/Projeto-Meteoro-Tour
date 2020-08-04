@@ -19,7 +19,7 @@ public class LinhaLoader {
             Pane grafico = load(getClass().getResource("../fxml/Linha.fxml"));
             Scene cena = new Scene(grafico);
             Stage stage = new Stage();
-            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setResizable(false);
             stage.setTitle("Linhas");
             LinhaController trechoController = loader.getController();
             stage.setScene(cena);

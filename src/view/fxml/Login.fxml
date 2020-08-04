@@ -7,19 +7,20 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="313.0" prefWidth="332.0" style="-fx-background-color: #696969;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
+
+<AnchorPane prefHeight="313.0" prefWidth="332.0" style="-fx-background-color: #FEED84" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
    <children>
-      <Label layoutX="121.0" layoutY="25.0" prefHeight="45.0" prefWidth="192.0" text="Meteoro Tour" textFill="#460404" AnchorPane.leftAnchor="121.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="25.0">
+      <Label layoutX="121.0" layoutY="25.0" prefHeight="45.0" prefWidth="192.0" text="Meteoro Tour" textFill="#171717" AnchorPane.leftAnchor="121.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="25.0">
          <font>
             <Font name="Candara Bold Italic" size="32.0" />
          </font>
       </Label>
-      <Label layoutX="144.0" layoutY="61.0" prefHeight="19.0" prefWidth="164.0" text="Transportando com rapidez" textFill="#B33037" AnchorPane.leftAnchor="144.0" AnchorPane.rightAnchor="24.0">
+      <Label layoutX="144.0" layoutY="61.0" prefHeight="19.0" prefWidth="164.0" text="Transportando com rapidez" textFill="#171717" AnchorPane.leftAnchor="144.0" AnchorPane.rightAnchor="24.0">
          <font>
             <Font size="13.0" />
          </font></Label>
 
-      <Label layoutX="133.0" layoutY="97.0" prefHeight="20.0" prefWidth="74.0" text="Entrar como" textFill="#B33037" AnchorPane.leftAnchor="133.0" AnchorPane.rightAnchor="125.0">
+      <Label layoutX="133.0" layoutY="97.0" prefHeight="20.0" prefWidth="74.0" text="Entrar como" textFill="#171717" AnchorPane.leftAnchor="133.0" AnchorPane.rightAnchor="125.0">
          <font>
             <Font name="System Italic" size="14.0" />
          </font></Label>
@@ -52,27 +53,22 @@
          </font></RadioButton>
       <Pane fx:id="paneLogin" layoutX="53.0" layoutY="175.0" prefHeight="161.0" prefWidth="227.0">
          <children>
-            <ImageView fx:id="imgEntrar" fitHeight="30.0" fitWidth="32.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imgEntrar" fitHeight="30.0" fitWidth="32.0" layoutX="14.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
                <Image url="@../../resources/contato.png" />
             </ImageView>
-            <PasswordField fx:id="txtSenha" layoutX="49.0" layoutY="60.0" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="164.0" promptText="Senha" />
-            <ImageView fx:id="imgCadeado" fitHeight="30.0" fitWidth="32.0" layoutX="14.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true">
+            <PasswordField fx:id="txtSenha" layoutX="49.0" layoutY="51.0" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="164.0" promptText="Senha" />
+            <ImageView fx:id="imgCadeado" fitHeight="30.0" fitWidth="32.0" layoutX="14.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true">
                <Image url="@../../resources/cadeado.png" />
             </ImageView>
-            <Button fx:id="btEntrar" layoutX="65.0" layoutY="110.0" mnemonicParsing="false" onAction="#login" prefHeight="45.0" prefWidth="97.0" style="-fx-background-color: #B33037;" text="Entrar" textFill="WHITE">
+            <Button fx:id="btEntrar" layoutX="62.0" layoutY="102.0" mnemonicParsing="false" onAction="#login" prefHeight="45.0" prefWidth="103.0" style="-fx-background-color: #696969;" text="Entrar" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-            <TextField fx:id="txtUser" disable="true" layoutX="49.0" layoutY="14.0" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="164.0" promptText="Usuário" text="ADMINISTRADOR" />
+            <TextField fx:id="txtUser" disable="true" layoutX="49.0" layoutY="6.0" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="164.0" promptText="Usuário" text="ADMINISTRADOR" />
          </children>
       </Pane>
-      <Label fx:id="lbTeste" layoutX="55.0" layoutY="336.0" prefHeight="20.0" prefWidth="256.0" text="Vendedor ou adm entrou aee parabens" textFill="#323030">
-         <font>
-            <Font name="System Italic" size="14.0" />
-         </font>
-      </Label>
-      <Label fx:id="lbIncorreto" layoutX="84.0" layoutY="157.0" prefHeight="18.0" prefWidth="184.0" text="Ops! Sua senha está incorreta." textFill="#4d060b">
+      <Label fx:id="lbIncorreto" layoutX="84.0" layoutY="153.0" prefHeight="18.0" prefWidth="184.0" text="Ops! Sua senha está incorreta." textFill="#171717">
          <font>
             <Font name="Candara Bold Italic" size="14.0" />
          </font>
