@@ -18,6 +18,7 @@
                 <Label layoutX="7.0" layoutY="18.0" text="CPF" />
             <Label layoutX="9.0" layoutY="108.0" text="RG" />
             <Label layoutX="11.0" layoutY="152.0" text="Cargo" />
+
             <TextField fx:id="txtFieldCargo" layoutX="105.0" layoutY="148.0" />
             <TextField fx:id="txtFieldRG" layoutX="105.0" layoutY="104.0" />
 

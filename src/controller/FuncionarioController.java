@@ -10,9 +10,10 @@ import model.entities.Funcionario;
 
 import java.util.Optional;
 
-public class FuncionarioController {
+public class FuncionarioController{
 
-
+    //todo
+    // verificação text field e classes verificação
     public TextField txtFieldCPF;
     public TextField txtFieldNome;
     public TextField txtFieldCargo;
@@ -36,8 +37,7 @@ public class FuncionarioController {
         cRG.setCellValueFactory(new PropertyValueFactory<>("rg"));
         cCargo.setCellValueFactory(new PropertyValueFactory<>("cargo"));
         tabelaFunc.setItems(loadTable());
-        tabelaFunc.getSelectionModel().select(0);
-        setTextField();
+
     }
 
     private ObservableList<Funcionario> loadTable() {
@@ -61,8 +61,10 @@ public class FuncionarioController {
     }
 
     public void deleteFunc(ActionEvent actionEvent) {
-        if (verificationAlert()) funcionarios.remove(getIndexOfSelectedRow());
-
+        if (getFuncOfSelectedRow() != null){
+            if (verificationAlert()) funcionarios.remove(getIndexOfSelectedRow());
+        }
+        clearTextField();
     }
 
     private boolean verificationAlert(){
@@ -79,12 +81,12 @@ public class FuncionarioController {
         //tabelaOnibus.getSelectionModel().select(null);
         if (indexSelectedBus >= 0){
             editFunc(indexSelectedBus);
-            informationAlert("Ônibus editado com sucesso");
+            informationAlert("Funcionario editado com sucesso");
         }
         else {
             Funcionario func = newFunc();
             funcionarios.add(func);
-            informationAlert("Ônibus adicionado com sucesso");
+            informationAlert("Funcionario adicionado com sucesso");
             //lbSalvo.setText("Salvo");
         }
         tabelaFunc.getSelectionModel().select(funcionarios.size());
@@ -96,7 +98,7 @@ public class FuncionarioController {
 
     private void informationAlert(String msg){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText(msg);
+        alert.setHeaderText(msg);
         alert.showAndWait();
     }
 

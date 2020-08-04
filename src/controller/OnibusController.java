@@ -13,6 +13,8 @@ import model.entities.Onibus;
 import java.util.Optional;
 
 public class OnibusController {
+    //todo
+    // verificação text field e classes verificação
     @FXML private TableView<Onibus> tabelaOnibus;
     @FXML private TableColumn<Onibus, String> cRenavam;
     @FXML private TableColumn<Onibus, String> cPlaca;
@@ -30,8 +32,6 @@ public class OnibusController {
         cRenavam.setCellValueFactory(new PropertyValueFactory<>("renavam"));
         cPlaca.setCellValueFactory(new PropertyValueFactory<>("placa"));
         tabelaOnibus.setItems(loadTable());
-        tabelaOnibus.getSelectionModel().select(0);
-        setTextField();
     }
 
     private ObservableList<Onibus> loadTable() {
@@ -87,7 +87,7 @@ public class OnibusController {
 
     private void informationAlert(String msg){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText(msg);
+        alert.setHeaderText(msg);
         alert.showAndWait();
     }
 
@@ -99,8 +99,10 @@ public class OnibusController {
         if (result.get() == ButtonType.OK) {
             onibus.remove(getIndexOfSelectedRow());
         }*/
-        if (verificationAlert()) onibus.remove(getIndexOfSelectedRow());
-
+        if (getOnibusOfSelectedRow() != null) {
+            if (verificationAlert()) onibus.remove(getIndexOfSelectedRow());
+        }
+        clearTextField();
     }
 
     private boolean verificationAlert(){
