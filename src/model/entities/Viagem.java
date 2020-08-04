@@ -1,14 +1,11 @@
 package model.entities;
 
 import java.sql.Time;
-import java.util.Date;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class Viagem {
     private Date data;
-    private Time horarioSaida;
     private String cidadeOrigem, cidadeDestino;
 
     private Linha linha;
@@ -18,12 +15,27 @@ public class Viagem {
     public Viagem() {
     }
 
-    public Viagem(String cidadeOrigem, String cidadeDestino, Linha linha) {
+    public Viagem(Date data, String cidadeOrigem, String cidadeDestino, Linha linha) {
         this.cidadeOrigem = cidadeOrigem;
         this.cidadeDestino = cidadeDestino;
         this.linha = linha;
         this.trechosLinha = linha.generateTrechosViagem(cidadeOrigem, cidadeDestino);
-        this.horarioSaida = this.trechosLinha.get(0).getHorarioSaida();
+        this.data = dateTimeunion(data, this.trechosLinha.get(0).getHorarioSaida());
+    }
+
+    private Date dateTimeunion(Date data, Date time){
+        /**Une horario com data, em uma mesma classe tipo Data*/
+        Calendar calendarA = Calendar.getInstance();
+        calendarA.setTime(data);
+
+        Calendar calendarB = Calendar.getInstance();
+        calendarB.setTime(time);
+
+        calendarA.set(Calendar.HOUR_OF_DAY, calendarB.get(Calendar.HOUR_OF_DAY));
+        calendarA.set(Calendar.MINUTE, calendarB.get(Calendar.MINUTE));
+        calendarA.set(Calendar.SECOND, calendarB.get(Calendar.SECOND));
+        calendarA.set(Calendar.MILLISECOND, calendarB.get(Calendar.MILLISECOND));
+        return calendarA.getTime();
     }
 
     public Set<String> verifyDisponibility(){
@@ -53,14 +65,6 @@ public class Viagem {
 
     public void setData(Date data) {
         this.data = data;
-    }
-
-    public Time getHorarioSaida() {
-        return horarioSaida;
-    }
-
-    public void setHorarioSaida(Time horarioSaida) {
-        this.horarioSaida = horarioSaida;
     }
 
     public String getCidadeOrigem() {
