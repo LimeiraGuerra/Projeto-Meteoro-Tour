@@ -18,12 +18,12 @@ public class FuncionarioLoader {
             Pane graph = load(getClass().getResource("../fxml/Funcionario.fxml"));
             Scene scene = new Scene(graph,900,440);
             Stage stage = new Stage();
-            //stage.initStyle(StageStyle.UNDECORATED);
-            stage.setTitle("Onibus");
-            FuncionarioController trechoController = loader.getController();
+            stage.setTitle("Funcionario");
+            FuncionarioLoader funcionarioController = loader.getController();
 
             stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(false);
             stage.showAndWait();
 
         } catch (IOException e) {

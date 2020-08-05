@@ -20,10 +20,11 @@ public class OnibusLoader {
             Scene scene = new Scene(graph, 840,400);
             Stage stage = new Stage();
             stage.setTitle("Onibus");
-            TrechoController trechoController = loader.getController();
+            OnibusLoader onibusController = loader.getController();
 
             stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(false);
             stage.showAndWait();
 
         } catch (IOException e) {
