@@ -200,7 +200,7 @@ public class LinhaController{
     }
 
     private int calcOrdemLinha(){
-        return 0;
+        return indexLastTrechoList();
     }
 
     private Date returnHora() throws ParseException {
