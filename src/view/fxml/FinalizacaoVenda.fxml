@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="373.0" prefWidth="262.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FinalizacaoVendaController">
+   <children>
+      <Label layoutX="17.0" layoutY="132.0" text="Nome:" />
+      <Label layoutX="17.0" layoutY="181.0" text="CPF:" />
+      <Label layoutX="150.0" layoutY="181.0" text="RG:" />
+      <Label layoutX="17.0" layoutY="239.0" text="Telefone:" />
+      <Label layoutX="17.0" layoutY="295.0" text="Adicionar seguro?:" />
+      <TextField fx:id="txfFieldNome" layoutX="15.0" layoutY="149.0" prefHeight="25.0" prefWidth="232.0" />
+      <TextField fx:id="txtFieldCpf" layoutX="15.0" layoutY="198.0" prefHeight="25.0" prefWidth="122.0" />
+      <TextField fx:id="txtFieldRg" layoutX="148.0" layoutY="198.0" prefHeight="25.0" prefWidth="99.0" />
+      <TextField fx:id="txtFieldTelefone" layoutX="74.0" layoutY="235.0" prefHeight="25.0" prefWidth="173.0" />
+      <RadioButton layoutX="132.0" layoutY="295.0" mnemonicParsing="false" text="Sim">
+         <toggleGroup>
+            <ToggleGroup fx:id="optSeguro" />
+         </toggleGroup></RadioButton>
+      <RadioButton layoutX="193.0" layoutY="295.0" mnemonicParsing="false" selected="true" text="Não" toggleGroup="$optSeguro" />
+      <Button layoutX="15.0" layoutY="323.0" mnemonicParsing="false" onAction="#finalizeSale" prefHeight="41.0" prefWidth="232.0" text="Finalizar compra" />
+      <Label layoutX="16.0" layoutY="8.0" text="Linha:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="16.0" layoutY="31.0" text="De:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="16.0" layoutY="54.0" text="Para:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="16.0" layoutY="77.0" text="Horário de saída:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="16.0" layoutY="100.0" text="Valor da viagem: ">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="17.0" layoutY="270.0" text="Valor do seguro de bagagem:" />
+      <Label fx:id="lbLinha" layoutX="54.0" layoutY="8.0" text="Nome da linha" />
+      <Label fx:id="lbCidadeOrigem" layoutX="40.0" layoutY="31.0" text="Nome cidade origem" />
+      <Label fx:id="lbCidadeDestino" layoutX="49.0" layoutY="54.0" text="Nome cidade destino" />
+      <Label fx:id="lbHorarioSaida" layoutX="117.0" layoutY="77.0" text="HH:mm" />
+      <Label fx:id="lbValorViagem" layoutX="116.0" layoutY="100.0" text="R$ 00,00" />
+      <Label fx:id="lbValorSeguro" layoutX="179.0" layoutY="270.0" text="R$ 00,00" />
+      <Line endX="125.0" layoutX="137.0" layoutY="124.0" opacity="0.41" startX="-137.0" />
+   </children>
+</AnchorPane>

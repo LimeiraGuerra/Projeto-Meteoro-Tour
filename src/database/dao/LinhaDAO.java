@@ -4,9 +4,7 @@ import database.utils.DAO;
 import model.entities.Linha;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class LinhaDAO implements DAO<Linha, String> {
     private static LinhaDAO instancia;
@@ -24,8 +22,9 @@ public class LinhaDAO implements DAO<Linha, String> {
 
     @Override
     public void update(Linha model) {
-        Linha linha = searchLinha(model);
-        linha.setNome(model.getNome());
+        int index = linhas.indexOf(model);
+        linhas.remove(index);
+        linhas.add(index, model);
     }
 
     @Override
@@ -46,12 +45,7 @@ public class LinhaDAO implements DAO<Linha, String> {
     }
 
     public Linha searchLinha(Linha linha){
-        for (Linha l: linhas) {
-            if (l.equals(linha)){
-                return  linha;
-            }
-        }
-        return null;
+        return linhas.contains(linha) ? linha : null;
     }
     public List<Linha> getListLinha(){
         return linhas;

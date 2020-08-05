@@ -53,7 +53,7 @@
                 <Font size="18.0" fx:id="x1" />
               </font>
             </Label>
-                  <Button id="btnAssento01" fx:id="btnAssento01" contentDisplay="CENTER" layoutX="30.0" layoutY="71.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="01">
+                  <Button id="01" fx:id="01" contentDisplay="CENTER" layoutX="30.0" layoutY="71.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="01">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -71,7 +71,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento02" fx:id="btnAssento02" contentDisplay="CENTER" layoutX="80.0" layoutY="71.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="02">
+                  <Button id="02" fx:id="02" contentDisplay="CENTER" layoutX="80.0" layoutY="71.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="02">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -86,7 +86,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento05" fx:id="btnAssento05" contentDisplay="CENTER" layoutX="30.0" layoutY="112.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="05">
+                  <Button id="05" fx:id="05" contentDisplay="CENTER" layoutX="30.0" layoutY="112.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="05">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -101,7 +101,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento06" fx:id="btnAssento06" contentDisplay="CENTER" layoutX="80.0" layoutY="112.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="06">
+                  <Button id="06" fx:id="06" contentDisplay="CENTER" layoutX="80.0" layoutY="112.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="06">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -116,7 +116,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento09" fx:id="btnAssento09" contentDisplay="CENTER" layoutX="30.0" layoutY="154.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="09">
+                  <Button id="09" fx:id="09" contentDisplay="CENTER" layoutX="30.0" layoutY="154.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="09">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -131,7 +131,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento10" fx:id="btnAssento10" contentDisplay="CENTER" layoutX="80.0" layoutY="154.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="10">
+                  <Button id="10" fx:id="10" contentDisplay="CENTER" layoutX="80.0" layoutY="154.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="10">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -146,7 +146,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento13" fx:id="btnAssento13" contentDisplay="CENTER" layoutX="30.0" layoutY="196.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="13">
+                  <Button id="13" fx:id="13" contentDisplay="CENTER" layoutX="30.0" layoutY="196.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="13">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -161,7 +161,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento14" fx:id="btnAssento14" contentDisplay="CENTER" layoutX="80.0" layoutY="196.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="14">
+                  <Button id="14" fx:id="14" contentDisplay="CENTER" layoutX="80.0" layoutY="196.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="14">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -176,7 +176,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento17" fx:id="btnAssento17" contentDisplay="CENTER" layoutX="30.0" layoutY="238.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="17">
+                  <Button id="17" fx:id="17" contentDisplay="CENTER" layoutX="30.0" layoutY="238.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="17">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -191,7 +191,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento18" fx:id="btnAssento18" contentDisplay="CENTER" layoutX="80.0" layoutY="238.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="18">
+                  <Button id="18" fx:id="18" contentDisplay="CENTER" layoutX="80.0" layoutY="238.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="18">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -206,7 +206,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento21" fx:id="btnAssento21" contentDisplay="CENTER" layoutX="30.0" layoutY="280.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="21">
+                  <Button id="21" fx:id="21" contentDisplay="CENTER" layoutX="30.0" layoutY="280.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="21">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -221,7 +221,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento22" fx:id="btnAssento22" contentDisplay="CENTER" layoutX="80.0" layoutY="280.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="22">
+                  <Button id="22" fx:id="22" contentDisplay="CENTER" layoutX="80.0" layoutY="280.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="22">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -236,7 +236,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento25" fx:id="btnAssento25" contentDisplay="CENTER" layoutX="30.0" layoutY="322.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="25">
+                  <Button id="25" fx:id="25" contentDisplay="CENTER" layoutX="30.0" layoutY="322.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="25">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -251,7 +251,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento26" fx:id="btnAssento26" contentDisplay="CENTER" layoutX="80.0" layoutY="322.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="26">
+                  <Button id="26" fx:id="26" contentDisplay="CENTER" layoutX="80.0" layoutY="322.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="26">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -266,7 +266,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento29" fx:id="btnAssento29" contentDisplay="CENTER" layoutX="30.0" layoutY="364.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="29">
+                  <Button id="29" fx:id="29" contentDisplay="CENTER" layoutX="30.0" layoutY="364.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="29">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -281,7 +281,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento30" fx:id="btnAssento30" contentDisplay="CENTER" layoutX="80.0" layoutY="364.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="30">
+                  <Button id="30" fx:id="30" contentDisplay="CENTER" layoutX="80.0" layoutY="364.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="30">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -296,7 +296,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento33" fx:id="btnAssento33" contentDisplay="CENTER" layoutX="30.0" layoutY="406.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="33">
+                  <Button id="33" fx:id="33" contentDisplay="CENTER" layoutX="30.0" layoutY="406.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="33">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -311,7 +311,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento34" fx:id="btnAssento34" contentDisplay="CENTER" layoutX="80.0" layoutY="406.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="34">
+                  <Button id="34" fx:id="34" contentDisplay="CENTER" layoutX="80.0" layoutY="406.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="34">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -326,7 +326,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento37" fx:id="btnAssento37" contentDisplay="CENTER" layoutX="30.0" layoutY="448.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="37">
+                  <Button id="37" fx:id="37" contentDisplay="CENTER" layoutX="30.0" layoutY="448.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="37">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -341,7 +341,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento38" fx:id="btnAssento38" contentDisplay="CENTER" layoutX="80.0" layoutY="448.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="38">
+                  <Button id="38" fx:id="38" contentDisplay="CENTER" layoutX="80.0" layoutY="448.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="38">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -356,7 +356,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento41" fx:id="btnAssento41" contentDisplay="CENTER" layoutX="30.0" layoutY="490.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="41">
+                  <Button id="41" fx:id="41" contentDisplay="CENTER" layoutX="30.0" layoutY="490.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="41">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -371,7 +371,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento42" fx:id="btnAssento42" contentDisplay="CENTER" layoutX="80.0" layoutY="490.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="42">
+                  <Button id="42" fx:id="42" contentDisplay="CENTER" layoutX="80.0" layoutY="490.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="42">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -386,7 +386,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento04" fx:id="btnAssento04" contentDisplay="CENTER" disable="true" layoutX="158.0" layoutY="71.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(240, 213, 14);" styleClass="assentoPref" text="04">
+                  <Button id="04" fx:id="04" contentDisplay="CENTER" disable="true" layoutX="158.0" layoutY="71.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(240, 213, 14);" styleClass="assentoPref" text="04">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -401,7 +401,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento03" fx:id="btnAssento03" contentDisplay="CENTER" disable="true" layoutX="208.0" layoutY="71.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(240, 213, 14);" styleClass="assentoPref" text="03">
+                  <Button id="03" fx:id="03" contentDisplay="CENTER" disable="true" layoutX="208.0" layoutY="71.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(240, 213, 14);" styleClass="assentoPref" text="03">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -416,7 +416,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento08" fx:id="btnAssento08" contentDisplay="CENTER" layoutX="158.0" layoutY="112.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="08">
+                  <Button id="08" fx:id="08" contentDisplay="CENTER" layoutX="158.0" layoutY="112.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="08">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -431,7 +431,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento07" fx:id="btnAssento07" contentDisplay="CENTER" layoutX="208.0" layoutY="112.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="07">
+                  <Button id="07" fx:id="07" contentDisplay="CENTER" layoutX="208.0" layoutY="112.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="07">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -446,7 +446,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento12" fx:id="btnAssento12" contentDisplay="CENTER" layoutX="158.0" layoutY="154.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="12">
+                  <Button id="12" fx:id="12" contentDisplay="CENTER" layoutX="158.0" layoutY="154.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="12">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -461,7 +461,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento11" fx:id="btnAssento11" contentDisplay="CENTER" layoutX="208.0" layoutY="154.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="11">
+                  <Button id="11" fx:id="11" contentDisplay="CENTER" layoutX="208.0" layoutY="154.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="11">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -476,7 +476,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento16" fx:id="btnAssento16" contentDisplay="CENTER" layoutX="158.0" layoutY="196.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="16">
+                  <Button id="16" fx:id="16" contentDisplay="CENTER" layoutX="158.0" layoutY="196.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="16">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -491,7 +491,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento15" fx:id="btnAssento15" contentDisplay="CENTER" layoutX="208.0" layoutY="196.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="15">
+                  <Button id="15" fx:id="15" contentDisplay="CENTER" layoutX="208.0" layoutY="196.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="15">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -506,7 +506,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento20" fx:id="btnAssento20" contentDisplay="CENTER" layoutX="158.0" layoutY="238.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="20">
+                  <Button id="20" fx:id="20" contentDisplay="CENTER" layoutX="158.0" layoutY="238.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="20">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -521,7 +521,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento19" fx:id="btnAssento19" contentDisplay="CENTER" layoutX="208.0" layoutY="238.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="19">
+                  <Button id="19" fx:id="19" contentDisplay="CENTER" layoutX="208.0" layoutY="238.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="19">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -536,7 +536,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento24" fx:id="btnAssento24" contentDisplay="CENTER" layoutX="158.0" layoutY="280.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="24">
+                  <Button id="24" fx:id="24" contentDisplay="CENTER" layoutX="158.0" layoutY="280.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="24">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -551,7 +551,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento23" fx:id="btnAssento23" contentDisplay="CENTER" layoutX="208.0" layoutY="280.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="23">
+                  <Button id="23" fx:id="23" contentDisplay="CENTER" layoutX="208.0" layoutY="280.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="23">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -566,7 +566,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento28" fx:id="btnAssento28" contentDisplay="CENTER" layoutX="158.0" layoutY="322.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="28">
+                  <Button id="28" fx:id="28" contentDisplay="CENTER" layoutX="158.0" layoutY="322.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="28">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -581,7 +581,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento27" fx:id="btnAssento27" contentDisplay="CENTER" layoutX="208.0" layoutY="322.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="27">
+                  <Button id="27" fx:id="27" contentDisplay="CENTER" layoutX="208.0" layoutY="322.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="27">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -596,7 +596,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento32" fx:id="btnAssento32" contentDisplay="CENTER" layoutX="158.0" layoutY="364.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="32">
+                  <Button id="32" fx:id="32" contentDisplay="CENTER" layoutX="158.0" layoutY="364.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="32">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -611,7 +611,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento31" fx:id="btnAssento31" contentDisplay="CENTER" layoutX="208.0" layoutY="364.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="31">
+                  <Button id="31" fx:id="31" contentDisplay="CENTER" layoutX="208.0" layoutY="364.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="31">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -626,7 +626,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento36" fx:id="btnAssento36" contentDisplay="CENTER" layoutX="158.0" layoutY="406.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="36">
+                  <Button id="36" fx:id="36" contentDisplay="CENTER" layoutX="158.0" layoutY="406.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="36">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -641,7 +641,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento35" fx:id="btnAssento35" contentDisplay="CENTER" layoutX="208.0" layoutY="406.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="35">
+                  <Button id="35" fx:id="35" contentDisplay="CENTER" layoutX="208.0" layoutY="406.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="35">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -656,7 +656,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento40" fx:id="btnAssento40" contentDisplay="CENTER" layoutX="158.0" layoutY="448.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="40">
+                  <Button id="40" fx:id="40" contentDisplay="CENTER" layoutX="158.0" layoutY="448.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="40">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -671,7 +671,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento39" fx:id="btnAssento39" contentDisplay="CENTER" layoutX="208.0" layoutY="448.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="39">
+                  <Button id="39" fx:id="39" contentDisplay="CENTER" layoutX="208.0" layoutY="448.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="39">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -686,7 +686,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento44" fx:id="btnAssento44" contentDisplay="CENTER" layoutX="158.0" layoutY="490.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="44">
+                  <Button id="44" fx:id="44" contentDisplay="CENTER" layoutX="158.0" layoutY="490.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="44">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -701,7 +701,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button id="btnAssento43" fx:id="btnAssento43" contentDisplay="CENTER" layoutX="208.0" layoutY="490.0" mnemonicParsing="false" onAction="#purchaseClickedSit" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="43">
+                  <Button id="43" fx:id="43" contentDisplay="CENTER" layoutX="208.0" layoutY="490.0" mnemonicParsing="false" onAction="#purchaseClickedSeat" prefHeight="25.0" prefWidth="22.0" style="-fx-padding: 0; -fx-background-radius: 4; -fx-background-color: rgb(104, 227, 23);" styleClass="assento" text="43">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="57.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -772,9 +772,9 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
-                  <ImageView fitHeight="191.0" fitWidth="146.0" layoutX="415.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView blendMode="COLOR_BURN" fitHeight="147.0" fitWidth="202.0" layoutX="386.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../resources/onibus.png" />
+                        <Image url="@../../resources/logo.png" />
                      </image>
                   </ImageView>
         </children>

@@ -10,27 +10,16 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import view.loader.FuncionarioLoader;
+import model.entities.Passagem;
+import view.loader.*;
 import model.entities.Viagem;
 import model.usecases.GerarViagensUC;
-import view.loader.LinhaLoader;
-import view.loader.PassagemLoader;
-import view.loader.OnibusLoader;
-import view.loader.TrechoLoader;
-import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import view.util.DataValidator;
+import view.util.TipoEspecial;
+import java.util.*;
 
 public class VendasController {
-
-    @FXML Button btnAssento01, btnAssento02, btnAssento03, btnAssento04, btnAssento05, btnAssento06,
-            btnAssento07, btnAssento08, btnAssento09, btnAssento10, btnAssento11, btnAssento12, btnAssento13,
-            btnAssento14, btnAssento15, btnAssento16, btnAssento17, btnAssento18, btnAssento19, btnAssento20,
-            btnAssento21, btnAssento22, btnAssento23, btnAssento24, btnAssento25, btnAssento26, btnAssento27,
-            btnAssento28, btnAssento29, btnAssento30, btnAssento31, btnAssento32, btnAssento33, btnAssento34,
-            btnAssento35, btnAssento36, btnAssento37, btnAssento38, btnAssento39, btnAssento40, btnAssento41,
-            btnAssento42, btnAssento43, btnAssento44;
+    
     @FXML Menu menuGerenciar;
     @FXML AnchorPane popupReagendamento;
     @FXML TextField txtFieldOrigem, txtFieldDestino;
@@ -41,11 +30,13 @@ public class VendasController {
     @FXML TableColumn<Viagem, String> colLinha, colHorarioSaida;
 
     private Scene scene;
-    private enum TipoEspecial {NÃO, IDOSO, DEFICIENTE}
     private TipoEspecial clientType = TipoEspecial.NÃO;
     private GerarViagensUC gerarViagensUC;
     private ObservableList<Viagem> tableDataViagens;
     private Viagem selectedViagem;
+    private String messageHead, messageBody;
+    private Passagem passagemReagendamento;
+    private boolean modeReagendamento = false;
 
     public VendasController() {
         this.gerarViagensUC = new GerarViagensUC(ViagemDAO.getInstancia());
@@ -76,27 +67,31 @@ public class VendasController {
         this.toggleModeReagendamento(true);
     }
 
-    public void cancelModeReagendamento(ActionEvent actionEvent) {
+    public void cancelModeReagendamento() {
         this.toggleModeReagendamento(false);
     }
 
     private void setInfoInFields(){
-        //txtFieldOrigem.setText(this.passagemReagendamento.getViagem().getCidadeOrigem());
-        //txtFieldDestino.setText(this.passagemReagendamento.getViagem().getCidadeDestino());
+        txtFieldOrigem.setText(this.passagemReagendamento.getViagem().getCidadeOrigem());
+        txtFieldDestino.setText(this.passagemReagendamento.getViagem().getCidadeDestino());
     }
 
     private void toggleModeReagendamento(boolean mode) {
+        this.modeReagendamento = mode;
         this.txtFieldOrigem.setDisable(mode);
         this.txtFieldDestino.setDisable(mode);
         this.popupReagendamento.setVisible(mode);
     }
 
     public void openBuscarPassagens(ActionEvent actionEvent) {
+        this.clearTable();
         PassagemLoader janelaPassagens = new PassagemLoader();
         janelaPassagens.start();
-        //Abre a modal Buscar Passagem
-        //Apenas teste
-        this.setModeReagendamento();
+        this.passagemReagendamento = janelaPassagens.getPassagemReagendamento();
+        if (this.passagemReagendamento != null) {
+            this.clearTable();
+            this.setModeReagendamento();
+        }
     }
 
     public void openTrecho(ActionEvent actionEvent) {
@@ -113,71 +108,111 @@ public class VendasController {
         RadioButton selectedRadioButton = (RadioButton) clienteEspecial.getSelectedToggle();
         this.toggleClientType(selectedRadioButton.getId());
     }
+
     private void toggleClientType(String id){
         if (id.equals("rdIdoso")){
             this.setClientType(TipoEspecial.IDOSO);
-            this.toggleSpecialSits(false);
+            this.toggleSpecialSeats(false);
         }else {
             if (id.equals("rdDeficiente"))
                 this.setClientType(TipoEspecial.DEFICIENTE);
             else
                 this.setClientType(TipoEspecial.NÃO);
-            this.toggleSpecialSits(true);
+            this.toggleSpecialSeats(true);
         }
     }
 
-    private void toggleSpecialSits(boolean mode){
-        this.btnAssento03.setDisable(mode);
-        this.btnAssento04.setDisable(mode);
-        this.disableUnavailableSits();
+    private void toggleSpecialSeats(boolean mode){
+        this.getButtonByCSSId("#03").setDisable(mode);
+        this.getButtonByCSSId("#04").setDisable(mode);
+        this.disableUnavailableSeats();
     }
 
     public void searchForViagens(ActionEvent actionEvent) {
-        Date data = this.LocalDateConverter(this.datePickerSaida.getValue());
-        String cidadeOrigem = this.txtFieldOrigem.getText();
-        String cidadeDestino = this.txtFieldDestino.getText();
-        if (this.checkInputsValues(data, cidadeOrigem, cidadeDestino)) {
-            List<Viagem> viagens = this.gerarViagensUC.searchForViagens(data, cidadeOrigem, cidadeDestino);
-            this.showResultsToTable(viagens);
+        Date data = DataValidator.LocalDateConverter(this.datePickerSaida.getValue());
+        String cidadeOrigem = DataValidator.txtInputVerifier(this.txtFieldOrigem.getText());
+        String cidadeDestino = DataValidator.txtInputVerifier(this.txtFieldDestino.getText());
+        if (this.checkInputsValues(data, cidadeOrigem, cidadeDestino))
+            this.verifyTimeOfResults(this.gerarViagensUC.searchForViagens(data, cidadeOrigem, cidadeDestino));
+        else {
+            this.clearTable();
+            this.messageHead = "Parâmetros de pesquisa inválidos ou nulos!";
+            this.errorAlert();
         }
     }
 
-    private boolean checkInputsValues(Date data, String cidadeOrigem, String cidadeDestino) {
-        return  data != null && cidadeOrigem != null && cidadeDestino != null;
+    private void clearTable(){
+        this.showResultsToTable(new ArrayList<>());
     }
 
-    private Date LocalDateConverter(LocalDate localDate){
-        /**
-         * Metodo temporário, deve fazer parte do verificador de inputs
-         */
-        return localDate != null ? java.sql.Date.valueOf(localDate) : null;
+    private void errorAlert(){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Erro!");
+        this.modalAlert(alert);
+    }
+
+    private void informationAlert(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Aviso!");
+        this.modalAlert(alert);
+    }
+
+    private void modalAlert(Alert alert){
+        alert.setHeaderText(this.messageHead);
+        alert.setContentText(this.messageBody);
+        alert.showAndWait();
+    }
+
+    private void verifyTimeOfResults(List<Viagem> viagens){
+        List<Viagem> viagensTimeFilter = new ArrayList<>();
+        for (Viagem v : viagens)
+            if (this.getSystemTime().compareTo(v.getData()) <= 0)
+                viagensTimeFilter.add(v);
+        this.showResultsToTable(viagensTimeFilter);
+        if (viagensTimeFilter.isEmpty()) {
+            this.messageHead = "Busca não encontrou nenhum resultado válido!";
+            this.messageBody = "Reveja os parâmetros informados.";
+            this.informationAlert();
+        }
+    }
+
+    private Date getSystemTime(){
+        return Calendar.getInstance().getTime();
+    }
+
+    private boolean checkInputsValues(Date data, String cidadeOrigem, String cidadeDestino) {
+        StringBuilder st = new StringBuilder();
+        if (data == null){st.append("Campo data inválido.\n");}
+        if (cidadeOrigem == null){st.append("Campo cidade origem inválido.\n");}
+        if (cidadeDestino == null){st.append("Campo cidade destino inválido.\n");}
+        this.messageBody = st.toString();
+        return st.length() == 0;
     }
 
     private void showResultsToTable(List<Viagem> viagens){
         this.tableDataViagens.setAll(viagens);
     }
 
-    private void resetSits(){
-        String color;
+    private void resetSeats(){
         for (int i = 1; i < 45; i++) {
-            Button bt = this.getButtonByCSSId("#btnAssento" + String.format("%02d", i));
+            Button bt = this.getButtonByCSSId("#".concat(String.format("%02d", i)));
             bt.setDisable(false);
         }
     }
 
-    private void disableUnavailableSits(){
+    private void disableUnavailableSeats(){
         if(this.selectedViagem != null) {
-            Set<String> assentosVendidos = this.selectedViagem.verifyDisponibility();
-            for (String numID : assentosVendidos) {
-                Button bt = this.getButtonByCSSId("#btnAssento" + numID);
+            Iterator<String> itAV = this.selectedViagem.getAssentosVendidosViagem();
+            while (itAV.hasNext()) {
+                Button bt = this.getButtonByCSSId("#".concat(itAV.next()));
                 bt.setDisable(true);
             }
         }
     }
 
-    private void toggleStateAndVisualOfSits(){
-        this.resetSits();
-        this.disableUnavailableSits();
+    private void toggleStateAndVisualOfSeats(){
+        this.resetSeats();
+        this.disableUnavailableSeats();
         this.checkToggle();
     }
 
@@ -185,7 +220,7 @@ public class VendasController {
         if(mouseEvent.getClickCount() == 1) {
             this.selectedViagem = this.tableViagens.getSelectionModel().getSelectedItem();
             if (this.selectedViagem != null)
-                this.toggleStateAndVisualOfSits();
+                this.toggleStateAndVisualOfSeats();
         }
     }
 
@@ -193,10 +228,24 @@ public class VendasController {
         return (Button) this.scene.lookup(selector);
     }
 
-    public void purchaseClickedSit(ActionEvent actionEvent) {
-        Button btn = (Button) actionEvent.getSource();
-        System.out.println(btn.getId());
-        //todo compra a partir do assento
+    public void purchaseClickedSeat(ActionEvent actionEvent) {
+        if (this.selectedViagem != null) {
+            Button btn = (Button) actionEvent.getSource();
+            FinalizacaoVendaLoader janelaFinal;
+            if (this.modeReagendamento)
+                janelaFinal = new FinalizacaoVendaLoader(this.passagemReagendamento);
+            else janelaFinal = new FinalizacaoVendaLoader();
+            janelaFinal.start(this.selectedViagem, this.getClientType(), btn.getId());
+            if (janelaFinal.isSoldSuccess()) {
+                this.cancelModeReagendamento();
+                this.markSoldSeat(btn.getId());
+            }
+        }
+    }
+
+    private void markSoldSeat(String seatId){
+        this.selectedViagem.addAssentoVendidoViagem(seatId);
+        this.toggleStateAndVisualOfSeats();
     }
 
     public TipoEspecial getClientType() {

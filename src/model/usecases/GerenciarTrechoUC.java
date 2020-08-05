@@ -20,18 +20,18 @@ public class GerenciarTrechoUC {
         return daoTrecho.searchTrecho(trecho);
     }
 
-    public  Trecho createTrecho(String origem, String destino, double km, double tempo, double valorP, double valorE, double valorS){
+    public  Trecho createTrecho(String origem, String destino, double km, int tempo, double valorP, double valorE, double valorS){
         Trecho t = new Trecho(origem, destino, km, tempo, valorP, valorE, valorS);
-        daoTrecho.save(t);
+        this.addTrecho(t);
         return t;
     }
-    public void updateTrecho(double km, double tempo, double valorP, double valorE, double valorS, Trecho trecho){
+    public void updateTrecho(double km, int tempo, double valorP, double valorE, double valorS, Trecho trecho){
         trecho.setTaxaEmbarque(valorE);
         trecho.setQuilometragem(km);
         trecho.setTempoDuracao(tempo);
         trecho.setValorSeguro(valorS);
         trecho.setValorPassagem(valorP);
-        daoTrecho.update(trecho);
+        updateTrecho(trecho);
 
     }
     public void  deleteTrecho(Trecho t){
@@ -39,7 +39,6 @@ public class GerenciarTrechoUC {
     }
 
     public List<Trecho> getListTrechos() {
-
        return  daoTrecho.getListTrechos();
     }
 
@@ -55,4 +54,7 @@ public class GerenciarTrechoUC {
         return trecho.getCidadeDestino().equals(cidade);
     }
 
+    public void updateTrecho(Trecho trecho) {
+        daoTrecho.update(trecho);
+    }
 }

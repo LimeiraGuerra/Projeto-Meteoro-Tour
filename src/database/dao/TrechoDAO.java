@@ -16,10 +16,10 @@ public class TrechoDAO implements DAO<Trecho, String> {
     private List<AssentoTrechoLinha> assentosVendScuff = new ArrayList<>();
 
     private TrechoDAO(){
-        trechos.add(new Trecho("Descalvado", "São Carlos", 40.0, 30.0, 10.0, 1.0, 0.2));
-        trechos.add(new Trecho("São Carlos", "Ibaté", 15.0, 5.0, 5.0, 0.5, 0.2));
-        trechos.add(new Trecho("São Carlos", "Araraquara", 30.0, 20.0, 7.0, 0.8, 0.2));
-        trechos.add(new Trecho("Araraquara", "Ibaté", 20.0, 15.0, 8.0, 1.0, 0.2));
+        trechos.add(new Trecho("Descalvado", "São Carlos", 40.0, 30, 10.0, 1.0, 0.2));
+        trechos.add(new Trecho("São Carlos", "Ibaté", 15.0, 5, 5.0, 0.5, 0.2));
+        trechos.add(new Trecho("São Carlos", "Araraquara", 30.0, 20, 7.0, 0.8, 0.2));
+        trechos.add(new Trecho("Araraquara", "Ibaté", 20.0, 15, 8.0, 1.0, 0.2));
 
         trechosLinhaScuff.add(new int[]{1, 0});
         trechosLinhaScuff.add(new int[]{1, 1});
@@ -41,7 +41,8 @@ public class TrechoDAO implements DAO<Trecho, String> {
 
     @Override
     public void update(Trecho model) {
-        Trecho trecho = searchTrecho(model);
+        int index = trechos.indexOf(model);
+        Trecho trecho = trechos.get(index);
         if (trecho != null){
             trecho.setTaxaEmbarque(model.getTaxaEmbarque());
             trecho.setQuilometragem(model.getQuilometragem());
@@ -49,6 +50,8 @@ public class TrechoDAO implements DAO<Trecho, String> {
             trecho.setValorSeguro(model.getValorSeguro());
             trecho.setValorPassagem(model.getValorPassagem());
         }
+        trechos.remove(index);
+        trechos.add(index, trecho);
     }
 
     @Override
@@ -63,18 +66,12 @@ public class TrechoDAO implements DAO<Trecho, String> {
 
     @Override
     public List<Trecho> selectByArgs(String... args) {
-
         return null;
     }
-    public  Trecho searchTrecho(Trecho trecho){
-        for (Trecho t : trechos){
-            if (t.equals(trecho)){
-                return  trecho;
-            }
-        }
-        return  null;
-    }
 
+    public  Trecho searchTrecho(Trecho trecho){
+        return trechos.contains(trecho) ? trecho : null;
+    }
 
     public List<Trecho> getListTrechos() {
         return trechos;
@@ -95,8 +92,6 @@ public class TrechoDAO implements DAO<Trecho, String> {
         }
         return trechosLinha;
     }
-
-
 
     public static TrechoDAO getInstancia(){
         if (instancia == null){

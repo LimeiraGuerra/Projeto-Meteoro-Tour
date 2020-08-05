@@ -13,11 +13,11 @@ public class ViagemDAO implements DAO<Viagem, String> {
     private static ViagemDAO instancia;
 
     private ViagemDAO(){
+        this.keysCidadesTest.add(new String[]{"Descalvado", "São Carlos", "0"});
+        this.keysCidadesTest.add(new String[]{"São Carlos", "Ibaté", "0"});
         this.keysCidadesTest.add(new String[]{"Descalvado", "São Carlos", "1"});
-        this.keysCidadesTest.add(new String[]{"São Carlos", "Ibaté", "1"});
-        this.keysCidadesTest.add(new String[]{"Descalvado", "São Carlos", "2"});
-        this.keysCidadesTest.add(new String[]{"São Carlos", "Araraquara", "2"});
-        this.keysCidadesTest.add(new String[]{"Araraquara", "Ibaté", "2"});
+        this.keysCidadesTest.add(new String[]{"São Carlos", "Araraquara", "1"});
+        this.keysCidadesTest.add(new String[]{"Araraquara", "Ibaté", "1"});
     }
 
     @Override
@@ -53,7 +53,7 @@ public class ViagemDAO implements DAO<Viagem, String> {
                     if (tl2[1].equals(args[1]) && tl[2].equals(tl2[2])) {
                         Linha linha = daoLinha.selectById(tl[2]);
                         linha.addAllTrechosLinha(TrechoDAO.getInstancia().selectTrechosByLinha(linha, args[2]));
-                        viagens.add(new Viagem(tl[0], tl2[1], linha));
+                        viagens.add(new Viagem(java.sql.Date.valueOf(args[2]), tl[0], tl2[1], linha));
                         break;
                     }
                 }
