@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
@@ -15,13 +16,16 @@
       <Label layoutX="150.0" layoutY="181.0" text="RG:" />
       <Label layoutX="17.0" layoutY="239.0" text="Telefone:" />
       <Label layoutX="17.0" layoutY="295.0" text="Adicionar seguro?:" />
-      <TextField layoutX="15.0" layoutY="149.0" prefHeight="25.0" prefWidth="232.0" />
-      <TextField layoutX="15.0" layoutY="198.0" prefHeight="25.0" prefWidth="122.0" />
-      <TextField layoutX="148.0" layoutY="198.0" prefHeight="25.0" prefWidth="99.0" />
-      <TextField layoutX="74.0" layoutY="235.0" prefHeight="25.0" prefWidth="173.0" />
-      <RadioButton layoutX="132.0" layoutY="295.0" mnemonicParsing="false" text="Sim" />
-      <RadioButton layoutX="193.0" layoutY="295.0" mnemonicParsing="false" text="Não" />
-      <Button layoutX="15.0" layoutY="323.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="232.0" text="Finalizar compra" />
+      <TextField fx:id="txfFieldNome" layoutX="15.0" layoutY="149.0" prefHeight="25.0" prefWidth="232.0" />
+      <TextField fx:id="txtFieldCpf" layoutX="15.0" layoutY="198.0" prefHeight="25.0" prefWidth="122.0" />
+      <TextField fx:id="txtFieldRg" layoutX="148.0" layoutY="198.0" prefHeight="25.0" prefWidth="99.0" />
+      <TextField fx:id="txtFieldTelefone" layoutX="74.0" layoutY="235.0" prefHeight="25.0" prefWidth="173.0" />
+      <RadioButton layoutX="132.0" layoutY="295.0" mnemonicParsing="false" text="Sim">
+         <toggleGroup>
+            <ToggleGroup fx:id="optSeguro" />
+         </toggleGroup></RadioButton>
+      <RadioButton layoutX="193.0" layoutY="295.0" mnemonicParsing="false" selected="true" text="Não" toggleGroup="$optSeguro" />
+      <Button layoutX="15.0" layoutY="323.0" mnemonicParsing="false" onAction="#finalizeSale" prefHeight="41.0" prefWidth="232.0" text="Finalizar compra" />
       <Label layoutX="16.0" layoutY="8.0" text="Linha:">
          <font>
             <Font name="System Bold" size="12.0" />

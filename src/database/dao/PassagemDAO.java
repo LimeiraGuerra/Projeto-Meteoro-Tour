@@ -4,14 +4,20 @@ import database.utils.DAO;
 import model.entities.Passagem;
 import model.entities.Viagem;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PassagemDAO implements DAO<Passagem, String> {
+    private Map<String, Passagem> passagens = new HashMap<>();
+    private long cont = 0;
 
     private static PassagemDAO instancia;
     @Override
     public void save(Passagem model) {
-
+        model.setNumPassagem(++cont);
+        this.passagens.put(""+cont, model);
     }
 
     @Override
@@ -21,28 +27,20 @@ public class PassagemDAO implements DAO<Passagem, String> {
 
     @Override
     public void delete(Passagem model) {
-
+        passagens.remove(""+model.getNumPassagem());
     }
 
     @Override
     public Passagem selectById(String id) {
-        /* todo */
-        /* Retorno pra teste */
-        Viagem testeViagem = new Viagem();
-        testeViagem.setCidadeOrigem("Descalvado");
-        testeViagem.setCidadeDestino("São Carlos");
-        Passagem testePassagem = new Passagem();
-        testePassagem.setViagem(testeViagem);
-        testePassagem.setNumPassagem(1234);
-        if (id.equals(""+testePassagem.getNumPassagem())){
-            return testePassagem;
-        }
-        return null;
+        return passagens.containsKey(id) ? passagens.get(id) : null;
     }
 
     @Override
     public List<Passagem> selectByArgs(String... args) {
-        return null;
+        List<Passagem> matchP = new ArrayList<>();
+        for(Passagem p : passagens.values())
+            if (args[0].equals(p.getCpf())) matchP.add(p);
+        return matchP;
     }
 
     public static PassagemDAO getInstancia(){

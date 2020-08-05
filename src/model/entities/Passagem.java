@@ -1,20 +1,31 @@
 package model.entities;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Passagem {
 
     private long numPassagem;
-    private double precoTotal;
+    private double precoPago;
     private String nome;
     private String cpf;
+    private String rg;
     private String telefone;
     private boolean seguro;
-    private String formaPagamento;
     private Date dataCompra;
     private Date dataViagem;
 
     private Viagem viagem;
+
+    public Passagem(String nome, String cpf, String rg, String telefone) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.rg = rg;
+        this.telefone = telefone;
+    }
+
+    public Passagem() {
+    }
 
     public boolean verificarValidade(){
         return false;
@@ -26,14 +37,6 @@ public class Passagem {
 
     public void setNumPassagem(long numPassagem) {
         this.numPassagem = numPassagem;
-    }
-
-    public double getPrecoTotal() {
-        return precoTotal;
-    }
-
-    public void setPrecoTotal(double precoTotal) {
-        this.precoTotal = precoTotal;
     }
 
     public String getNome() {
@@ -68,14 +71,6 @@ public class Passagem {
         this.seguro = seguro;
     }
 
-    public String getFormaPagamento() {
-        return formaPagamento;
-    }
-
-    public void setFormaPagamento(String formaPagamento) {
-        this.formaPagamento = formaPagamento;
-    }
-
     public Date getDataCompra() {
         return dataCompra;
     }
@@ -98,6 +93,44 @@ public class Passagem {
 
     public void setViagem(Viagem viagem) {
         this.viagem = viagem;
+    }
+
+    public String getRg() {
+        return rg;
+    }
+
+    public void setRg(String rg) {
+        this.rg = rg;
+    }
+
+    public double getPrecoPago() {
+        return precoPago;
+    }
+
+    public void setPrecoPago(double precoPago) {
+        this.precoPago = precoPago;
+    }
+
+    public String getHorarioSaida(){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+        return dateFormat.format(this.dataViagem);
+    }
+
+    public String getDataViagemStr(){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        return dateFormat.format(this.dataViagem);
+    }
+
+    public String getNomeLinha(){
+        return viagem.getLinhaName();
+    }
+
+    public String getCidadeOrigem(){
+        return viagem.getCidadeOrigem();
+    }
+
+    public String getCidadeDestino(){
+        return viagem.getCidadeDestino();
     }
 }
 

@@ -10,9 +10,9 @@ public class Viagem {
 
     private Linha linha;
     private List<TrechoLinha> trechosLinha;
-    private Double valueViagem = 0.0;
-    private Double valueSeguroViagem = 0.0;
-    /* todo methods */
+    private double valueViagem = 0.0;
+    private double valueSeguroViagem = 0.0;
+    private Set<String> assentosVendidosViagem = new LinkedHashSet<>();
 
     public Viagem() {
     }
@@ -23,10 +23,13 @@ public class Viagem {
         this.linha = linha;
         this.trechosLinha = linha.generateTrechosViagem(cidadeOrigem, cidadeDestino);
         this.data = dateTimeUnion(data, this.trechosLinha.get(0).getHorarioSaida());
+        this.verifyDisponibility();
     }
 
     private Date dateTimeUnion(Date data, Date time){
-        /**Une horario com data, em uma mesma classe tipo Data*/
+        /**
+         * Une horario com data, em uma mesma classe tipo Data
+         */
         Calendar calendarA = Calendar.getInstance();
         calendarA.setTime(data);
 
@@ -40,15 +43,29 @@ public class Viagem {
         return calendarA.getTime();
     }
 
-    public Set<String> verifyDisponibility(){
-        Set<String> assentosVendidos = new LinkedHashSet<>();
+    public void verifyDisponibility(){
+        double valueViagem = 0.0;
+        double valueSeguroViagem = 0.0;
         for(TrechoLinha tl: trechosLinha){
+            valueViagem += tl.getTrecho().getValorTotal();
+            valueSeguroViagem += tl.getTrecho().getValorSeguro();
             if (tl.getAssentoTrechoLinha() != null)
-                //this.valueViagem += tl.getTrecho().getValorTotal();
-                //this.valueSeguroViagem += tl.getTrecho().getValorSeguro();
-                assentosVendidos.addAll(tl.getAssentoTrechoLinha().getAssentosVendidos());
+                this.assentosVendidosViagem.addAll(tl.getAssentoTrechoLinha().getAssentosVendidos());
         }
-        return assentosVendidos;
+        this.setValuesOfViagem(valueViagem, valueSeguroViagem);
+    }
+
+    private void setValuesOfViagem(double total, double seguro){
+        this.valueViagem = total;
+        this.valueSeguroViagem = seguro;
+    }
+
+    public Iterator<String> getAssentosVendidosViagem(){
+        return assentosVendidosViagem.iterator();
+    }
+
+    public void addAssentoVendidoViagem(String sitId){
+        this.assentosVendidosViagem.add(sitId);
     }
 
     public String getLinhaName(){

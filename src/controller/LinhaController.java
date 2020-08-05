@@ -14,7 +14,8 @@ import model.usecases.GerenciarLinhaUC;
 import model.usecases.GerenciarTrechoUC;
 import model.usecases.GerenciarTrechoLinhaUC;
 import view.util.AlertWindow;
-import view.util.TextFieldValidator;
+import view.util.DataValidator;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -284,7 +285,7 @@ public class LinhaController{
     }
 
     private boolean checkHoraMinuto(){
-       return TextFieldValidator.isHora(txtHoraTrecho) && TextFieldValidator.isMinuto(txtMinTrecho);
+       return DataValidator.isHora(txtHoraTrecho) && DataValidator.isMinuto(txtMinTrecho);
 
     }
 

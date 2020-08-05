@@ -9,8 +9,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import model.entities.Trecho;
 import model.usecases.GerenciarTrechoUC;
+import view.util.DataValidator;
 import view.util.AlertWindow;
-import view.util.TextFieldValidator;
 
 public class TrechoController {
 
@@ -158,14 +158,13 @@ public class TrechoController {
         lbValorTotal.setText("O valor total do trecho é: " + valor);
     }
 
-
-    private boolean checkTextField(){
-        return !TextFieldValidator.isDate(tfDestino) && !TextFieldValidator.isDate(tfOrigem) &&
-                TextFieldValidator.isDouble(tfQuilometragem) &&
-                TextFieldValidator.isDouble(tfTempoDuracao) &&
-                TextFieldValidator.isDouble(tfValorPassagem) &&
-                TextFieldValidator.isDouble(tfTaxaEmbarque) &&
-                TextFieldValidator.isDouble(tfValorSeguro);
+    public boolean checkTextField() {
+        return !tfDestino.getText().isEmpty() && !tfOrigem.getText().isEmpty() &&
+                DataValidator.isDouble(tfQuilometragem) &&
+                DataValidator.isDouble(tfTempoDuracao) &&
+                DataValidator.isDouble(tfValorPassagem) &&
+                DataValidator.isDouble(tfTaxaEmbarque) &&
+                DataValidator.isDouble(tfValorSeguro);
     }
 
     private void setFieldsTrecho(Trecho trecho){
