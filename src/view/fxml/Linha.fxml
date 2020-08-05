@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="487.0" prefWidth="798.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LinhaController">
+<AnchorPane prefHeight="487.0" prefWidth="798.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LinhaController">
     <TableView fx:id="tabelaLinha" layoutX="14.0" layoutY="29.0" prefHeight="410.0" prefWidth="414.0">
         <columns>
             <TableColumn fx:id="cNome" prefWidth="240.0" text="Nome" />
@@ -22,7 +15,7 @@
     </TableView>
     <Button fx:id="btCriarLinha" layoutX="99.0" layoutY="447.0" mnemonicParsing="false" onAction="#viewCreateLinha" prefHeight="25.0" prefWidth="135.0" text="Criar Linha" />
     <Button fx:id="btVerLinha" layoutX="257.0" layoutY="447.0" mnemonicParsing="false" onAction="#seeLinha" prefHeight="25.0" prefWidth="171.0" text="Visualizar linha" />
-   <Pane fx:id="paneLinhaTrecho" layoutX="442.0" layoutY="57.0" prefHeight="422.0" prefWidth="329.0" style="visibility: true;">
+   <Pane fx:id="paneLinhaTrecho" layoutX="442.0" layoutY="57.0" prefHeight="422.0" prefWidth="329.0" style="visibility: false;">
       <children>
          <Button fx:id="btExcluirLinha" layoutX="14.0" layoutY="388.0" mnemonicParsing="false" onAction="#deleteLinha" prefHeight="25.0" prefWidth="149.0" text="Excluir linha" />
          <TableView fx:id="tabelaLinhaTrecho" layoutX="-2.0" layoutY="75.0" prefHeight="259.0" prefWidth="329.0">
@@ -32,7 +25,7 @@
            </columns>
          </TableView>
          <Button fx:id="btExcluirTrecho" layoutX="205.0" layoutY="340.0" mnemonicParsing="false" onAction="#deleteTrecho" prefHeight="25.0" prefWidth="109.0" text="Excluir trecho" />
-         <ComboBox fx:id="cbTrechos" layoutX="67.0" layoutY="13.0" prefHeight="25.0" prefWidth="261.0" />
+         <ComboBox fx:id="cbTrechos" layoutX="67.0" layoutY="13.0" prefHeight="25.0" prefWidth="261.0" promptText="Escolha um trecho" visibleRowCount="15" />
          <Label fx:id="lbTrecho" layoutX="-2.0" layoutY="16.0" prefHeight="20.0" prefWidth="55.0" text="Trechos">
             <font>
                <Font size="14.0" />
@@ -55,7 +48,7 @@
          </Label>
       </children>
    </Pane>
-   <Label fx:id="lbLinha" layoutX="442.0" layoutY="32.0" prefHeight="20.0" prefWidth="49.0" style="visibility: true;" text="Linha">
+   <Label fx:id="lbLinha" layoutX="442.0" layoutY="32.0" prefHeight="20.0" prefWidth="49.0" style="visibility: false;" text="Linha">
       <font>
          <Font size="14.0" />
       </font>
@@ -88,7 +81,7 @@
          <Button fx:id="btCancelarTrecho" layoutX="93.0" layoutY="348.0" mnemonicParsing="false" onAction="#cancelTrecho" prefHeight="25.0" prefWidth="101.0" text="Cancelar Trecho" />
     </children>
    </Pane>
-   <Pane fx:id="paneImg" layoutX="448.0" layoutY="27.0" prefHeight="410.0" prefWidth="323.0" style="visibility: false;">
+   <Pane fx:id="paneImg" layoutX="448.0" layoutY="27.0" prefHeight="410.0" prefWidth="323.0" style="visibility: true;">
       <children>
          <ImageView fitHeight="303.0" fitWidth="302.0" layoutX="11.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true">
             <image>

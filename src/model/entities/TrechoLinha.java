@@ -1,7 +1,5 @@
 package model.entities;
 
-
-import java.sql.Time;
 import java.util.Date;
 import java.util.Objects;
 
@@ -21,7 +19,7 @@ public class TrechoLinha {
         this.trecho = trecho;
         this.linha = linha;
         trecho.setTrechoLinha(this);
-        linha.setTrechoList(this);
+        linha.addTrechoLinha(this);
     }
 
 

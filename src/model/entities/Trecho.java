@@ -7,7 +7,7 @@ public class Trecho {
     private String cidadeOrigem;
     private String cidadeDestino;
     private double quilometragem;
-    private double tempoDuracao;
+    private int tempoDuracao;
     private double valorPassagem;
     private double taxaEmbarque;
     private double valorSeguro;
@@ -18,7 +18,7 @@ public class Trecho {
     public Trecho() {
     }
 
-    public Trecho(String cidadeOrigem, String cidadeDestino, double quilometragem, double tempoDuracao, double valorPassagem, double taxaEmbarque, double valorSeguro) {
+    public Trecho(String cidadeOrigem, String cidadeDestino, double quilometragem, int tempoDuracao, double valorPassagem, double taxaEmbarque, double valorSeguro) {
         this.cidadeOrigem = cidadeOrigem;
         this.cidadeDestino = cidadeDestino;
         this.quilometragem = quilometragem;
@@ -29,6 +29,13 @@ public class Trecho {
         this.valorTotal = valorPassagem + taxaEmbarque  + valorSeguro;
     }
 
+    public void setTrechoLinha(TrechoLinha trechoL){
+        trechoLinha.add(trechoL);
+    }
+
+    public void deleteTrechoLinha(TrechoLinha trechoL) {
+        trechoLinha.remove(trechoL);
+    }
 
     public void setValorTotal() {
         this.valorTotal = valorPassagem + taxaEmbarque;
@@ -42,16 +49,8 @@ public class Trecho {
         return cidadeOrigem;
     }
 
-    public void setCidadeOrigem(String cidadeOrigem) {
-        this.cidadeOrigem = cidadeOrigem;
-    }
-
     public String getCidadeDestino() {
         return cidadeDestino;
-    }
-
-    public void setCidadeDestino(String cidadeDestino) {
-        this.cidadeDestino = cidadeDestino;
     }
 
     public double getQuilometragem() {
@@ -62,11 +61,11 @@ public class Trecho {
         this.quilometragem = quilometragem;
     }
 
-    public double getTempoDuracao() {
+    public int getTempoDuracao() {
         return tempoDuracao;
     }
 
-    public void setTempoDuracao(double tempoDuracao) {
+    public void setTempoDuracao(int tempoDuracao) {
         this.tempoDuracao = tempoDuracao;
     }
 
@@ -93,8 +92,11 @@ public class Trecho {
     public void setValorSeguro(double valorSeguro) {
         this.valorSeguro = valorSeguro;
     }
-
-    public void setTrechoLinha(TrechoLinha trechoL){
-        trechoLinha.add(trechoL);
+    public int sizeListTrechoLinha(){
+        return trechoLinha.size();
+    }
+    @Override
+    public String toString() {
+        return cidadeOrigem + " - " + cidadeDestino;
     }
 }

@@ -7,7 +7,7 @@ import java.util.List;
 public class GerenciarLinhaUC {
 
     LinhaDAO daoLinha = LinhaDAO.getInstancia();
-    int idFicticio = 3;
+    long idFicticio = 3;
 
     public void createLinha(String nomeLinha){
         Linha linha = new Linha(idFicticio++ , nomeLinha);
@@ -28,7 +28,6 @@ public class GerenciarLinhaUC {
     public void deleteLinha(Linha linha) {
         daoLinha.delete(linha);
     }
-
     public Linha searchLinha(Linha l){
         return  daoLinha.searchLinha(l);
     }
@@ -37,11 +36,8 @@ public class GerenciarLinhaUC {
         return daoLinha.getListLinha();
     }
 
-    public void updateLinha(String nomeNovo, Linha l) {
-        Linha linha = searchLinha(l);
-        linha.setNome(nomeNovo);
+
+    public void updateLinha(Linha linha) {
         daoLinha.update(linha);
     }
-
-
 }

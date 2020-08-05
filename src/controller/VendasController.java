@@ -15,10 +15,6 @@ import model.entities.Viagem;
 import model.usecases.GerarViagensUC;
 import view.util.TextFieldValidator;
 import view.util.TipoEspecial;
-
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.*;
 
 public class VendasController {

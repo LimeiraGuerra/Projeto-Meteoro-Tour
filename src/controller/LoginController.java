@@ -7,11 +7,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import model.entities.Administrador;
 import model.entities.Vendedor;
-
 import javafx.stage.Stage;
-
 import model.usecases.LoginUC;
 import view.loader.VendasLoader;
 
@@ -58,6 +55,7 @@ public class LoginController implements Initializable {
         }
         else{
             lbIncorreto.setVisible(true);
+            txtSenha.clear();
         }
     }
 
