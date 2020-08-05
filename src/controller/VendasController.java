@@ -16,7 +16,6 @@ import model.entities.Viagem;
 import model.usecases.GerarViagensUC;
 import view.util.DataValidator;
 import view.util.TipoEspecial;
-
 import java.util.*;
 
 public class VendasController {

@@ -36,7 +36,6 @@
       </TableView>
       <Button fx:id="criarTrecho" layoutX="174.0" layoutY="353.0" mnemonicParsing="false" onAction="#viewCreateTrecho" prefHeight="25.0" prefWidth="135.0" text="Criar novo trecho" />
       <Button fx:id="verTrecho" layoutX="325.0" layoutY="353.0" mnemonicParsing="false" onAction="#seeTrecho" prefHeight="25.0" prefWidth="171.0" text="Visualizar trecho selecionado" />
-      <Label fx:id="lbSalvo" layoutX="397.0" layoutY="410.0" />
       <Button fx:id="btDeleteTrecho" layoutX="565.0" layoutY="353.0" mnemonicParsing="false" onAction="#deleteTrecho" prefHeight="25.0" prefWidth="101.0" text="Excluir trecho" />
       <Button fx:id="btSalvaTrecho" layoutX="680.0" layoutY="353.0" mnemonicParsing="false" onAction="#saveOrUpdateTrecho" prefHeight="25.0" prefWidth="98.0" text="Salvar trecho" />
       <Pane fx:id="paneImg" blendMode="SRC_ATOP" layoutX="498.0" layoutY="28.0" prefHeight="364.0" prefWidth="280.0">

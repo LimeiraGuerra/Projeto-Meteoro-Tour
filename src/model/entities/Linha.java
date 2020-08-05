@@ -1,6 +1,5 @@
 package model.entities;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +23,15 @@ public class Linha {
 
     }
 
+    public Linha(long id, String nome, List<TrechoLinha> trechoslinhas) {
+        this.id = id;
+        this.nome = nome;
+    }
+
+    public List<TrechoLinha> getArray(){
+        return trechosLinha;
+    }
+
 
     public void addTrechoLinha(TrechoLinha trecho){
         trechosLinha.add(trecho);
@@ -41,8 +49,8 @@ public class Linha {
 
     public  void setValorTotalLinha(){
         valorTotalLinha = 0;
-        for (TrechoLinha trecho:trechosLinha) {
-            valorTotalLinha+=trecho.getTrecho().getValorTotal();
+        for (TrechoLinha trechoLinha:trechosLinha) {
+            valorTotalLinha+=trechoLinha.getTrecho().getValorTotal();
         }
     }
     public TrechoLinha getTrechoLinha(Trecho trecho){
@@ -53,12 +61,13 @@ public class Linha {
         }
         return null;
     }
-    public List<TrechoLinha> getLisTrechosLinha(){
+    public List<TrechoLinha> getListTrechosLinha(){
         return trechosLinha;
     }
 
-    public void removeTrecho(TrechoLinha trecho){
-        trechosLinha.remove(trecho);
+    public void deleteTrechoLinha(TrechoLinha trecho){
+
+        trechosLinha.remove(trechosLinha.indexOf(trecho));
         setValorTotalLinha();
         setQuilometragem();
     }
@@ -111,7 +120,5 @@ public class Linha {
         nome = nomeNovo;
     }
 
-    public void setTrechoList(TrechoLinha trechoLinha){
-        trechosLinha.add(trechoLinha);
-    }
+
 }

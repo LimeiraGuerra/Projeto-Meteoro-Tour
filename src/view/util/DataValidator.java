@@ -2,7 +2,6 @@ package view.util;
 
 import javafx.scene.control.TextField;
 
-import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.Date;
@@ -25,6 +24,27 @@ public class DataValidator {
     public static boolean isRg(String rg){
         //todo Não sei padrão de rg ¯\_(ツ)_/¯
         return rg.matches(".+");
+    }
+
+    public static boolean isHora(TextField string){
+        String str = string.getText();
+        if (str.matches("[0-23]\\d")){
+            int i = Integer.parseInt(str);
+            if (i >= 0 && i <=23){
+                return true;
+            }
+        }
+        return false;
+    }
+    public static boolean isMinuto(TextField string){
+        String str = string.getText();
+        if (str.matches("[0-59]\\d")){
+            int i = Integer.parseInt(str);
+            if (i >= 0 && i <=59){
+                return true;
+            }
+        }
+        return false;
     }
 
     public static String checkNumId(String id){

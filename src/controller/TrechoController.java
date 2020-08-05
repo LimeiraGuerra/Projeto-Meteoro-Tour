@@ -10,7 +10,7 @@ import javafx.scene.layout.Pane;
 import model.entities.Trecho;
 import model.usecases.GerenciarTrechoUC;
 import view.util.DataValidator;
-
+import view.util.AlertWindow;
 
 public class TrechoController {
 
@@ -31,7 +31,6 @@ public class TrechoController {
     @FXML private Button btDeleteTrecho;
     @FXML private Button btSalvaTrecho;
     @FXML private Label lbValorTotal;
-    @FXML private Label lbSalvo;
 
     private ObservableList<Trecho> trechos = FXCollections.observableArrayList();
     private GerenciarTrechoUC ucTrecho = new GerenciarTrechoUC();
@@ -59,19 +58,9 @@ public class TrechoController {
         return tabelaTrecho.getSelectionModel().getSelectedItem();
     }
 
-    private void cleanFields(){
-        tfOrigem.clear();
-        tfDestino.clear();
-        tfQuilometragem.clear();
-        tfTempoDuracao.clear();
-        tfValorPassagem.clear();
-        tfTaxaEmbarque.clear();
-        tfValorSeguro.clear();
-        lbValorTotal.setText("");
-    }
     private Trecho createTrecho(){
         Trecho trecho = ucTrecho.createTrecho(tfOrigem.getText(), tfDestino.getText(), Double.parseDouble(tfQuilometragem.getText()),
-                Double.parseDouble(tfTempoDuracao.getText()), Double.parseDouble(tfValorPassagem.getText()),
+                Integer.parseInt(tfTempoDuracao.getText()), Double.parseDouble(tfValorPassagem.getText()),
                 Double.parseDouble(tfTaxaEmbarque.getText()), Double.parseDouble(tfValorSeguro.getText()));
 
         return trecho;
@@ -83,7 +72,7 @@ public class TrechoController {
 
     private void updateTrecho(){
         Trecho trecho = searchTrechoOrigemDestino();
-        ucTrecho.updateTrecho(Double.parseDouble(tfQuilometragem.getText()),Double.parseDouble(tfTempoDuracao.getText()),
+        ucTrecho.updateTrecho(Double.parseDouble(tfQuilometragem.getText()),Integer.parseInt(tfTempoDuracao.getText()),
                 Double.parseDouble(tfValorPassagem.getText()), Double.parseDouble(tfTaxaEmbarque.getText()),Double.parseDouble(tfValorSeguro.getText()), trecho);
 
         trecho.setValorTotal();
@@ -96,15 +85,15 @@ public class TrechoController {
 
            Trecho trecho = createTrecho();
            trechos.add(trecho);
-           lbSalvo.setText("Salvo");
+           AlertWindow.informationAlerta("O trecho: " + trecho.toString() + " foi salvo!", "Trecho adicionado");
         }
-        if (searchTrechoTable() != null && checkTextField()) {
+        else if (searchTrechoTable() != null && checkTextField()) {
             updateTrecho();
-            lbSalvo.setText("Salvo");
+            AlertWindow.informationAlerta("O trecho: " + searchTrechoTable().toString() + " foi editado!", "Trecho editado");
 
         }
         else{
-            lbSalvo.setText("NÃO SALVO");
+            AlertWindow.informationAlerta("O trecho não pode ser adicionado\nVerifique se não há esse trecho criado!", "Trecho não adicionado :(");
         }
         cleanFields();
         tabelaTrecho.refresh();
@@ -122,30 +111,33 @@ public class TrechoController {
         paneTrecho.setVisible(true);
     }
 
-    public void deleteTrecho(ActionEvent actionEvent) {
 
+    private boolean trechoNoContainsTrechoLinha(Trecho trecho){
+        if (trecho.sizeListTrechoLinha() == 0){
+            return true;
+        }
+        return false;
+    }
+
+    @FXML
+    private void deleteTrecho(ActionEvent actionEvent) {
        Trecho trecho = searchTrechoTable();
-
        if (trecho != null){
-           ucTrecho.deleteTrecho(trecho);
-           trechos.remove(trecho);
-           tabelaTrecho.refresh();
+           if (trechoNoContainsTrechoLinha(trecho)){
+               if (AlertWindow.verificationAlert("Deseja excluir o trecho: " + trecho.toString() + " ?", "Exclusão de trecho.")){
+                   ucTrecho.deleteTrecho(trecho);
+                   trechos.remove(trecho);
+                   tabelaTrecho.refresh();
+               }
+           }else{
+               AlertWindow.informationAlerta("Trecho não pode ser excluido pois pertece a uma linha.", "Erro na exclusão do trecho " + trecho.toString());
+           }
        }
        setVisibleButtonPane(false);
        setVisiblePaneImg(true);
        cleanFields();
     }
 
-    private void setFieldsTrecho(Trecho trecho){
-        tfOrigem.setText(trecho.getCidadeOrigem());
-        tfDestino.setText(trecho.getCidadeDestino());
-        tfQuilometragem.setText(String.valueOf(trecho.getQuilometragem()));
-        tfTempoDuracao.setText(String.valueOf(trecho.getTempoDuracao()));
-        tfValorPassagem.setText(String.valueOf(trecho.getValorPassagem()));
-        tfTaxaEmbarque.setText(String.valueOf(trecho.getTaxaEmbarque()));
-        tfValorSeguro.setText(String.valueOf(trecho.getValorSeguro()));
-        setValorTotal(trecho.getValorTotal());
-    }
 
     @FXML
     private void seeTrecho(ActionEvent actionEvent) {
@@ -166,12 +158,7 @@ public class TrechoController {
         lbValorTotal.setText("O valor total do trecho é: " + valor);
     }
 
-    private void setVisiblePaneImg(boolean bool) {
-        paneImg.setVisible(bool);
-    }
-
-
-    public boolean checkTextField(){
+    public boolean checkTextField() {
         return !tfDestino.getText().isEmpty() && !tfOrigem.getText().isEmpty() &&
                 DataValidator.isDouble(tfQuilometragem) &&
                 DataValidator.isDouble(tfTempoDuracao) &&
@@ -180,13 +167,40 @@ public class TrechoController {
                 DataValidator.isDouble(tfValorSeguro);
     }
 
-    public void setDisableOrigemDestino(boolean bool){
+    private void setFieldsTrecho(Trecho trecho){
+        tfOrigem.setText(trecho.getCidadeOrigem());
+        tfDestino.setText(trecho.getCidadeDestino());
+        tfQuilometragem.setText(String.valueOf(trecho.getQuilometragem()));
+        tfTempoDuracao.setText(String.valueOf(trecho.getTempoDuracao()));
+        tfValorPassagem.setText(String.valueOf(trecho.getValorPassagem()));
+        tfTaxaEmbarque.setText(String.valueOf(trecho.getTaxaEmbarque()));
+        tfValorSeguro.setText(String.valueOf(trecho.getValorSeguro()));
+        setValorTotal(trecho.getValorTotal());
+    }
+
+    private void cleanFields(){
+        tfOrigem.clear();
+        tfDestino.clear();
+        tfQuilometragem.clear();
+        tfTempoDuracao.clear();
+        tfValorPassagem.clear();
+        tfTaxaEmbarque.clear();
+        tfValorSeguro.clear();
+        lbValorTotal.setText("");
+    }
+
+
+    private void setDisableOrigemDestino(boolean bool){
         tfOrigem.setDisable(bool);
         tfDestino.setDisable(bool);
     }
-    public void setVisibleButtonPane(boolean bool){
+    private void setVisibleButtonPane(boolean bool){
         btDeleteTrecho.setVisible(bool);
         btSalvaTrecho.setVisible(bool);
         paneTrecho.setVisible(bool);
+    }
+
+    private void setVisiblePaneImg(boolean bool) {
+        paneImg.setVisible(bool);
     }
 }

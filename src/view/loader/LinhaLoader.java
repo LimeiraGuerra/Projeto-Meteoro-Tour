@@ -5,6 +5,7 @@ import controller.TrechoController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -22,6 +23,7 @@ public class LinhaLoader {
             stage.setResizable(false);
             stage.setTitle("Linhas");
             LinhaController trechoController = loader.getController();
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(cena);
             stage.show();
 
