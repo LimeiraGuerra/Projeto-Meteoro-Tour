@@ -6,21 +6,33 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.entities.Passagem;
 import model.entities.Viagem;
 import view.util.TipoEspecial;
 
 import java.io.IOException;
 
 public class FinalizacaoVendaLoader {
+    private boolean success = false;
+    private Passagem passagemR;
 
-    public void start(Viagem viagem, TipoEspecial clientType){
+    public FinalizacaoVendaLoader(Passagem passagemReagendamento) {
+        this.passagemR = passagemReagendamento;
+    }
+
+    public FinalizacaoVendaLoader() {
+    }
+
+    public void start(Viagem viagem, TipoEspecial clientType, String sitId){
         try{
             FXMLLoader loader = new FXMLLoader();
             Pane graph = loader.load(getClass().getResource("../fxml/FinalizacaoVenda.fxml").openStream());
             FinalizacaoVendaController ctrl = loader.getController();
 
             ctrl.setChosenViagem(viagem);
-            ctrl.setChonsenSitId(clientType);
+            ctrl.setClientType(clientType);
+            ctrl.setChosenSitId(sitId);
+            if (this.passagemR != null){ctrl.setPassagemR(this.passagemR);}
 
             Stage stage = new Stage();
             stage.setScene(new Scene(graph, 252, 363));
@@ -28,8 +40,13 @@ public class FinalizacaoVendaLoader {
             stage.setResizable(false);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
+
+            this.success = ctrl.isSoldSuccess();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public boolean isSoldSuccess(){
+        return success;
     }
 }

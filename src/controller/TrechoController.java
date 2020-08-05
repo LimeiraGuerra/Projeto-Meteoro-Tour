@@ -9,7 +9,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import model.entities.Trecho;
 import model.usecases.GerenciarTrechoUC;
-import view.util.TextFieldValidator;
+import view.util.DataValidator;
 
 
 public class TrechoController {
@@ -172,12 +172,12 @@ public class TrechoController {
 
 
     public boolean checkTextField(){
-        return !TextFieldValidator.isDate(tfDestino) && !TextFieldValidator.isDate(tfOrigem) &&
-                TextFieldValidator.isDouble(tfQuilometragem) &&
-                TextFieldValidator.isDouble(tfTempoDuracao) &&
-                TextFieldValidator.isDouble(tfValorPassagem) &&
-                TextFieldValidator.isDouble(tfTaxaEmbarque) &&
-                TextFieldValidator.isDouble(tfValorSeguro);
+        return !tfDestino.getText().isEmpty() && !tfOrigem.getText().isEmpty() &&
+                DataValidator.isDouble(tfQuilometragem) &&
+                DataValidator.isDouble(tfTempoDuracao) &&
+                DataValidator.isDouble(tfValorPassagem) &&
+                DataValidator.isDouble(tfTaxaEmbarque) &&
+                DataValidator.isDouble(tfValorSeguro);
     }
 
     public void setDisableOrigemDestino(boolean bool){

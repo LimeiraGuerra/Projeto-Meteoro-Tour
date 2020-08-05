@@ -12,29 +12,29 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="445.0" prefWidth="917.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PassagemController">
    <children>
-      <TableView fx:id="tablePassagens" layoutX="14.0" layoutY="14.0" prefHeight="383.0" prefWidth="890.0">
+      <TableView fx:id="tablePassagens" layoutX="14.0" layoutY="14.0" onMouseClicked="#selectPassagem" prefHeight="383.0" prefWidth="890.0">
         <columns>
-          <TableColumn fx:id="colNumero" minWidth="-Infinity" prefWidth="60.0" text="Número" />
-          <TableColumn fx:id="colData" minWidth="-Infinity" prefWidth="90.0" text="Data" />
-            <TableColumn fx:id="colHorarioSaida" minWidth="-Infinity" prefWidth="90.0" text="Horário Saída" />
-            <TableColumn fx:id="colLinha" prefWidth="261.0" text="Linha" />
-            <TableColumn fx:id="colOrigem" minWidth="-Infinity" prefWidth="144.0" text="Cidade Origem" />
-            <TableColumn fx:id="colDestino" minWidth="-Infinity" prefWidth="144.0" text="Cidade Destino" />
-            <TableColumn fx:id="colValor" minWidth="-Infinity" prefWidth="100.0" text="Valor Total" />
+          <TableColumn fx:id="colNumero" minWidth="-Infinity" prefWidth="60.0" resizable="false" text="Número" />
+            <TableColumn fx:id="colCpf" minWidth="-Infinity" prefWidth="100.0" resizable="false" text="CPF Cliente" />
+          <TableColumn fx:id="colData" minWidth="-Infinity" prefWidth="90.0" resizable="false" text="Data Viagem" />
+            <TableColumn fx:id="colHorarioSaida" minWidth="-Infinity" prefWidth="90.0" resizable="false" text="Horário Saída" />
+            <TableColumn fx:id="colLinha" prefWidth="260.0" resizable="false" text="Linha" />
+            <TableColumn fx:id="colOrigem" minWidth="-Infinity" prefWidth="144.0" resizable="false" text="Cidade Origem" />
+            <TableColumn fx:id="colDestino" minWidth="-Infinity" prefWidth="144.0" resizable="false" text="Cidade Destino" />
         </columns>
       </TableView>
       <Label layoutX="14.0" layoutY="413.0" text="Buscar por:" />
-      <RadioButton layoutX="79.0" layoutY="413.0" mnemonicParsing="false" selected="true" text="Número da passagem">
+      <RadioButton fx:id="rdNumero" layoutX="79.0" layoutY="413.0" mnemonicParsing="false" selected="true" text="Número da passagem">
          <toggleGroup>
-            <ToggleGroup fx:id="SearchType" />
+            <ToggleGroup fx:id="searchType" />
          </toggleGroup>
       </RadioButton>
-      <RadioButton layoutX="228.0" layoutY="413.0" mnemonicParsing="false" text="CPF cliente" toggleGroup="$SearchType" />
+      <RadioButton fx:id="rdCpf" layoutX="228.0" layoutY="413.0" mnemonicParsing="false" text="CPF cliente" toggleGroup="$searchType" />
       <TextField fx:id="txtSearchBar" layoutX="321.0" layoutY="409.0" prefHeight="25.0" prefWidth="197.0" />
-      <Button layoutX="528.0" layoutY="409.0" mnemonicParsing="false" onAction="#searchForViagens" prefHeight="25.0" prefWidth="59.0" text="Buscar" />
-      <Button fx:id="btnReemicao" disable="true" layoutX="607.0" layoutY="409.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="86.0" text="Reemição" />
-      <Button fx:id="btnDevolucao" disable="true" layoutX="703.0" layoutY="409.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="86.0" text="Devolução" />
-      <Button fx:id="btnReagendamento" disable="true" layoutX="799.0" layoutY="409.0" mnemonicParsing="false" text="Reagendamento" />
+      <Button layoutX="528.0" layoutY="409.0" mnemonicParsing="false" onAction="#searchForViagens" onMouseClicked="#selectPassagem" prefHeight="25.0" prefWidth="59.0" text="Buscar" />
+      <Button fx:id="btnReemicao" disable="true" layoutX="607.0" layoutY="409.0" mnemonicParsing="false" onAction="#printPassagem" prefHeight="25.0" prefWidth="86.0" text="Reemição" />
+      <Button fx:id="btnDevolucao" disable="true" layoutX="703.0" layoutY="409.0" mnemonicParsing="false" onAction="#removePassagem" prefHeight="25.0" prefWidth="86.0" text="Devolução" />
+      <Button fx:id="btnReagendamento" disable="true" layoutX="799.0" layoutY="409.0" mnemonicParsing="false" onAction="#reschedulePassagem" text="Reagendamento" />
       <Line endX="-100.0" endY="-25.0" layoutX="697.0" layoutY="434.0" opacity="0.4" startX="-100.0" />
    </children>
 </AnchorPane>
