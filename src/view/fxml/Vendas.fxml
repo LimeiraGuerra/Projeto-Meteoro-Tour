@@ -38,6 +38,8 @@
                   <MenuItem mnemonicParsing="false" onAction="#openLinha" text="Linhas" />
                      </items></Menu>
             <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem fx:id="menuOptRelatorio" disable="true" mnemonicParsing="false" onAction="#openRelatorios" text="Relatórios" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem fx:id="menuOptPassagens" mnemonicParsing="false" onAction="#openBuscarPassagens" text="Buscar Passagens" />
           </items>
         </Menu>
