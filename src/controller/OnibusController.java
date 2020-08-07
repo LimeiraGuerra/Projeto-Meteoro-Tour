@@ -1,5 +1,7 @@
 package controller;
 
+import database.dao.FuncionarioDAO;
+import database.dao.OnibusDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -8,11 +10,16 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import model.entities.Funcionario;
 import model.entities.Onibus;
+import model.usecases.GerenciarFuncionarioUC;
+import model.usecases.GerenciarOnibusUC;
+import view.util.DataValidator;
 
 import java.util.Optional;
 
 public class OnibusController {
+
     @FXML private TableView<Onibus> tabelaOnibus;
     @FXML private TableColumn<Onibus, String> cRenavam;
     @FXML private TableColumn<Onibus, String> cPlaca;
@@ -20,7 +27,13 @@ public class OnibusController {
     @FXML private TextField txtFieldPlaca;
     @FXML private Pane paneOnibus;
 
+    String msgBody;
     private ObservableList<Onibus> onibus = FXCollections.observableArrayList();
+    private GerenciarOnibusUC ucOnibus;
+
+    public OnibusController(){
+        this.ucOnibus= new GerenciarOnibusUC(OnibusDAO.getInstancia());
+    }
 
     public void initialize(){
         bind();
@@ -35,86 +48,101 @@ public class OnibusController {
     }
 
     private ObservableList<Onibus> loadTable() {
-        Onibus o = new Onibus("12345","54321");
-        Onibus o1 = new Onibus("6789","9876");
-        onibus.addAll(o,o1);
+        refreshTable();
         return onibus;
     }
 
+    private void  refreshTable(){
+        onibus.clear();
+        onibus.addAll(ucOnibus.getListOnibus());
+        tabelaOnibus.refresh();
+    }
+
+    public void addOnibus(ActionEvent actionEvent) {
+        tabelaOnibus.getSelectionModel().select(null);
+        clearTextField();
+    }
+
+    public void deleteOnibus(ActionEvent actionEvent) {
+        if (getOnibusOfSelectedRow() != null) {
+            if (verificationAlert()) ucOnibus.deleteOnibus(getOnibusOfSelectedRow());
+        }
+        refreshTable();
+        clearTextField();
+    }
+
     public void saveOnibus(ActionEvent actionEvent) {
-        int indexSelectedBus = getIndexOfSelectedRow();
-        System.out.println(getIndexOfSelectedRow());
-        //tabelaOnibus.getSelectionModel().select(null);
-        if (indexSelectedBus >= 0){
-            editOnibus(indexSelectedBus);
-            informationAlert("Ônibus editado com sucesso");
-        }
-        else {
-            Onibus bus = newOnibus();
-            onibus.add(bus);
-            informationAlert("Ônibus adicionado com sucesso");
-            //lbSalvo.setText("Salvo");
-        }
+        addOrEditFunc();
+        refreshTable();
         tabelaOnibus.getSelectionModel().select(onibus.size());
+    }
+
+    private void addOrEditFunc(){
+        if (verifyTextFields()){
+            if (getIndexOfSelectedRow() >= 0){
+                editOnibus(getIndexOfSelectedRow());
+            }
+            else {
+                createOnibus();
+            }
+        }else {
+            informationAlert(msgBody);
+        }
     }
 
     private void editOnibus(int index) {
         Onibus selectedBus = onibus.get(index);
-        System.out.println(selectedBus);
-        selectedBus.setRenavam(txtFieldRenavam.getText());
-        selectedBus.setPlaca(txtFieldPlaca.getText());
-        onibus.set(index,selectedBus);
-    }
-
-    private Onibus buscarOnibusList(String renavam, String placa){
-        for (Onibus bus: onibus){
-            if (bus.getRenavam().equals(renavam) || bus.getPlaca().equals(placa)) return bus;
+        if (ifTableNotHaveRenavamOrPlaca(selectedBus)){
+            setOnibusByTextFields(selectedBus);
+            ucOnibus.updateOnibus(selectedBus);
+            informationAlert("Ônibus editado com sucesso");
+            refreshTable();
+            clearTextField();
+        }else {
+            errorAlert("Renavam ou placa já cadastrados no sistema");
         }
-        return null;
     }
 
-    private Onibus getOnibusOfSelectedRow(){
-        return tabelaOnibus.getSelectionModel().getSelectedItem();
+    private boolean ifTableNotHaveRenavamOrPlaca(Onibus bus) {
+        for (Onibus o: onibus){
+            if (!o.equals(bus) && (o.getRenavam().equals(bus.getRenavam()) || o.getPlaca().equals(bus.getPlaca()))){
+                return false;
+            }
+        }
+        return true;
     }
 
-    private int getIndexOfSelectedRow(){
-        return tabelaOnibus.getSelectionModel().getSelectedIndex();
+    private void setOnibusByTextFields(Onibus bus){
+        bus.setRenavam(txtFieldRenavam.getText());
+        bus.setPlaca(txtFieldPlaca.getText());
+    }
+
+    public void createOnibus(){
+        Onibus bus = newOnibus();
+        if (ifTableNotContainsFunc(bus)) {
+            //s
+            ucOnibus.saveOnibus(bus);
+            informationAlert("Onibus adicionado com sucesso");
+        } else {
+            errorAlert("Renavam ou placa já cadastrados no sistema");
+        }
     }
 
     private Onibus newOnibus(){
         return new Onibus(txtFieldRenavam.getText(), txtFieldPlaca.getText());
     }
 
-    private void informationAlert(String msg){
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText(msg);
-        alert.showAndWait();
+    private boolean ifTableNotContainsFunc(Onibus bus){
+        for (Onibus o: onibus){
+            if (o.getRenavam().equals(bus.getRenavam()) || o.getPlaca().equals(bus.getPlaca())){
+                return false;
+            }
+        }
+        return true;
     }
 
-    public void deleteOnibus(ActionEvent actionEvent) {
-        /*Alert alert= new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setHeaderText("Tem certeza que deseja excluir esse ônibus?");
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK) {
-            onibus.remove(getIndexOfSelectedRow());
-        }*/
-
-
-        if (verificationAlert()) onibus.remove(getIndexOfSelectedRow());
-
-    }
-
-    private boolean verificationAlert(){
-        Alert alert= new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setHeaderText("Tem certeza que deseja excluir esse ônibus?");
-        Optional<ButtonType> result = alert.showAndWait();
-        return result.get() == ButtonType.OK;
-    }
-
-    public void addOnibus(ActionEvent actionEvent) {
-        tabelaOnibus.getSelectionModel().select(null);
-        clearTextField();
+    public void setTextFieldByClick(MouseEvent mouseEvent){
+        setTextField();
     }
 
     private void setTextField(){
@@ -123,12 +151,48 @@ public class OnibusController {
         txtFieldPlaca.setText(bus.getPlaca());
     }
 
-    public void setTextFieldByClick(MouseEvent mouseEvent){
-        setTextField();
-    }
-
     private void clearTextField(){
         txtFieldPlaca.clear();
         txtFieldRenavam.clear();
+    }
+
+    private boolean verifyTextFields(){
+        StringBuilder str = new StringBuilder();
+        //todo verify renavam e placa
+        if (DataValidator.txtInputVerifier(txtFieldRenavam.getText())== null) str.append("Campo Renavam inválido. \n");
+        if (DataValidator.txtInputVerifier(txtFieldPlaca.getText())== null) str.append("Campo Placa inválido. \n");
+        msgBody = str.toString();
+        return str.length() == 0;
+    }
+
+
+    private boolean verificationAlert(){
+        Alert alert= new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText("Tem certeza que deseja excluir esse onibus?");
+        alert.setContentText(getOnibusOfSelectedRow().toString());
+        Optional<ButtonType> result = alert.showAndWait();
+        return result.get() == ButtonType.OK;
+    }
+
+    private void informationAlert(String msg){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("AVISO!");
+        alert.setContentText(msg);
+        alert.showAndWait();
+    }
+
+    private void errorAlert(String msg) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText("ERRO!");
+        alert.setContentText(msg);
+        alert.showAndWait();
+    }
+
+    private Onibus getOnibusOfSelectedRow(){
+        return tabelaOnibus.getSelectionModel().getSelectedItem();
+    }
+
+    private int getIndexOfSelectedRow(){
+        return tabelaOnibus.getSelectionModel().getSelectedIndex();
     }
 }

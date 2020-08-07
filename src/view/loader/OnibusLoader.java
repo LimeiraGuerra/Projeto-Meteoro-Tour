@@ -17,13 +17,14 @@ public class OnibusLoader {
         FXMLLoader loader = new FXMLLoader();
         try{
             Pane graph = load(getClass().getResource("../fxml/Onibus.fxml"));
-            Scene scene = new Scene(graph);
+            Scene scene = new Scene(graph, 780,410);
             Stage stage = new Stage();
             stage.setTitle("Onibus");
-            TrechoController trechoController = loader.getController();
+            OnibusLoader onibusController = loader.getController();
 
             stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(false);
             stage.showAndWait();
 
         } catch (IOException e) {
