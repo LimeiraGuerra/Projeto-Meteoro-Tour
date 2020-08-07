@@ -11,7 +11,7 @@ import java.util.List;
 public class GerenciarTrechoLinhaUC {
     private TrechoLinhaDAO daoTrechoLinha = TrechoLinhaDAO.getInstancia();
     private GerenciarTrechoUC ucTrecho = new GerenciarTrechoUC();
-    private  GerenciarLinhaUC ucLinha = new GerenciarLinhaUC();
+    private GerenciarLinhaUC ucLinha = new GerenciarLinhaUC();
 
     public void createTrechoLinha(Linha linha, Trecho trecho, Date horario, int ordem){
         TrechoLinha trechoL = new TrechoLinha(ordem, horario, trecho, linha);

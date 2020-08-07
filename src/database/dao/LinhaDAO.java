@@ -47,6 +47,14 @@ public class LinhaDAO implements DAO<Linha, String> {
     public Linha searchLinha(Linha linha){
         return linhas.contains(linha) ? linha : null;
     }
+    public Linha searchLinhaNome(String nome){
+        for (Linha linha: linhas) {
+            if(linha.getNome().equals(nome)){
+                return linha;
+            }
+        }
+        return null;
+    }
     public List<Linha> getListLinha(){
         return linhas;
     }

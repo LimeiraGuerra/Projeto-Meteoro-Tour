@@ -8,8 +8,7 @@ import java.util.Date;
 
 public class DataValidator {
 
-    public static boolean isDouble(TextField string){
-        String str = string.getText();
+    public static boolean isDouble(String str){
         return str.matches("-?\\d+|\\d+.\\d+");
     }
 
@@ -26,8 +25,7 @@ public class DataValidator {
         return rg.matches(".+");
     }
 
-    public static boolean isHora(TextField string){
-        String str = string.getText();
+    public static boolean isHora(String str){
         if (str.matches("[0-23]\\d")){
             int i = Integer.parseInt(str);
             if (i >= 0 && i <=23){
@@ -36,8 +34,7 @@ public class DataValidator {
         }
         return false;
     }
-    public static boolean isMinuto(TextField string){
-        String str = string.getText();
+    public static boolean isMinuto(String str){
         if (str.matches("[0-59]\\d")){
             int i = Integer.parseInt(str);
             if (i >= 0 && i <=59){
