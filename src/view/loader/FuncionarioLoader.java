@@ -16,7 +16,7 @@ public class FuncionarioLoader {
         FXMLLoader loader = new FXMLLoader();
         try{
             Pane graph = load(getClass().getResource("../fxml/Funcionario.fxml"));
-            Scene scene = new Scene(graph,900,440);
+            Scene scene = new Scene(graph,870,420);
             Stage stage = new Stage();
             stage.setTitle("Funcionario");
             FuncionarioLoader funcionarioController = loader.getController();

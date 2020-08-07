@@ -41,4 +41,12 @@ public class Funcionario {
     public void setCargo(String cargo) {
         this.cargo = cargo;
     }
+
+    @Override
+    public String toString() {
+        return  "CPF : " + cpf + '\n' +
+                "Nome : " + nome + '\n' +
+                "RG : " + rg + '\n' +
+                "Cargo : " + cargo + '\n';
+    }
 }

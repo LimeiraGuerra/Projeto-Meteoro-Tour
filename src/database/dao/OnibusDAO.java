@@ -1,24 +1,35 @@
 package database.dao;
 
 import database.utils.DAO;
+import model.entities.Funcionario;
 import model.entities.Onibus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OnibusDAO implements DAO<Onibus,String> {
+    private static OnibusDAO instancia;
+    private List<Onibus> onibus = new ArrayList<>();
+
+    private OnibusDAO(){
+        onibus.add(new Onibus("12345678910", "ABC1234"));
+        onibus.add(new Onibus("13578976453", "DEF5678"));
+        onibus.add(new Onibus("15326476535", "GHI9101"));
+        onibus.add(new Onibus("86452333234", "JKL1121"));
+    }
     @Override
     public void save(Onibus model) {
-
+        onibus.add(model);
     }
 
     @Override
     public void update(Onibus model) {
-
+        onibus.set(onibus.indexOf(model), model);
     }
 
     @Override
     public void delete(Onibus model) {
-
+        onibus.remove(model);
     }
 
     @Override
@@ -29,5 +40,14 @@ public class OnibusDAO implements DAO<Onibus,String> {
     @Override
     public List<Onibus> selectByArgs(String... args) {
         return null;
+    }
+
+    public List<Onibus> getListOnibus() {
+        return onibus;
+    }
+
+    public static OnibusDAO getInstancia(){
+        if (instancia == null) return new OnibusDAO();
+        return instancia;
     }
 }

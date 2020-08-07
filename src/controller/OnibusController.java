@@ -13,8 +13,7 @@ import model.entities.Onibus;
 import java.util.Optional;
 
 public class OnibusController {
-    //todo
-    // verificação text field e classes verificação
+
     @FXML private TableView<Onibus> tabelaOnibus;
     @FXML private TableColumn<Onibus, String> cRenavam;
     @FXML private TableColumn<Onibus, String> cPlaca;
