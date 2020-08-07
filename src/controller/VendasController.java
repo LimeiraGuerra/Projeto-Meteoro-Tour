@@ -24,7 +24,7 @@ public class VendasController {
     @FXML AnchorPane popupReagendamento;
     @FXML TextField txtFieldOrigem, txtFieldDestino;
     @FXML DatePicker datePickerSaida;
-    @FXML MenuItem menuOptPassagens;
+    @FXML MenuItem menuOptPassagens, menuOptRelatorio;
     @FXML ToggleGroup clienteEspecial;
     @FXML TableView<Viagem> tableViagens;
     @FXML TableColumn<Viagem, String> colLinha, colHorarioSaida;
@@ -60,6 +60,7 @@ public class VendasController {
 
     public void setAdminPrivileges() {
         this.menuGerenciar.setDisable(false);
+        this.menuOptRelatorio.setDisable(false);
     }
 
     public void setModeReagendamento() {
@@ -248,6 +249,22 @@ public class VendasController {
         this.toggleStateAndVisualOfSeats();
     }
 
+    public void openOnibus(ActionEvent actionEvent){
+        OnibusLoader janelaOnibus = new OnibusLoader();
+        janelaOnibus.start();
+
+    }
+
+    public void openFunc(ActionEvent actionEvent) {
+        FuncionarioLoader janelaFunc = new FuncionarioLoader();
+        janelaFunc.start();
+    }
+
+    public void openRelatorios(ActionEvent actionEvent) {
+        RelatorioLoader janelaRelatorio = new RelatorioLoader();
+        janelaRelatorio.start();
+    }
+
     public TipoEspecial getClientType() {
         return clientType;
     }
@@ -262,16 +279,5 @@ public class VendasController {
 
     public void setScene(Scene scene) {
         this.scene = scene;
-    }
-
-    public void openOnibus(ActionEvent actionEvent){
-        OnibusLoader janelaOnibus = new OnibusLoader();
-        janelaOnibus.start();
-
-    }
-
-    public void openFunc(ActionEvent actionEvent) {
-        FuncionarioLoader janelaFunc = new FuncionarioLoader();
-        janelaFunc.start();
     }
 }
