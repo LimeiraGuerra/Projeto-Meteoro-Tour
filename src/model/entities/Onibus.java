@@ -23,4 +23,10 @@ public class Onibus {
     public void setPlaca(String placa) {
         this.placa = placa;
     }
+
+    @Override
+    public String toString() {
+        return "RENAVAM : " + renavam + '\n' +
+                "Placa : " + placa + '\n';
+    }
 }

@@ -35,7 +35,7 @@ public class FinalizacaoVendaLoader {
             if (this.passagemR != null){ctrl.setPassagemR(this.passagemR);}
 
             Stage stage = new Stage();
-            stage.setScene(new Scene(graph, 252, 363));
+            stage.setScene(new Scene(graph));
             stage.setTitle("Finalizar Compra");
             stage.setResizable(false);
             stage.initModality(Modality.APPLICATION_MODAL);

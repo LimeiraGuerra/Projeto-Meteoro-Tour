@@ -15,7 +15,7 @@ public class RelatorioLoader {
             Pane graph = loader.load(getClass().getResource("/view/fxml/Relatorio.fxml").openStream());
 
             Stage stage = new Stage();
-            stage.setScene(new Scene(graph, 966, 449));
+            stage.setScene(new Scene(graph));
             stage.setTitle("Meteoro Tour - Relatórios");
             stage.setResizable(false);
             stage.initModality(Modality.APPLICATION_MODAL);

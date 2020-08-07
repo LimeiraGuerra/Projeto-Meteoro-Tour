@@ -19,7 +19,7 @@ public class PassagemLoader {
             PassagemController ctrl = loader.getController();
 
             Stage stage = new Stage();
-            stage.setScene(new Scene(graph, 907, 435));
+            stage.setScene(new Scene(graph));
             stage.setTitle("Meteoro Tour - Busca de Passagens");
             stage.setResizable(false);
             stage.initModality(Modality.APPLICATION_MODAL);

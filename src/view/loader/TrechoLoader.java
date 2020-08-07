@@ -17,7 +17,7 @@ public class TrechoLoader {
         FXMLLoader loader = new FXMLLoader();
         try{
             Pane grafico = load(getClass().getResource("/view/fxml/Trecho.fxml"));
-            Scene cena = new Scene(grafico, 763, 490);
+            Scene cena = new Scene(grafico);
             Stage stage = new Stage();
             stage.setResizable(false);
 
