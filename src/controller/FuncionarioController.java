@@ -64,13 +64,6 @@ public class FuncionarioController{
         clearTextField();
     }
 
-    private void clearTextField() {
-        txtFieldCPF.clear();
-        txtFieldNome.clear();
-        txtFieldCargo.clear();
-        txtFieldRG.clear();
-    }
-
     public void deleteFunc(ActionEvent actionEvent) {
         if (getFuncOfSelectedRow() != null){
             if (verificationAlert()) ucFuncionario.deleteFunc(getFuncOfSelectedRow());
@@ -79,26 +72,10 @@ public class FuncionarioController{
         clearTextField();
     }
 
-    private boolean verificationAlert(){
-        Alert alert= new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setHeaderText("Tem certeza que deseja excluir "+getFuncOfSelectedRow().getNome()+"?");
-        alert.setContentText(getFuncOfSelectedRow().toString());
-        Optional<ButtonType> result = alert.showAndWait();
-        return result.get() == ButtonType.OK;
-    }
-
     public void saveFunc(ActionEvent actionEvent) {
         addOrEditFunc();
         refreshTable();
         tabelaFunc.getSelectionModel().select(funcionarios.size());
-    }
-
-    private Funcionario newFunc() {
-        String cpf = DataValidator.cpfVerifier(txtFieldCPF.getText());
-        String nome = DataValidator.txtInputVerifier(txtFieldNome.getText());
-        String rg = DataValidator.rgVerifier(txtFieldRG.getText());
-        String cargo = DataValidator.txtInputVerifier(txtFieldCargo.getText());
-        return new Funcionario(cpf, nome, rg, cargo);
     }
 
     private void addOrEditFunc(){
@@ -111,23 +88,6 @@ public class FuncionarioController{
         } else {
             informationAlert(msgBody);
         }
-    }
-
-    private boolean verifyTextFields(){
-        StringBuilder str = new StringBuilder();
-        if (DataValidator.cpfVerifier(txtFieldCPF.getText())== null) str.append("Campo CPF inválido. \n");
-        if (DataValidator.txtInputVerifier(txtFieldNome.getText())== null) str.append("Campo nome inválido. \n");
-        if (DataValidator.rgVerifier(txtFieldRG.getText())==null) str.append("Campo RG inválido. \n");
-        if (DataValidator.txtInputVerifier(txtFieldCargo.getText())==null) str.append("Campo Cargo inválido. \n");
-        msgBody = str.toString();
-        return str.length() == 0;
-    }
-
-    private void informationAlert(String msg){
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText("AVISO!");
-        alert.setContentText(msg);
-        alert.showAndWait();
     }
 
     private void editFunc(int index) {
@@ -143,11 +103,13 @@ public class FuncionarioController{
         }
     }
 
-    private void errorAlert(String msg){
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setHeaderText("ERRO!");
-        alert.setContentText(msg);
-        alert.showAndWait();
+    private boolean ifTableNotHaveCpfORg(Funcionario func) {
+        for (Funcionario f : funcionarios){
+            if (!f.equals(func) &&(f.getCpf().equals(func.getCpf()) || f.getRg().equals(func.getRg()))){
+                return false;
+            }
+        }
+        return true;
     }
 
     private void setFuncByTextFields(Funcionario func){
@@ -157,25 +119,22 @@ public class FuncionarioController{
         func.setCargo(txtFieldCargo.getText());
     }
 
-    private boolean ifTableNotHaveCpfORg(Funcionario func) {
-        for (Funcionario f : funcionarios){
-            if (!f.equals(func) &&(f.getCpf().equals(func.getCpf()) || f.getRg().equals(func.getRg()))){
-                return false;
-            }
-        }
-        return true;
-        //return !(func.getCpf().equals(txtFieldCPF.getText()) || func.getRg().equals(txtFieldRG.getText()));
-    }
-
     private void createFunc(){
         Funcionario func = newFunc();
         if (ifTableNotContainsFunc(func)) {
-            //s
             ucFuncionario.saveFunc(func);
             informationAlert("Funcionario adicionado com sucesso");
         } else {
             errorAlert("CPF ou RG já cadastrados no sistema");
         }
+    }
+
+    private Funcionario newFunc() {
+        String cpf = DataValidator.cpfVerifier(txtFieldCPF.getText());
+        String nome = DataValidator.txtInputVerifier(txtFieldNome.getText());
+        String rg = DataValidator.rgVerifier(txtFieldRG.getText());
+        String cargo = DataValidator.txtInputVerifier(txtFieldCargo.getText());
+        return new Funcionario(cpf, nome, rg, cargo);
     }
 
     private boolean ifTableNotContainsFunc(Funcionario func){
@@ -197,6 +156,45 @@ public class FuncionarioController{
         txtFieldNome.setText(func.getNome());
         txtFieldRG.setText(func.getRg());
         txtFieldCargo.setText(func.getCargo());
+    }
+
+    private void clearTextField() {
+        txtFieldCPF.clear();
+        txtFieldNome.clear();
+        txtFieldCargo.clear();
+        txtFieldRG.clear();
+    }
+
+    private boolean verifyTextFields(){
+        StringBuilder str = new StringBuilder();
+        if (DataValidator.cpfVerifier(txtFieldCPF.getText())== null) str.append("Campo CPF inválido. \n");
+        if (DataValidator.txtInputVerifier(txtFieldNome.getText())== null) str.append("Campo nome inválido. \n");
+        if (DataValidator.rgVerifier(txtFieldRG.getText())==null) str.append("Campo RG inválido. \n");
+        if (DataValidator.txtInputVerifier(txtFieldCargo.getText())==null) str.append("Campo Cargo inválido. \n");
+        msgBody = str.toString();
+        return str.length() == 0;
+    }
+
+    private boolean verificationAlert(){
+        Alert alert= new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText("Tem certeza que deseja excluir "+getFuncOfSelectedRow().getNome()+"?");
+        alert.setContentText(getFuncOfSelectedRow().toString());
+        Optional<ButtonType> result = alert.showAndWait();
+        return result.get() == ButtonType.OK;
+    }
+
+    private void informationAlert(String msg){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("AVISO!");
+        alert.setContentText(msg);
+        alert.showAndWait();
+    }
+
+    private void errorAlert(String msg){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText("ERRO!");
+        alert.setContentText(msg);
+        alert.showAndWait();
     }
 
     private Funcionario getFuncOfSelectedRow() {

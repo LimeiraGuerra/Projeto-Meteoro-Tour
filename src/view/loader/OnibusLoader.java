@@ -17,7 +17,7 @@ public class OnibusLoader {
         FXMLLoader loader = new FXMLLoader();
         try{
             Pane graph = load(getClass().getResource("../fxml/Onibus.fxml"));
-            Scene scene = new Scene(graph, 840,400);
+            Scene scene = new Scene(graph, 780,410);
             Stage stage = new Stage();
             stage.setTitle("Onibus");
             OnibusLoader onibusController = loader.getController();
