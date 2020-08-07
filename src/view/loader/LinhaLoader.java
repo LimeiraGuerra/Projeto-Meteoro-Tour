@@ -17,7 +17,7 @@ public class LinhaLoader {
     public void start(){
         FXMLLoader loader = new FXMLLoader();
         try{
-            Pane grafico = load(getClass().getResource("../fxml/Linha.fxml"));
+            Pane grafico = load(getClass().getResource("/view/fxml/Linha.fxml"));
             Scene cena = new Scene(grafico, 791, 490);
             Stage stage = new Stage();
             stage.setResizable(false);

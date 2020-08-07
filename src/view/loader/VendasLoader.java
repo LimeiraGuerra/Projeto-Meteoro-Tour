@@ -21,7 +21,7 @@ public class VendasLoader {
 
     public void start(){
         try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/Vendas.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/Vendas.fxml"));
             VBox graph = loader.load();
             VendasController ctrl = loader.getController();
 

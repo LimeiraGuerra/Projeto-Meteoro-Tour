@@ -12,7 +12,7 @@ public class RelatorioLoader {
     public void start(){
         try{
             FXMLLoader loader = new FXMLLoader();
-            Pane graph = loader.load(getClass().getResource("../fxml/Relatorio.fxml").openStream());
+            Pane graph = loader.load(getClass().getResource("/view/fxml/Relatorio.fxml").openStream());
 
             Stage stage = new Stage();
             stage.setScene(new Scene(graph, 966, 449));
