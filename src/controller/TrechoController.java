@@ -41,7 +41,7 @@ public class TrechoController {
         setVisibleButtonPane(false);
     }
 
-    public void bind(){
+    private void bind(){
         cDestino.setCellValueFactory(new PropertyValueFactory<>("cidadeDestino"));
         cOrigem.setCellValueFactory(new PropertyValueFactory<>("cidadeOrigem"));
         cQuilometragem.setCellValueFactory(new PropertyValueFactory<>("quilometragem"));
@@ -81,25 +81,28 @@ public class TrechoController {
 
     @FXML
     private void saveOrUpdateTrecho(ActionEvent actionEvent) {
-        if (searchTrechoOrigemDestino() == null && checkTextField()){
+        if (checkTextField()) {
+            if (searchTrechoOrigemDestino() == null) {
+                Trecho trecho = createTrecho();
+                trechos.add(trecho);
+                AlertWindow.informationAlerta("O trecho: " + trecho.toString() + " foi salvo!", "Trecho adicionado");
+            }else if (searchTrechoTable() != null) {
+                updateTrecho();
+                AlertWindow.informationAlerta("O trecho: " + searchTrechoTable().toString() + " foi editado!", "Trecho editado");
 
-           Trecho trecho = createTrecho();
-           trechos.add(trecho);
-           AlertWindow.informationAlerta("O trecho: " + trecho.toString() + " foi salvo!", "Trecho adicionado");
-        }
-        else if (searchTrechoTable() != null && checkTextField()) {
-            updateTrecho();
-            AlertWindow.informationAlerta("O trecho: " + searchTrechoTable().toString() + " foi editado!", "Trecho editado");
+            } else {
+                AlertWindow.informationAlerta("O trecho não pode ser adicionado\nVerifique se não há esse trecho criado!", "Trecho não adicionado :(");
+            }
 
+            cleanFields();
+            tabelaTrecho.refresh();
+            setVisibleButtonPane(false);
+            setVisiblePaneImg(true);
+        }else{
+            AlertWindow.informationAlerta("Campos vazios", "Trecho não adicionado");
         }
-        else{
-            AlertWindow.informationAlerta("O trecho não pode ser adicionado\nVerifique se não há esse trecho criado!", "Trecho não adicionado :(");
-        }
-        cleanFields();
-        tabelaTrecho.refresh();
-        setVisibleButtonPane(false);
-        setVisiblePaneImg(true);
-        }
+
+    }
 
     @FXML
     private void viewCreateTrecho() {
@@ -158,13 +161,13 @@ public class TrechoController {
         lbValorTotal.setText("O valor total do trecho é: " + valor);
     }
 
-    public boolean checkTextField() {
+    private boolean checkTextField() {
         return !tfDestino.getText().isEmpty() && !tfOrigem.getText().isEmpty() &&
-                DataValidator.isDouble(tfQuilometragem) &&
-                DataValidator.isDouble(tfTempoDuracao) &&
-                DataValidator.isDouble(tfValorPassagem) &&
-                DataValidator.isDouble(tfTaxaEmbarque) &&
-                DataValidator.isDouble(tfValorSeguro);
+                DataValidator.isDouble(tfQuilometragem.getText()) &&
+                DataValidator.isDouble(tfTempoDuracao.getText()) &&
+                DataValidator.isDouble(tfValorPassagem.getText()) &&
+                DataValidator.isDouble(tfTaxaEmbarque.getText()) &&
+                DataValidator.isDouble(tfValorSeguro.getText());
     }
 
     private void setFieldsTrecho(Trecho trecho){

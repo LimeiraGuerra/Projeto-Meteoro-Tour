@@ -31,6 +31,9 @@ public class GerenciarLinhaUC {
     public Linha searchLinha(Linha l){
         return  daoLinha.searchLinha(l);
     }
+    public Linha searchLinhaNome(String nome){
+        return daoLinha.searchLinhaNome(nome);
+    }
 
     public List<Linha> getListLinha() {
         return daoLinha.getListLinha();

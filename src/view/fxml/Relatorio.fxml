@@ -40,8 +40,8 @@
       </Label>
       <Rectangle fill="#ffffff00" height="25.0" layoutX="595.0" layoutY="397.0" opacity="0.25" stroke="BLACK" strokeType="INSIDE" width="189.0" />
       <Line endX="-0.5" endY="1.5" layoutX="690.0" layoutY="419.0" opacity="0.25" startX="-0.5" startY="-20.5" />
-      <Label fx:id="lbTotalUso" alignment="CENTER" contentDisplay="CENTER" layoutX="595.0" layoutY="401.0" prefHeight="17.0" prefWidth="95.0" text="9999999" textAlignment="CENTER" />
-      <Label fx:id="lbTotalLucro" alignment="CENTER" contentDisplay="CENTER" layoutX="689.0" layoutY="401.0" prefHeight="17.0" prefWidth="95.0" text="100000,00" textAlignment="CENTER" />
+      <Label fx:id="lbTotalUso" alignment="CENTER" contentDisplay="CENTER" layoutX="595.0" layoutY="401.0" prefHeight="17.0" prefWidth="95.0" text="0" textAlignment="CENTER" />
+      <Label fx:id="lbTotalLucro" alignment="CENTER" contentDisplay="CENTER" layoutX="689.0" layoutY="401.0" prefHeight="17.0" prefWidth="95.0" text="00,00" textAlignment="CENTER" />
       <Label layoutX="552.0" layoutY="426.0" text="Média:">
          <font>
             <Font name="System Bold" size="12.0" />
@@ -49,8 +49,8 @@
       </Label>
       <Rectangle fill="#ffffff00" height="25.0" layoutX="595.0" layoutY="422.0" opacity="0.25" stroke="BLACK" strokeType="INSIDE" width="189.0" />
       <Line endX="-0.5" endY="1.5" layoutX="690.0" layoutY="444.0" opacity="0.25" startX="-0.5" startY="-20.5" />
-      <Label fx:id="lbMediaUso" alignment="CENTER" contentDisplay="CENTER" layoutX="595.0" layoutY="426.0" prefHeight="17.0" prefWidth="95.0" text="9999999" textAlignment="CENTER" />
-      <Label fx:id="lbMediaLucro" alignment="CENTER" contentDisplay="CENTER" layoutX="689.0" layoutY="426.0" prefHeight="17.0" prefWidth="95.0" text="100000,00" textAlignment="CENTER" />
+      <Label fx:id="lbMediaUso" alignment="CENTER" contentDisplay="CENTER" layoutX="595.0" layoutY="426.0" prefHeight="17.0" prefWidth="95.0" text="0" textAlignment="CENTER" />
+      <Label fx:id="lbMediaLucro" alignment="CENTER" contentDisplay="CENTER" layoutX="689.0" layoutY="426.0" prefHeight="17.0" prefWidth="95.0" text="00,00" textAlignment="CENTER" />
       <Pane disable="true" layoutX="784.0" layoutY="16.0" prefHeight="204.0" prefWidth="201.0">
          <children>
             <Label layoutX="14.0" layoutY="3.0" text="Filtrar por:">

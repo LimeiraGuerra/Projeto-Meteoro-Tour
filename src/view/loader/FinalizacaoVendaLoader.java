@@ -26,7 +26,7 @@ public class FinalizacaoVendaLoader {
     public void start(Viagem viagem, TipoEspecial clientType, String sitId){
         try{
             FXMLLoader loader = new FXMLLoader();
-            Pane graph = loader.load(getClass().getResource("../fxml/FinalizacaoVenda.fxml").openStream());
+            Pane graph = loader.load(getClass().getResource("/view/fxml/FinalizacaoVenda.fxml").openStream());
             FinalizacaoVendaController ctrl = loader.getController();
 
             ctrl.setChosenViagem(viagem);

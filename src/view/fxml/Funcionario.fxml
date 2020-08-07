@@ -8,23 +8,23 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane prefHeight="410.0" prefWidth="860.0" xmlns="http://javafx.com/javafx/8.0.261" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FuncionarioController">
+<AnchorPane prefHeight="427.0" prefWidth="830.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FuncionarioController">
     <children>
-        <Pane fx:id="paneFunc" blendMode="SRC_ATOP" layoutX="615.0" layoutY="23.0" prefHeight="327.0" prefWidth="238.0">
+        <Pane fx:id="paneFunc" blendMode="SRC_ATOP" layoutX="605.0" layoutY="30.0" prefHeight="162.0" prefWidth="221.0">
             <children>
-                <TextField fx:id="txtFieldCPF" layoutX="73.0" layoutY="14.0" prefHeight="25.0" prefWidth="157.0" />
-                <Label layoutX="10.0" layoutY="65.0" text="Nome" />
-                <TextField fx:id="txtFieldNome" layoutX="73.0" layoutY="61.0" prefHeight="25.0" prefWidth="157.0" />
-                <Label layoutX="7.0" layoutY="18.0" text="CPF" />
-            <Label layoutX="9.0" layoutY="108.0" text="RG" />
-            <Label layoutX="11.0" layoutY="152.0" text="Cargo" />
-            <TextField fx:id="txtFieldRG" layoutX="73.0" layoutY="104.0" prefHeight="25.0" prefWidth="157.0" />
+                <TextField fx:id="txtFieldCPF" layoutX="54.0" layoutY="14.0" prefHeight="25.0" prefWidth="157.0" />
+                <Label layoutX="10.0" layoutY="54.0" text="Nome:" />
+                <TextField fx:id="txtFieldNome" layoutX="54.0" layoutY="50.0" prefHeight="25.0" prefWidth="157.0" />
+                <Label layoutX="10.0" layoutY="18.0" text="CPF:" />
+            <Label layoutX="10.0" layoutY="90.0" text="RG:" />
+            <Label layoutX="10.0" layoutY="126.0" text="Cargo:" />
+            <TextField fx:id="txtFieldRG" layoutX="54.0" layoutY="86.0" prefHeight="25.0" prefWidth="157.0" />
 
-            <TextField fx:id="txtFieldCargo" layoutX="73.0" layoutY="148.0" prefHeight="25.0" prefWidth="157.0" />
+            <TextField fx:id="txtFieldCargo" layoutX="54.0" layoutY="122.0" prefHeight="25.0" prefWidth="157.0" />
 
             </children>
         </Pane>
-        <TableView fx:id="tabelaFunc" layoutX="14.0" layoutY="29.0" onMouseClicked="#setTextFieldByClick" prefHeight="315.0" prefWidth="590.0">
+        <TableView fx:id="tabelaFunc" layoutX="14.0" layoutY="29.0" onMouseClicked="#setTextFieldByClick" prefHeight="348.0" prefWidth="590.0">
             <columns>
                 <TableColumn fx:id="cCPF" prefWidth="154.0" text="CPF" />
                 <TableColumn fx:id="cNome" prefWidth="167.0" text="Nome" />
@@ -33,10 +33,10 @@
 
             </columns>
         </TableView>
-        <Button layoutX="150.0" layoutY="378.0" mnemonicParsing="false" onAction="#addFunc" prefHeight="25.0" prefWidth="149.0" text="Adicionar novo funcionario" />
+        <Button layoutX="150.0" layoutY="390.0" mnemonicParsing="false" onAction="#addFunc" prefHeight="25.0" prefWidth="171.0" text="Adicionar Novo Funcionário" />
         <Label layoutX="397.0" layoutY="410.0" />
-        <Button layoutX="14.0" layoutY="378.0" mnemonicParsing="false" onAction="#deleteFunc" prefHeight="25.0" prefWidth="120.0" text="Excluir Funcionario" />
-        <Button layoutX="690.0" layoutY="378.0" mnemonicParsing="false" onAction="#saveFunc" prefHeight="25.0" prefWidth="126.0" text="Salvar Funcionario" />
+        <Button layoutX="14.0" layoutY="390.0" mnemonicParsing="false" onAction="#deleteFunc" prefHeight="25.0" prefWidth="120.0" text="Excluir Funcionário" />
+        <Button layoutX="690.0" layoutY="390.0" mnemonicParsing="false" onAction="#saveFunc" prefHeight="25.0" prefWidth="126.0" text="Salvar Funcionário" />
     </children>
 
 </AnchorPane>

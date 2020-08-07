@@ -16,10 +16,10 @@ public class OnibusLoader {
     public void start(){
         FXMLLoader loader = new FXMLLoader();
         try{
-            Pane graph = load(getClass().getResource("../fxml/Onibus.fxml"));
-            Scene scene = new Scene(graph, 780,410);
+            Pane graph = load(getClass().getResource("/view/fxml/Onibus.fxml"));
+            Scene scene = new Scene(graph, 713,390);
             Stage stage = new Stage();
-            stage.setTitle("Onibus");
+            stage.setTitle("Meteoro Tour - Ônibus");
             OnibusLoader onibusController = loader.getController();
 
             stage.setScene(scene);

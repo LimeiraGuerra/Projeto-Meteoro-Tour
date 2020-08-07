@@ -1,84 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="487.0" prefWidth="798.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LinhaController">
-    <TableView fx:id="tabelaLinha" layoutX="14.0" layoutY="29.0" prefHeight="410.0" prefWidth="414.0">
+<AnchorPane prefHeight="500.0" prefWidth="801.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LinhaController">
+    <TableView fx:id="tabelaLinha" layoutX="14.0" layoutY="29.0" prefHeight="424.0" prefWidth="414.0">
         <columns>
             <TableColumn fx:id="cNome" prefWidth="240.0" text="Nome" />
             <TableColumn fx:id="cValorLinha" prefWidth="78.0" text="Valor Total" />
             <TableColumn fx:id="cQuilometragemLinha" prefWidth="95.0" text="Quilometragem" />
         </columns>
     </TableView>
-    <Button fx:id="btCriarLinha" layoutX="99.0" layoutY="447.0" mnemonicParsing="false" onAction="#viewCreateLinha" prefHeight="25.0" prefWidth="135.0" text="Criar Linha" />
-    <Button fx:id="btVerLinha" layoutX="257.0" layoutY="447.0" mnemonicParsing="false" onAction="#seeLinha" prefHeight="25.0" prefWidth="171.0" text="Visualizar linha" />
-   <Pane fx:id="paneLinhaTrecho" layoutX="442.0" layoutY="57.0" prefHeight="422.0" prefWidth="329.0" style="visibility: false;">
+    <Button fx:id="btCriarLinha" layoutX="15.0" layoutY="465.0" mnemonicParsing="false" onAction="#viewCreateLinha" prefHeight="25.0" prefWidth="135.0" text="Criar Linha" />
+    <Button fx:id="btVerLinha" layoutX="174.0" layoutY="465.0" mnemonicParsing="false" onAction="#seeLinha" prefHeight="25.0" prefWidth="171.0" text="Visualizar Linha" />
+   <Pane fx:id="paneLinhaTrecho" layoutX="441.0" layoutY="57.0" prefHeight="440.0" prefWidth="356.0" style="visibility: false;">
       <children>
-         <Button fx:id="btExcluirLinha" layoutX="14.0" layoutY="388.0" mnemonicParsing="false" onAction="#deleteLinha" prefHeight="25.0" prefWidth="149.0" text="Excluir linha" />
-         <TableView fx:id="tabelaLinhaTrecho" layoutX="-2.0" layoutY="75.0" prefHeight="259.0" prefWidth="329.0">
+         <ComboBox fx:id="cbTrechos" layoutX="63.0" layoutY="4.0" prefHeight="25.0" prefWidth="283.0" promptText="Adicione um trecho a linha" visibleRowCount="15" />
+         <TextField fx:id="txtHoraTrecho" layoutX="133.0" layoutY="42.0" prefHeight="25.0" prefWidth="30.0" />
+         <TextField fx:id="txtMinTrecho" layoutX="186.0" layoutY="41.0" prefHeight="25.0" prefWidth="30.0" />
+         <Button fx:id="btAdicionarTrecho" layoutX="238.0" layoutY="41.0" mnemonicParsing="false" onAction="#addTrecho" prefHeight="25.0" prefWidth="109.0" text="Adicionar Trecho" />
+         <TableView fx:id="tabelaLinhaTrecho" layoutX="-2.0" layoutY="75.0" onMouseClicked="#organizeFieldtHoraEdit" prefHeight="292.0" prefWidth="348.0">
            <columns>
-             <TableColumn fx:id="cTrechoOrigem" prefWidth="166.0" text="Cidade Origem" />
-             <TableColumn fx:id="cTrechoDestino" prefWidth="162.0" text="Cidade Destino" />
+             <TableColumn fx:id="cTrechoOrigem" prefWidth="177.0" text="Cidade Origem" />
+             <TableColumn fx:id="cTrechoDestino" prefWidth="170.0" text="Cidade Destino" />
            </columns>
          </TableView>
-         <Button fx:id="btExcluirTrecho" layoutX="205.0" layoutY="340.0" mnemonicParsing="false" onAction="#deleteTrecho" prefHeight="25.0" prefWidth="109.0" text="Excluir trecho" />
-         <ComboBox fx:id="cbTrechos" layoutX="67.0" layoutY="13.0" prefHeight="25.0" prefWidth="261.0" promptText="Escolha um trecho" visibleRowCount="15" />
-         <Label fx:id="lbTrecho" layoutX="-2.0" layoutY="16.0" prefHeight="20.0" prefWidth="55.0" text="Trechos">
+         <Button fx:id="btExcluirTrecho" layoutX="227.0" layoutY="371.0" mnemonicParsing="false" onAction="#deleteTrecho" prefHeight="25.0" prefWidth="120.0" text="Excluir trecho" />
+         <Button fx:id="btCadastrarTrecho" layoutX="90.0" layoutY="371.0" mnemonicParsing="false" onAction="#viewRegistrerNewTrecho" prefHeight="25.0" prefWidth="120.0" text="Novo trecho" />
+         <Button fx:id="btSalvarAlteracao" layoutX="227.0" layoutY="407.0" mnemonicParsing="false" onAction="#saveChange" prefHeight="25.0" prefWidth="120.0" text="Atualizar Tabela" />
+         <Button fx:id="btExcluirLinha" layoutX="91.0" layoutY="407.0" mnemonicParsing="false" onAction="#deleteLinha" prefHeight="25.0" prefWidth="120.0" text="Excluir linha" />
+         <Label layoutX="3.0" layoutY="43.0" prefHeight="20.0" prefWidth="120.0" text="Horário do Trecho">
             <font>
                <Font size="14.0" />
             </font>
          </Label>
-         <Button fx:id="btAdicionarTrecho" layoutX="207.0" layoutY="40.0" mnemonicParsing="false" onAction="#addTrecho" prefHeight="25.0" prefWidth="120.0" text="Adicionar Trecho" />
-         <Button fx:id="btSalvarAlteracao" layoutX="181.0" layoutY="388.0" mnemonicParsing="false" onAction="#saveChange" prefHeight="25.0" prefWidth="135.0" text="Salvar" />
-         <Button fx:id="btCadastrarTrecho" layoutX="88.0" layoutY="340.0" mnemonicParsing="false" onAction="#viewRegistrerNewTrecho" prefHeight="25.0" prefWidth="109.0" text="Cadastrar trecho" />
-         <TextField fx:id="txtHoraTrecho" layoutX="113.0" layoutY="42.0" prefHeight="25.0" prefWidth="37.0" />
-         <Label layoutY="44.0" prefHeight="20.0" prefWidth="120.0" text="Horário - Trecho">
+         <Label fx:id="lbTrecho" layoutY="7.0" prefHeight="20.0" prefWidth="55.0" text="Trechos">
             <font>
                <Font size="14.0" />
             </font>
          </Label>
-         <TextField fx:id="txtMinTrecho" layoutX="163.0" layoutY="42.0" prefHeight="25.0" prefWidth="37.0" />
-         <Label layoutX="156.0" layoutY="42.0" prefHeight="17.0" prefWidth="7.0" text=":">
+         <Label layoutX="174.0" layoutY="42.0" prefHeight="17.0" prefWidth="7.0" text=":">
             <font>
                <Font size="16.0" />
             </font>
          </Label>
+         <Label fx:id="lbNomeTrecho" layoutX="2.0" layoutY="344.0" prefHeight="17.0" prefWidth="135.0" />
+         <TextField fx:id="txtHoraTrechoEdit" layoutX="148.0" layoutY="338.0" prefHeight="25.0" prefWidth="30.0" />
+         <Label fx:id="lbEdit" layoutX="183.0" layoutY="338.0" prefHeight="17.0" prefWidth="7.0" text=":">
+            <font>
+               <Font size="16.0" />
+            </font>
+         </Label>
+         <TextField fx:id="txtMinTrechoEdit" layoutX="195.0" layoutY="338.0" prefHeight="25.0" prefWidth="30.0" />
+         <Button fx:id="btAtualizarHora" layoutX="240.0" layoutY="338.0" mnemonicParsing="false" onAction="#atualizarhorario" prefHeight="25.0" prefWidth="109.0" text="Atualizar Horário" />
       </children>
    </Pane>
-   <Label fx:id="lbLinha" layoutX="442.0" layoutY="32.0" prefHeight="20.0" prefWidth="49.0" style="visibility: false;" text="Linha">
+   <Label fx:id="lbLinha" layoutX="442.0" layoutY="34.0" prefHeight="20.0" prefWidth="49.0" style="visibility: false;" text="Linha:">
       <font>
          <Font size="14.0" />
       </font>
    </Label>
-   <TextField fx:id="txtNomeLinha" layoutX="501.0" layoutY="29.0" prefHeight="25.0" prefWidth="203.0" />
-   <Button fx:id="btAdicionarLinha" layoutX="721.0" layoutY="30.0" mnemonicParsing="false" onAction="#addLinha" prefHeight="25.0" prefWidth="43.0" text="OK!" />
-   <Pane fx:id="paneCriaTrecho" layoutX="442.0" layoutY="14.0" prefHeight="422.0" prefWidth="329.0" style="visibility: false;">
+   <TextField fx:id="txtNomeLinha" layoutX="502.0" layoutY="30.0" prefHeight="25.0" prefWidth="237.0" />
+   <Button fx:id="btAdicionarLinha" layoutX="750.0" layoutY="30.0" mnemonicParsing="false" onAction="#addLinha" prefHeight="25.0" prefWidth="37.0" text="OK" />
+   <Pane fx:id="paneCriaTrecho" layoutX="442.0" layoutY="44.0" prefHeight="377.0" prefWidth="329.0" style="visibility: false;">
     <children>
-        <TextField fx:id="tfOrigem" layoutX="168.0" layoutY="43.0" />
-        <TextField fx:id="tfTempoDuracao" layoutX="168.0" layoutY="291.0" />
-        <TextField fx:id="tfValorPassagem" layoutX="168.0" layoutY="249.0" />
-        <TextField fx:id="tfValorSeguro" layoutX="168.0" layoutY="211.0" />
-        <TextField fx:id="tfTaxaEmbarque" layoutX="168.0" layoutY="168.0" />
-        <Label layoutX="39.0" layoutY="295.0" text="Tempo de Duração" />
-        <Label layoutX="40.0" layoutY="172.0" text="Taxa de Embarque" />
-        <Label layoutX="39.0" layoutY="253.0" text="Valor da Passagem" />
-        <Label layoutX="46.0" layoutY="215.0" text="Valor do Seguro" />
-        <Label layoutX="48.0" layoutY="130.0" text="Quilometragem" />
-        <Label layoutX="40.0" layoutY="87.0" text="Cidade de Destino" />
-        <Label layoutX="40.0" layoutY="47.0" text="Cidade de Origem" />
-        <TextField fx:id="tfQuilometragem" layoutX="168.0" layoutY="126.0" />
-        <TextField fx:id="tfDestino" layoutX="168.0" layoutY="83.0" />
+        <TextField fx:id="tfOrigem" layoutX="168.0" layoutY="53.0" />
+        <TextField fx:id="tfDestino" layoutX="168.0" layoutY="93.0" />
+        <TextField fx:id="tfQuilometragem" layoutX="168.0" layoutY="134.0" />
+        <TextField fx:id="tfTaxaEmbarque" layoutX="168.0" layoutY="175.0" />
+        <TextField fx:id="tfValorSeguro" layoutX="168.0" layoutY="216.0" />
+        <TextField fx:id="tfValorPassagem" layoutX="168.0" layoutY="256.0" />
+        <TextField fx:id="tfTempoDuracao" layoutX="168.0" layoutY="298.0" />
+        <Label layoutX="40.0" layoutY="302.0" text="Tempo de Duração:" />
+        <Label layoutX="40.0" layoutY="179.0" text="Taxa de Embarque:" />
+        <Label layoutX="40.0" layoutY="260.0" text="Valor da Passagem:" />
+        <Label layoutX="40.0" layoutY="220.0" text="Valor do Seguro:" />
+        <Label layoutX="40.0" layoutY="138.0" text="Quilometragem:" />
+        <Label layoutX="40.0" layoutY="97.0" text="Cidade de Destino:" />
+        <Label layoutX="40.0" layoutY="57.0" text="Cidade de Origem:" />
         <Label fx:id="lbValorTotal" layoutX="10.0" layoutY="295.0" />
          <Label fx:id="lbCriarTrecho" layoutX="103.0" layoutY="14.0" prefHeight="20.0" prefWidth="120.0" text="Crie o novo trecho">
             <font>
                <Font size="14.0" />
             </font>
          </Label>
-         <Button fx:id="btSalvarTrecho" layoutX="211.0" layoutY="348.0" mnemonicParsing="false" onAction="#saveTrecho" prefHeight="25.0" prefWidth="101.0" text="Salvar Trecho" />
-         <Button fx:id="btCancelarTrecho" layoutX="93.0" layoutY="348.0" mnemonicParsing="false" onAction="#cancelTrecho" prefHeight="25.0" prefWidth="101.0" text="Cancelar Trecho" />
+         <Button fx:id="btSalvarTrecho" layoutX="211.0" layoutY="348.0" mnemonicParsing="false" onAction="#saveTrecho" prefHeight="25.0" prefWidth="101.0" text="Salvar" />
+         <Button fx:id="btCancelarTrecho" layoutX="93.0" layoutY="348.0" mnemonicParsing="false" onAction="#cancelTrecho" prefHeight="25.0" prefWidth="101.0" text="Cancelar" />
     </children>
    </Pane>
    <Pane fx:id="paneImg" layoutX="448.0" layoutY="27.0" prefHeight="410.0" prefWidth="323.0" style="visibility: true;">

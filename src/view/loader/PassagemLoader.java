@@ -15,7 +15,7 @@ public class PassagemLoader {
     public void start(){
         try{
             FXMLLoader loader = new FXMLLoader();
-            Pane graph = loader.load(getClass().getResource("../fxml/Passagem.fxml").openStream());
+            Pane graph = loader.load(getClass().getResource("/view/fxml/Passagem.fxml").openStream());
             PassagemController ctrl = loader.getController();
 
             Stage stage = new Stage();

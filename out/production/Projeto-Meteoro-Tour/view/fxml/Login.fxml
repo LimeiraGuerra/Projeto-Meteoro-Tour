@@ -1,77 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="313.0" prefWidth="332.0" style="-fx-background-color: #FEED84" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
+<AnchorPane prefHeight="350.0" prefWidth="236.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
    <children>
-      <Label layoutX="121.0" layoutY="25.0" prefHeight="45.0" prefWidth="192.0" text="Meteoro Tour" textFill="#171717" AnchorPane.leftAnchor="121.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="25.0">
-         <font>
-            <Font name="Candara Bold Italic" size="32.0" />
-         </font>
-      </Label>
-      <Label layoutX="144.0" layoutY="61.0" prefHeight="19.0" prefWidth="164.0" text="Transportando com rapidez" textFill="#171717" AnchorPane.leftAnchor="144.0" AnchorPane.rightAnchor="24.0">
-         <font>
-            <Font size="13.0" />
-         </font></Label>
 
-      <Label layoutX="133.0" layoutY="97.0" prefHeight="20.0" prefWidth="74.0" text="Entrar como" textFill="#171717" AnchorPane.leftAnchor="133.0" AnchorPane.rightAnchor="125.0">
+      <Label layoutX="78.0" layoutY="171.0" prefHeight="20.0" prefWidth="82.0" text="Entrar como" AnchorPane.leftAnchor="78.0" AnchorPane.rightAnchor="76.0">
          <font>
             <Font name="System Italic" size="14.0" />
          </font></Label>
-      <ImageView fitHeight="60.0" fitWidth="85.0" layoutX="51.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="275.0" AnchorPane.leftAnchor="51.0" AnchorPane.rightAnchor="215.0" AnchorPane.topAnchor="25.0">
-         <Image url="@../../resources/onibus.png" />
-      </ImageView>
-      <ImageView fx:id="imgFechar" fitHeight="19.0" fitWidth="14.0" layoutX="314.0" layoutY="4.0" onMouseClicked="#close" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgFechar" fitHeight="19.0" fitWidth="14.0" layoutX="216.0" layoutY="7.0" onMouseClicked="#close" pickOnBounds="true" preserveRatio="true">
          <Image url="@../../resources/fechar.png" />
          <cursor>
             <Cursor fx:constant="CLOSED_HAND" />
          </cursor>
-         <effect>
-            <Lighting>
-               <bumpInput>
-                  <Shadow />
-               </bumpInput>
-               <light>
-                  <Light.Distant />
-               </light>
-            </Lighting>
-         </effect>
       </ImageView>
-      <RadioButton fx:id="rbAdm" layoutX="73.0" layoutY="123.0" mnemonicParsing="false" onAction="#onAdmin" prefHeight="30.0" prefWidth="103.0" text="Administrador">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font></RadioButton>
-      <RadioButton fx:id="rbVend" layoutX="183.0" layoutY="123.0" mnemonicParsing="false" onAction="#onVend" prefHeight="30.0" prefWidth="77.0" text="Vendedor">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font></RadioButton>
-      <Pane fx:id="paneLogin" layoutX="53.0" layoutY="175.0" prefHeight="161.0" prefWidth="227.0">
+      <ToggleButton fx:id="tbAdm" layoutX="18.0" layoutY="195.0" mnemonicParsing="false" onAction="#onAdmin" prefHeight="30.0" prefWidth="99.0" text="Administrador" />
+      <Button layoutX="120.0" layoutY="195.0" mnemonicParsing="false" onAction="#onVend" prefHeight="30.0" prefWidth="99.0" text="Vendedor" />
+      <Pane fx:id="paneLogin" layoutX="7.0" layoutY="243.0" prefHeight="116.0" prefWidth="227.0" visible="false">
          <children>
-            <ImageView fx:id="imgEntrar" fitHeight="30.0" fitWidth="32.0" layoutX="14.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
-               <Image url="@../../resources/contato.png" />
-            </ImageView>
-            <PasswordField fx:id="txtSenha" layoutX="49.0" layoutY="51.0" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="164.0" promptText="Senha" />
-            <ImageView fx:id="imgCadeado" fitHeight="30.0" fitWidth="32.0" layoutX="14.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true">
+            <PasswordField fx:id="txtSenha" layoutX="47.0" layoutY="10.0" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="164.0" promptText="Senha" />
+            <ImageView fx:id="imgCadeado" fitHeight="30.0" fitWidth="32.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                <Image url="@../../resources/cadeado.png" />
             </ImageView>
-            <Button fx:id="btEntrar" layoutX="62.0" layoutY="102.0" mnemonicParsing="false" onAction="#login" prefHeight="45.0" prefWidth="103.0" style="-fx-background-color: #696969;" text="Entrar" textFill="WHITE">
+            <Button fx:id="btEntrar" layoutX="11.0" layoutY="58.0" mnemonicParsing="false" onAction="#login" prefHeight="45.0" prefWidth="200.0" text="Entrar">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-            <TextField fx:id="txtUser" disable="true" layoutX="49.0" layoutY="6.0" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="164.0" promptText="Usuário" text="ADMINISTRADOR" />
          </children>
       </Pane>
-      <Label fx:id="lbIncorreto" layoutX="84.0" layoutY="153.0" prefHeight="18.0" prefWidth="184.0" text="Ops! Sua senha está incorreta." textFill="#171717">
+      <Label fx:id="lbIncorreto" layoutX="91.0" layoutY="234.0" prefHeight="18.0" prefWidth="99.0" text="Senha incorreta." textFill="RED" visible="false">
          <font>
             <Font name="Candara Bold Italic" size="14.0" />
          </font>
       </Label>
+      <ImageView blendMode="COLOR_BURN" fitHeight="150.0" fitWidth="200.0" layoutX="18.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resources/logo.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

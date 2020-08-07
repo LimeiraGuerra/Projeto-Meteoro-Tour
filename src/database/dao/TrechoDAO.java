@@ -83,7 +83,7 @@ public class TrechoDAO implements DAO<Trecho, String> {
         for(int[] tl : trechosLinhaScuff){
             if(tl[0] == linha.getId()){
                 TrechoLinha tlaux = new TrechoLinha(cont, Time.valueOf("12:00:00"), trechos.get(tl[1]), linha);
-                if(assentosVendScuff.get(cont).getData().compareTo(java.sql.Date.valueOf(data)) == 0) {
+                if(data != null && assentosVendScuff.get(cont).getData().compareTo(java.sql.Date.valueOf(data)) == 0) {
                     tlaux.setAssentoTrechoLinha(assentosVendScuff.get(cont));
                 }
                 cont++;
