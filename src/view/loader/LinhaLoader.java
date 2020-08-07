@@ -18,10 +18,10 @@ public class LinhaLoader {
         FXMLLoader loader = new FXMLLoader();
         try{
             Pane grafico = load(getClass().getResource("../fxml/Linha.fxml"));
-            Scene cena = new Scene(grafico);
+            Scene cena = new Scene(grafico, 791, 490);
             Stage stage = new Stage();
             stage.setResizable(false);
-            stage.setTitle("Linhas");
+            stage.setTitle("Meteoro Tour - Linhas");
             LinhaController trechoController = loader.getController();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(cena);

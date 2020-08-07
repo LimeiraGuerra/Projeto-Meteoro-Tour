@@ -17,11 +17,11 @@ public class TrechoLoader {
         FXMLLoader loader = new FXMLLoader();
         try{
             Pane grafico = load(getClass().getResource("../fxml/Trecho.fxml"));
-            Scene cena = new Scene(grafico);
+            Scene cena = new Scene(grafico, 763, 490);
             Stage stage = new Stage();
             stage.setResizable(false);
 
-            stage.setTitle("Trechos");
+            stage.setTitle("Meteoro Tour - Trechos");
             TrechoController trechoController = loader.getController();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(cena);

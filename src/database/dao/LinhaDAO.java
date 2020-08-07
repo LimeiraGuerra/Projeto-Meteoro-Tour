@@ -47,6 +47,7 @@ public class LinhaDAO implements DAO<Linha, String> {
     public Linha searchLinha(Linha linha){
         return linhas.contains(linha) ? linha : null;
     }
+
     public Linha searchLinhaNome(String nome){
         for (Linha linha: linhas) {
             if(linha.getNome().equals(nome)){
@@ -55,9 +56,14 @@ public class LinhaDAO implements DAO<Linha, String> {
         }
         return null;
     }
+
     public List<Linha> getListLinha(){
+        for (Linha l : linhas){
+            l.addAllTrechosLinha(TrechoDAO.getInstancia().selectTrechosByLinha(l, null));
+        }
         return linhas;
     }
+
     public static LinhaDAO getInstancia(){
         if (instancia == null){
             instancia = new LinhaDAO();

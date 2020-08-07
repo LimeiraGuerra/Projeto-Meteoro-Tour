@@ -8,27 +8,27 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/8.0.261" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.OnibusController">
+<AnchorPane prefHeight="400.0" prefWidth="723.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.OnibusController">
     <children>
-        <Pane fx:id="paneOnibus" blendMode="SRC_ATOP" layoutX="516.0" layoutY="29.0" prefHeight="304.0" prefWidth="252.0">
+        <Pane fx:id="paneOnibus" blendMode="SRC_ATOP" layoutX="491.0" layoutY="29.0" prefHeight="304.0" prefWidth="223.0">
             <children>
-                <TextField fx:id="txtFieldRenavam" layoutX="89.0" layoutY="14.0" />
-                <Label layoutX="7.0" layoutY="56.0" text="Placa" />
-                <Label layoutX="7.0" layoutY="18.0" text="Renavam" />
-                <TextField fx:id="txtFieldPlaca" layoutX="89.0" layoutY="52.0" />
+                <TextField fx:id="txtFieldRenavam" layoutX="67.0" layoutY="14.0" />
+                <Label layoutX="7.0" layoutY="54.0" text="Placa:" />
+                <Label layoutX="7.0" layoutY="18.0" text="Renavam:" />
+                <TextField fx:id="txtFieldPlaca" layoutX="67.0" layoutY="50.0" />
 
             </children>
         </Pane>
-        <TableView fx:id="tabelaOnibus" layoutX="14.0" layoutY="29.0" onMouseClicked="#setTextFieldByClick" prefHeight="315.0" prefWidth="477.0">
+        <TableView fx:id="tabelaOnibus" layoutX="14.0" layoutY="29.0" onMouseClicked="#setTextFieldByClick" prefHeight="324.0" prefWidth="477.0">
             <columns>
                 <TableColumn fx:id="cRenavam" prefWidth="251.0" text="RENAVAM" />
                 <TableColumn fx:id="cPlaca" prefWidth="225.0" text="Placa" />
 
             </columns>
         </TableView>
-        <Button layoutX="156.0" layoutY="353.0" mnemonicParsing="false" onAction="#addOnibus" prefHeight="25.0" prefWidth="149.0" text="Adicionar novo onibus" />
-        <Button layoutX="14.0" layoutY="353.0" mnemonicParsing="false" onAction="#deleteOnibus" prefHeight="25.0" prefWidth="101.0" text="Excluir Onibus" />
-        <Button layoutX="642.0" layoutY="353.0" mnemonicParsing="false" onAction="#saveOnibus" prefHeight="25.0" prefWidth="98.0" text="Salvar Onibus" />
+        <Button layoutX="156.0" layoutY="364.0" mnemonicParsing="false" onAction="#addOnibus" prefHeight="25.0" prefWidth="149.0" text="Adicionar Novo Ônibus" />
+        <Button layoutX="14.0" layoutY="364.0" mnemonicParsing="false" onAction="#deleteOnibus" prefHeight="25.0" prefWidth="101.0" text="Excluir Ônibus" />
+        <Button layoutX="608.0" layoutY="364.0" mnemonicParsing="false" onAction="#saveOnibus" prefHeight="25.0" prefWidth="98.0" text="Salvar Ônibus" />
     </children>
 
 </AnchorPane>
