@@ -160,11 +160,11 @@ public class TrechoController {
 
     public boolean checkTextField() {
         return !tfDestino.getText().isEmpty() && !tfOrigem.getText().isEmpty() &&
-                DataValidator.isDouble(tfQuilometragem) &&
-                DataValidator.isDouble(tfTempoDuracao) &&
-                DataValidator.isDouble(tfValorPassagem) &&
-                DataValidator.isDouble(tfTaxaEmbarque) &&
-                DataValidator.isDouble(tfValorSeguro);
+                DataValidator.isDouble(tfQuilometragem.getText()) &&
+                DataValidator.isDouble(tfTempoDuracao.getText()) &&
+                DataValidator.isDouble(tfValorPassagem.getText()) &&
+                DataValidator.isDouble(tfTaxaEmbarque.getText()) &&
+                DataValidator.isDouble(tfValorSeguro.getText());
     }
 
     private void setFieldsTrecho(Trecho trecho){

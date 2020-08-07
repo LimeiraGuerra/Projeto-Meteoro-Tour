@@ -135,13 +135,6 @@ public class LinhaController{
         if (trecho != null && trechoLinha != null){
             if (isFirstOrLastTrecho(trecho)){
                 if (AlertWindow.verificationAlert("Deseja excluir o trecho: " + trecho.toString() + " ?", "Exclusão do trecho na linha: " + linha.getNome())){
-                    for (Linha l : ucLinha.getListLinha()){
-                        for (TrechoLinha tl : l.getListTrechosLinha()){
-                            System.out.println(tl.getTrecho());
-                            System.out.println(tl.getLinha().getNome());
-                            System.out.println(tl);
-                        }
-                    }
                     ucTrechoLinha.deleteTrechoLinha(trechoLinha);
                     loadTableLinhaTrecho(linha);
 
@@ -243,12 +236,19 @@ public class LinhaController{
     }
 
     public void saveTrecho(ActionEvent actionEvent) {
-        ucTrecho.createTrecho(tfOrigem.getText(), tfDestino.getText(), Double.parseDouble(tfQuilometragem.getText()),
-                Integer.parseInt(tfTempoDuracao.getText()), Double.parseDouble(tfValorPassagem.getText()),
-                Double.parseDouble(tfTaxaEmbarque.getText()), Double.parseDouble(tfValorSeguro.getText()));
+        if(checkTextField()){
+            if (ucTrecho.searchForOrigemDestino(tfOrigem.getText(), tfDestino.getText()) == null){
+                ucTrecho.createTrecho(tfOrigem.getText(), tfDestino.getText(), Double.parseDouble(tfQuilometragem.getText()),
+                        Integer.parseInt(tfTempoDuracao.getText()), Double.parseDouble(tfValorPassagem.getText()),
+                        Double.parseDouble(tfTaxaEmbarque.getText()), Double.parseDouble(tfValorSeguro.getText()));
+            }else{
+                AlertWindow.informationAlerta("Trecho não pode ser salvo, pois há trecho com o mesmo conjunto de cidade Origem - cidade Destino", "Trecho não adicionado.");
+            }
+        }else{
+            AlertWindow.informationAlerta("Trecho não pode ser salvo, pois havia campos vazios", "Trecho não adicionado.");
+        }
 
         fixVisionPane();
-
     }
 
     private void fixVisionPane(){
@@ -285,7 +285,7 @@ public class LinhaController{
     }
 
     private boolean checkHoraMinuto(){
-       return DataValidator.isHora(txtHoraTrecho) && DataValidator.isMinuto(txtMinTrecho);
+       return DataValidator.isHora(txtHoraTrecho.getText()) && DataValidator.isMinuto(txtMinTrecho.getText());
 
     }
 
@@ -325,6 +325,15 @@ public class LinhaController{
             txtHoraTrecho.setText(str[0]);
             txtMinTrecho.setText(str[1]);
         }
+    }
+
+    public boolean checkTextField() {
+        return !tfDestino.getText().isEmpty() && !tfOrigem.getText().isEmpty() &&
+                DataValidator.isDouble(tfQuilometragem.getText()) &&
+                DataValidator.isDouble(tfTempoDuracao.getText()) &&
+                DataValidator.isDouble(tfValorPassagem.getText()) &&
+                DataValidator.isDouble(tfTaxaEmbarque.getText()) &&
+                DataValidator.isDouble(tfValorSeguro.getText());
     }
 }
 
