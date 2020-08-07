@@ -41,7 +41,7 @@ public class TrechoController {
         setVisibleButtonPane(false);
     }
 
-    public void bind(){
+    private void bind(){
         cDestino.setCellValueFactory(new PropertyValueFactory<>("cidadeDestino"));
         cOrigem.setCellValueFactory(new PropertyValueFactory<>("cidadeOrigem"));
         cQuilometragem.setCellValueFactory(new PropertyValueFactory<>("quilometragem"));
@@ -161,7 +161,7 @@ public class TrechoController {
         lbValorTotal.setText("O valor total do trecho é: " + valor);
     }
 
-    public boolean checkTextField() {
+    private boolean checkTextField() {
         return !tfDestino.getText().isEmpty() && !tfOrigem.getText().isEmpty() &&
                 DataValidator.isDouble(tfQuilometragem.getText()) &&
                 DataValidator.isDouble(tfTempoDuracao.getText()) &&

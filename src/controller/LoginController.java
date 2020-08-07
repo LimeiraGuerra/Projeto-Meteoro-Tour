@@ -47,7 +47,8 @@ public class LoginController implements Initializable {
         Stage stage = (Stage) lbIncorreto.getScene().getWindow();
         stage.close();
     }
-    public void login(ActionEvent actionEvent) {
+    @FXML
+    private void login(ActionEvent actionEvent) {
         if (loginUc.isCheckPassword(txtSenha.getText())){
             VendasLoader janelaVendas = new VendasLoader(user);
             janelaVendas.start();
@@ -59,7 +60,8 @@ public class LoginController implements Initializable {
         }
     }
 
-    public void onAdmin(ActionEvent actionEvent) {
+    @FXML
+    private void onAdmin(ActionEvent actionEvent) {
         returnAdmin();
         boolean radioAdm = rbAdm.isSelected();
         if (radioAdm){
@@ -67,7 +69,8 @@ public class LoginController implements Initializable {
         }
     }
 
-    public void onVend(ActionEvent actionEvent) {
+    @FXML
+    private void onVend(ActionEvent actionEvent) {
         user = new Vendedor();
         boolean radioVend = rbVend.isSelected();
         if(radioVend){
@@ -78,7 +81,8 @@ public class LoginController implements Initializable {
         }
     }
 
-    public void close(MouseEvent mouseEvent) {
+    @FXML
+    private void close(MouseEvent mouseEvent) {
         Platform.exit();
         System.exit(0);
     }

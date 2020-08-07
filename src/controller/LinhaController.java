@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import model.entities.Linha;
 import model.entities.Trecho;
@@ -45,6 +46,12 @@ public class LinhaController{
     @FXML private Pane paneImg;
     @FXML private TextField txtHoraTrecho;
     @FXML private TextField txtMinTrecho;
+    @FXML private TextField txtHoraTrechoEdit;
+    @FXML private TextField txtMinTrechoEdit;
+    @FXML private Label lbNomeTrecho;
+    @FXML private Label lbEdit;
+    @FXML private Button btAtualizarHora;
+
 
 
     private ObservableList<Trecho> trechosListTabela = FXCollections.observableArrayList();
@@ -56,6 +63,7 @@ public class LinhaController{
     public void initialize() {
         bindLinha();
         setImgVisible();
+        setVisibleTimeFieldsEdit(false);
     }
 
     private void bindLinha(){
@@ -144,6 +152,8 @@ public class LinhaController{
             }
 
         }
+        setVisibleTimeFieldsEdit(false);
+        sizeTableTrechoLinha(292.0);
         loadCombobox();
     }
 
@@ -182,8 +192,8 @@ public class LinhaController{
         Linha linha = searchLinhaTable();
         Trecho trecho = cbTrechos.getSelectionModel().getSelectedItem();
         if (isFieldTrechoHoraSet()){
-            if (checkHoraMinuto()){
-                ucTrechoLinha.createTrechoLinha(linha, trecho, returnHora(), calcOrdemLinha());
+            if (checkHoraMinuto(txtHoraTrecho, txtMinTrecho)){
+                ucTrechoLinha.createTrechoLinha(linha, trecho, returnHora(txtHoraTrecho, txtMinTrecho), calcOrdemLinha());
                 loadTableLinhaTrecho(linha);
                 loadCombobox();
                 atualizaHora();
@@ -199,13 +209,9 @@ public class LinhaController{
     }
 
     private int calcOrdemLinha(){
-        return indexLastTrechoList();
-    }
+        System.out.println(trechosListTabela.size());
+        return trechosListTabela.size();
 
-    private Date returnHora() throws ParseException {
-       String str =  txtHoraTrecho.getText().trim() + ":" + txtMinTrecho.getText().trim();
-       SimpleDateFormat formatador = new SimpleDateFormat("HH:mm");
-       return formatador.parse(str);
     }
 
     private List<Trecho> updateComboBox(String destino){
@@ -231,7 +237,8 @@ public class LinhaController{
         paneImg.setVisible(false);
     }
 
-    public void addLinha(ActionEvent actionEvent) {
+    @FXML
+    private void addLinha(ActionEvent actionEvent) {
         if (ucLinha.searchLinhaNome(txtNomeLinha.getText()) == null){
             ucLinha.createLinha(txtNomeLinha.getText());
 
@@ -243,7 +250,8 @@ public class LinhaController{
         paneImg.setVisible(true);
     }
 
-    public void saveTrecho(ActionEvent actionEvent) {
+    @FXML
+    private void saveTrecho(ActionEvent actionEvent) {
         if(checkTextField()){
             if (ucTrecho.searchForOrigemDestino(tfOrigem.getText(), tfDestino.getText()) == null){
                 ucTrecho.createTrecho(tfOrigem.getText(), tfDestino.getText(), Double.parseDouble(tfQuilometragem.getText()),
@@ -292,8 +300,8 @@ public class LinhaController{
         setOrigemTextField();
     }
 
-    private boolean checkHoraMinuto(){
-       return DataValidator.isHora(txtHoraTrecho.getText()) && DataValidator.isMinuto(txtMinTrecho.getText());
+    private boolean checkHoraMinuto(TextField t1, TextField t2){
+       return DataValidator.isHora(t1.getText()) && DataValidator.isMinuto(t2.getText());
 
     }
 
@@ -320,7 +328,7 @@ public class LinhaController{
     private String calculateTimeOfExitTrecho() throws ParseException {
         GregorianCalendar gregorianCalendar = new GregorianCalendar();
         if (trechosListTabela.size() > 0){
-            gregorianCalendar.setTime(returnHora());
+            gregorianCalendar.setTime(returnHora(txtHoraTrecho, txtMinTrecho));
             int amount = trechosListTabela.get(indexLastTrechoList()).getTempoDuracao();
             gregorianCalendar.add(Calendar.MINUTE, amount);
             SimpleDateFormat formatador = new SimpleDateFormat("HH:mm");
@@ -337,13 +345,68 @@ public class LinhaController{
         }
     }
 
-    public boolean checkTextField() {
+    private boolean checkTextField() {
         return !tfDestino.getText().isEmpty() && !tfOrigem.getText().isEmpty() &&
                 DataValidator.isDouble(tfQuilometragem.getText()) &&
                 DataValidator.isDouble(tfTempoDuracao.getText()) &&
                 DataValidator.isDouble(tfValorPassagem.getText()) &&
                 DataValidator.isDouble(tfTaxaEmbarque.getText()) &&
                 DataValidator.isDouble(tfValorSeguro.getText());
+    }
+
+    @FXML
+    private void organizeFieldtHoraEdit(MouseEvent mouseEvent) throws ParseException {
+        sizeTableTrechoLinha(258.0);
+        setVisibleTimeFieldsEdit(true);
+        Trecho t = tabelaLinhaTrecho.getSelectionModel().getSelectedItem();
+        TrechoLinha trechoL = searchLinhaTable().getTrechoLinha(t);
+        setFieldHoraEdit(returnHorario(trechoL), t.toString());
+    }
+
+    private String[] returnHorario(TrechoLinha trechoLinha) throws ParseException {
+        Date hora = trechoLinha.getHorarioSaida();
+        SimpleDateFormat formatador = new SimpleDateFormat("HH:mm");
+        String horas = formatador.format(hora);
+        String[] horario = horas.split(":");
+        return horario;
+    }
+
+    private void setFieldHoraEdit(String[] horario, String nomeTrecho){
+        txtHoraTrechoEdit.setText(horario[0]);
+        txtMinTrechoEdit.setText(horario[1]);
+        lbNomeTrecho.setText(nomeTrecho);
+    }
+
+    private void sizeTableTrechoLinha(Double tamanho){
+        tabelaLinhaTrecho.setPrefHeight(tamanho);
+    }
+    private void setVisibleTimeFieldsEdit(boolean bool){
+        lbNomeTrecho.setVisible(bool);
+        txtHoraTrechoEdit.setVisible(bool);
+        txtMinTrechoEdit.setVisible(bool);
+        lbEdit.setVisible(bool);
+        btAtualizarHora.setVisible(bool);
+    }
+
+    private Date returnHora(TextField t1, TextField t2) throws ParseException {
+        String str =  t1.getText().trim() + ":" + t2.getText().trim();
+        SimpleDateFormat formatador = new SimpleDateFormat("HH:mm");
+        return formatador.parse(str);
+    }
+
+    @FXML
+    private void atualizarhorario(ActionEvent actionEvent) throws ParseException {
+        Date hora = returnHora(txtHoraTrechoEdit, txtMinTrechoEdit);
+        if (checkHoraMinuto(txtHoraTrechoEdit, txtMinTrechoEdit)) {
+            Trecho t = tabelaLinhaTrecho.getSelectionModel().getSelectedItem();
+            TrechoLinha trechoL = searchLinhaTable().getTrechoLinha(t);
+            trechoL.setHorarioSaida(hora);
+            setVisibleTimeFieldsEdit(false);
+            sizeTableTrechoLinha(292.0);
+        }else{
+            AlertWindow.informationAlerta("Padrão de hora (hh:mm) não foi seguido.", "Atualização não realizada.");
+        }
+
     }
 }
 
