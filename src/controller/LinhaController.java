@@ -181,14 +181,19 @@ public class LinhaController{
     private void addTrecho(ActionEvent actionEvent) throws ParseException {
         Linha linha = searchLinhaTable();
         Trecho trecho = cbTrechos.getSelectionModel().getSelectedItem();
-        if (checkHoraMinuto()){
-            ucTrechoLinha.createTrechoLinha(linha, trecho, returnHora(), calcOrdemLinha());
-            loadTableLinhaTrecho(linha);
-            loadCombobox();
-            atualizaHora();
+        if (isFieldTrechoHoraSet()){
+            if (checkHoraMinuto()){
+                ucTrechoLinha.createTrechoLinha(linha, trecho, returnHora(), calcOrdemLinha());
+                loadTableLinhaTrecho(linha);
+                loadCombobox();
+                atualizaHora();
+            }
+            else{
+                AlertWindow.verificationAlert("Informe hora e minutos válidos\nNo padrão: hh:mm.", "Hora informada inválida!");
+            }
         }
         else{
-            AlertWindow.verificationAlert("Informe hora e minutos válidos\nNo padrão: hh:mm.", "Hora informada inválida!");
+            AlertWindow.verificationAlert("Não foi possível adicionar o trecho na linha\nConfira se os campos de hora e minuto estão preenchidos e um trecho selecionado.", "Trecho não adicionado.");
         }
 
     }
@@ -227,12 +232,15 @@ public class LinhaController{
     }
 
     public void addLinha(ActionEvent actionEvent) {
-        if (searchLinhaTable() == null){
+        if (ucLinha.searchLinhaNome(txtNomeLinha.getText()) == null){
             ucLinha.createLinha(txtNomeLinha.getText());
-            setVisibleButtonTxtLinha(false);
-            updateTableLinha();
-            paneImg.setVisible(true);
+
+        }else{
+            AlertWindow.informationAlerta("Já existe uma linha com esse nome", "Linha não adicionada.");
         }
+        setVisibleButtonTxtLinha(false);
+        updateTableLinha();
+        paneImg.setVisible(true);
     }
 
     public void saveTrecho(ActionEvent actionEvent) {
@@ -292,7 +300,9 @@ public class LinhaController{
     private boolean isFirstOrLastTrecho(Trecho trecho){
         return trechosListTabela.indexOf(trecho)  == 0 || trechosListTabela.indexOf(trecho) == indexLastTrechoList();
     }
-
+    private boolean isFieldTrechoHoraSet(){
+        return (cbTrechos.getSelectionModel().getSelectedItem() != null) && !txtMinTrecho.getText().isEmpty() && !txtHoraTrecho.getText().isEmpty();
+    }
     private void setOrigemTextField(){
         if (indexLastTrechoList() != 0){
             Trecho t = trechosListTabela.get(indexLastTrechoList());

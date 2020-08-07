@@ -32,7 +32,7 @@
             </font>
          </Label>
          <Button fx:id="btAdicionarTrecho" layoutX="207.0" layoutY="40.0" mnemonicParsing="false" onAction="#addTrecho" prefHeight="25.0" prefWidth="120.0" text="Adicionar Trecho" />
-         <Button fx:id="btSalvarAlteracao" layoutX="181.0" layoutY="388.0" mnemonicParsing="false" onAction="#saveChange" prefHeight="25.0" prefWidth="135.0" text="Salvar" />
+         <Button fx:id="btSalvarAlteracao" layoutX="181.0" layoutY="388.0" mnemonicParsing="false" onAction="#saveChange" prefHeight="25.0" prefWidth="135.0" text="Atualizar Tabela" />
          <Button fx:id="btCadastrarTrecho" layoutX="88.0" layoutY="340.0" mnemonicParsing="false" onAction="#viewRegistrerNewTrecho" prefHeight="25.0" prefWidth="109.0" text="Cadastrar trecho" />
          <TextField fx:id="txtHoraTrecho" layoutX="113.0" layoutY="42.0" prefHeight="25.0" prefWidth="37.0" />
          <Label layoutY="44.0" prefHeight="20.0" prefWidth="120.0" text="Horário - Trecho">

@@ -81,25 +81,28 @@ public class TrechoController {
 
     @FXML
     private void saveOrUpdateTrecho(ActionEvent actionEvent) {
-        if (searchTrechoOrigemDestino() == null && checkTextField()){
+        if (checkTextField()) {
+            if (searchTrechoOrigemDestino() == null) {
+                Trecho trecho = createTrecho();
+                trechos.add(trecho);
+                AlertWindow.informationAlerta("O trecho: " + trecho.toString() + " foi salvo!", "Trecho adicionado");
+            }else if (searchTrechoTable() != null) {
+                updateTrecho();
+                AlertWindow.informationAlerta("O trecho: " + searchTrechoTable().toString() + " foi editado!", "Trecho editado");
 
-           Trecho trecho = createTrecho();
-           trechos.add(trecho);
-           AlertWindow.informationAlerta("O trecho: " + trecho.toString() + " foi salvo!", "Trecho adicionado");
-        }
-        else if (searchTrechoTable() != null && checkTextField()) {
-            updateTrecho();
-            AlertWindow.informationAlerta("O trecho: " + searchTrechoTable().toString() + " foi editado!", "Trecho editado");
+            } else {
+                AlertWindow.informationAlerta("O trecho não pode ser adicionado\nVerifique se não há esse trecho criado!", "Trecho não adicionado :(");
+            }
 
+            cleanFields();
+            tabelaTrecho.refresh();
+            setVisibleButtonPane(false);
+            setVisiblePaneImg(true);
+        }else{
+            AlertWindow.informationAlerta("Campos vazios", "Trecho não adicionado");
         }
-        else{
-            AlertWindow.informationAlerta("O trecho não pode ser adicionado\nVerifique se não há esse trecho criado!", "Trecho não adicionado :(");
-        }
-        cleanFields();
-        tabelaTrecho.refresh();
-        setVisibleButtonPane(false);
-        setVisiblePaneImg(true);
-        }
+
+    }
 
     @FXML
     private void viewCreateTrecho() {
