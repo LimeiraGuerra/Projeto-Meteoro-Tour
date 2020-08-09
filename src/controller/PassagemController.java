@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import model.entities.Passagem;
 import model.usecases.ConsultarPassagensVendidasUC;
 import model.usecases.DevolverPassagensUC;
+import view.util.AlertWindow;
 import view.util.DataValidator;
 
 import java.util.*;
@@ -72,7 +73,7 @@ public class PassagemController {
     private void informErrorSearch(boolean choice){
         this.messageHead = "Parâmetros de pesquisa inválidos ou nulos!";
         this.messageBody = (choice?"Número de passagem" : "CPF").concat(" inválido.");
-        this.errorAlert();
+        AlertWindow.errorAlert(messageBody, messageHead);
     }
 
     private void showResultsToTable(List<Passagem> passagensEncontradas){
@@ -105,7 +106,7 @@ public class PassagemController {
     private void informEmptyResults(){
         this.messageHead = "Busca não encontrou nenhum resultado válido!";
         this.messageBody = "Reveja os parâmetros informados.";
-        this.informationAlert();
+        AlertWindow.informationAlerta(messageBody, messageHead);
     }
 
     private boolean checkSearchType() {
@@ -135,7 +136,7 @@ public class PassagemController {
     private void informErrorExpiredPassagem(){
         this.messageHead = "Ação Inválida!";
         this.messageBody = "Passagem com data e/ou horário expirados";
-        this.errorAlert();
+        AlertWindow.errorAlert(messageBody, messageHead);
     }
 
     public void removePassagem(ActionEvent actionEvent) {
@@ -150,7 +151,7 @@ public class PassagemController {
 
     private boolean checkActions(){
         if (this.verifyValidity()){
-            if (this.verificationAlert()) return true;
+            if (AlertWindow.verificationAlert(messageBody, messageHead)) return true;
         }
         else this.informErrorExpiredPassagem();
         return false;
@@ -162,32 +163,6 @@ public class PassagemController {
             this.passagemReagendamento = this.selectedPassagem;
             this.closeWindow();
         }
-    }
-
-    private void errorAlert(){
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Erro!");
-        this.modalAlert(alert);
-    }
-
-    private void informationAlert(){
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Aviso!");
-        this.modalAlert(alert);
-    }
-
-    private void modalAlert(Alert alert){
-        alert.setHeaderText(this.messageHead);
-        alert.setContentText(this.messageBody);
-        alert.showAndWait();
-    }
-
-    private boolean verificationAlert() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setHeaderText(this.messageHead);
-        alert.setContentText(this.messageBody);
-        Optional<ButtonType> result = alert.showAndWait();
-        return result.get() == ButtonType.OK;
     }
 
     private void closeWindow(){

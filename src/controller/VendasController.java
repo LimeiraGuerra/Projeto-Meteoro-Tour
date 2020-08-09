@@ -14,6 +14,7 @@ import model.entities.Passagem;
 import view.loader.*;
 import model.entities.Viagem;
 import model.usecases.GerarViagensUC;
+import view.util.AlertWindow;
 import view.util.DataValidator;
 import view.util.TipoEspecial;
 import java.util.*;
@@ -138,7 +139,7 @@ public class VendasController {
         else {
             this.clearTable();
             this.messageHead = "Parâmetros de pesquisa inválidos ou nulos!";
-            this.errorAlert();
+            AlertWindow.errorAlert(messageBody,messageHead);
         }
     }
 
@@ -146,23 +147,6 @@ public class VendasController {
         this.showResultsToTable(new ArrayList<>());
     }
 
-    private void errorAlert(){
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Erro!");
-        this.modalAlert(alert);
-    }
-
-    private void informationAlert(){
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Aviso!");
-        this.modalAlert(alert);
-    }
-
-    private void modalAlert(Alert alert){
-        alert.setHeaderText(this.messageHead);
-        alert.setContentText(this.messageBody);
-        alert.showAndWait();
-    }
 
     private void verifyTimeOfResults(List<Viagem> viagens){
         List<Viagem> viagensTimeFilter = new ArrayList<>();
@@ -173,7 +157,7 @@ public class VendasController {
         if (viagensTimeFilter.isEmpty()) {
             this.messageHead = "Busca não encontrou nenhum resultado válido!";
             this.messageBody = "Reveja os parâmetros informados.";
-            this.informationAlert();
+            AlertWindow.informationAlerta(messageBody, messageHead);
         }
     }
 
