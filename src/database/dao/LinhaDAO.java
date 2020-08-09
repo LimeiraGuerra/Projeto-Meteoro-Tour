@@ -35,8 +35,7 @@ public class LinhaDAO implements DAO<Linha, String> {
     @Override
     public Linha selectById(String id) {
         int num = Integer.parseInt(id);
-        Linha result = linhas.get(num);
-        return result;
+        return linhas.get(num);
     }
 
     @Override
@@ -58,9 +57,6 @@ public class LinhaDAO implements DAO<Linha, String> {
     }
 
     public List<Linha> getListLinha(){
-        for (Linha l : linhas){
-            l.addAllTrechosLinha(TrechoDAO.getInstancia().selectTrechosByLinha(l, null));
-        }
         return linhas;
     }
 

@@ -52,7 +52,7 @@ public class ViagemDAO implements DAO<Viagem, String> {
                 for (String[] tl2 : this.keysCidadesTest) {
                     if (tl2[1].equals(args[1]) && tl[2].equals(tl2[2])) {
                         Linha linha = daoLinha.selectById(tl[2]);
-                        linha.addAllTrechosLinha(TrechoDAO.getInstancia().selectTrechosByLinha(linha, args[2]));
+                        linha.addAllTrechosLinha(TrechoLinhaDAO.getInstancia().selectTrechosByLinha(linha, args[2]));
                         viagens.add(new Viagem(java.sql.Date.valueOf(args[2]), tl[0], tl2[1], linha));
                         break;
                     }
