@@ -2,22 +2,26 @@ package database.dao;
 
 import database.utils.DAO;
 import model.entities.Linha;
+import model.entities.TrechoLinha;
 import model.entities.Viagem;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ViagemDAO implements DAO<Viagem, String> {
-    private List<String[]> keysCidadesTest = new ArrayList<>();
+    private List<String[]> keysCidadesTest;
 
     private static ViagemDAO instancia;
 
-    private ViagemDAO(){
-        this.keysCidadesTest.add(new String[]{"Descalvado", "São Carlos", "0"});
-        this.keysCidadesTest.add(new String[]{"São Carlos", "Ibaté", "0"});
-        this.keysCidadesTest.add(new String[]{"Descalvado", "São Carlos", "1"});
-        this.keysCidadesTest.add(new String[]{"São Carlos", "Araraquara", "1"});
-        this.keysCidadesTest.add(new String[]{"Araraquara", "Ibaté", "1"});
+    private void getKeysCidadesTest(){
+        keysCidadesTest = new ArrayList<>();
+        TrechoLinhaDAO trechoLinhaDAO = TrechoLinhaDAO.getInstancia();
+        List<TrechoLinha> tl = trechoLinhaDAO.getListTrechoLinha();
+        System.out.println(tl.size());
+        for (TrechoLinha t : tl){
+            keysCidadesTest.add(new String[]{
+                    t.getTrecho().getCidadeOrigem(), t.getTrecho().getCidadeDestino(), ""+t.getLinha().getId()});
+        }
     }
 
     @Override
@@ -46,6 +50,8 @@ public class ViagemDAO implements DAO<Viagem, String> {
         /* Retorno pra teste */
         List<Viagem> viagens = new ArrayList<>();
         LinhaDAO daoLinha = LinhaDAO.getInstancia();
+
+        getKeysCidadesTest();
 
         for (String[] tl : this.keysCidadesTest) {
             if (tl[0].equals(args[0])) {

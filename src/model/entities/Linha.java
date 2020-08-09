@@ -2,6 +2,7 @@ package model.entities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Linha {
 
@@ -120,5 +121,17 @@ public class Linha {
         nome = nomeNovo;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o instanceof Long) return getId() == (long) o;
+        if (!(o instanceof Linha)) return false;
+        Linha linha = (Linha) o;
+        return getId() == linha.getId();
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
 }

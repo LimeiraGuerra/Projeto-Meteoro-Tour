@@ -18,13 +18,13 @@ public class TrechoLinhaDAO implements DAO<TrechoLinha, String> {
     private List<AssentoTrechoLinha> assentosVendScuff = new ArrayList<>();
 
     private TrechoLinhaDAO() {
-        trechosLinhas.add(new TrechoLinha(0, Time.valueOf("12:00:00"), TrechoDAO.getInstancia().selectById("0"), LinhaDAO.getInstancia().selectById("0") ));
-        trechosLinhas.add(new TrechoLinha(1, Time.valueOf("12:30:00"), TrechoDAO.getInstancia().selectById("1"), LinhaDAO.getInstancia().selectById("0") ));
-        trechosLinhas.add(new TrechoLinha(2, Time.valueOf("12:50:00"), TrechoDAO.getInstancia().selectById("3"), LinhaDAO.getInstancia().selectById("0") ));
-
         trechosLinhas.add(new TrechoLinha(0, Time.valueOf("12:00:00"), TrechoDAO.getInstancia().selectById("0"), LinhaDAO.getInstancia().selectById("1") ));
         trechosLinhas.add(new TrechoLinha(1, Time.valueOf("12:30:00"), TrechoDAO.getInstancia().selectById("1"), LinhaDAO.getInstancia().selectById("1") ));
-        trechosLinhas.add(new TrechoLinha(2, Time.valueOf("12:50:00"), TrechoDAO.getInstancia().selectById("2"), LinhaDAO.getInstancia().selectById("1") ));
+        trechosLinhas.add(new TrechoLinha(2, Time.valueOf("12:50:00"), TrechoDAO.getInstancia().selectById("3"), LinhaDAO.getInstancia().selectById("1") ));
+
+        trechosLinhas.add(new TrechoLinha(0, Time.valueOf("12:00:00"), TrechoDAO.getInstancia().selectById("0"), LinhaDAO.getInstancia().selectById("2") ));
+        trechosLinhas.add(new TrechoLinha(1, Time.valueOf("12:30:00"), TrechoDAO.getInstancia().selectById("1"), LinhaDAO.getInstancia().selectById("2") ));
+        trechosLinhas.add(new TrechoLinha(2, Time.valueOf("12:50:00"), TrechoDAO.getInstancia().selectById("2"), LinhaDAO.getInstancia().selectById("2") ));
 
 
 
@@ -44,14 +44,14 @@ public class TrechoLinhaDAO implements DAO<TrechoLinha, String> {
     public List<TrechoLinha> selectTrechosByLinha(Linha linha, String data){
         List<TrechoLinha> trechosLinhaTemp = new ArrayList<>();
         int cont = 0;
-        for(int[] tl : trechosLinhaScuff){
-            if(tl[0] == linha.getId()){
-                TrechoLinha tlaux = trechosLinhas.get(cont);
+        for(TrechoLinha tl : trechosLinhas){
+            if(tl.getLinha().equals(linha)){
                 if(data != null && assentosVendScuff.get(cont).getData().compareTo(java.sql.Date.valueOf(data)) == 0) {
-                    tlaux.setAssentoTrechoLinha(assentosVendScuff.get(cont));
+                    tl.setAssentoTrechoLinha(assentosVendScuff.get(cont));
                 }
+                else tl.setAssentoTrechoLinha(null);
                 cont++;
-                trechosLinhaTemp.add(tlaux);
+                trechosLinhaTemp.add(tl);
             }
         }
         return trechosLinhaTemp;

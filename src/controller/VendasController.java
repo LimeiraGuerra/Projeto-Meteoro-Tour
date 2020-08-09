@@ -141,6 +141,7 @@ public class VendasController {
             this.messageHead = "Parâmetros de pesquisa inválidos ou nulos!";
             AlertWindow.errorAlert(messageBody,messageHead);
         }
+        this.selectedViagem = null;
     }
 
     private void clearTable(){

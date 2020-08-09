@@ -34,8 +34,11 @@ public class LinhaDAO implements DAO<Linha, String> {
 
     @Override
     public Linha selectById(String id) {
-        int num = Integer.parseInt(id);
-        return linhas.get(num);
+        Long num = Long.parseLong(id);
+        for (Linha l : linhas){
+            if (l.equals(num)) return l;
+        }
+        return null;
     }
 
     @Override
