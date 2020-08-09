@@ -14,6 +14,7 @@ import model.entities.Funcionario;
 import model.entities.Onibus;
 import model.usecases.GerenciarFuncionarioUC;
 import model.usecases.GerenciarOnibusUC;
+import view.util.AlertWindow;
 import view.util.DataValidator;
 
 import java.util.Optional;
@@ -65,7 +66,7 @@ public class OnibusController {
 
     public void deleteOnibus(ActionEvent actionEvent) {
         if (getOnibusOfSelectedRow() != null) {
-            if (verificationAlert()) ucOnibus.deleteOnibus(getOnibusOfSelectedRow());
+            if (AlertWindow.verificationAlert("Tem certeza que deseja excluir esse onibus?", getOnibusOfSelectedRow().toString())) ucOnibus.deleteOnibus(getOnibusOfSelectedRow());
         }
         refreshTable();
         clearTextField();
@@ -86,7 +87,7 @@ public class OnibusController {
                 createOnibus();
             }
         }else {
-            informationAlert(msgBody);
+            AlertWindow.informationAlerta(msgBody, "Alerta.");
         }
     }
 
@@ -95,11 +96,11 @@ public class OnibusController {
         if (ifTableNotHaveRenavamOrPlaca(selectedBus)){
             setOnibusByTextFields(selectedBus);
             ucOnibus.updateOnibus(selectedBus);
-            informationAlert("Ônibus editado com sucesso");
+            AlertWindow.informationAlerta("Ônibus editado com sucesso", "");
             refreshTable();
             clearTextField();
         }else {
-            errorAlert("Renavam ou placa já cadastrados no sistema");
+            AlertWindow.errorAlert("Renavam ou placa já cadastrados no sistema", "");
         }
     }
 
@@ -122,9 +123,9 @@ public class OnibusController {
         if (ifTableNotContainsFunc(bus)) {
             //s
             ucOnibus.saveOnibus(bus);
-            informationAlert("Onibus adicionado com sucesso");
+            AlertWindow.informationAlerta("Onibus adicionado com sucesso", "");
         } else {
-            errorAlert("Renavam ou placa já cadastrados no sistema");
+            AlertWindow.errorAlert("Renavam ou placa já cadastrados no sistema", "");
         }
     }
 
@@ -163,29 +164,6 @@ public class OnibusController {
         if (DataValidator.txtInputVerifier(txtFieldPlaca.getText())== null) str.append("Campo Placa inválido. \n");
         msgBody = str.toString();
         return str.length() == 0;
-    }
-
-
-    private boolean verificationAlert(){
-        Alert alert= new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setHeaderText("Tem certeza que deseja excluir esse onibus?");
-        alert.setContentText(getOnibusOfSelectedRow().toString());
-        Optional<ButtonType> result = alert.showAndWait();
-        return result.get() == ButtonType.OK;
-    }
-
-    private void informationAlert(String msg){
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText("AVISO!");
-        alert.setContentText(msg);
-        alert.showAndWait();
-    }
-
-    private void errorAlert(String msg) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setHeaderText("ERRO!");
-        alert.setContentText(msg);
-        alert.showAndWait();
     }
 
     private Onibus getOnibusOfSelectedRow(){

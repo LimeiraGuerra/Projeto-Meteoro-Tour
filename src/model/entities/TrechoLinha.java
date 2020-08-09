@@ -11,6 +11,11 @@ public class TrechoLinha {
     private Linha linha;
 
     public TrechoLinha() {
+
+
+
+
+
     }
 
     public TrechoLinha(int ordem, Date horarioSaida, Trecho trecho, Linha linha) {

@@ -22,4 +22,12 @@ public class AlertWindow {
         Optional<ButtonType> result = alert.showAndWait();
         return result.get() == ButtonType.OK;
     }
+
+    public static void errorAlert(String msg, String messageBody){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Erro!");
+        alert.setHeaderText(msg);
+        alert.setContentText(messageBody);
+        alert.showAndWait();
+    }
 }
