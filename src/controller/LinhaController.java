@@ -382,6 +382,7 @@ public class LinhaController{
     private void sizeTableTrechoLinha(Double tamanho){
         tabelaLinhaTrecho.setPrefHeight(tamanho);
     }
+
     private void setVisibleTimeFieldsEdit(boolean bool){
         lbNomeTrecho.setVisible(bool);
         txtHoraTrechoEdit.setVisible(bool);
@@ -408,7 +409,7 @@ public class LinhaController{
         }else{
             AlertWindow.informationAlerta("Padrão de hora (hh:mm) não foi seguido.", "Atualização não realizada.");
         }
-
     }
+
 }
 
