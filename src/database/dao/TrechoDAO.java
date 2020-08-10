@@ -12,16 +12,17 @@ import java.util.*;
 public class TrechoDAO implements DAO<Trecho, String> {
     private static TrechoDAO instancia;
     private List<Trecho> trechos = new ArrayList<>();
-    private List<int[]> trechosLinhaScuff = new ArrayList<>();
-    private List<AssentoTrechoLinha> assentosVendScuff = new ArrayList<>();
+    //private List<int[]> trechosLinhaScuff = new ArrayList<>();
+    //private List<AssentoTrechoLinha> assentosVendScuff = new ArrayList<>();
+
 
     private TrechoDAO(){
         trechos.add(new Trecho("Descalvado", "São Carlos", 40.0, 30, 10.0, 1.0, 0.2));
-        trechos.add(new Trecho("São Carlos", "Ibaté", 15.0, 5, 5.0, 0.5, 0.2));
         trechos.add(new Trecho("São Carlos", "Araraquara", 30.0, 20, 7.0, 0.8, 0.2));
+        trechos.add(new Trecho("São Carlos", "Ibaté", 15.0, 5, 5.0, 0.5, 0.2));
         trechos.add(new Trecho("Araraquara", "Ibaté", 20.0, 15, 8.0, 1.0, 0.2));
 
-        trechosLinhaScuff.add(new int[]{1, 0});
+        /*trechosLinhaScuff.add(new int[]{1, 0});
         trechosLinhaScuff.add(new int[]{1, 1});
         trechosLinhaScuff.add(new int[]{2, 0});
         trechosLinhaScuff.add(new int[]{2, 2});
@@ -31,7 +32,7 @@ public class TrechoDAO implements DAO<Trecho, String> {
         assentosVendScuff.add(new AssentoTrechoLinha(java.sql.Date.valueOf("2020-10-10"), Arrays.asList(new String[]{"04", "32", "21", "42", "39"})));
         assentosVendScuff.add(new AssentoTrechoLinha(java.sql.Date.valueOf("2020-10-10"), Arrays.asList(new String[]{"32", "29", "08"})));
         assentosVendScuff.add(new AssentoTrechoLinha(java.sql.Date.valueOf("2020-10-10"), Arrays.asList(new String[]{"23", "03"})));
-        assentosVendScuff.add(new AssentoTrechoLinha(java.sql.Date.valueOf("2020-10-11"), Arrays.asList(new String[]{"44", "10", "18"})));
+        assentosVendScuff.add(new AssentoTrechoLinha(java.sql.Date.valueOf("2020-10-11"), Arrays.asList(new String[]{"44", "10", "18"})));*/
     }
 
     @Override
@@ -61,7 +62,8 @@ public class TrechoDAO implements DAO<Trecho, String> {
 
     @Override
     public Trecho selectById(String id) {
-        return null;
+        int num = Integer.parseInt(id);
+        return trechos.get(num);
     }
 
     @Override
@@ -77,7 +79,7 @@ public class TrechoDAO implements DAO<Trecho, String> {
         return trechos;
     }
 
-    public List<TrechoLinha> selectTrechosByLinha(Linha linha, String data){
+   /* public List<TrechoLinha> selectTrechosByLinha(Linha linha, String data){
         List<TrechoLinha> trechosLinha = new ArrayList<>();
         int cont = 0;
         for(int[] tl : trechosLinhaScuff){
@@ -91,7 +93,7 @@ public class TrechoDAO implements DAO<Trecho, String> {
             }
         }
         return trechosLinha;
-    }
+    }*/
 
     public static TrechoDAO getInstancia(){
         if (instancia == null){

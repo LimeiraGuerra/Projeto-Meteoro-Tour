@@ -18,7 +18,7 @@ public class LinhaLoader {
         FXMLLoader loader = new FXMLLoader();
         try{
             Pane grafico = load(getClass().getResource("/view/fxml/Linha.fxml"));
-            Scene cena = new Scene(grafico, 791, 490);
+            Scene cena = new Scene(grafico);
             Stage stage = new Stage();
             stage.setResizable(false);
             stage.setTitle("Meteoro Tour - Linhas");

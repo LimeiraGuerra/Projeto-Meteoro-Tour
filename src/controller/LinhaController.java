@@ -359,8 +359,10 @@ public class LinhaController{
         sizeTableTrechoLinha(258.0);
         setVisibleTimeFieldsEdit(true);
         Trecho t = tabelaLinhaTrecho.getSelectionModel().getSelectedItem();
-        TrechoLinha trechoL = searchLinhaTable().getTrechoLinha(t);
-        setFieldHoraEdit(returnHorario(trechoL), t.toString());
+        if (t!=null){
+            TrechoLinha trechoL = searchLinhaTable().getTrechoLinha(t);
+            setFieldHoraEdit(returnHorario(trechoL), t.toString());
+        }
     }
 
     private String[] returnHorario(TrechoLinha trechoLinha) throws ParseException {

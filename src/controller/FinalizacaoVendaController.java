@@ -9,6 +9,7 @@ import model.entities.Passagem;
 import model.entities.Viagem;
 import model.usecases.DevolverPassagensUC;
 import model.usecases.VenderPassagensUC;
+import view.util.AlertWindow;
 import view.util.DataValidator;
 import view.util.TipoEspecial;
 
@@ -49,10 +50,10 @@ public class FinalizacaoVendaController {
     public void finalizeSale(ActionEvent actionEvent) {
         this.setTotalToPay();
         Passagem p = this.getClientDataFromView();
-        if (p == null) this.errorAlert();
+        if (p == null) AlertWindow.errorAlert("Parâmetros de pesquisa inválidos ou nulos!", messageBody);
         else {
             this.setPayMessage();
-            if (this.verificationAlert()) {
+            if (AlertWindow.verificationAlert("Confirmar venda?", "")) {
                 this.addDataToPassagem(p);
                 this.venderPassagensUC.saveSale(p);
                 this.deleteOldPassagem();
@@ -134,22 +135,6 @@ public class FinalizacaoVendaController {
     private void closeWindow(){
         Stage stage = (Stage) lbLinha.getScene().getWindow();
         stage.close();
-    }
-
-    private boolean verificationAlert(){
-        Alert alert= new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setHeaderText("Confirmar venda?");
-        alert.setContentText(this.messageBody);
-        Optional<ButtonType> result = alert.showAndWait();
-        return result.get() == ButtonType.OK;
-    }
-
-    private void errorAlert(){
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Erro!");
-        alert.setHeaderText("Parâmetros de pesquisa inválidos ou nulos!");
-        alert.setContentText(this.messageBody);
-        alert.showAndWait();
     }
 
     public Viagem getChosenViagem() {

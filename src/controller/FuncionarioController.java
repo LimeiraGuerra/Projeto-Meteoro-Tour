@@ -9,6 +9,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import model.entities.Funcionario;
 import model.usecases.GerenciarFuncionarioUC;
+import view.util.AlertWindow;
 import view.util.DataValidator;
 
 import java.util.Iterator;
@@ -66,7 +67,7 @@ public class FuncionarioController{
 
     public void deleteFunc(ActionEvent actionEvent) {
         if (getFuncOfSelectedRow() != null){
-            if (verificationAlert()) ucFuncionario.deleteFunc(getFuncOfSelectedRow());
+            if (AlertWindow.verificationAlert("Tem certeza que deseja excluir "+getFuncOfSelectedRow().getNome()+"?", getFuncOfSelectedRow().toString())) ucFuncionario.deleteFunc(getFuncOfSelectedRow());
         }
         refreshTable();
         clearTextField();
@@ -86,7 +87,7 @@ public class FuncionarioController{
                 createFunc();
             }
         } else {
-            informationAlert(msgBody);
+            AlertWindow.informationAlerta(msgBody, "Alerta.");
         }
     }
 
@@ -95,11 +96,11 @@ public class FuncionarioController{
         if (ifTableNotHaveCpfORg(selectedFunc)){
             setFuncByTextFields(selectedFunc);
             ucFuncionario.updateFunc(selectedFunc);
-            informationAlert("Funcionario editado com sucesso");
+            AlertWindow.informationAlerta("Funcionario editado com sucesso", "");
             refreshTable();
             clearTextField();
         }else {
-            errorAlert("CPF ou RG já cadastrados no sistema");
+            AlertWindow.errorAlert("CPF ou RG já cadastrados no sistema", "");
         }
     }
 
@@ -123,9 +124,9 @@ public class FuncionarioController{
         Funcionario func = newFunc();
         if (ifTableNotContainsFunc(func)) {
             ucFuncionario.saveFunc(func);
-            informationAlert("Funcionario adicionado com sucesso");
+            AlertWindow.informationAlerta("Funcionario adicionado com sucesso", "Funcionário adicionado");
         } else {
-            errorAlert("CPF ou RG já cadastrados no sistema");
+            AlertWindow.errorAlert("CPF ou RG já cadastrados no sistema", "");
         }
     }
 
@@ -173,28 +174,6 @@ public class FuncionarioController{
         if (DataValidator.txtInputVerifier(txtFieldCargo.getText())==null) str.append("Campo Cargo inválido. \n");
         msgBody = str.toString();
         return str.length() == 0;
-    }
-
-    private boolean verificationAlert(){
-        Alert alert= new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setHeaderText("Tem certeza que deseja excluir "+getFuncOfSelectedRow().getNome()+"?");
-        alert.setContentText(getFuncOfSelectedRow().toString());
-        Optional<ButtonType> result = alert.showAndWait();
-        return result.get() == ButtonType.OK;
-    }
-
-    private void informationAlert(String msg){
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText("AVISO!");
-        alert.setContentText(msg);
-        alert.showAndWait();
-    }
-
-    private void errorAlert(String msg){
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setHeaderText("ERRO!");
-        alert.setContentText(msg);
-        alert.showAndWait();
     }
 
     private Funcionario getFuncOfSelectedRow() {

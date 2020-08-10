@@ -28,7 +28,7 @@ public class VendasLoader {
             if(isVendedorAdmin()) {ctrl.setAdminPrivileges();}
 
             Stage stage = new Stage();
-            stage.setScene(new Scene(graph, 890, 590));
+            stage.setScene(new Scene(graph));
             ctrl.setScene(stage.getScene()); //Passo a cena para o controle para usar css selector
             stage.setTitle("Meteoro Tour - Venda de Passagens");
             stage.setResizable(false); 

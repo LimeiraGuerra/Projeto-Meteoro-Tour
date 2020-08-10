@@ -17,7 +17,7 @@ public class OnibusLoader {
         FXMLLoader loader = new FXMLLoader();
         try{
             Pane graph = load(getClass().getResource("/view/fxml/Onibus.fxml"));
-            Scene scene = new Scene(graph, 713,390);
+            Scene scene = new Scene(graph);
             Stage stage = new Stage();
             stage.setTitle("Meteoro Tour - Ônibus");
             OnibusLoader onibusController = loader.getController();
