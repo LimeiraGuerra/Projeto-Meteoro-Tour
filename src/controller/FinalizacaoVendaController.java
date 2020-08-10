@@ -15,7 +15,6 @@ import view.util.TipoEspecial;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Optional;
 
 public class FinalizacaoVendaController {
     @FXML Label lbLinha, lbCidadeOrigem, lbCidadeDestino, lbHorarioSaida, lbValorViagem, lbValorSeguro;
@@ -50,10 +49,10 @@ public class FinalizacaoVendaController {
     public void finalizeSale(ActionEvent actionEvent) {
         this.setTotalToPay();
         Passagem p = this.getClientDataFromView();
-        if (p == null) AlertWindow.errorAlert("Parâmetros de pesquisa inválidos ou nulos!", messageBody);
+        if (p == null) AlertWindow.errorAlert(this.messageBody, "Parâmetros de pesquisa inválidos ou nulos!");
         else {
             this.setPayMessage();
-            if (AlertWindow.verificationAlert("Confirmar venda?", "")) {
+            if (AlertWindow.verificationAlert(this.messageBody, "Confirmar venda?")) {
                 this.addDataToPassagem(p);
                 this.venderPassagensUC.saveSale(p);
                 this.deleteOldPassagem();

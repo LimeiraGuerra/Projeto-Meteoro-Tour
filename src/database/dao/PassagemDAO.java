@@ -4,6 +4,7 @@ import database.utils.DAO;
 import model.entities.Passagem;
 import model.entities.Viagem;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,6 +42,18 @@ public class PassagemDAO implements DAO<Passagem, String> {
         for(Passagem p : passagens.values())
             if (args[0].equals(p.getCpf())) matchP.add(p);
         return matchP;
+    }
+
+    public List<Passagem> selectByDateInterval(String ini, String end){
+        List<Passagem> pAux = new ArrayList<>();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        for (Passagem p : passagens.values()){
+            String date = df.format(p.getDataViagem());
+            if (ini.compareTo(date) <= 0 && end.compareTo(date) >= 0){
+                pAux.add(p);
+            }
+        }
+        return pAux;
     }
 
     public static PassagemDAO getInstancia(){

@@ -19,12 +19,11 @@ public class TrechoLinhaDAO implements DAO<TrechoLinha, String> {
 
     private TrechoLinhaDAO() {
         trechosLinhas.add(new TrechoLinha(0, Time.valueOf("12:00:00"), TrechoDAO.getInstancia().selectById("0"), LinhaDAO.getInstancia().selectById("1") ));
-        trechosLinhas.add(new TrechoLinha(1, Time.valueOf("12:30:00"), TrechoDAO.getInstancia().selectById("1"), LinhaDAO.getInstancia().selectById("1") ));
-        trechosLinhas.add(new TrechoLinha(2, Time.valueOf("12:50:00"), TrechoDAO.getInstancia().selectById("3"), LinhaDAO.getInstancia().selectById("1") ));
+        trechosLinhas.add(new TrechoLinha(1, Time.valueOf("12:30:00"), TrechoDAO.getInstancia().selectById("2"), LinhaDAO.getInstancia().selectById("1") ));
 
         trechosLinhas.add(new TrechoLinha(0, Time.valueOf("12:00:00"), TrechoDAO.getInstancia().selectById("0"), LinhaDAO.getInstancia().selectById("2") ));
         trechosLinhas.add(new TrechoLinha(1, Time.valueOf("12:30:00"), TrechoDAO.getInstancia().selectById("1"), LinhaDAO.getInstancia().selectById("2") ));
-        trechosLinhas.add(new TrechoLinha(2, Time.valueOf("12:50:00"), TrechoDAO.getInstancia().selectById("2"), LinhaDAO.getInstancia().selectById("2") ));
+        trechosLinhas.add(new TrechoLinha(2, Time.valueOf("12:50:00"), TrechoDAO.getInstancia().selectById("3"), LinhaDAO.getInstancia().selectById("2") ));
 
 
 
