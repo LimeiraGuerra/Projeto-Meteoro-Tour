@@ -1,9 +1,11 @@
 package model.entities;
 
+import view.util.DataValidator;
+
 import java.util.Date;
 
 public class InfoLinhaTrechoRelatorio {
-    private Date data;
+    private String data, horarioSaida;
     private String nomeLinha, nomeTrecho;
     private int uso;
     private double lucro;
@@ -11,20 +13,29 @@ public class InfoLinhaTrechoRelatorio {
     public InfoLinhaTrechoRelatorio() {
     }
 
-    public InfoLinhaTrechoRelatorio(Date data, String nomeLinha, String nomeTrecho, int uso, double lucro) {
+    public InfoLinhaTrechoRelatorio(String data, String horarioSaida, String nomeLinha, String nomeTrecho, int uso, double lucro) {
         this.data = data;
+        this.horarioSaida = horarioSaida;
         this.nomeLinha = nomeLinha;
         this.nomeTrecho = nomeTrecho;
         this.uso = uso;
         this.lucro = lucro;
     }
 
-    public Date getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(String data) {
         this.data = data;
+    }
+
+    public String getHorarioSaida() {
+        return horarioSaida;
+    }
+
+    public void setHorarioSaida(String horarioSaida) {
+        this.horarioSaida = horarioSaida;
     }
 
     public String getNomeLinha() {
@@ -55,7 +66,21 @@ public class InfoLinhaTrechoRelatorio {
         return lucro;
     }
 
+    public String getLucroFormated(){
+        return DataValidator.formatCurrencyView(lucro);
+    }
+
     public void setLucro(double lucro) {
         this.lucro = lucro;
+    }
+
+    @Override
+    public String toString() {
+        return data + ";" +
+                nomeLinha + ";" +
+                horarioSaida + ";" +
+                nomeTrecho + ";" +
+                uso + ";" +
+                getLucroFormated() + "\n";
     }
 }

@@ -40,8 +40,8 @@
       </Label>
       <Rectangle fill="#ffffff00" height="25.0" layoutX="595.0" layoutY="397.0" opacity="0.25" stroke="BLACK" strokeType="INSIDE" width="189.0" />
       <Line endX="-0.5" endY="1.5" layoutX="690.0" layoutY="419.0" opacity="0.25" startX="-0.5" startY="-20.5" />
-      <Label fx:id="lbTotalUso" alignment="CENTER" contentDisplay="CENTER" layoutX="595.0" layoutY="401.0" prefHeight="17.0" prefWidth="95.0" text="0" textAlignment="CENTER" />
-      <Label fx:id="lbTotalLucro" alignment="CENTER" contentDisplay="CENTER" layoutX="689.0" layoutY="401.0" prefHeight="17.0" prefWidth="95.0" text="00,00" textAlignment="CENTER" />
+      <Label fx:id="lbTotalUso" alignment="CENTER" contentDisplay="CENTER" layoutX="595.0" layoutY="401.0" prefHeight="17.0" prefWidth="95.0" text="" textAlignment="CENTER" />
+      <Label fx:id="lbTotalLucro" alignment="CENTER" contentDisplay="CENTER" layoutX="689.0" layoutY="401.0" prefHeight="17.0" prefWidth="95.0" text="" textAlignment="CENTER" />
       <Label layoutX="552.0" layoutY="426.0" text="Média:">
          <font>
             <Font name="System Bold" size="12.0" />
@@ -49,9 +49,9 @@
       </Label>
       <Rectangle fill="#ffffff00" height="25.0" layoutX="595.0" layoutY="422.0" opacity="0.25" stroke="BLACK" strokeType="INSIDE" width="189.0" />
       <Line endX="-0.5" endY="1.5" layoutX="690.0" layoutY="444.0" opacity="0.25" startX="-0.5" startY="-20.5" />
-      <Label fx:id="lbMediaUso" alignment="CENTER" contentDisplay="CENTER" layoutX="595.0" layoutY="426.0" prefHeight="17.0" prefWidth="95.0" text="0" textAlignment="CENTER" />
-      <Label fx:id="lbMediaLucro" alignment="CENTER" contentDisplay="CENTER" layoutX="689.0" layoutY="426.0" prefHeight="17.0" prefWidth="95.0" text="00,00" textAlignment="CENTER" />
-      <Pane disable="true" layoutX="784.0" layoutY="16.0" prefHeight="204.0" prefWidth="201.0">
+      <Label fx:id="lbMediaUso" alignment="CENTER" contentDisplay="CENTER" layoutX="595.0" layoutY="426.0" prefHeight="17.0" prefWidth="95.0" text="" textAlignment="CENTER" />
+      <Label fx:id="lbMediaLucro" alignment="CENTER" contentDisplay="CENTER" layoutX="689.0" layoutY="426.0" prefHeight="17.0" prefWidth="95.0" text="" textAlignment="CENTER" />
+      <Pane fx:id="paneFilter" disable="true" layoutX="784.0" layoutY="16.0" prefHeight="204.0" prefWidth="201.0">
          <children>
             <Label layoutX="14.0" layoutY="3.0" text="Filtrar por:">
                <font>
@@ -59,15 +59,17 @@
                </font>
             </Label>
             <Label layoutX="14.0" layoutY="31.0" text="Linha:" />
-            <TextField layoutX="12.0" layoutY="96.0" prefHeight="25.0" prefWidth="168.0" />
+            <TextField fx:id="txtFieldLinha" layoutX="12.0" layoutY="48.0" prefHeight="25.0" prefWidth="168.0" />
+            <TextField fx:id="txtFieldTrecho" layoutX="12.0" layoutY="96.0" prefHeight="25.0" prefWidth="168.0" />
             <Label layoutX="14.0" layoutY="79.0" text="Trecho:" />
-            <TextField layoutX="12.0" layoutY="48.0" prefHeight="25.0" prefWidth="168.0" />
-            <TextField layoutX="12.0" layoutY="144.0" prefHeight="25.0" prefWidth="168.0" />
-            <Label layoutX="14.0" layoutY="127.0" text="Horário Saída:" />
-            <Button layoutX="12.0" layoutY="179.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="168.0" text="Filtrar Resultados" />
+            <TextField fx:id="txtFieldHorarioIni" layoutX="12.0" layoutY="144.0" prefHeight="25.0" prefWidth="72.0" />
+            <TextField fx:id="txtFieldHorarioFim" layoutX="108.0" layoutY="144.0" prefHeight="25.0" prefWidth="72.0" />
+            <Label layoutX="14.0" layoutY="127.0" text="Horário Saída entre:" />
+            <Button layoutX="12.0" layoutY="179.0" mnemonicParsing="false" onAction="#filterResults" prefHeight="25.0" prefWidth="168.0" text="Filtrar Resultados" />
+            <Label layoutX="88.0" layoutY="148.0" text="até" />
          </children>
       </Pane>
       <Label layoutX="800.0" layoutY="273.0" text="De:" />
-      <Button disable="true" layoutX="797.0" layoutY="372.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="168.0" text="Exportar Planilha" />
+      <Button fx:id="btnExport" disable="true" layoutX="797.0" layoutY="372.0" mnemonicParsing="false" onAction="#tableExport" prefHeight="25.0" prefWidth="168.0" text="Exportar Planilha" />
    </children>
 </AnchorPane>
