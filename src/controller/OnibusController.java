@@ -28,7 +28,7 @@ public class OnibusController {
     @FXML private TextField txtFieldPlaca;
     @FXML private Pane paneOnibus;
 
-    String msgBody;
+    private String msgBody;
     private ObservableList<Onibus> onibus = FXCollections.observableArrayList();
     private GerenciarOnibusUC ucOnibus;
 

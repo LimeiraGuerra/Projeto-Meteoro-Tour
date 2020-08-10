@@ -199,11 +199,11 @@ public class LinhaController{
                 atualizaHora();
             }
             else{
-                AlertWindow.verificationAlert("Informe hora e minutos válidos\nNo padrão: hh:mm.", "Hora informada inválida!");
+                AlertWindow.errorAlert("Informe hora e minutos válidos\nNo padrão: hh:mm.", "Hora informada inválida!");
             }
         }
         else{
-            AlertWindow.verificationAlert("Não foi possível adicionar o trecho na linha\nConfira se os campos de hora e minuto estão preenchidos e um trecho selecionado.", "Trecho não adicionado.");
+            AlertWindow.errorAlert("Não foi possível adicionar o trecho na linha\nConfira se os campos de hora e minuto estão preenchidos e um trecho selecionado.", "Trecho não adicionado.");
         }
 
     }
@@ -261,7 +261,7 @@ public class LinhaController{
                 AlertWindow.informationAlerta("Trecho não pode ser salvo, pois há trecho com o mesmo conjunto de cidade Origem - cidade Destino", "Trecho não adicionado.");
             }
         }else{
-            AlertWindow.informationAlerta("Trecho não pode ser salvo, pois havia campos vazios", "Trecho não adicionado.");
+            AlertWindow.errorAlert("Trecho não pode ser salvo, pois havia campos vazios", "Trecho não adicionado.");
         }
 
         fixVisionPane();
@@ -355,7 +355,7 @@ public class LinhaController{
     }
 
     @FXML
-    private void organizeFieldtHoraEdit(MouseEvent mouseEvent) throws ParseException {
+    private void organizeFieldtHoraEdit(MouseEvent mouseEvent) {
         sizeTableTrechoLinha(258.0);
         setVisibleTimeFieldsEdit(true);
         Trecho t = tabelaLinhaTrecho.getSelectionModel().getSelectedItem();
@@ -365,12 +365,11 @@ public class LinhaController{
         }
     }
 
-    private String[] returnHorario(TrechoLinha trechoLinha) throws ParseException {
+    private String[] returnHorario(TrechoLinha trechoLinha) {
         Date hora = trechoLinha.getHorarioSaida();
         SimpleDateFormat formatador = new SimpleDateFormat("HH:mm");
         String horas = formatador.format(hora);
-        String[] horario = horas.split(":");
-        return horario;
+        return horas.split(":");
     }
 
     private void setFieldHoraEdit(String[] horario, String nomeTrecho){
@@ -382,6 +381,7 @@ public class LinhaController{
     private void sizeTableTrechoLinha(Double tamanho){
         tabelaLinhaTrecho.setPrefHeight(tamanho);
     }
+
     private void setVisibleTimeFieldsEdit(boolean bool){
         lbNomeTrecho.setVisible(bool);
         txtHoraTrechoEdit.setVisible(bool);
@@ -406,9 +406,9 @@ public class LinhaController{
             setVisibleTimeFieldsEdit(false);
             sizeTableTrechoLinha(292.0);
         }else{
-            AlertWindow.informationAlerta("Padrão de hora (hh:mm) não foi seguido.", "Atualização não realizada.");
+            AlertWindow.errorAlert("Padrão de hora (hh:mm) não foi seguido.", "Atualização não realizada.");
         }
-
     }
+
 }
 

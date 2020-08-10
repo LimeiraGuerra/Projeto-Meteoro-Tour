@@ -99,7 +99,7 @@ public class TrechoController {
             setVisibleButtonPane(false);
             setVisiblePaneImg(true);
         }else{
-            AlertWindow.informationAlerta("Campos vazios", "Trecho não adicionado");
+            AlertWindow.errorAlert("Campos vazios", "Trecho não adicionado");
         }
 
     }
@@ -116,10 +116,7 @@ public class TrechoController {
 
 
     private boolean trechoNoContainsTrechoLinha(Trecho trecho){
-        if (trecho.sizeListTrechoLinha() == 0){
-            return true;
-        }
-        return false;
+        return trecho.sizeListTrechoLinha() == 0;
     }
 
     @FXML
@@ -133,7 +130,7 @@ public class TrechoController {
                    tabelaTrecho.refresh();
                }
            }else{
-               AlertWindow.informationAlerta("Trecho não pode ser excluido pois pertece a uma linha.", "Erro na exclusão do trecho " + trecho.toString());
+               AlertWindow.errorAlert("Trecho não pode ser excluido pois pertece a uma linha.", "Erro na exclusão do trecho " + trecho.toString());
            }
        }
        setVisibleButtonPane(false);

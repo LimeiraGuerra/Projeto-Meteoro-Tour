@@ -22,7 +22,6 @@ public class TrechoLoader {
             stage.setResizable(false);
 
             stage.setTitle("Meteoro Tour - Trechos");
-            TrechoController trechoController = loader.getController();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(cena);
             stage.show();

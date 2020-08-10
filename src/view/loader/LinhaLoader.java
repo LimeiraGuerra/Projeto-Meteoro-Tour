@@ -22,7 +22,6 @@ public class LinhaLoader {
             Stage stage = new Stage();
             stage.setResizable(false);
             stage.setTitle("Meteoro Tour - Linhas");
-            LinhaController trechoController = loader.getController();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(cena);
             stage.show();
