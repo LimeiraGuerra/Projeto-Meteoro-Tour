@@ -133,8 +133,8 @@ public class RelatorioController {
         String horaFim = this.txtFieldHorarioFim.getText().trim();
         List<InfoLinhaTrechoRelatorio> filteredList = new ArrayList<>();
         for (InfoLinhaTrechoRelatorio info : this.relatorioData){
-            if (!nomeLinha.isEmpty() && !info.getNomeLinha().equals(nomeLinha)) continue;
-            if (!nomeTrecho.isEmpty() && !info.getNomeTrecho().equals(nomeTrecho)) continue;
+            if (!nomeLinha.isEmpty() && !info.getNomeLinha().contains(nomeLinha)) continue;
+            if (!nomeTrecho.isEmpty() && !info.getNomeTrecho().contains(nomeTrecho)) continue;
             if (!horaIni.isEmpty() && !horaFim.isEmpty() &&
                     (info.getHorarioSaida().compareTo(horaIni) < 0 ||
                     info.getHorarioSaida().compareTo(horaFim) > 0)) continue;
