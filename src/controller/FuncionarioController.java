@@ -126,6 +126,7 @@ public class FuncionarioController{
         if (ifTableNotContainsFunc(func)) {
             ucFuncionario.saveFunc(func);
             AlertWindow.informationAlerta("Funcionario: \n"+ func +"adicionado com sucesso", "Funcionário adicionado");
+            refreshTable();
             clearTextField();
         } else {
             AlertWindow.errorAlert("CPF ou RG já cadastrados no sistema", "");

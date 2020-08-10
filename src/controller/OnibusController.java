@@ -121,6 +121,7 @@ public class OnibusController {
         if (ifTableNotContainsFunc(bus)) {
             ucOnibus.saveOnibus(bus);
             AlertWindow.informationAlerta("Onibus: \n"+bus+" adicionado com sucesso", "");
+            refreshTable();
             clearTextField();
         } else {
             AlertWindow.errorAlert("Renavam ou placa já cadastrados no sistema", "");
