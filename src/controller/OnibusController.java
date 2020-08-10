@@ -44,8 +44,6 @@ public class OnibusController {
         cRenavam.setCellValueFactory(new PropertyValueFactory<>("renavam"));
         cPlaca.setCellValueFactory(new PropertyValueFactory<>("placa"));
         tabelaOnibus.setItems(loadTable());
-        tabelaOnibus.getSelectionModel().select(0);
-        setTextField();
     }
 
     private ObservableList<Onibus> loadTable() {
@@ -74,7 +72,7 @@ public class OnibusController {
 
     public void saveOnibus(ActionEvent actionEvent) {
         addOrEditFunc();
-        refreshTable();
+        //refreshTable();
         tabelaOnibus.getSelectionModel().select(onibus.size());
     }
 
@@ -96,7 +94,7 @@ public class OnibusController {
         if (ifTableNotHaveRenavamOrPlaca(selectedBus)){
             setOnibusByTextFields(selectedBus);
             ucOnibus.updateOnibus(selectedBus);
-            AlertWindow.informationAlerta("Ônibus editado com sucesso", "");
+            AlertWindow.informationAlerta("Ônibus: \n"+selectedBus+"editado com sucesso", "");
             refreshTable();
             clearTextField();
         }else {
@@ -121,9 +119,9 @@ public class OnibusController {
     public void createOnibus(){
         Onibus bus = newOnibus();
         if (ifTableNotContainsFunc(bus)) {
-            //s
             ucOnibus.saveOnibus(bus);
-            AlertWindow.informationAlerta("Onibus adicionado com sucesso", "");
+            AlertWindow.informationAlerta("Onibus: \n"+bus+" adicionado com sucesso", "");
+            clearTextField();
         } else {
             AlertWindow.errorAlert("Renavam ou placa já cadastrados no sistema", "");
         }

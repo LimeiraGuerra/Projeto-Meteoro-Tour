@@ -47,7 +47,7 @@ public class FuncionarioDAO implements DAO<Funcionario, String> {
     }
 
     public static FuncionarioDAO getInstancia(){
-        if (instancia == null) return new FuncionarioDAO();
+        if (instancia == null) instancia = new FuncionarioDAO();
         return instancia;
     }
 }

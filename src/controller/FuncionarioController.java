@@ -75,13 +75,14 @@ public class FuncionarioController{
 
     public void saveFunc(ActionEvent actionEvent) {
         addOrEditFunc();
-        refreshTable();
+        //refreshTable();
         tabelaFunc.getSelectionModel().select(funcionarios.size());
     }
 
     private void addOrEditFunc(){
+        int selectedRow = getIndexOfSelectedRow();
         if (verifyTextFields()) {
-            if (getIndexOfSelectedRow() >= 0) {
+            if (selectedRow >= 0) {
                 editFunc(getIndexOfSelectedRow());
             } else {
                 createFunc();
@@ -96,7 +97,7 @@ public class FuncionarioController{
         if (ifTableNotHaveCpfORg(selectedFunc)){
             setFuncByTextFields(selectedFunc);
             ucFuncionario.updateFunc(selectedFunc);
-            AlertWindow.informationAlerta("Funcionario editado com sucesso", "");
+            AlertWindow.informationAlerta("Funcionario: \n"+selectedFunc +"editado com sucesso", "");
             refreshTable();
             clearTextField();
         }else {
@@ -124,7 +125,8 @@ public class FuncionarioController{
         Funcionario func = newFunc();
         if (ifTableNotContainsFunc(func)) {
             ucFuncionario.saveFunc(func);
-            AlertWindow.informationAlerta("Funcionario adicionado com sucesso", "Funcionário adicionado");
+            AlertWindow.informationAlerta("Funcionario: \n"+ func +"adicionado com sucesso", "Funcionário adicionado");
+            clearTextField();
         } else {
             AlertWindow.errorAlert("CPF ou RG já cadastrados no sistema", "");
         }

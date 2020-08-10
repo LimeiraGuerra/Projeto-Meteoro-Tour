@@ -47,7 +47,7 @@ public class OnibusDAO implements DAO<Onibus,String> {
     }
 
     public static OnibusDAO getInstancia(){
-        if (instancia == null) return new OnibusDAO();
+        if (instancia == null) instancia = new OnibusDAO();
         return instancia;
     }
 }
