@@ -1,9 +1,10 @@
 package database.utils;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface DAO<E, I> {
+    /**Lançar "NotImplementedException" caso não use algum método*/
+
     void save(E model);
 
     void update(E model);
@@ -12,5 +13,9 @@ public interface DAO<E, I> {
 
     E selectById(I id);
 
-    List<E> selectByArgs(I... args);/* todo, tem que fazer pra receber parametros diferenciados, tipo strings para o trecho */
+    List<E> selectAll();
+
+    List<E> selectAllByArg(I arg);
+
+    List<E> selectByArgs(I... args); /*Usar somente quando necessário*/
 }

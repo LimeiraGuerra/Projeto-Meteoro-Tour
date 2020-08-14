@@ -50,6 +50,7 @@ public class LinhaDAO implements DAO<Linha, String> {
         return linhas.contains(linha) ? linha : null;
     }
 
+    //Melhor verificar se existe na tabela da view do que fazer um metodo de dao
     public Linha searchLinhaNome(String nome){
         for (Linha linha: linhas) {
             if(linha.getNome().equals(nome)){

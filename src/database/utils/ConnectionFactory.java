@@ -31,12 +31,12 @@ public class ConnectionFactory implements AutoCloseable{
 
     @Override
     public void close() throws Exception {
-            if(connection != null){
-                connection.close();
-                if(preparedStatement != null)
-                    preparedStatement.close();
-                if(statement != null)
-                    statement.close();
+        if(connection != null){
+            connection.close();
+            if(preparedStatement != null)
+                preparedStatement.close();
+            if(statement != null)
+                statement.close();
         }
     }
 }
