@@ -4,6 +4,7 @@ import database.utils.DAO;
 import model.entities.AssentoTrechoLinha;
 import model.entities.Linha;
 import model.entities.TrechoLinha;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.sql.Time;
 import java.util.ArrayList;
