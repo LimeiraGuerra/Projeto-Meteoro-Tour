@@ -25,8 +25,6 @@ public class TrechoLinhaDAO implements DAO<TrechoLinha, String> {
         trechosLinhas.add(new TrechoLinha(1, Time.valueOf("12:30:00"), TrechoDAO.getInstancia().selectById("1"), LinhaDAO.getInstancia().selectById("2") ));
         trechosLinhas.add(new TrechoLinha(2, Time.valueOf("12:50:00"), TrechoDAO.getInstancia().selectById("3"), LinhaDAO.getInstancia().selectById("2") ));
 
-
-
         trechosLinhaScuff.add(new int[]{1, 0});
         trechosLinhaScuff.add(new int[]{1, 1});
         trechosLinhaScuff.add(new int[]{2, 0});
@@ -75,8 +73,7 @@ public class TrechoLinhaDAO implements DAO<TrechoLinha, String> {
     @Override
     public TrechoLinha selectById(String id) {
         int num = Integer.parseInt(id);
-        TrechoLinha result = trechosLinhas.get(num);
-        return result;
+        return trechosLinhas.get(num);
     }
 
     @Override

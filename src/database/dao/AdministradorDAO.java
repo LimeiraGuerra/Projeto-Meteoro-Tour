@@ -11,7 +11,6 @@ public class AdministradorDAO implements DAO<Administrador, String> {
 
     private AdministradorDAO() {
         administrador.setSenha("1234");
-        administrador.setNome("José");
     }
 
     @Override
