@@ -53,6 +53,16 @@ public class TrechoDAO implements DAO<Trecho, String> {
     }
 
     @Override
+    public List<Trecho> selectAll() {
+        return null;
+    }
+
+    @Override
+    public List<Trecho> selectAllByArg(String arg) {
+        return null;
+    }
+
+    @Override
     public List<Trecho> selectByArgs(String... args) {
         return null;
     }

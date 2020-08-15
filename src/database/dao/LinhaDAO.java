@@ -42,6 +42,16 @@ public class LinhaDAO implements DAO<Linha, String> {
     }
 
     @Override
+    public List<Linha> selectAll() {
+        return null;
+    }
+
+    @Override
+    public List<Linha> selectAllByArg(String arg) {
+        return null;
+    }
+
+    @Override
     public List<Linha> selectByArgs(String... args) {
         return null;
     }

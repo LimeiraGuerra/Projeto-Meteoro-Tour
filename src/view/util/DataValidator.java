@@ -17,12 +17,15 @@ public class DataValidator {
     }
 
     public static boolean isCpf(String cpf){
-        return cpf.matches("^([0-9]{3}\\.?){3}-?[0-9]{2}$");
+        return cpf.matches("^([0-9]{3}?){3}?[0-9]{2}$");
     }
 
-    public static boolean isRg(String rg){
-        //todo Não sei padrão de rg ¯\_(ツ)_/¯
-        return rg.matches(".+");
+    public static boolean isPhone(String num){
+        return num.matches("^\\d{10,11}$");
+    }
+
+    public static boolean isTime (String time) {
+        return time.matches("^([2][0-3]|[0-1][0-9]):[0-5][0-9]$");
     }
 
     public static boolean isHora(String str){
@@ -34,6 +37,7 @@ public class DataValidator {
         }
         return false;
     }
+
     public static boolean isMinuto(String str){
         if (str.matches("[0-59]\\d")){
             int i = Integer.parseInt(str);
@@ -70,16 +74,28 @@ public class DataValidator {
     }
 
     public static String rgVerifier(String rg){
+        /**RG tem padrão diferente para cada estado, e não é obrigatório*/
         rg = txtInputVerifier(rg);
-        if (rg != null && isRg(rg))
-            return rg;
+        if (rg == null) return "";
+        if (rg.length() < 14) return rg;
         return null;
     }
 
     public static String cpfVerifier(String cpf){
-        cpf = txtInputVerifier(cpf);
-        if (cpf != null && isCpf(cpf))
+        if (isCpf(cpf))
             return cpf;
         return null;
+    }
+
+    public static String phoneVerifier(String phone){
+        if (isPhone(phone))
+            return phone;
+        return null;
+    }
+
+    public static String verifyTime(String time){
+        if (isTime(time))
+            return time;
+        return "";
     }
 }

@@ -44,6 +44,16 @@ public class ViagemDAO implements DAO<Viagem, String> {
     }
 
     @Override
+    public List<Viagem> selectAll() {
+        return null;
+    }
+
+    @Override
+    public List<Viagem> selectAllByArg(String arg) {
+        return null;
+    }
+
+    @Override
     public List<Viagem> selectByArgs(String... args) {
         /* todo */
         /* Retorno pra teste */
