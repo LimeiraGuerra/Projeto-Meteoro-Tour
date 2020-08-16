@@ -36,6 +36,16 @@ public class AdministradorDAO implements DAO<Administrador, String> {
     }
 
     @Override
+    public List<Administrador> selectAll() {
+        return null;
+    }
+
+    @Override
+    public List<Administrador> selectAllByArg(String arg) {
+        return null;
+    }
+
+    @Override
     public List<Administrador> selectByArgs(String... args) {
         return null;
     }

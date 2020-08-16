@@ -78,6 +78,16 @@ public class TrechoLinhaDAO implements DAO<TrechoLinha, String> {
     }
 
     @Override
+    public List<TrechoLinha> selectAll() {
+        return null;
+    }
+
+    @Override
+    public List<TrechoLinha> selectAllByArg(String arg) {
+        return null;
+    }
+
+    @Override
     public List<TrechoLinha> selectByArgs(String... args) {
         return null;
     }

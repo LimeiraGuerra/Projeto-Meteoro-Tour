@@ -47,6 +47,16 @@ public class InfoRelatorioDAO implements DAO<InfoLinhaTrechoRelatorio, String> {
     }
 
     @Override
+    public List<InfoLinhaTrechoRelatorio> selectAll() {
+        return null;
+    }
+
+    @Override
+    public List<InfoLinhaTrechoRelatorio> selectAllByArg(String arg) {
+        return null;
+    }
+
+    @Override
     public List<InfoLinhaTrechoRelatorio> selectByArgs(String... args) {
         return this.findInfoByInterval(args[0], args[1]);
     }

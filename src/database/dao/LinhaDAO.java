@@ -1,8 +1,6 @@
 package database.dao;
-
 import database.utils.DAO;
 import model.entities.Linha;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +36,16 @@ public class LinhaDAO implements DAO<Linha, String> {
         for (Linha l : linhas){
             if (l.equals(num)) return l;
         }
+        return null;
+    }
+
+    @Override
+    public List<Linha> selectAll() {
+        return null;
+    }
+
+    @Override
+    public List<Linha> selectAllByArg(String arg) {
         return null;
     }
 

@@ -37,6 +37,16 @@ public class PassagemDAO implements DAO<Passagem, String> {
     }
 
     @Override
+    public List<Passagem> selectAll() {
+        return null;
+    }
+
+    @Override
+    public List<Passagem> selectAllByArg(String arg) {
+        return null;
+    }
+
+    @Override
     public List<Passagem> selectByArgs(String... args) {
         List<Passagem> matchP = new ArrayList<>();
         for(Passagem p : passagens.values())

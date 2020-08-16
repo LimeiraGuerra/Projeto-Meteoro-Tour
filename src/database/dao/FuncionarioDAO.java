@@ -38,6 +38,16 @@ public class FuncionarioDAO implements DAO<Funcionario, String> {
     }
 
     @Override
+    public List<Funcionario> selectAll() {
+        return null;
+    }
+
+    @Override
+    public List<Funcionario> selectAllByArg(String arg) {
+        return null;
+    }
+
+    @Override
     public List<Funcionario> selectByArgs(String... args) {
         return null;
     }

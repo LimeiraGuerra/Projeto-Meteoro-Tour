@@ -38,6 +38,16 @@ public class OnibusDAO implements DAO<Onibus,String> {
     }
 
     @Override
+    public List<Onibus> selectAll() {
+        return null;
+    }
+
+    @Override
+    public List<Onibus> selectAllByArg(String arg) {
+        return null;
+    }
+
+    @Override
     public List<Onibus> selectByArgs(String... args) {
         return null;
     }
