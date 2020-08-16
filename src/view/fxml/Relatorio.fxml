@@ -11,6 +11,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
+<?import view.util.mask.MaskedTextField?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="459.0" prefWidth="976.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RelatorioController">
    <children>
@@ -62,8 +63,8 @@
             <TextField fx:id="txtFieldLinha" layoutX="12.0" layoutY="48.0" prefHeight="25.0" prefWidth="168.0" />
             <TextField fx:id="txtFieldTrecho" layoutX="12.0" layoutY="96.0" prefHeight="25.0" prefWidth="168.0" />
             <Label layoutX="14.0" layoutY="79.0" text="Trecho:" />
-            <TextField fx:id="txtFieldHorarioIni" layoutX="12.0" layoutY="144.0" prefHeight="25.0" prefWidth="72.0" />
-            <TextField fx:id="txtFieldHorarioFim" layoutX="108.0" layoutY="144.0" prefHeight="25.0" prefWidth="72.0" />
+            <MaskedTextField fx:id="txtFieldHorarioIni" layoutX="12.0" layoutY="144.0" prefHeight="25.0" prefWidth="72.0" mask="##:##" />
+            <MaskedTextField fx:id="txtFieldHorarioFim" layoutX="108.0" layoutY="144.0" prefHeight="25.0" prefWidth="72.0" mask="##:##" />
             <Label layoutX="14.0" layoutY="127.0" text="Horário Saída entre:" />
             <Button layoutX="12.0" layoutY="179.0" mnemonicParsing="false" onAction="#filterResults" prefHeight="25.0" prefWidth="168.0" text="Filtrar Resultados" />
             <Label layoutX="88.0" layoutY="148.0" text="até" />

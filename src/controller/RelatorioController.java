@@ -129,8 +129,8 @@ public class RelatorioController {
     public void filterResults(ActionEvent actionEvent) {
         String nomeLinha = this.txtFieldLinha.getText().trim();
         String nomeTrecho = this.txtFieldTrecho.getText().trim();
-        String horaIni = this.txtFieldHorarioIni.getText().trim();
-        String horaFim = this.txtFieldHorarioFim.getText().trim();
+        String horaIni = DataValidator.verifyTime(this.txtFieldHorarioIni.getText());
+        String horaFim = DataValidator.verifyTime(this.txtFieldHorarioFim.getText());
         List<InfoLinhaTrechoRelatorio> filteredList = new ArrayList<>();
         for (InfoLinhaTrechoRelatorio info : this.relatorioData){
             if (!nomeLinha.isEmpty() && !info.getNomeLinha().contains(nomeLinha)) continue;

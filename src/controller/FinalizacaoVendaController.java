@@ -12,6 +12,7 @@ import model.usecases.VenderPassagensUC;
 import view.util.AlertWindow;
 import view.util.DataValidator;
 import view.util.TipoEspecial;
+import view.util.mask.MaskedTextField;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -19,7 +20,8 @@ import java.util.Date;
 public class FinalizacaoVendaController {
     @FXML Label lbLinha, lbCidadeOrigem, lbCidadeDestino, lbHorarioSaida, lbValorViagem, lbValorSeguro;
     @FXML ToggleGroup optSeguro;
-    @FXML TextField txfFieldNome, txtFieldCpf, txtFieldRg, txtFieldTelefone;
+    @FXML TextField txfFieldNome, txtFieldRg;
+    @FXML MaskedTextField txtFieldCpf, txtFieldTelefone;
 
     private Viagem chosenViagem;
     private TipoEspecial clientType;
@@ -85,9 +87,9 @@ public class FinalizacaoVendaController {
     private Passagem getClientDataFromView(){
         Passagem passagem = null;
         String nome = DataValidator.txtInputVerifier(this.txfFieldNome.getText());
-        String cpf = DataValidator.cpfVerifier(this.txtFieldCpf.getText());
-        String rg = this.txtFieldRg.getText();
-        String telefone = this.txtFieldTelefone.getText();
+        String cpf = DataValidator.cpfVerifier(this.txtFieldCpf.getPlainText());
+        String rg = DataValidator.rgVerifier(this.txtFieldRg.getText());
+        String telefone = DataValidator.phoneVerifier(this.txtFieldTelefone.getPlainText());
         if (this.checkInputsValues(nome, cpf, rg, telefone))
             passagem = new Passagem(nome, cpf, rg, telefone);
         return passagem;
