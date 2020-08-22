@@ -37,7 +37,7 @@ public class PassagemController {
     private DevolverPassagensUC ucDevolverPassagens;
 
     public PassagemController() {
-        DAO<Passagem, String> passagemDAO = PassagemDAO.getInstancia();
+        DAO<Passagem, String> passagemDAO = new PassagemDAO();
         this.ucPassagensVendidas = new ConsultarPassagensVendidasUC(passagemDAO);
         this.ucDevolverPassagens = new DevolverPassagensUC(passagemDAO);
     }

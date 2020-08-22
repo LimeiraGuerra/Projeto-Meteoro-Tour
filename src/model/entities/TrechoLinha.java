@@ -4,8 +4,10 @@ import java.util.Date;
 import java.util.Objects;
 
 public class TrechoLinha {
+    private long id;
     private Date horarioSaida;
     private int ordem;
+    private int dPlus;
     private AssentoTrechoLinha assentoTrechoLinha;
     private Trecho trecho;
     private Linha linha;
@@ -13,9 +15,17 @@ public class TrechoLinha {
     public TrechoLinha() {
     }
 
-    public TrechoLinha(int ordem, Date horarioSaida, Trecho trecho, Linha linha) {
+    public TrechoLinha(long id, Date horarioSaida, int ordem, int dPlus) {
+        this.id = id;
         this.horarioSaida = horarioSaida;
         this.ordem = ordem;
+        this.dPlus = dPlus;
+    }
+
+    public TrechoLinha(int ordem, Date horarioSaida, int dPlus, Trecho trecho, Linha linha) {
+        this.horarioSaida = horarioSaida;
+        this.ordem = ordem;
+        this.dPlus = dPlus;
         this.trecho = trecho;
         this.linha = linha;
         trecho.setTrechoLinha(this);
@@ -29,6 +39,14 @@ public class TrechoLinha {
 
     public void setAssentoTrechoLinha(AssentoTrechoLinha assentoTrechoLinha) {
         this.assentoTrechoLinha = assentoTrechoLinha;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public Linha getLinha() {
@@ -61,6 +79,14 @@ public class TrechoLinha {
 
     public void setOrdem(int ordem) {
         this.ordem = ordem;
+    }
+
+    public int getdPlus() {
+        return dPlus;
+    }
+
+    public void setdPlus(int dPlus) {
+        this.dPlus = dPlus;
     }
 
     @Override

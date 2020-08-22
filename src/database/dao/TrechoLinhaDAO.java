@@ -1,12 +1,19 @@
 package database.dao;
 
+import database.utils.ConnectionFactory;
 import database.utils.DAO;
 import model.entities.AssentoTrechoLinha;
 import model.entities.Linha;
+import model.entities.Trecho;
 import model.entities.TrechoLinha;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,9 +25,9 @@ public class TrechoLinhaDAO implements DAO<TrechoLinha, String> {
     private List<int[]> trechosLinhaScuff = new ArrayList<>();
     private List<AssentoTrechoLinha> assentosVendScuff = new ArrayList<>();
 
-    private TrechoLinhaDAO() {
+    public TrechoLinhaDAO() {
+        /*trechosLinhas.add(new TrechoLinha(1, Time.valueOf("12:30:00"), TrechoDAO.getInstancia().selectById("2"), LinhaDAO.getInstancia().selectById("1") ));
         trechosLinhas.add(new TrechoLinha(0, Time.valueOf("12:00:00"), TrechoDAO.getInstancia().selectById("0"), LinhaDAO.getInstancia().selectById("1") ));
-        trechosLinhas.add(new TrechoLinha(1, Time.valueOf("12:30:00"), TrechoDAO.getInstancia().selectById("2"), LinhaDAO.getInstancia().selectById("1") ));
 
         trechosLinhas.add(new TrechoLinha(0, Time.valueOf("12:00:00"), TrechoDAO.getInstancia().selectById("0"), LinhaDAO.getInstancia().selectById("2") ));
         trechosLinhas.add(new TrechoLinha(1, Time.valueOf("12:30:00"), TrechoDAO.getInstancia().selectById("1"), LinhaDAO.getInstancia().selectById("2") ));
@@ -37,6 +44,8 @@ public class TrechoLinhaDAO implements DAO<TrechoLinha, String> {
         assentosVendScuff.add(new AssentoTrechoLinha(java.sql.Date.valueOf("2020-10-10"), Arrays.asList(new String[]{"32", "29", "08"})));
         assentosVendScuff.add(new AssentoTrechoLinha(java.sql.Date.valueOf("2020-10-10"), Arrays.asList(new String[]{"23", "03"})));
         assentosVendScuff.add(new AssentoTrechoLinha(java.sql.Date.valueOf("2020-10-11"), Arrays.asList(new String[]{"44", "10", "18"})));
+
+         */
     }
 
     public List<TrechoLinha> selectTrechosByLinha(Linha linha, String data){
@@ -84,7 +93,39 @@ public class TrechoLinhaDAO implements DAO<TrechoLinha, String> {
 
     @Override
     public List<TrechoLinha> selectAllByArg(String arg) {
-        return null;
+        /**arg = idLinha*/
+        String sql = "SELECT * FROM vTrechoLinhaByLinha WHERE idLinha = "+arg+";";
+        List<TrechoLinha> tls = null;
+        try (Statement stmt = ConnectionFactory.createStatement()) {
+            ResultSet rs = stmt.executeQuery(sql);
+            tls = new ArrayList<>();
+            while (rs.next()){
+                TrechoLinha tl = this.setResultTrechoLinha(rs);
+                tl.setTrecho(this.setResultTrecho(rs));
+                tls.add(tl);
+            }
+        } catch (SQLException | ParseException throwables) {
+            throwables.printStackTrace();
+        }
+        return tls;
+    }
+
+    private Trecho setResultTrecho(ResultSet rs) throws SQLException {
+        return new Trecho(rs.getString("cidadeOrigem"),
+                rs.getString("cidadeDestino"),
+                rs.getDouble("quilometragem"),
+                rs.getInt("tempoDuracao"),
+                rs.getDouble("valorPassagem"),
+                rs.getDouble("taxaEmbarque"),
+                rs.getDouble("valorSeguro"));
+    }
+
+    private TrechoLinha setResultTrechoLinha(ResultSet rs) throws SQLException, ParseException {
+        SimpleDateFormat formatador = new SimpleDateFormat("HH:mm");
+        return new TrechoLinha(rs.getLong("idTrechoLinha"),
+                formatador.parse(rs.getString("horarioSaida")),
+                rs.getInt("ordem"),
+                rs.getInt("dPlus"));
     }
 
 
@@ -98,12 +139,5 @@ public class TrechoLinhaDAO implements DAO<TrechoLinha, String> {
     }
     public List<TrechoLinha> getListTrechoLinha(){
         return trechosLinhas;
-    }
-
-    public static TrechoLinhaDAO getInstancia(){
-        if (instancia == null){
-            instancia = new TrechoLinhaDAO();
-        }
-        return  instancia;
     }
 }

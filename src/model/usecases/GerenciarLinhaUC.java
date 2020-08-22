@@ -6,7 +6,7 @@ import java.util.List;
 
 public class GerenciarLinhaUC {
 
-    LinhaDAO daoLinha = LinhaDAO.getInstancia();
+    LinhaDAO daoLinha = new LinhaDAO();
     long idFicticio = 3;
 
     public void createLinha(String nomeLinha){

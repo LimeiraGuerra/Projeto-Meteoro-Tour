@@ -2,7 +2,6 @@ CREATE TABLE Administrador(
 	senha TEXT NOT NULL PRIMARY KEY
 );
 
-
 CREATE TABLE Funcionario(
 	cpf TEXT NOT NULL PRIMARY KEY,
 	rg TEXT NOT NULL UNIQUE,
@@ -24,90 +23,47 @@ CREATE TABLE Trecho(
 	valorPassagem REAL NOT NULL,
 	taxaEmbarque REAL NOT NULL,
 	valorSeguro REAL NOT NULL
-	--valorTotal REAL NOT NULL
 );
 
 CREATE TABLE Linha(
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	nome TEXT NOT NULL UNIQUE
-	--quilometragemLinha REAL NOT NULL,
-	--valorTotalLinha REAL NOT NULL
-);
-
-CREATE TABLE AssentoTrechoLinha(
-	id INTEGER PRIMARY KEY AUTOINCREMENT,
-	data TEXT NOT NULL,
-	assento01 INTEGER,
-	assento02 INTEGER,
-	assento03 INTEGER,
-	assento04 INTEGER,
-	assento05 INTEGER,
-	assento06 INTEGER,
-	assento07 INTEGER,
-	assento08 INTEGER,
-	assento09 INTEGER,
-	assento10 INTEGER,
-	assento11 INTEGER,
-	assento12 INTEGER,
-	assento13 INTEGER,
-	assento14 INTEGER,
-	assento15 INTEGER,
-	assento16 INTEGER,
-	assento17 INTEGER,
-	assento18 INTEGER,
-	assento19 INTEGER,
-	assento20 INTEGER,
-	assento21 INTEGER,
-	assento22 INTEGER,
-	assento23 INTEGER,
-	assento24 INTEGER,
-	assento25 INTEGER,
-	assento26 INTEGER,
-	assento27 INTEGER,
-	assento28 INTEGER,
-	assento29 INTEGER,
-	assento30 INTEGER,
-	assento31 INTEGER,
-	assento32 INTEGER,
-	assento33 INTEGER,
-	assento34 INTEGER,
-	assento35 INTEGER,
-	assento36 INTEGER,
-	assento37 INTEGER,
-	assento38 INTEGER,
-	assento39 INTEGER,
-	assento40 INTEGER,
-	assento41 INTEGER,
-	assento42 INTEGER,
-	assento43 INTEGER,
-	assento44 INTEGER
 );
 
 CREATE TABLE TrechoLinha(
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
-	--data TEXT NOT NULL,
+	horarioSaida TIME NOT NULL,
 	ordem INTEGER NOT NULL,
-	linha INTEGER NOT NULL,
-	trecho INTEGER NOT NULL,
-	assentoPorTrecho INTEGER NOT NULL,
-	FOREIGN KEY(linha) REFERENCES Linha(id),
-	FOREIGN KEY(trecho) REFERENCES Trecho(id),
-	FOREIGN KEY(assentoPorTrecho) REFERENCES AssentoTrechoLinha(id) --acho q o contrario é melhor
+	dPlus INTEGER NOT NULL,
+	idLinha INTEGER NOT NULL,
+	idTrecho INTEGER NOT NULL,
+	FOREIGN KEY(idLinha) REFERENCES Linha(id),
+	FOREIGN KEY(idTrecho) REFERENCES Trecho(id)
+);
+
+CREATE TABLE AssentoTrechoLinha(
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	data DATE NOT NULL,
+	idTrechoLinha INTEGER NOT NULL,
+	idAssento TEXT NOT NULL,
+	FOREIGN KEY(idTrechoLinha) REFERENCES TrechoLinha(id)
 );
 
 CREATE TABLE Viagem(
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
-	data TEXT NOT NULL,
+	data DATE NOT NULL,
 	cidadeOrigem TEXT NOT NULL,
-	cidadeDestino TEXT NOT NULL
+	cidadeDestino TEXT NOT NULL,
+	idLinha INTEGER NOT NULL,
+	FOREIGN KEY(idLinha) REFERENCES Linha(id)
 );
 
-CREATE TABLE TrechoLinhaViagem(
-	viagem INTEGER NOT NULL,
-	trechoLinha INTEGER NOT NULL,
-	PRIMARY KEY(viagem, trechoLinha),
-	FOREIGN KEY(viagem) REFERENCES Viagem(id),
-	FOREIGN KEY(trechoLinha) REFERENCES TrechoLinha(id)
+CREATE TABLE TrechoLinhaPassagem(
+	idPassagem INTEGER NOT NULL,
+	idTrechoLinha INTEGER NOT NULL,
+	PRIMARY KEY(idPassagem, idTrechoLinha),
+	FOREIGN KEY(idPassagem) REFERENCES Passagem(numPassagem),
+	FOREIGN KEY(idTrechoLinha) REFERENCES TrechoLinha(id)
 );
 
 CREATE TABLE Passagem(
@@ -118,8 +74,39 @@ CREATE TABLE Passagem(
 	telefoneCliente TEXT NOT NULL,
 	precoPago REAL NOT NULL,
 	seguro INTEGER NOT NULL,
-	dataCompra TEXT NOT NULL,
-	dataViagem TEXT NOT NULL,
-	viagem INTEGER NOT NULL,
-	FOREIGN KEY(viagem) REFERENCES Viagem(id)
+	dataCompra DATETIME NOT NULL,
+	dataViagem DATETIME NOT NULL,
+	cidadeOrigem TEXT NOT NULL,
+	cidadeDestino TEXT NOT NULL,
+	idLinha INTEGER NOT NULL,
+	FOREIGN KEY(idLinha) REFERENCES Linha(id)
 );
+
+CREATE VIEW vLinhaByCidades(idLinha, nomeLinha) AS
+SELECT l.* FROM linha l
+GROUP by l.id;
+
+CREATE VIEW vTrechoLinhaByLinha (idTrechoLinha, horarioSaida, ordem, dPlus, idLinha, idTrecho,
+cidadeOrigem, cidadeDestino, quilometragem, tempoDuracao, valorPassagem, taxaEmbarque, valorSeguro) AS
+SELECT tl.id, tl.horarioSaida, tl.ordem, tl.dPlus, tl.idLinha , t.* 
+FROM  trechoLinha tl JOIN trecho t ON tl.idTrecho = t.id;
+
+INSERT INTO Trecho(cidadeOrigem, cidadeDestino, quilometragem, tempoDuracao, valorPassagem, taxaEmbarque, valorSeguro)
+VALUES('Descalvado', 'São Carlos', 40.0, 50, 10.0, 5.0, 0.3);
+INSERT INTO Trecho(cidadeOrigem, cidadeDestino, quilometragem, tempoDuracao, valorPassagem, taxaEmbarque, valorSeguro)
+VALUES('São Carlos', 'Ibaté', 15.0, 20, 5.0, 3.0, 0.1);
+INSERT INTO Trecho(cidadeOrigem, cidadeDestino, quilometragem, tempoDuracao, valorPassagem, taxaEmbarque, valorSeguro)
+VALUES('São Carlos', 'Araraquara', 30.0, 35, 8.0, 4.0, 0.2);
+INSERT INTO Trecho(cidadeOrigem, cidadeDestino, quilometragem, tempoDuracao, valorPassagem, taxaEmbarque, valorSeguro)
+VALUES('Araraquara', 'Ibaté', 20.0, 25, 6.0, 3.5, 0.25);
+INSERT INTO Linha(nome) VALUES('Descalvado - Ibaté curto');
+INSERT INTO Linha(nome) VALUES('Descalvado - Ibaté longo');
+INSERT INTO TrechoLinha(horarioSaida, ordem, dPlus, idLinha, idTrecho) VALUES(time('12:00'), 1, 0, 1, 1);
+INSERT INTO TrechoLinha(horarioSaida, ordem, dPlus, idLinha, idTrecho) VALUES(time('12:55'), 2, 0, 1, 2);
+INSERT INTO TrechoLinha(horarioSaida, ordem, dPlus, idLinha, idTrecho) VALUES(time('09:00'), 1, 0, 2, 1);
+INSERT INTO TrechoLinha(horarioSaida, ordem, dPlus, idLinha, idTrecho) VALUES(time('09:55'), 2, 0, 2, 3);
+INSERT INTO TrechoLinha(horarioSaida, ordem, dPlus, idLinha, idTrecho) VALUES(time('10:30'), 3, 0, 2, 4);
+INSERT INTO AssentoTrechoLinha(data, idTrechoLinha, idAssento) VALUES(date('2020-10-11'), 2, '04');
+INSERT INTO AssentoTrechoLinha(data, idTrechoLinha, idAssento) VALUES(date('2020-10-10'), 1, '05');
+INSERT INTO AssentoTrechoLinha(data, idTrechoLinha, idAssento) VALUES(date('2020-10-11'), 1, '03');
+INSERT INTO AssentoTrechoLinha(data, idTrechoLinha, idAssento) VALUES(date('2020-10-12'), 2, '06');
