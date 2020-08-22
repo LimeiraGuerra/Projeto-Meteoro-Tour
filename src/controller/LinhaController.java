@@ -193,7 +193,7 @@ public class LinhaController{
         Trecho trecho = cbTrechos.getSelectionModel().getSelectedItem();
         if (isFieldTrechoHoraSet()){
             if (checkHoraMinuto(txtHoraTrecho, txtMinTrecho)){
-                ucTrechoLinha.createTrechoLinha(linha, trecho, returnHora(txtHoraTrecho, txtMinTrecho), calcOrdemLinha());
+                //ucTrechoLinha.createTrechoLinha(linha, trecho, returnHora(txtHoraTrecho, txtMinTrecho), calcOrdemLinha());
                 loadTableLinhaTrecho(linha);
                 loadCombobox();
                 atualizaHora();

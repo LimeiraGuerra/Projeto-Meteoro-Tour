@@ -47,13 +47,23 @@ public class InfoRelatorioDAO implements DAO<InfoLinhaTrechoRelatorio, String> {
     }
 
     @Override
+    public List<InfoLinhaTrechoRelatorio> selectAll() {
+        return null;
+    }
+
+    @Override
+    public List<InfoLinhaTrechoRelatorio> selectAllByArg(String arg) {
+        return null;
+    }
+
+    @Override
     public List<InfoLinhaTrechoRelatorio> selectByArgs(String... args) {
         return this.findInfoByInterval(args[0], args[1]);
     }
 
     public List<InfoLinhaTrechoRelatorio> findInfoByInterval(String ini, String end){
         Map<String, Linha> formating = new HashMap<>();
-        List<Passagem> resultPassagem = PassagemDAO.getInstancia().selectByDateInterval(ini, end);
+        List<Passagem> resultPassagem = null;//PassagemDAO.getInstancia().selectByDateInterval(ini, end);
         List<InfoLinhaTrechoRelatorio> iltr = new ArrayList<>();
         SimpleDateFormat df = new SimpleDateFormat("HH:mm");
         for(Passagem rp : resultPassagem){

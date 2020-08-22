@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
+<?import view.util.mask.MaskedTextField?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="373.0" prefWidth="262.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FinalizacaoVendaController">
    <children>
@@ -17,9 +18,10 @@
       <Label layoutX="17.0" layoutY="239.0" text="Telefone:" />
       <Label layoutX="17.0" layoutY="295.0" text="Adicionar seguro?:" />
       <TextField fx:id="txfFieldNome" layoutX="15.0" layoutY="149.0" prefHeight="25.0" prefWidth="232.0" />
-      <TextField fx:id="txtFieldCpf" layoutX="15.0" layoutY="198.0" prefHeight="25.0" prefWidth="122.0" />
+      <MaskedTextField fx:id="txtFieldCpf" layoutX="15.0" layoutY="198.0" prefHeight="25.0" prefWidth="122.0" mask="###.###.###-##"/>
       <TextField fx:id="txtFieldRg" layoutX="148.0" layoutY="198.0" prefHeight="25.0" prefWidth="99.0" />
-      <TextField fx:id="txtFieldTelefone" layoutX="74.0" layoutY="235.0" prefHeight="25.0" prefWidth="173.0" />
+      <!--<TextField fx:id="txtFieldTelefone" layoutX="74.0" layoutY="235.0" prefHeight="25.0" prefWidth="173.0" />-->
+      <MaskedTextField fx:id="txtFieldTelefone" layoutX="74.0" layoutY="235.0" prefHeight="25.0" prefWidth="173.0" mask="(##)#####-####"/>
       <RadioButton layoutX="132.0" layoutY="295.0" mnemonicParsing="false" text="Sim">
          <toggleGroup>
             <ToggleGroup fx:id="optSeguro" />

@@ -15,11 +15,13 @@ import model.usecases.ConsultarPassagensVendidasUC;
 import model.usecases.DevolverPassagensUC;
 import view.util.AlertWindow;
 import view.util.DataValidator;
+import view.util.mask.MaskedTextField;
 
 import java.util.*;
 
 public class PassagemController {
-    @FXML TextField txtSearchBar;
+    @FXML MaskedTextField txtSearchCpf;
+    @FXML TextField txtSearchId;
     @FXML TableView<Passagem> tablePassagens;
     @FXML TableColumn<Passagem, String> colNumero, colData, colHorarioSaida,
             colLinha, colOrigem, colDestino, colCpf;
@@ -35,7 +37,7 @@ public class PassagemController {
     private DevolverPassagensUC ucDevolverPassagens;
 
     public PassagemController() {
-        DAO<Passagem, String> passagemDAO = PassagemDAO.getInstancia();
+        DAO<Passagem, String> passagemDAO = new PassagemDAO();
         this.ucPassagensVendidas = new ConsultarPassagensVendidasUC(passagemDAO);
         this.ucDevolverPassagens = new DevolverPassagensUC(passagemDAO);
     }
@@ -115,11 +117,15 @@ public class PassagemController {
     }
 
     private String verifyTextField(boolean choice){
-        String searchKey = txtSearchBar.getText();
         if (choice)
-            return DataValidator.checkNumId(searchKey);
-        else
-            return DataValidator.cpfVerifier(searchKey);
+            return DataValidator.checkNumId(this.txtSearchId.getText());
+        return DataValidator.cpfVerifier(this.txtSearchCpf.getPlainText());
+    }
+
+    public void changeInput(ActionEvent actionEvent) {
+        boolean mode = this.checkSearchType();
+        this.txtSearchId.setVisible(mode);
+        this.txtSearchCpf.setVisible(!mode);
     }
 
     public void printPassagem(ActionEvent actionEvent) {
@@ -192,4 +198,5 @@ public class PassagemController {
     public Passagem getPassagemReagendamento() {
         return passagemReagendamento;
     }
+
 }

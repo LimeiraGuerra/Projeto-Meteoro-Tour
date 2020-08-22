@@ -1,6 +1,7 @@
 package controller;
 
 import database.dao.PassagemDAO;
+import database.dao.ViagemDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -12,6 +13,7 @@ import model.usecases.VenderPassagensUC;
 import view.util.AlertWindow;
 import view.util.DataValidator;
 import view.util.TipoEspecial;
+import view.util.mask.MaskedTextField;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -19,7 +21,8 @@ import java.util.Date;
 public class FinalizacaoVendaController {
     @FXML Label lbLinha, lbCidadeOrigem, lbCidadeDestino, lbHorarioSaida, lbValorViagem, lbValorSeguro;
     @FXML ToggleGroup optSeguro;
-    @FXML TextField txfFieldNome, txtFieldCpf, txtFieldRg, txtFieldTelefone;
+    @FXML TextField txfFieldNome, txtFieldRg;
+    @FXML MaskedTextField txtFieldCpf, txtFieldTelefone;
 
     private Viagem chosenViagem;
     private TipoEspecial clientType;
@@ -32,8 +35,8 @@ public class FinalizacaoVendaController {
     private Passagem passagemR;
 
     public FinalizacaoVendaController(){
-        this.devolverPassagensUC = new DevolverPassagensUC(PassagemDAO.getInstancia());
-        this.venderPassagensUC = new VenderPassagensUC(PassagemDAO.getInstancia());
+        this.devolverPassagensUC = new DevolverPassagensUC(new PassagemDAO());
+        this.venderPassagensUC = new VenderPassagensUC(new PassagemDAO(), new ViagemDAO());
     }
 
     private void setInfoToView(){
@@ -53,7 +56,7 @@ public class FinalizacaoVendaController {
         else {
             this.setPayMessage();
             if (AlertWindow.verificationAlert(this.messageBody, "Confirmar venda?")) {
-                this.addDataToPassagem(p);
+                this.addInfoToPassagem(p);
                 this.venderPassagensUC.saveSale(p);
                 this.deleteOldPassagem();
                 this.soldSuccess = true;
@@ -66,10 +69,10 @@ public class FinalizacaoVendaController {
         if (this.passagemR != null) this.devolverPassagensUC.deletePassagem(this.passagemR);
     }
 
-    private void addDataToPassagem(Passagem passagem){
+    private void addInfoToPassagem(Passagem passagem){
         passagem.setPrecoPago(this.totalToPay);
-        passagem.setViagem(this.chosenViagem);
-        passagem.setDataViagem(this.chosenViagem.getData());
+        passagem.setAssentoId(this.chosenSitId);
+        passagem.setInfoOfViagem(this.chosenViagem);
         passagem.setDataCompra(this.getSystemTime());
     }
 
@@ -85,9 +88,9 @@ public class FinalizacaoVendaController {
     private Passagem getClientDataFromView(){
         Passagem passagem = null;
         String nome = DataValidator.txtInputVerifier(this.txfFieldNome.getText());
-        String cpf = DataValidator.cpfVerifier(this.txtFieldCpf.getText());
-        String rg = this.txtFieldRg.getText();
-        String telefone = this.txtFieldTelefone.getText();
+        String cpf = DataValidator.cpfVerifier(this.txtFieldCpf.getPlainText());
+        String rg = DataValidator.rgVerifier(this.txtFieldRg.getText());
+        String telefone = DataValidator.phoneVerifier(this.txtFieldTelefone.getPlainText());
         if (this.checkInputsValues(nome, cpf, rg, telefone))
             passagem = new Passagem(nome, cpf, rg, telefone);
         return passagem;

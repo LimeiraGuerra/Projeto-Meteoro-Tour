@@ -34,8 +34,8 @@ public class Linha {
     }
 
 
-    public void addTrechoLinha(TrechoLinha trecho){
-        trechosLinha.add(trecho);
+    public void addTrechoLinha(TrechoLinha tl){
+        trechosLinha.add(tl);
         setValorTotalLinha();
         setQuilometragem();
 
@@ -88,6 +88,7 @@ public class Linha {
         List<TrechoLinha> trechosViagem = new ArrayList<>();
         boolean viagemOrigin = false;
         for(TrechoLinha tl : trechosLinha){
+            tl.setLinha(this);
             if(tl.equals(cidadeOrigem) || viagemOrigin){
                 viagemOrigin = true;
                 trechosViagem.add(tl);

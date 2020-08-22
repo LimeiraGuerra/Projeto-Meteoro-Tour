@@ -1,5 +1,8 @@
 package controller;
 
+import database.dao.AssentosTrechoLinhaDAO;
+import database.dao.LinhaDAO;
+import database.dao.TrechoLinhaDAO;
 import database.dao.ViagemDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -40,7 +43,10 @@ public class VendasController {
     private boolean modeReagendamento = false;
 
     public VendasController() {
-        this.gerarViagensUC = new GerarViagensUC(ViagemDAO.getInstancia());
+        this.gerarViagensUC = new GerarViagensUC(new ViagemDAO(),
+                new LinhaDAO(),
+                new TrechoLinhaDAO(),
+                new AssentosTrechoLinhaDAO());
     }
 
     @FXML

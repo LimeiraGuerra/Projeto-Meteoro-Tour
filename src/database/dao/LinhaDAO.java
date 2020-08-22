@@ -1,19 +1,18 @@
 package database.dao;
 
+import database.utils.ConnectionFactory;
 import database.utils.DAO;
 import model.entities.Linha;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 public class LinhaDAO implements DAO<Linha, String> {
-    private static LinhaDAO instancia;
     private List<Linha> linhas = new ArrayList<>();
-
-    private LinhaDAO() {
-        linhas.add(new Linha(1L, "Descalvado - Ibaté Curto"));
-        linhas.add(new Linha(2L, "Descalvado - Ibaté Longo"));
-    }
 
     @Override
     public void save(Linha model) {
@@ -42,8 +41,46 @@ public class LinhaDAO implements DAO<Linha, String> {
     }
 
     @Override
-    public List<Linha> selectByArgs(String... args) {
+    public List<Linha> selectAll() {
         return null;
+    }
+
+    @Override
+    public List<Linha> selectAllByArg(String arg) {
+        return null;
+    }
+
+    @Override
+    public List<Linha> selectByArgs(String... args) {
+        /**args[0] = cidadeOrigem
+         * args[1] = cidadeDestino
+         */
+        String sql = "SELECT * FROM vLinhaByCidades WHERE idLinha IN (\n"
+                + "SELECT tl.idLinha FROM trechoLinha tl JOIN trecho t ON t.id = tl.idTrecho\n"
+                + "WHERE t.cidadeOrigem = ? AND idLinha IN (\n"
+                + "SELECT idLinha FROM trechoLinha tl JOIN trecho t ON t.id = tl.idTrecho\n"
+                + "WHERE t.cidadeDestino = ?));";
+        List<Linha> linhas = null;
+        try (PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
+            setKeysCidades(stmt, args[0], args[1]);
+            linhas = setResultLinhas(stmt.executeQuery());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return linhas;
+    }
+
+    private List<Linha> setResultLinhas(ResultSet rs) throws SQLException {
+        List<Linha> linhas = new ArrayList<>();
+        while (rs.next())
+            linhas.add(new Linha(rs.getLong("idLinha"), rs.getString("nomeLinha")));
+        return linhas;
+    }
+
+    private void setKeysCidades(PreparedStatement stmt, String cidadeOrigem, String cidadeDestino)
+            throws SQLException {
+        stmt.setString(1, cidadeOrigem);
+        stmt.setString(2, cidadeDestino);
     }
 
     public Linha searchLinha(Linha linha){
@@ -62,12 +99,5 @@ public class LinhaDAO implements DAO<Linha, String> {
 
     public List<Linha> getListLinha(){
         return linhas;
-    }
-
-    public static LinhaDAO getInstancia(){
-        if (instancia == null){
-            instancia = new LinhaDAO();
-        }
-        return  instancia;
     }
 }

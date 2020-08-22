@@ -23,7 +23,7 @@ public class Viagem {
         this.linha = linha;
         this.trechosLinha = linha.generateTrechosViagem(cidadeOrigem, cidadeDestino);
         this.data = dateTimeUnion(data, this.trechosLinha.get(0).getHorarioSaida());
-        this.verifyDisponibility();
+        //this.verifyDisponibility();
     }
 
     private Date dateTimeUnion(Date data, Date time){
@@ -43,7 +43,7 @@ public class Viagem {
         return calendarA.getTime();
     }
 
-    public void verifyDisponibility(){
+    /*public void verifyDisponibility(){
         double valueViagem = 0.0;
         double valueSeguroViagem = 0.0;
         for(TrechoLinha tl: trechosLinha){
@@ -53,9 +53,13 @@ public class Viagem {
                 this.assentosVendidosViagem.addAll(tl.getAssentoTrechoLinha().getAssentosVendidos());
         }
         this.setValuesOfViagem(valueViagem, valueSeguroViagem);
+    }*/
+
+    public void setAssentosVendidosViagem(List<String> assentosVendidosViagem){
+        this.assentosVendidosViagem.addAll(assentosVendidosViagem);
     }
 
-    private void setValuesOfViagem(double total, double seguro){
+    public void setValuesOfViagem(double total, double seguro){
         this.valueViagem = total;
         this.valueSeguroViagem = seguro;
     }
@@ -64,8 +68,14 @@ public class Viagem {
         return assentosVendidosViagem.iterator();
     }
 
+    public Iterator<TrechoLinha> getTrechosLinha(){ return trechosLinha.iterator(); }
+
     public void addAssentoVendidoViagem(String sitId){
         this.assentosVendidosViagem.add(sitId);
+    }
+
+    public int getDatePlusCorrection(){
+        return trechosLinha.get(0).getdPlus();
     }
 
     public String getLinhaName(){
