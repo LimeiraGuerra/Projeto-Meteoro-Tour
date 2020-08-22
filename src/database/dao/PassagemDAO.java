@@ -1,24 +1,88 @@
 package database.dao;
 
+import database.utils.ConnectionFactory;
 import database.utils.DAO;
 import model.entities.Passagem;
-import model.entities.Viagem;
+import model.entities.TrechoLinha;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class PassagemDAO implements DAO<Passagem, String> {
     private Map<String, Passagem> passagens = new HashMap<>();
-    private long cont = 0;
 
-    private static PassagemDAO instancia;
     @Override
     public void save(Passagem model) {
-        model.setNumPassagem(++cont);
-        this.passagens.put(""+cont, model);
+        String sqlPassagem = "INSERT INTO Passagem (nomeCliente, cpfCliente, rgCliente, telefoneCliente," +
+                "precoPago, seguro, cidadeOrigem, cidadeDestino, idLinha, dataCompra, dataViagem) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, datetime(?), datetime(?));";
+        String sqlLink = "INSERT INTO TrechoLinhaPassagem (idPassagem, idTrechoLinha) VALUES (?, ?);";
+        String sqlAssento = "INSERT INTO AssentoTrechoLinha (data, idTrechoLinha, idAssento)" +
+                "VALUES (date(?, '+'||?||' day'), ?, ?);";
+
+        try(PreparedStatement stmtPassagem = ConnectionFactory.createPreparedStatement(sqlPassagem);
+                PreparedStatement stmtLink = ConnectionFactory.createPreparedStatement(sqlLink);
+                PreparedStatement stmtAssento = ConnectionFactory.createPreparedStatement(sqlAssento)) {
+            ConnectionFactory.getConnection().setAutoCommit(false);
+            this.setKeysAndExecuteStatementPassagem(stmtPassagem, model);
+            ResultSet rs = stmtPassagem.getGeneratedKeys();
+            if (rs.next()){
+                model.setNumPassagem(rs.getLong(1));
+                this.setBatchForPassagem(stmtLink, stmtAssento, model);
+                ConnectionFactory.getConnection().commit();
+            }else ConnectionFactory.executeRollBack();
+        } catch (SQLException throwables) {
+            ConnectionFactory.executeRollBack();
+            throwables.printStackTrace();
+        }
+    }
+
+    private void setBatchForPassagem(PreparedStatement stmtLink, PreparedStatement stmtAssento, Passagem model)
+            throws SQLException {
+        Iterator<TrechoLinha> itTl = model.getViagem().getTrechosLinha();
+        while (itTl.hasNext()) {
+            TrechoLinha tl = itTl.next();
+            this.setKeysStatementLink(stmtLink, model.getNumPassagem(), tl.getId());
+            this.setKeysStatementAssento(stmtAssento, model, tl);
+        }
+        stmtLink.execute();
+        stmtAssento.execute();
+    }
+
+    private void setKeysAndExecuteStatementPassagem(PreparedStatement stmt, Passagem model) throws SQLException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        stmt.setString(1, model.getNome());
+        stmt.setString(2, model.getCpf());
+        stmt.setString(3, model.getRg());
+        stmt.setString(4, model.getTelefone());
+        stmt.setDouble(5, model.getPrecoPago());
+        stmt.setInt(6, model.isSeguro() ? 1 : 0);
+        stmt.setString(7, model.getCidadeOrigem());
+        stmt.setString(8, model.getCidadeDestino());
+        stmt.setLong(9, model.getLinha().getId());
+        stmt.setString(10, dateFormat.format(model.getDataCompra()));
+        stmt.setString(11, dateFormat.format(model.getDataViagem()));
+        stmt.execute();
+    }
+
+    private void setKeysStatementLink(PreparedStatement stmt, long numPassagem, long idTrechoLinha)
+            throws SQLException {
+        stmt.setLong(1, numPassagem);
+        stmt.setLong(2, idTrechoLinha);
+        stmt.addBatch();
+    }
+
+    private void setKeysStatementAssento(PreparedStatement stmt, Passagem model, TrechoLinha tl)
+            throws SQLException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        stmt.setString(1, dateFormat.format(model.getDataViagem()));
+        stmt.setInt(2, tl.getdPlus()-model.getViagem().getDatePlusCorrection());
+        stmt.setLong(3, tl.getId());
+        stmt.setString(4, model.getAssentoId());
+        stmt.addBatch();
     }
 
     @Override
@@ -64,15 +128,5 @@ public class PassagemDAO implements DAO<Passagem, String> {
             }
         }
         return pAux;
-    }
-
-    public static PassagemDAO getInstancia(){
-        if (instancia == null){
-            instancia = new PassagemDAO();
-        }
-        return instancia;
-    }
-
-    private PassagemDAO() {
     }
 }

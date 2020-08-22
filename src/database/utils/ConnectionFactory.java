@@ -12,6 +12,7 @@ public class ConnectionFactory implements AutoCloseable{
         try {
             if(connection == null)
                 connection = DriverManager.getConnection("jdbc:sqlite:database.db");
+            connection.setAutoCommit(true);
         }
         catch (SQLException e) { e.printStackTrace();}
         return connection;
@@ -27,6 +28,17 @@ public class ConnectionFactory implements AutoCloseable{
         try {statement = createConnection().createStatement();}
         catch (SQLException e) { e.printStackTrace();}
         return statement;
+    }
+
+    public static Connection getConnection(){
+        return connection;
+    }
+
+    public static void executeRollBack(){
+        if(connection != null){
+            try { connection.rollback();
+            } catch (SQLException e) { e.printStackTrace(); }
+        }
     }
 
     @Override

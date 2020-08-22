@@ -14,6 +14,9 @@ public class Passagem {
     private boolean seguro;
     private Date dataCompra;
     private Date dataViagem;
+    private String cidadeOrigem, cidadeDestino;
+    private String assentoId;
+    private Linha linha;
 
     private Viagem viagem;
 
@@ -41,6 +44,38 @@ public class Passagem {
 
     public String getNome() {
         return nome;
+    }
+
+    public void setInfoOfViagem(Viagem v){
+        this.dataViagem = v.getData();
+        this.cidadeOrigem = v.getCidadeOrigem();
+        this.cidadeDestino = v.getCidadeDestino();
+        this.linha = v.getLinha();
+        this.viagem = v;
+    }
+
+    public String getAssentoId() {
+        return assentoId;
+    }
+
+    public void setAssentoId(String assentoId) {
+        this.assentoId = assentoId;
+    }
+
+    public void setCidadeOrigem(String cidadeOrigem) {
+        this.cidadeOrigem = cidadeOrigem;
+    }
+
+    public void setCidadeDestino(String cidadeDestino) {
+        this.cidadeDestino = cidadeDestino;
+    }
+
+    public Linha getLinha() {
+        return linha;
+    }
+
+    public void setLinha(Linha linha) {
+        this.linha = linha;
     }
 
     public void setNome(String nome) {

@@ -1,5 +1,6 @@
 package model.entities;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -7,13 +8,12 @@ public class AssentoTrechoLinha {
     private Date data;
     private TrechoLinha trechoLinha;
 
-    private List<String> assentosVendidos;
+    private List<String> assentosVendidos = new ArrayList<>();
 
     public AssentoTrechoLinha(){}
 
     //Temporário
-    public AssentoTrechoLinha(Date data, List<String> assentosVendidos) {
-        this.assentosVendidos = assentosVendidos;
+    public AssentoTrechoLinha(Date data) {
         this.data = data;
     }
     public List<String> getAssentosVendidos(){

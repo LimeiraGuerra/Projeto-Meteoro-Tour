@@ -9,16 +9,16 @@ import java.util.Date;
 import java.util.List;
 
 public class GerenciarTrechoLinhaUC {
-    private TrechoLinhaDAO daoTrechoLinha = TrechoLinhaDAO.getInstancia();
+    private TrechoLinhaDAO daoTrechoLinha = new TrechoLinhaDAO();
     private GerenciarTrechoUC ucTrecho = new GerenciarTrechoUC();
     private GerenciarLinhaUC ucLinha = new GerenciarLinhaUC();
 
-    public void createTrechoLinha(Linha linha, Trecho trecho, Date horario, int ordem){
+    /*public void createTrechoLinha(Linha linha, Trecho trecho, Date horario, int ordem){
         TrechoLinha trechoL = new TrechoLinha(ordem, horario, trecho, linha);
         daoTrechoLinha.save(trechoL);
         ucLinha.updateLinha(linha);
         ucTrecho.updateTrecho(trecho);
-    }
+    }*/
 
     public TrechoLinha searchTrechoLinha() {
         return searchTrechoLinha();

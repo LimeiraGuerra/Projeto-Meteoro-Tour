@@ -1,6 +1,7 @@
 package controller;
 
 import database.dao.PassagemDAO;
+import database.dao.ViagemDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -34,8 +35,8 @@ public class FinalizacaoVendaController {
     private Passagem passagemR;
 
     public FinalizacaoVendaController(){
-        this.devolverPassagensUC = new DevolverPassagensUC(PassagemDAO.getInstancia());
-        this.venderPassagensUC = new VenderPassagensUC(PassagemDAO.getInstancia());
+        this.devolverPassagensUC = new DevolverPassagensUC(new PassagemDAO());
+        this.venderPassagensUC = new VenderPassagensUC(new PassagemDAO(), new ViagemDAO());
     }
 
     private void setInfoToView(){
@@ -55,7 +56,7 @@ public class FinalizacaoVendaController {
         else {
             this.setPayMessage();
             if (AlertWindow.verificationAlert(this.messageBody, "Confirmar venda?")) {
-                this.addDataToPassagem(p);
+                this.addInfoToPassagem(p);
                 this.venderPassagensUC.saveSale(p);
                 this.deleteOldPassagem();
                 this.soldSuccess = true;
@@ -68,10 +69,10 @@ public class FinalizacaoVendaController {
         if (this.passagemR != null) this.devolverPassagensUC.deletePassagem(this.passagemR);
     }
 
-    private void addDataToPassagem(Passagem passagem){
+    private void addInfoToPassagem(Passagem passagem){
         passagem.setPrecoPago(this.totalToPay);
-        passagem.setViagem(this.chosenViagem);
-        passagem.setDataViagem(this.chosenViagem.getData());
+        passagem.setAssentoId(this.chosenSitId);
+        passagem.setInfoOfViagem(this.chosenViagem);
         passagem.setDataCompra(this.getSystemTime());
     }
 
