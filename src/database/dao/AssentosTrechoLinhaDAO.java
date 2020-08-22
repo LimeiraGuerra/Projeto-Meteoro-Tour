@@ -4,7 +4,6 @@ import database.utils.ConnectionFactory;
 import database.utils.DAO;
 import model.entities.AssentoTrechoLinha;
 import model.entities.Viagem;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;

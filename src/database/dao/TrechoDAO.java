@@ -1,12 +1,7 @@
 package database.dao;
 
 import database.utils.DAO;
-import model.entities.AssentoTrechoLinha;
-import model.entities.Linha;
 import model.entities.Trecho;
-import model.entities.TrechoLinha;
-
-import java.sql.Time;
 import java.util.*;
 
 public class TrechoDAO implements DAO<Trecho, String> {

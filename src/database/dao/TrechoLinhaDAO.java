@@ -6,46 +6,20 @@ import model.entities.AssentoTrechoLinha;
 import model.entities.Linha;
 import model.entities.Trecho;
 import model.entities.TrechoLinha;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class TrechoLinhaDAO implements DAO<TrechoLinha, String> {
 
-    private static TrechoLinhaDAO instancia;
     private List<TrechoLinha> trechosLinhas = new ArrayList<>();
-    private List<int[]> trechosLinhaScuff = new ArrayList<>();
     private List<AssentoTrechoLinha> assentosVendScuff = new ArrayList<>();
 
     public TrechoLinhaDAO() {
-        /*trechosLinhas.add(new TrechoLinha(1, Time.valueOf("12:30:00"), TrechoDAO.getInstancia().selectById("2"), LinhaDAO.getInstancia().selectById("1") ));
-        trechosLinhas.add(new TrechoLinha(0, Time.valueOf("12:00:00"), TrechoDAO.getInstancia().selectById("0"), LinhaDAO.getInstancia().selectById("1") ));
-
-        trechosLinhas.add(new TrechoLinha(0, Time.valueOf("12:00:00"), TrechoDAO.getInstancia().selectById("0"), LinhaDAO.getInstancia().selectById("2") ));
-        trechosLinhas.add(new TrechoLinha(1, Time.valueOf("12:30:00"), TrechoDAO.getInstancia().selectById("1"), LinhaDAO.getInstancia().selectById("2") ));
-        trechosLinhas.add(new TrechoLinha(2, Time.valueOf("12:50:00"), TrechoDAO.getInstancia().selectById("3"), LinhaDAO.getInstancia().selectById("2") ));
-
-        trechosLinhaScuff.add(new int[]{1, 0});
-        trechosLinhaScuff.add(new int[]{1, 1});
-        trechosLinhaScuff.add(new int[]{2, 0});
-        trechosLinhaScuff.add(new int[]{2, 2});
-        trechosLinhaScuff.add(new int[]{2, 3});
-
-        assentosVendScuff.add(new AssentoTrechoLinha(java.sql.Date.valueOf("2020-10-11"), Arrays.asList(new String[]{"04", "05", "23", "03"})));
-        assentosVendScuff.add(new AssentoTrechoLinha(java.sql.Date.valueOf("2020-10-10"), Arrays.asList(new String[]{"04", "32", "21", "42", "39"})));
-        assentosVendScuff.add(new AssentoTrechoLinha(java.sql.Date.valueOf("2020-10-10"), Arrays.asList(new String[]{"32", "29", "08"})));
-        assentosVendScuff.add(new AssentoTrechoLinha(java.sql.Date.valueOf("2020-10-10"), Arrays.asList(new String[]{"23", "03"})));
-        assentosVendScuff.add(new AssentoTrechoLinha(java.sql.Date.valueOf("2020-10-11"), Arrays.asList(new String[]{"44", "10", "18"})));
-
-         */
     }
 
     public List<TrechoLinha> selectTrechosByLinha(Linha linha, String data){

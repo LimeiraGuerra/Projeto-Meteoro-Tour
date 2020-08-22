@@ -2,7 +2,6 @@ package database.dao;
 
 import database.utils.DAO;
 import model.entities.Administrador;
-
 import java.util.List;
 
 public class AdministradorDAO implements DAO<Administrador, String> {

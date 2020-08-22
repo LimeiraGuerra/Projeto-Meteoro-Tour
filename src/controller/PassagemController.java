@@ -16,7 +16,6 @@ import model.usecases.DevolverPassagensUC;
 import view.util.AlertWindow;
 import view.util.DataValidator;
 import view.util.mask.MaskedTextField;
-
 import java.util.*;
 
 public class PassagemController {

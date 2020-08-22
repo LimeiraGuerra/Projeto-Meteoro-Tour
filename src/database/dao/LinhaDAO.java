@@ -50,7 +50,7 @@ public class LinhaDAO implements DAO<Linha, String> {
 
     @Override
     public List<Linha> selectByArgs(String... args) {
-        /**args[0] = cidadeOrigem
+        /*args[0] = cidadeOrigem
          * args[1] = cidadeDestino
          */
         String sql = "SELECT * FROM vLinhaByCidades WHERE idLinha IN (\n"

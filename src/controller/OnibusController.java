@@ -1,6 +1,5 @@
 package controller;
 
-import database.dao.FuncionarioDAO;
 import database.dao.OnibusDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,14 +9,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import model.entities.Funcionario;
 import model.entities.Onibus;
-import model.usecases.GerenciarFuncionarioUC;
 import model.usecases.GerenciarOnibusUC;
 import view.util.AlertWindow;
 import view.util.DataValidator;
-
-import java.util.Optional;
 
 public class OnibusController {
 

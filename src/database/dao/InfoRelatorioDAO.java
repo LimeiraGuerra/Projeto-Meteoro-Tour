@@ -5,7 +5,6 @@ import model.entities.InfoLinhaTrechoRelatorio;
 import model.entities.Linha;
 import model.entities.Passagem;
 import model.entities.TrechoLinha;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;

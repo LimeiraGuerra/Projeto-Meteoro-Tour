@@ -4,7 +4,6 @@ import database.utils.ConnectionFactory;
 import database.utils.DAO;
 import model.entities.Passagem;
 import model.entities.TrechoLinha;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

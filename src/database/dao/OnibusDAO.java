@@ -1,7 +1,6 @@
 package database.dao;
 
 import database.utils.DAO;
-import model.entities.Funcionario;
 import model.entities.Onibus;
 
 import java.util.ArrayList;

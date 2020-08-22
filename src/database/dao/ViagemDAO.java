@@ -2,10 +2,8 @@ package database.dao;
 
 import database.utils.ConnectionFactory;
 import database.utils.DAO;
-import model.entities.Linha;
 import model.entities.TrechoLinha;
 import model.entities.Viagem;
-
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
