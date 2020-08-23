@@ -89,11 +89,11 @@ public class Linha {
         boolean viagemOrigin = false;
         for(TrechoLinha tl : trechosLinha){
             tl.setLinha(this);
-            if(tl.equals(cidadeOrigem) || viagemOrigin){
+            if(tl.getTrecho().getCidadeOrigem().equals(cidadeOrigem) || viagemOrigin){
                 viagemOrigin = true;
                 trechosViagem.add(tl);
             }
-            if(tl.equals(cidadeDestino)) { break; }
+            if(tl.getTrecho().getCidadeDestino().equals(cidadeDestino)) { break; }
         }
         return trechosViagem;
     }

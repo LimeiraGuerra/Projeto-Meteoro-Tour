@@ -92,8 +92,6 @@ public class TrechoLinha {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (this.getTrecho().getCidadeOrigem().equals(o) ||
-                this.getTrecho().getCidadeDestino().equals(o)) return true;
         if (!(o instanceof TrechoLinha)) return false;
         TrechoLinha that = (TrechoLinha) o;
         return getOrdem() == that.getOrdem();
