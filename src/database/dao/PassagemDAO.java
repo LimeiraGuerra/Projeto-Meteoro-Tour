@@ -48,8 +48,8 @@ public class PassagemDAO implements DAO<Passagem, String> {
             this.setKeysStatementLink(stmtLink, model.getNumPassagem(), tl.getId());
             this.setKeysStatementAssento(stmtAssento, model, tl);
         }
-        stmtLink.execute();
-        stmtAssento.execute();
+        stmtLink.executeBatch();
+        stmtAssento.executeBatch();
     }
 
     private void setKeysAndExecuteStatementPassagem(PreparedStatement stmt, Passagem model) throws SQLException {
@@ -97,6 +97,7 @@ public class PassagemDAO implements DAO<Passagem, String> {
 
     @Override
     public Passagem selectById(String id) {
+        String sql = "SELECT p.*";
         return passagens.containsKey(id) ? passagens.get(id) : null;
     }
 
