@@ -107,6 +107,7 @@ public class TrechoLinhaDAO implements DAO<TrechoLinha, String> {
                 tl.setTrecho(this.setResultTrecho(rs));
                 tls.add(tl);
             }
+            ConnectionFactory.closeStatements(stmt);
         } catch (SQLException | ParseException throwables) {
             throwables.printStackTrace();
         }

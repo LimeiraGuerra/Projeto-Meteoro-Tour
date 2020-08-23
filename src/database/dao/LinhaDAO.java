@@ -64,6 +64,7 @@ public class LinhaDAO implements DAO<Linha, String> {
         try (PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
             setKeysCidades(stmt, args[0], args[1]);
             linhas = setResultLinhas(stmt.executeQuery());
+            ConnectionFactory.closeStatements(stmt);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

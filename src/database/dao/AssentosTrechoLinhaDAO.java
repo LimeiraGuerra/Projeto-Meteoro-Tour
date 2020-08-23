@@ -81,6 +81,7 @@ public class AssentosTrechoLinhaDAO implements DAO<AssentoTrechoLinha, String> {
             while (rs.next()) {
                 ast.add(rs.getString("idAssento"));
             }
+            ConnectionFactory.closeStatements(stmt);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

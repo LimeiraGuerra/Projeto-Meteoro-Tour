@@ -17,6 +17,14 @@ public class Viagem {
     public Viagem() {
     }
 
+    public Viagem(Date data, String cidadeOrigem, String cidadeDestino, double valueViagem, double valueSeguroViagem) {
+        this.data = data;
+        this.cidadeOrigem = cidadeOrigem;
+        this.cidadeDestino = cidadeDestino;
+        this.valueViagem = valueViagem;
+        this.valueSeguroViagem = valueSeguroViagem;
+    }
+
     public Viagem(Date data, String cidadeOrigem, String cidadeDestino, Linha linha) {
         this.cidadeOrigem = cidadeOrigem;
         this.cidadeDestino = cidadeDestino;

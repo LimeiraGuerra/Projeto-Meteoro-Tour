@@ -2,12 +2,16 @@ package database.dao;
 
 import database.utils.ConnectionFactory;
 import database.utils.DAO;
+import model.entities.Linha;
 import model.entities.Passagem;
 import model.entities.TrechoLinha;
+import model.entities.Viagem;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -17,39 +21,37 @@ public class PassagemDAO implements DAO<Passagem, String> {
     @Override
     public void save(Passagem model) {
         String sqlPassagem = "INSERT INTO Passagem (nomeCliente, cpfCliente, rgCliente, telefoneCliente," +
-                "precoPago, seguro, cidadeOrigem, cidadeDestino, idLinha, dataCompra, dataViagem) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, datetime(?), datetime(?));";
-        String sqlLink = "INSERT INTO TrechoLinhaPassagem (idPassagem, idTrechoLinha) VALUES (?, ?);";
-        String sqlAssento = "INSERT INTO AssentoTrechoLinha (data, idTrechoLinha, idAssento)" +
-                "VALUES (date(?, '+'||?||' day'), ?, ?);";
+                "precoPago, seguro, dataCompra) VALUES (?, ?, ?, ?, ?, ?, datetime(?));";
+        String sqlViagem = "INSERT INTO Viagem (idPassagem, data, cidadeOrigem, cidadeDestino, idLinha) " +
+                "VALUES (?, datetime(?), ?, ?, ?);";
+        String sqlAssento = "INSERT INTO AssentoTrechoLinha (data, idTrechoLinha, idPassagem, idAssento)" +
+                "VALUES (date(?, '+'||?||' day'), ?, ?, ?);";
 
         try(PreparedStatement stmtPassagem = ConnectionFactory.createPreparedStatement(sqlPassagem);
-                PreparedStatement stmtLink = ConnectionFactory.createPreparedStatement(sqlLink);
-                PreparedStatement stmtAssento = ConnectionFactory.createPreparedStatement(sqlAssento)) {
+            PreparedStatement stmtViagem = ConnectionFactory.createPreparedStatement(sqlViagem);
+            PreparedStatement stmtAssento = ConnectionFactory.createPreparedStatement(sqlAssento)) {
             ConnectionFactory.getConnection().setAutoCommit(false);
             this.setKeysAndExecuteStatementPassagem(stmtPassagem, model);
             ResultSet rs = stmtPassagem.getGeneratedKeys();
             if (rs.next()){
                 model.setNumPassagem(rs.getLong(1));
-                this.setBatchForPassagem(stmtLink, stmtAssento, model);
+                this.setKeysAndExecuteStatementViagem(stmtViagem, model);
+                this.setBatchForAssento(stmtAssento, model);
                 ConnectionFactory.getConnection().commit();
             }else ConnectionFactory.executeRollBack();
+            ConnectionFactory.closeStatements(stmtAssento, stmtViagem, stmtPassagem);
         } catch (SQLException throwables) {
             ConnectionFactory.executeRollBack();
             throwables.printStackTrace();
         }
     }
 
-    private void setBatchForPassagem(PreparedStatement stmtLink, PreparedStatement stmtAssento, Passagem model)
+    private void setBatchForAssento(PreparedStatement stmt, Passagem model)
             throws SQLException {
         Iterator<TrechoLinha> itTl = model.getViagem().getTrechosLinha();
-        while (itTl.hasNext()) {
-            TrechoLinha tl = itTl.next();
-            this.setKeysStatementLink(stmtLink, model.getNumPassagem(), tl.getId());
-            this.setKeysStatementAssento(stmtAssento, model, tl);
-        }
-        stmtLink.executeBatch();
-        stmtAssento.executeBatch();
+        while (itTl.hasNext())
+            this.setKeysStatementAssento(stmt, model, itTl.next());
+        stmt.executeBatch();
     }
 
     private void setKeysAndExecuteStatementPassagem(PreparedStatement stmt, Passagem model) throws SQLException {
@@ -60,28 +62,29 @@ public class PassagemDAO implements DAO<Passagem, String> {
         stmt.setString(4, model.getTelefone());
         stmt.setDouble(5, model.getPrecoPago());
         stmt.setInt(6, model.isSeguro() ? 1 : 0);
-        stmt.setString(7, model.getCidadeOrigem());
-        stmt.setString(8, model.getCidadeDestino());
-        stmt.setLong(9, model.getLinha().getId());
-        stmt.setString(10, dateFormat.format(model.getDataCompra()));
-        stmt.setString(11, dateFormat.format(model.getDataViagem()));
+        stmt.setString(7, dateFormat.format(model.getDataCompra()));
         stmt.execute();
     }
 
-    private void setKeysStatementLink(PreparedStatement stmt, long numPassagem, long idTrechoLinha)
+    private void setKeysAndExecuteStatementViagem(PreparedStatement stmt, Passagem model)
             throws SQLException {
-        stmt.setLong(1, numPassagem);
-        stmt.setLong(2, idTrechoLinha);
-        stmt.addBatch();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        stmt.setLong(1, model.getNumPassagem());
+        stmt.setString(2, dateFormat.format(model.getViagem().getData()));
+        stmt.setString(3, model.getViagem().getCidadeOrigem());
+        stmt.setString(4, model.getViagem().getCidadeDestino());
+        stmt.setLong(5, model.getViagem().getLinha().getId());
+        stmt.execute();
     }
 
     private void setKeysStatementAssento(PreparedStatement stmt, Passagem model, TrechoLinha tl)
             throws SQLException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        stmt.setString(1, dateFormat.format(model.getDataViagem()));
+        stmt.setString(1, dateFormat.format(model.getViagem().getData()));
         stmt.setInt(2, tl.getdPlus()-model.getViagem().getDatePlusCorrection());
         stmt.setLong(3, tl.getId());
-        stmt.setString(4, model.getAssentoId());
+        stmt.setLong(4, model.getNumPassagem());
+        stmt.setString(5, model.getAssentoId());
         stmt.addBatch();
     }
 
@@ -92,13 +95,53 @@ public class PassagemDAO implements DAO<Passagem, String> {
 
     @Override
     public void delete(Passagem model) {
-        passagens.remove(""+model.getNumPassagem());
+        String sql = "DELETE FROM Passagem WHERE numPassagem = ?;";
+        try(Statement stmtConfig = ConnectionFactory.createStatement();
+                PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
+            stmtConfig.execute("PRAGMA foreign_keys=on;");
+            stmt.setLong(1, model.getNumPassagem());
+            stmt.execute();
+            ConnectionFactory.closeStatements(stmt);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     @Override
     public Passagem selectById(String id) {
-        String sql = "SELECT p.*";
-        return passagens.containsKey(id) ? passagens.get(id) : null;
+        String sql = "SELECT * FROM vPassagensVendidas WHERE numPassagem = ?";
+        Passagem passagem = null;
+        try (PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
+            stmt.setString(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next())
+                passagem = this.setResultPassagem(rs);
+            ConnectionFactory.closeStatements(stmt);
+        } catch (SQLException | ParseException throwables) {
+            throwables.printStackTrace();
+        }
+        return passagem;
+    }
+
+    private Passagem setResultPassagem(ResultSet rs) throws SQLException, ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Passagem passagem = new Passagem(rs.getLong("numPassagem"),
+                rs.getDouble("precoPago"),
+                rs.getString("nomeCliente"),
+                rs.getString("cpfCliente"),
+                rs.getString("rgCliente"),
+                rs.getString("telefoneCliente"),
+                rs.getBoolean("seguro"),
+                dateFormat.parse(rs.getString("dataCompra")),
+                rs.getString("idAssento"));
+        passagem.setViagem(new Viagem(dateFormat.parse(rs.getString("dataViagem")),
+                rs.getString("cidadeOrigem"),
+                rs.getString("cidadeDestino"),
+                rs.getDouble("valorViagem"),
+                rs.getDouble("valorSeguro")));
+        passagem.getViagem().setLinha(new Linha(rs.getLong("idLinha"),
+                rs.getString("nomeLinha")));
+        return passagem;
     }
 
     @Override
@@ -108,26 +151,34 @@ public class PassagemDAO implements DAO<Passagem, String> {
 
     @Override
     public List<Passagem> selectAllByArg(String arg) {
-        return null;
+        String sql = "SELECT * FROM vPassagensVendidas WHERE cpfCliente = ?";
+        List<Passagem> passagens = new ArrayList<>();
+        try (PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
+            stmt.setString(1, arg);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next())
+                passagens.add(this.setResultPassagem(rs));
+            ConnectionFactory.closeStatements(stmt);
+        } catch (SQLException | ParseException throwables) {
+            throwables.printStackTrace();
+        }
+        return passagens;
     }
 
     @Override
     public List<Passagem> selectByArgs(String... args) {
-        List<Passagem> matchP = new ArrayList<>();
-        for(Passagem p : passagens.values())
-            if (args[0].equals(p.getCpf())) matchP.add(p);
-        return matchP;
+        return null;
     }
 
     public List<Passagem> selectByDateInterval(String ini, String end){
-        List<Passagem> pAux = new ArrayList<>();
+        /*List<Passagem> pAux = new ArrayList<>();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         for (Passagem p : passagens.values()){
             String date = df.format(p.getDataViagem());
             if (ini.compareTo(date) <= 0 && end.compareTo(date) >= 0){
                 pAux.add(p);
             }
-        }
-        return pAux;
+        }*/
+        return null;
     }
 }
