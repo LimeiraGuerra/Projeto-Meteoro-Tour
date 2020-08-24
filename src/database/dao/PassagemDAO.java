@@ -21,7 +21,7 @@ public class PassagemDAO implements DAO<Passagem, String> {
     @Override
     public void save(Passagem model) {
         String sqlPassagem = "INSERT INTO Passagem (nomeCliente, cpfCliente, rgCliente, telefoneCliente," +
-                "precoPago, seguro, dataCompra) VALUES (?, ?, ?, ?, ?, ?, datetime(?));";
+                "precoPago, desconto, seguro, dataCompra) VALUES (?, ?, ?, ?, ?, ?, ?, datetime(?));";
         String sqlViagem = "INSERT INTO Viagem (idPassagem, data, cidadeOrigem, cidadeDestino, idLinha) " +
                 "VALUES (?, datetime(?), ?, ?, ?);";
         String sqlAssento = "INSERT INTO AssentoTrechoLinha (data, idTrechoLinha, idPassagem, idAssento)" +
@@ -61,8 +61,9 @@ public class PassagemDAO implements DAO<Passagem, String> {
         stmt.setString(3, model.getRg());
         stmt.setString(4, model.getTelefone());
         stmt.setDouble(5, model.getPrecoPago());
-        stmt.setInt(6, model.isSeguro() ? 1 : 0);
-        stmt.setString(7, dateFormat.format(model.getDataCompra()));
+        stmt.setDouble(6, model.getDiscount());
+        stmt.setInt(7, model.isSeguro() ? 1 : 0);
+        stmt.setString(8, dateFormat.format(model.getDataCompra()));
         stmt.execute();
     }
 
@@ -127,6 +128,7 @@ public class PassagemDAO implements DAO<Passagem, String> {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         Passagem passagem = new Passagem(rs.getLong("numPassagem"),
                 rs.getDouble("precoPago"),
+                rs.getDouble("desconto"),
                 rs.getString("nomeCliente"),
                 rs.getString("cpfCliente"),
                 rs.getString("rgCliente"),

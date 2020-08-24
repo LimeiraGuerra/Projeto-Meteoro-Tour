@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import model.entities.Passagem;
 import model.usecases.ConsultarPassagensVendidasUC;
 import model.usecases.DevolverPassagensUC;
+import view.loader.EmissaoBilheteLoader;
 import view.util.AlertWindow;
 import view.util.DataValidator;
 import view.util.mask.MaskedTextField;
@@ -50,7 +51,7 @@ public class PassagemController {
 
     private void bindTableColumnsToSource() {
         colNumero.setCellValueFactory(new PropertyValueFactory<>("numPassagem"));
-        colCpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
+        colCpf.setCellValueFactory(new PropertyValueFactory<>("formatedCpf"));
         colData.setCellValueFactory(new PropertyValueFactory<>("dataViagemStr"));
         colHorarioSaida.setCellValueFactory(new PropertyValueFactory<>("horarioSaida"));
         colLinha.setCellValueFactory(new PropertyValueFactory<>("nomeLinha"));
@@ -129,6 +130,8 @@ public class PassagemController {
     }
 
     public void printPassagem(ActionEvent actionEvent) {
+        EmissaoBilheteLoader janelaBilhete = new EmissaoBilheteLoader();
+        janelaBilhete.start(this.selectedPassagem);
     }
 
     private Date getSystemTime(){

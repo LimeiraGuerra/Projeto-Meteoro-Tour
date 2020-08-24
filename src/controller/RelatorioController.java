@@ -15,9 +15,6 @@ import view.util.AlertWindow;
 import view.util.DataValidator;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,7 +37,7 @@ public class RelatorioController {
     private List<InfoLinhaTrechoRelatorio> relatorioFilteredData;
 
     public RelatorioController() {
-        this.emitirRelatoriosUC = new EmitirRelatoriosUC(InfoRelatorioDAO.getInstancia());
+        this.emitirRelatoriosUC = new EmitirRelatoriosUC(new InfoRelatorioDAO());
     }
 
     @FXML
@@ -145,7 +142,8 @@ public class RelatorioController {
 
     public void tableExport(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
         File file = fileChooser.showSaveDialog(tableRelatorio.getScene().getWindow());
 
         if(file != null)

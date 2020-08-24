@@ -13,16 +13,13 @@ import java.util.Iterator;
 import java.util.List;
 
 public class GerarViagensUC {
-    private DAO<Viagem, String> daoViagem;
     private DAO<Linha, String> daoLinha;
     private DAO<TrechoLinha, String> daoTrechoLinha;
     private AssentosTrechoLinhaDAO daoAssentos;
 
-    public GerarViagensUC(DAO<Viagem, String> daoViagem,
-                          DAO<Linha, String> daoLinha,
+    public GerarViagensUC(DAO<Linha, String> daoLinha,
                           DAO<TrechoLinha, String> daoTrechoLinha,
                           DAO<AssentoTrechoLinha, String> daoAssentos){
-        this.daoViagem = daoViagem;
         this.daoLinha = daoLinha;
         this.daoTrechoLinha = daoTrechoLinha;
         this.daoAssentos = (AssentosTrechoLinhaDAO) daoAssentos;

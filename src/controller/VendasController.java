@@ -3,7 +3,6 @@ package controller;
 import database.dao.AssentosTrechoLinhaDAO;
 import database.dao.LinhaDAO;
 import database.dao.TrechoLinhaDAO;
-import database.dao.ViagemDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -43,8 +42,7 @@ public class VendasController {
     private boolean modeReagendamento = false;
 
     public VendasController() {
-        this.gerarViagensUC = new GerarViagensUC(new ViagemDAO(),
-                new LinhaDAO(),
+        this.gerarViagensUC = new GerarViagensUC(new LinhaDAO(),
                 new TrechoLinhaDAO(),
                 new AssentosTrechoLinhaDAO());
     }
@@ -167,8 +165,8 @@ public class VendasController {
             if (this.getSystemTime().compareTo(v.getData()) <= 0)
                 viagensTimeFilter.add(v);
         }
+        this.clearViewFromResults();
         if (viagensTimeFilter.isEmpty()) {
-            this.clearViewFromResults();
             this.messageHead = "Busca não encontrou nenhum resultado válido!";
             this.messageBody = "Reveja os parâmetros informados.";
             AlertWindow.informationAlerta(messageBody, messageHead);
