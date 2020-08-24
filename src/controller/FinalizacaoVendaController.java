@@ -15,6 +15,7 @@ import view.util.DataValidator;
 import view.util.TipoEspecial;
 import view.util.mask.MaskedTextField;
 
+import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -49,7 +50,7 @@ public class FinalizacaoVendaController {
         this.lbValorSeguro.setText(DataValidator.formatCurrencyView(this.valueSeguro));
     }
 
-    public void finalizeSale(ActionEvent actionEvent) {
+    public void finalizeSale(ActionEvent actionEvent) throws SQLException {
         this.setTotalToPay();
         Passagem p = this.getClientDataFromView();
         if (p == null) AlertWindow.errorAlert(this.messageBody, "Parâmetros de pesquisa inválidos ou nulos!");

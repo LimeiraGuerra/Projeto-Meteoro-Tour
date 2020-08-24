@@ -1,4 +1,4 @@
-CREATE TABLE Administrador(
+CREATE TABLE Administrador (
 	senha TEXT NOT NULL PRIMARY KEY
 );
 
@@ -92,7 +92,7 @@ CREATE VIEW vTrechoLinhaByLinha (idTrechoLinha, horarioSaida, ordem, dPlus, idLi
 cidadeOrigem, cidadeDestino, quilometragem, tempoDuracao, valorPassagem, taxaEmbarque, valorSeguro) AS
 SELECT tl.id, tl.horarioSaida, tl.ordem, tl.dPlus, tl.idLinha , t.* 
 FROM  trechoLinha tl JOIN trecho t ON tl.idTrecho = t.id;
-
+INSERT INTO administrador(senha) VALUES ("1234");
 INSERT INTO Trecho(cidadeOrigem, cidadeDestino, quilometragem, tempoDuracao, valorPassagem, taxaEmbarque, valorSeguro)
 VALUES('Descalvado', 'São Carlos', 40.0, 50, 10.0, 5.0, 0.3);
 INSERT INTO Trecho(cidadeOrigem, cidadeDestino, quilometragem, tempoDuracao, valorPassagem, taxaEmbarque, valorSeguro)
@@ -112,4 +112,3 @@ INSERT INTO TrechoLinha(horarioSaida, ordem, dPlus, idLinha, idTrecho) VALUES(ti
 --INSERT INTO AssentoTrechoLinha(data, idTrechoLinha, idAssento) VALUES(date('2020-10-10'), 1, '05');
 --INSERT INTO AssentoTrechoLinha(data, idTrechoLinha, idAssento) VALUES(date('2020-10-11'), 1, '03');
 --INSERT INTO AssentoTrechoLinha(data, idTrechoLinha, idAssento) VALUES(date('2020-10-12'), 2, '06');
-;

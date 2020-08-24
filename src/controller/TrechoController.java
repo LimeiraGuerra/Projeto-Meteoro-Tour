@@ -59,11 +59,10 @@ public class TrechoController {
     }
 
     private Trecho createTrecho(){
-        Trecho trecho = ucTrecho.createTrecho(tfOrigem.getText(), tfDestino.getText(), Double.parseDouble(tfQuilometragem.getText()),
+
+        return ucTrecho.createTrecho(tfOrigem.getText(), tfDestino.getText(), Double.parseDouble(tfQuilometragem.getText()),
                 Integer.parseInt(tfTempoDuracao.getText()), Double.parseDouble(tfValorPassagem.getText()),
                 Double.parseDouble(tfTaxaEmbarque.getText()), Double.parseDouble(tfValorSeguro.getText()));
-
-        return trecho;
     }
 
     private Trecho searchTrechoOrigemDestino(){
@@ -72,9 +71,8 @@ public class TrechoController {
 
     private void updateTrecho(){
         Trecho trecho = searchTrechoOrigemDestino();
-        ucTrecho.updateTrecho(Double.parseDouble(tfQuilometragem.getText()),Integer.parseInt(tfTempoDuracao.getText()),
+        ucTrecho.atualizaTrecho(Double.parseDouble(tfQuilometragem.getText()),Integer.parseInt(tfTempoDuracao.getText()),
                 Double.parseDouble(tfValorPassagem.getText()), Double.parseDouble(tfTaxaEmbarque.getText()),Double.parseDouble(tfValorSeguro.getText()), trecho);
-
         trecho.setValorTotal();
         setValorTotal(trecho.getValorTotal());
     }
@@ -95,6 +93,8 @@ public class TrechoController {
             }
 
             cleanFields();
+            trechos.clear();
+            trechos.addAll(ucTrecho.getListTrechos());
             tabelaTrecho.refresh();
             setVisibleButtonPane(false);
             setVisiblePaneImg(true);
@@ -143,14 +143,10 @@ public class TrechoController {
     private void seeTrecho(ActionEvent actionEvent) {
         Trecho t = searchTrechoTable();
         if (t != null){
-            Trecho trecho = ucTrecho.searchTrecho(t);
-            if (trecho.equals(t)) {
-                setFieldsTrecho(trecho);
-                setDisableOrigemDestino(true);
-                setVisibleButtonPane(true);
-                setVisiblePaneImg(false);
-            }
-
+            setFieldsTrecho(t);
+            setDisableOrigemDestino(true);
+            setVisibleButtonPane(true);
+            setVisiblePaneImg(false);
         }
     }
 

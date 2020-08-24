@@ -5,15 +5,15 @@ import model.entities.Administrador;
 
 public class LoginUC {
 
-    private AdministradorDAO daoAdministrador = AdministradorDAO.getInstancia();
-    private  Administrador adm;
+    private AdministradorDAO daoAdministrador = new AdministradorDAO();
 
     public boolean isCheckPassword(String senha){
-        adm = getAdministrador();
+        Administrador adm = getAdministrador();
         return adm.getSenha().equals(senha);
     }
 
     public Administrador getAdministrador(){
         return daoAdministrador.getAdministrador();
     }
+
 }

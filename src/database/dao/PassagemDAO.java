@@ -5,11 +5,7 @@ import database.utils.DAO;
 import model.entities.Linha;
 import model.entities.Passagem;
 import model.entities.TrechoLinha;
-<<<<<<< HEAD
-=======
 import model.entities.Viagem;
-
->>>>>>> 0e4795a4ef90f9e9d6134bc5bea2d4316a64ba9d
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

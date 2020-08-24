@@ -1,7 +1,6 @@
 package database.dao;
 import database.utils.DAO;
 import model.entities.Linha;
-
 import database.utils.ConnectionFactory;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,14 +14,17 @@ public class LinhaDAO implements DAO<Linha, String> {
 
     @Override
     public void save(Linha model){
-        String sqlLinha = "INSERT INTO VIAGEM (nome) " + "VALUES (?);";
+        String sqlLinha = "INSERT INTO LINHA(nome) VALUES(?);";
         try(PreparedStatement stmtLinha = ConnectionFactory.createPreparedStatement(sqlLinha)){
             ConnectionFactory.getConnection().setAutoCommit(false);
-            ResultSet rs = stmtLinha.getGeneratedKeys();
-            if (rs.next()){
-                model.setId(rs.getInt(1));
-                ConnectionFactory.getConnection().commit();
+            stmtLinha.setString(1, model.getNome());
+            ResultSet rs = stmtLinha.executeQuery();
+            System.out.println(rs.toString());
+            while (rs.next()){
+                model.setId(rs.getLong("id"));
             }
+            ConnectionFactory.getConnection().commit();
+            ConnectionFactory.closeStatements(stmtLinha);
         }
         catch (SQLException throwables) {
             ConnectionFactory.executeRollBack();

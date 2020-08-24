@@ -239,7 +239,7 @@ public class LinhaController{
 
     @FXML
     private void addLinha(ActionEvent actionEvent) {
-        if (ucLinha.searchLinhaNome(txtNomeLinha.getText()) == null){
+        if (searchLinhaNome(txtNomeLinha.getText()) == null){
             Linha l = ucLinha.createLinha(txtNomeLinha.getText());
             ucLinha.addLinha(l);
 

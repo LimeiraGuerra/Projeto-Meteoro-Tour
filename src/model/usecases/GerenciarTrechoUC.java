@@ -5,7 +5,7 @@ import java.util.List;
 
 public class GerenciarTrechoUC {
 
-    private TrechoDAO daoTrecho = TrechoDAO.getInstancia();
+    private TrechoDAO daoTrecho = new TrechoDAO();
 
     public Trecho searchForOrigemDestino(String origem, String destino){
         for (Trecho trecho : getListTrechos()){
@@ -16,21 +16,20 @@ public class GerenciarTrechoUC {
         return  null;
     }
 
-    public Trecho searchTrecho(Trecho trecho){
-        return daoTrecho.searchTrecho(trecho);
-    }
-
     public  Trecho createTrecho(String origem, String destino, double km, int tempo, double valorP, double valorE, double valorS){
         Trecho t = new Trecho(origem, destino, km, tempo, valorP, valorE, valorS);
         this.addTrecho(t);
         return t;
     }
-    public void updateTrecho(double km, int tempo, double valorP, double valorE, double valorS, Trecho trecho){
+    public void atualizaTrecho(double km, int tempo, double valorP, double valorE, double valorS, Trecho trecho){
+        System.out.println(trecho.toString() + "\n" + trecho.getQuilometragem());
         trecho.setTaxaEmbarque(valorE);
         trecho.setQuilometragem(km);
         trecho.setTempoDuracao(tempo);
         trecho.setValorSeguro(valorS);
         trecho.setValorPassagem(valorP);
+        System.out.println("Depois");
+        System.out.println(trecho.toString() + "\n" + trecho.getQuilometragem());
         updateTrecho(trecho);
 
     }
@@ -39,7 +38,7 @@ public class GerenciarTrechoUC {
     }
 
     public List<Trecho> getListTrechos() {
-       return  daoTrecho.getListTrechos();
+       return  daoTrecho.selectAll();
     }
 
     public void addTrecho(Trecho trecho) {

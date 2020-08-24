@@ -9,12 +9,11 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class DatabaseBuilder {
-
     public static void main(String[] args) {
         clear();
         build();
     }
-
+    
     private static void clear() {
         System.out.println("Cleaning up...");
         try {
@@ -35,6 +34,7 @@ public class DatabaseBuilder {
             System.out.println("Database has been created ...");
         } catch (SQLException | FileNotFoundException e) {
             System.out.println(e.getMessage());
+            System.out.println("tá entrando aqui");
         }
     }
 

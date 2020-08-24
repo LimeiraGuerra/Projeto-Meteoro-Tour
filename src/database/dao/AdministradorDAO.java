@@ -1,24 +1,31 @@
 package database.dao;
 
+import database.utils.ConnectionFactory;
 import database.utils.DAO;
 import model.entities.Administrador;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.List;
 
 public class AdministradorDAO implements DAO<Administrador, String> {
-    private Administrador administrador = new Administrador();
-    private static AdministradorDAO instancia;
 
-    private AdministradorDAO() {
-        administrador.setSenha("1234");
+    public Administrador getAdministrador(){
+        String sqlAdm = "SELECT * FROM administrador;";
+        Administrador administrador = null;
+        try(PreparedStatement stmtAdm = ConnectionFactory.createPreparedStatement(sqlAdm)){
+            ResultSet rs = stmtAdm.executeQuery();
+            while(rs.next()){
+                administrador = (new Administrador(rs.getString("senha")));
+            }
+            ConnectionFactory.closeStatements(stmtAdm);
+        }catch (Exception throwables){
+            throwables.printStackTrace();
+        }
+        return administrador;
     }
 
     @Override
     public void save(Administrador model) {
-        administrador = model;
-    }
-
-    public Administrador getAdministrador(){
-        return administrador;
     }
 
     @Override
@@ -49,10 +56,5 @@ public class AdministradorDAO implements DAO<Administrador, String> {
         return null;
     }
 
-    public static AdministradorDAO getInstancia(){
-        if (instancia == null){
-            instancia = new AdministradorDAO();
-        }
-        return instancia;
-    }
+
 }

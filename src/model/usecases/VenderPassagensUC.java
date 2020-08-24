@@ -4,6 +4,8 @@ import database.utils.DAO;
 import model.entities.Passagem;
 import model.entities.Viagem;
 
+import java.sql.SQLException;
+
 public class VenderPassagensUC {
     private DAO<Passagem, String> daoPassagem;
     private DAO<Viagem, String> daoViagem;
@@ -13,7 +15,7 @@ public class VenderPassagensUC {
         this.daoViagem = daoViagem;
     }
 
-    public void saveSale(Passagem p) {
+    public void saveSale(Passagem p) throws SQLException {
         this.daoPassagem.save(p);
     }
 }
