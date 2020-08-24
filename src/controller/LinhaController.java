@@ -173,7 +173,8 @@ public class LinhaController{
     private void saveChange(ActionEvent actionEvent) {
 
         if (searchLinhaTable() != null){
-            ucLinha.addLinha(searchLinhaTable());
+            searchLinhaTable().setNome(txtNomeLinha.getText());
+            ucLinha.updateLinha(searchLinhaTable());
             loadTableLinhaTrecho(searchLinhaTable());
         }
         updateTableLinha();
@@ -240,9 +241,7 @@ public class LinhaController{
     @FXML
     private void addLinha(ActionEvent actionEvent) {
         if (searchLinhaNome(txtNomeLinha.getText()) == null){
-            Linha l = ucLinha.createLinha(txtNomeLinha.getText());
-            ucLinha.addLinha(l);
-
+            ucLinha.createLinha(txtNomeLinha.getText());
         }else{
             AlertWindow.informationAlerta("Já existe uma linha com esse nome", "Linha não adicionada.");
         }
@@ -254,11 +253,11 @@ public class LinhaController{
     @FXML
     private void saveTrecho(ActionEvent actionEvent) {
         if(checkTextField()){
-            if (ucTrecho.searchForOrigemDestino(tfOrigem.getText(), tfDestino.getText()) == null){
+            if (ucTrecho.searchForOrigemDestino(tfOrigem.getText(), tfDestino.getText()) == null)
                 ucTrecho.createTrecho(tfOrigem.getText(), tfDestino.getText(), Double.parseDouble(tfQuilometragem.getText()),
                         Integer.parseInt(tfTempoDuracao.getText()), Double.parseDouble(tfValorPassagem.getText()),
                         Double.parseDouble(tfTaxaEmbarque.getText()), Double.parseDouble(tfValorSeguro.getText()));
-            }else{
+            else{
                 AlertWindow.informationAlerta("Trecho não pode ser salvo, pois há trecho com o mesmo conjunto de cidade Origem - cidade Destino", "Trecho não adicionado.");
             }
         }else{

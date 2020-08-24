@@ -10,54 +10,80 @@ import java.util.List;
 
 public class LinhaDAO implements DAO<Linha, String> {
 
-    private List<Linha> linhas = new ArrayList<>();
-
     @Override
     public void save(Linha model){
         String sqlLinha = "INSERT INTO LINHA(nome) VALUES(?);";
         try(PreparedStatement stmtLinha = ConnectionFactory.createPreparedStatement(sqlLinha)){
-            ConnectionFactory.getConnection().setAutoCommit(false);
             stmtLinha.setString(1, model.getNome());
-            ResultSet rs = stmtLinha.executeQuery();
-            System.out.println(rs.toString());
-            while (rs.next()){
-                model.setId(rs.getLong("id"));
-            }
-            ConnectionFactory.getConnection().commit();
+            stmtLinha.execute();
             ConnectionFactory.closeStatements(stmtLinha);
         }
         catch (SQLException throwables) {
-            ConnectionFactory.executeRollBack();
             throwables.printStackTrace();
         }
     }
 
     @Override
     public void update(Linha model) {
-        int index = linhas.indexOf(model);
-        System.out.println(index);
-        System.out.println(linhas.get(index).getNome());
-        linhas.remove(index);
-        linhas.add(index, model);
+        String sqlEdite = "UPDATE linha set nome = ? where id = ?;";
+        try(PreparedStatement stmtLinha = ConnectionFactory.createPreparedStatement(sqlEdite)){
+            stmtLinha.setString(1, model.getNome());
+            stmtLinha.setLong(2, model.getId());
+            stmtLinha.execute();
+            ConnectionFactory.closeStatements(stmtLinha);
+        }
+        catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
     }
 
     @Override
     public void delete(Linha model) {
-        linhas.remove(model);
+        String sqlEdite = "Delete from linha where id = ?;";
+        try(PreparedStatement stmtLinha = ConnectionFactory.createPreparedStatement(sqlEdite)){
+            stmtLinha.setLong(1, model.getId());
+            stmtLinha.execute();
+            ConnectionFactory.closeStatements(stmtLinha);
+        }
+        catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     @Override
     public Linha selectById(String id) {
         Long num = Long.parseLong(id);
-        for (Linha l : linhas){
-            if (l.equals(num)) return l;
+        String sql = "Select * from linha where id = ?;";
+        Linha linha = null;
+        try (PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
+            stmt.setLong(1, num);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                linha = new Linha(rs.getString(2));
+            }
+            ConnectionFactory.closeStatements(stmt);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
-        return null;
+        return linha;
     }
 
     @Override
     public List<Linha> selectAll() {
-        return null;
+        String sql = "Select * from linha;";
+        List<Linha> linhas = new ArrayList<>();
+        try (PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Linha linha = new Linha(rs. getLong(1), rs.getString(2));
+                linhas.add(linha);
+            }
+            ConnectionFactory.closeStatements(stmt);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return linhas;
     }
 
     @Override
@@ -97,16 +123,5 @@ public class LinhaDAO implements DAO<Linha, String> {
             throws SQLException {
         stmt.setString(1, cidadeOrigem);
         stmt.setString(2, cidadeDestino);
-    }
-
-    public Linha searchLinha(Linha linha){
-        return linhas.contains(linha) ? linha : null;
-    }
-
-    //Melhor verificar se existe na tabela da view do que fazer um metodo de dao
-
-
-    public List<Linha> getListLinha(){
-        return linhas;
     }
 }

@@ -6,6 +6,8 @@ import model.entities.AssentoTrechoLinha;
 import model.entities.Linha;
 import model.entities.Trecho;
 import model.entities.TrechoLinha;
+
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -18,9 +20,6 @@ public class TrechoLinhaDAO implements DAO<TrechoLinha, String> {
 
     private List<TrechoLinha> trechosLinhas = new ArrayList<>();
     private List<AssentoTrechoLinha> assentosVendScuff = new ArrayList<>();
-
-    public TrechoLinhaDAO() {
-    }
 
     public List<TrechoLinha> selectTrechosByLinha(Linha linha, String data){
         List<TrechoLinha> trechosLinhaTemp = new ArrayList<>();
@@ -62,7 +61,21 @@ public class TrechoLinhaDAO implements DAO<TrechoLinha, String> {
 
     @Override
     public List<TrechoLinha> selectAll() {
-        return null;
+        String sql = "Select * from TrechoLinha;";
+        List<TrechoLinha> trechosLinha = new ArrayList<>();
+        try (PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                TrechoLinha trecholinha = new TrechoLinha(rs.getLong(1), rs.getTime(2), rs. getInt(3), rs.getInt(4));
+                trechosLinha.add(trecholinha);
+            }
+            ConnectionFactory.closeStatements(stmt);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return trechosLinha;
+
+
     }
 
     @Override
