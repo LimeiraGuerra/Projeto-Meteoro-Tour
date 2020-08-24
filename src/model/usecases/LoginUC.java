@@ -1,19 +1,34 @@
 package model.usecases;
 
 import database.dao.AdministradorDAO;
+import database.utils.DAO;
 import model.entities.Administrador;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 public class LoginUC {
+    private DAO<Administrador, String> daoAdministrador;
 
-    private AdministradorDAO daoAdministrador = AdministradorDAO.getInstancia();
-    private  Administrador adm;
-
-    public boolean isCheckPassword(String senha){
-        adm = getAdministrador();
-        return adm.getSenha().equals(senha);
+    public LoginUC(DAO<Administrador, String> daoAdministrador) {
+        this.daoAdministrador = daoAdministrador;
     }
 
-    public Administrador getAdministrador(){
-        return daoAdministrador.getAdministrador();
+    private String hashSha1(String senha) {
+        StringBuffer sb = new StringBuffer();
+        try {
+            MessageDigest mDigest = MessageDigest.getInstance("SHA1");
+            byte[] result = mDigest.digest(senha.getBytes());
+            for (int i = 0; i < result.length; i++) {
+                sb.append(Integer.toString((result[i] & 0xff) + 0x100, 16).substring(1));
+            }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return sb.toString();
+    }
+
+    public Administrador getAdministrador(String senha){
+        return daoAdministrador.selectById(hashSha1(senha));
     }
 }

@@ -103,7 +103,8 @@ CREATE VIEW vTrechoLinhaByLinha (idTrechoLinha, horarioSaida, ordem, dPlus, idLi
 cidadeOrigem, cidadeDestino, quilometragem, tempoDuracao, valorPassagem, taxaEmbarque, valorSeguro) AS
 	SELECT tl.id, tl.horarioSaida, tl.ordem, tl.dPlus, tl.idLinha , t.* 
 	FROM  trechoLinha tl JOIN trecho t ON tl.idTrecho = t.id;
-
+	
+INSERT INTO Administrador VALUES('d033e22ae348aeb5660fc2140aec35850c4da997');
 INSERT INTO Trecho(cidadeOrigem, cidadeDestino, quilometragem, tempoDuracao, valorPassagem, taxaEmbarque, valorSeguro)
 VALUES('Descalvado', 'São Carlos', 40.0, 50, 10.0, 5.0, 0.3);
 INSERT INTO Trecho(cidadeOrigem, cidadeDestino, quilometragem, tempoDuracao, valorPassagem, taxaEmbarque, valorSeguro)
