@@ -70,9 +70,10 @@ public class FinalizacaoVendaController {
     }
 
     private void addInfoToPassagem(Passagem passagem){
-        passagem.setPrecoPago(this.totalToPay);
+        passagem.setPrecoPago(this.totalToPay +
+                (this.passagemR != null ? this.totalToPay += passagemR.getPrecoPago(): 0));
         passagem.setAssentoId(this.chosenSitId);
-        passagem.setInfoOfViagem(this.chosenViagem);
+        passagem.setViagem(this.chosenViagem);
         passagem.setDataCompra(this.getSystemTime());
     }
 

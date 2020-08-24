@@ -13,12 +13,22 @@ public class Passagem {
     private String telefone;
     private boolean seguro;
     private Date dataCompra;
-    private Date dataViagem;
-    private String cidadeOrigem, cidadeDestino;
     private String assentoId;
-    private Linha linha;
 
     private Viagem viagem;
+
+    public Passagem(long numPassagem, double precoPago, String nome, String cpf, String rg,
+                    String telefone, boolean seguro, Date dataCompra, String assentoId) {
+        this.numPassagem = numPassagem;
+        this.precoPago = precoPago;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.rg = rg;
+        this.telefone = telefone;
+        this.seguro = seguro;
+        this.dataCompra = dataCompra;
+        this.assentoId = assentoId;
+    }
 
     public Passagem(String nome, String cpf, String rg, String telefone) {
         this.nome = nome;
@@ -46,36 +56,12 @@ public class Passagem {
         return nome;
     }
 
-    public void setInfoOfViagem(Viagem v){
-        this.dataViagem = v.getData();
-        this.cidadeOrigem = v.getCidadeOrigem();
-        this.cidadeDestino = v.getCidadeDestino();
-        this.linha = v.getLinha();
-        this.viagem = v;
-    }
-
     public String getAssentoId() {
         return assentoId;
     }
 
     public void setAssentoId(String assentoId) {
         this.assentoId = assentoId;
-    }
-
-    public void setCidadeOrigem(String cidadeOrigem) {
-        this.cidadeOrigem = cidadeOrigem;
-    }
-
-    public void setCidadeDestino(String cidadeDestino) {
-        this.cidadeDestino = cidadeDestino;
-    }
-
-    public Linha getLinha() {
-        return linha;
-    }
-
-    public void setLinha(Linha linha) {
-        this.linha = linha;
     }
 
     public void setNome(String nome) {
@@ -114,14 +100,6 @@ public class Passagem {
         this.dataCompra = dataCompra;
     }
 
-    public Date getDataViagem() {
-        return dataViagem;
-    }
-
-    public void setDataViagem(Date dataViagem) {
-        this.dataViagem = dataViagem;
-    }
-
     public Viagem getViagem() {
         return viagem;
     }
@@ -147,13 +125,12 @@ public class Passagem {
     }
 
     public String getHorarioSaida(){
-        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
-        return dateFormat.format(this.dataViagem);
+        return this.viagem.getHorarioSaida();
     }
 
     public String getDataViagemStr(){
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        return dateFormat.format(this.dataViagem);
+        return dateFormat.format(this.getViagem().getData());
     }
 
     public String getNomeLinha(){

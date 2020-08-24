@@ -135,7 +135,7 @@ public class PassagemController {
     }
 
     private boolean verifyValidity(){
-        return this.getSystemTime().compareTo(this.selectedPassagem.getDataViagem()) < 0;
+        return this.getSystemTime().compareTo(this.selectedPassagem.getViagem().getData()) < 0;
     }
 
     private void informErrorExpiredPassagem(){

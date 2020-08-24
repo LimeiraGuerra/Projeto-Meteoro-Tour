@@ -77,6 +77,7 @@ public class VendasController {
 
     public void cancelModeReagendamento() {
         this.toggleModeReagendamento(false);
+        this.clearViewFromResults();
     }
 
     private void setInfoInFields(){
@@ -92,12 +93,11 @@ public class VendasController {
     }
 
     public void openBuscarPassagens(ActionEvent actionEvent) {
-        this.clearTable();
+        this.clearViewFromResults();
         PassagemLoader janelaPassagens = new PassagemLoader();
         janelaPassagens.start();
         this.passagemReagendamento = janelaPassagens.getPassagemReagendamento();
         if (this.passagemReagendamento != null) {
-            this.clearTable();
             this.setModeReagendamento();
         }
     }
@@ -143,7 +143,7 @@ public class VendasController {
         if (this.checkInputsValues(data, cidadeOrigem, cidadeDestino))
             this.verifyTimeOfResults(this.gerarViagensUC.searchForViagens(data, cidadeOrigem, cidadeDestino));
         else {
-            this.clearTable();
+            this.clearViewFromResults();
             this.messageHead = "Parâmetros de pesquisa inválidos ou nulos!";
             AlertWindow.errorAlert(messageBody,messageHead);
         }
@@ -154,18 +154,25 @@ public class VendasController {
         this.showResultsToTable(new ArrayList<>());
     }
 
+    private void clearViewFromResults(){
+        this.selectedViagem = null;
+        this.clearTable();
+        this.resetSeats();
+        this.checkToggle();
+    }
 
     private void verifyTimeOfResults(List<Viagem> viagens){
         List<Viagem> viagensTimeFilter = new ArrayList<>();
-        for (Viagem v : viagens)
+        for (Viagem v : viagens) {
             if (this.getSystemTime().compareTo(v.getData()) <= 0)
                 viagensTimeFilter.add(v);
-        this.showResultsToTable(viagensTimeFilter);
+        }
         if (viagensTimeFilter.isEmpty()) {
+            this.clearViewFromResults();
             this.messageHead = "Busca não encontrou nenhum resultado válido!";
             this.messageBody = "Reveja os parâmetros informados.";
             AlertWindow.informationAlerta(messageBody, messageHead);
-        }
+        }else this.showResultsToTable(viagensTimeFilter);
     }
 
     private Date getSystemTime(){
@@ -229,8 +236,8 @@ public class VendasController {
             else janelaFinal = new FinalizacaoVendaLoader();
             janelaFinal.start(this.selectedViagem, this.getClientType(), btn.getId());
             if (janelaFinal.isSoldSuccess()) {
-                this.cancelModeReagendamento();
-                this.markSoldSeat(btn.getId());
+                if (this.modeReagendamento) this.cancelModeReagendamento();
+                else this.markSoldSeat(btn.getId());
             }
         }
     }

@@ -45,25 +45,21 @@ CREATE TABLE AssentoTrechoLinha(
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	data DATE NOT NULL,
 	idTrechoLinha INTEGER NOT NULL,
+	idPassagem INTEGER NOT NULL,
 	idAssento TEXT NOT NULL,
+	FOREIGN KEY(idPassagem) REFERENCES Passagem(numPassagem) ON DELETE CASCADE,
 	FOREIGN KEY(idTrechoLinha) REFERENCES TrechoLinha(id)
 );
 
 CREATE TABLE Viagem(
-	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	idPassagem INTEGER NOT NULL,
 	data DATE NOT NULL,
 	cidadeOrigem TEXT NOT NULL,
 	cidadeDestino TEXT NOT NULL,
 	idLinha INTEGER NOT NULL,
+	PRIMARY KEY(idPassagem),
+	FOREIGN KEY(idPassagem) REFERENCES Passagem(numPassagem) ON DELETE CASCADE,
 	FOREIGN KEY(idLinha) REFERENCES Linha(id)
-);
-
-CREATE TABLE TrechoLinhaPassagem(
-	idPassagem INTEGER NOT NULL,
-	idTrechoLinha INTEGER NOT NULL,
-	PRIMARY KEY(idPassagem, idTrechoLinha),
-	FOREIGN KEY(idPassagem) REFERENCES Passagem(numPassagem),
-	FOREIGN KEY(idTrechoLinha) REFERENCES TrechoLinha(id)
 );
 
 CREATE TABLE Passagem(
@@ -74,13 +70,19 @@ CREATE TABLE Passagem(
 	telefoneCliente TEXT NOT NULL,
 	precoPago REAL NOT NULL,
 	seguro INTEGER NOT NULL,
-	dataCompra DATETIME NOT NULL,
-	dataViagem DATETIME NOT NULL,
-	cidadeOrigem TEXT NOT NULL,
-	cidadeDestino TEXT NOT NULL,
-	idLinha INTEGER NOT NULL,
-	FOREIGN KEY(idLinha) REFERENCES Linha(id)
+	dataCompra DATETIME NOT NULL
 );
+
+CREATE VIEW vPassagensVendidas (numPassagem, nomeCliente, cpfCliente, rgCliente, telefoneCliente, precoPago, seguro, 
+dataCompra, dataViagem,idAssento, cidadeOrigem, cidadeDestino, idLinha, nomeLinha, valorViagem, valorSeguro) AS
+	SELECT p.*, v.data,ast.idAssento, v.cidadeOrigem, v.cidadeDestino, 
+	l.id, l.nome, sum(t.valorPassagem+t.taxaEmbarque), sum(t.valorSeguro) FROM Passagem p
+	JOIN Viagem v ON p.numPassagem = v.idPassagem
+	JOIN Linha l ON l.id = v.idLinha
+	JOIN AssentoTrechoLinha ast ON ast.idPassagem = p.numPassagem
+	JOIN TrechoLinha tl ON tl.id = ast.idTrechoLinha
+	JOIN Trecho t ON t.id = tl.idTrecho
+	GROUP BY p.numPassagem;
 
 CREATE VIEW vLinhaByCidades(idLinha, nomeLinha) AS
 SELECT l.* FROM linha l
@@ -106,7 +108,8 @@ INSERT INTO TrechoLinha(horarioSaida, ordem, dPlus, idLinha, idTrecho) VALUES(ti
 INSERT INTO TrechoLinha(horarioSaida, ordem, dPlus, idLinha, idTrecho) VALUES(time('09:00'), 1, 0, 2, 1);
 INSERT INTO TrechoLinha(horarioSaida, ordem, dPlus, idLinha, idTrecho) VALUES(time('09:55'), 2, 0, 2, 3);
 INSERT INTO TrechoLinha(horarioSaida, ordem, dPlus, idLinha, idTrecho) VALUES(time('10:30'), 3, 0, 2, 4);
-INSERT INTO AssentoTrechoLinha(data, idTrechoLinha, idAssento) VALUES(date('2020-10-11'), 2, '04');
-INSERT INTO AssentoTrechoLinha(data, idTrechoLinha, idAssento) VALUES(date('2020-10-10'), 1, '05');
-INSERT INTO AssentoTrechoLinha(data, idTrechoLinha, idAssento) VALUES(date('2020-10-11'), 1, '03');
-INSERT INTO AssentoTrechoLinha(data, idTrechoLinha, idAssento) VALUES(date('2020-10-12'), 2, '06');
+--INSERT INTO AssentoTrechoLinha(data, idTrechoLinha, idAssento) VALUES(date('2020-10-11'), 2, '04');
+--INSERT INTO AssentoTrechoLinha(data, idTrechoLinha, idAssento) VALUES(date('2020-10-10'), 1, '05');
+--INSERT INTO AssentoTrechoLinha(data, idTrechoLinha, idAssento) VALUES(date('2020-10-11'), 1, '03');
+--INSERT INTO AssentoTrechoLinha(data, idTrechoLinha, idAssento) VALUES(date('2020-10-12'), 2, '06');
+;

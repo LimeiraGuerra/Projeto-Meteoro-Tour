@@ -18,6 +18,6 @@ public class ConsultarPassagensVendidasUC {
     }
 
     public List<Passagem> searchPassagensByCpf(String cpf){
-        return this.daoPassagem.selectByArgs(cpf);
+        return this.daoPassagem.selectAllByArg(cpf);
     }
 }
