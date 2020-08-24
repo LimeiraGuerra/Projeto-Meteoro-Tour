@@ -10,16 +10,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LinhaDAO implements DAO<Linha, String> {
+
     private List<Linha> linhas = new ArrayList<>();
 
     @Override
-    public void save(Linha model) {
-        linhas.add(model);
+    public void save(Linha model){
+        String sqlLinha = "INSERT INTO VIAGEM (nome) " + "VALUES (?);";
+        try(PreparedStatement stmtLinha = ConnectionFactory.createPreparedStatement(sqlLinha)){
+            ConnectionFactory.getConnection().setAutoCommit(false);
+            ResultSet rs = stmtLinha.getGeneratedKeys();
+            if (rs.next()){
+                model.setId(rs.getInt(1));
+                ConnectionFactory.getConnection().commit();
+            }
+        }
+        catch (SQLException throwables) {
+            ConnectionFactory.executeRollBack();
+            throwables.printStackTrace();
+        }
     }
 
     @Override
     public void update(Linha model) {
         int index = linhas.indexOf(model);
+        System.out.println(index);
+        System.out.println(linhas.get(index).getNome());
         linhas.remove(index);
         linhas.add(index, model);
     }
@@ -86,14 +101,7 @@ public class LinhaDAO implements DAO<Linha, String> {
     }
 
     //Melhor verificar se existe na tabela da view do que fazer um metodo de dao
-    public Linha searchLinhaNome(String nome){
-        for (Linha linha: linhas) {
-            if(linha.getNome().equals(nome)){
-                return linha;
-            }
-        }
-        return null;
-    }
+
 
     public List<Linha> getListLinha(){
         return linhas;

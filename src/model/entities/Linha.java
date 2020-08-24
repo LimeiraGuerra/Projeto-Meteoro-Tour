@@ -18,13 +18,17 @@ public class Linha {
         return nome;
     }
 
-    public Linha(long id, String nome) {
-        this.id = id;
+    public Linha( String nome) {
         this.nome = nome;
-
     }
 
-    public Linha(long id, String nome, List<TrechoLinha> trechoslinhas) {
+    public Linha(long id, String nome, List<TrechoLinha> trechoslinha) {
+        this.id = id;
+        this.nome = nome;
+        trechosLinha.addAll(trechoslinha);
+    }
+
+    public Linha(long id, String nome) {
         this.id = id;
         this.nome = nome;
     }

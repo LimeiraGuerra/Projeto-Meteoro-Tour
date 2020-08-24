@@ -173,7 +173,7 @@ public class LinhaController{
     private void saveChange(ActionEvent actionEvent) {
 
         if (searchLinhaTable() != null){
-            ucLinha.updateLinha(searchLinhaTable());
+            ucLinha.addLinha(searchLinhaTable());
             loadTableLinhaTrecho(searchLinhaTable());
         }
         updateTableLinha();
@@ -193,7 +193,7 @@ public class LinhaController{
         Trecho trecho = cbTrechos.getSelectionModel().getSelectedItem();
         if (isFieldTrechoHoraSet()){
             if (checkHoraMinuto(txtHoraTrecho, txtMinTrecho)){
-                //ucTrechoLinha.createTrechoLinha(linha, trecho, returnHora(txtHoraTrecho, txtMinTrecho), calcOrdemLinha());
+                ucTrechoLinha.createTrechoLinha(linha, trecho, returnHora(txtHoraTrecho, txtMinTrecho), calcOrdemLinha());
                 loadTableLinhaTrecho(linha);
                 loadCombobox();
                 atualizaHora();
@@ -240,7 +240,8 @@ public class LinhaController{
     @FXML
     private void addLinha(ActionEvent actionEvent) {
         if (ucLinha.searchLinhaNome(txtNomeLinha.getText()) == null){
-            ucLinha.createLinha(txtNomeLinha.getText());
+            Linha l = ucLinha.createLinha(txtNomeLinha.getText());
+            ucLinha.addLinha(l);
 
         }else{
             AlertWindow.informationAlerta("Já existe uma linha com esse nome", "Linha não adicionada.");
@@ -408,6 +409,15 @@ public class LinhaController{
         }else{
             AlertWindow.errorAlert("Padrão de hora (hh:mm) não foi seguido.", "Atualização não realizada.");
         }
+    }
+
+    private Linha searchLinhaNome(String nome){
+        for (Linha linha : linhasListTabela) {
+            if(linha.getNome().equals(nome)){
+                return linha;
+            }
+        }
+        return null;
     }
 
 }

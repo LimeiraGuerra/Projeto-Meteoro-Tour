@@ -13,12 +13,12 @@ public class GerenciarTrechoLinhaUC {
     private GerenciarTrechoUC ucTrecho = new GerenciarTrechoUC();
     private GerenciarLinhaUC ucLinha = new GerenciarLinhaUC();
 
-    /*public void createTrechoLinha(Linha linha, Trecho trecho, Date horario, int ordem){
-        TrechoLinha trechoL = new TrechoLinha(ordem, horario, trecho, linha);
+    public void createTrechoLinha(Linha linha, Trecho trecho, Date horario, int ordem){
+        TrechoLinha trechoL = new TrechoLinha(ordem, horario,0, trecho, linha);
         daoTrechoLinha.save(trechoL);
         ucLinha.updateLinha(linha);
         ucTrecho.updateTrecho(trecho);
-    }*/
+    }
 
     public TrechoLinha searchTrechoLinha() {
         return searchTrechoLinha();

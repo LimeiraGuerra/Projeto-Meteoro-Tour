@@ -9,11 +9,11 @@ public class GerenciarLinhaUC {
     LinhaDAO daoLinha = new LinhaDAO();
     long idFicticio = 3;
 
-    public void createLinha(String nomeLinha){
+    public Linha createLinha(String nomeLinha){
         Linha linha = new Linha(idFicticio++ , nomeLinha);
-        daoLinha.save(linha);
-
+        return linha;
     }
+
     public void addLinha(Linha l) {
         Linha linha = daoLinha.searchLinha(l);
         if (linha == null){
