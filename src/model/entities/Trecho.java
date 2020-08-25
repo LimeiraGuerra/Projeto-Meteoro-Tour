@@ -2,6 +2,7 @@ package model.entities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Trecho {
     private int id;
@@ -108,10 +109,10 @@ public class Trecho {
     public int sizeListTrechoLinha(){
         return trechoLinha.size();
     }
-    @Override
+   /* @Override
     public String toString() {
         return cidadeOrigem + " - " + cidadeDestino;
-    }
+    }*/
 
     public int getId() {
         return id;
@@ -119,5 +120,17 @@ public class Trecho {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public List<TrechoLinha> getListTrechoLinha(){
+        return trechoLinha;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Trecho)) return false;
+        Trecho trecho = (Trecho) o;
+        return getId() == trecho.getId();
     }
 }

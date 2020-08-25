@@ -16,7 +16,7 @@ public class ViagemDAO implements DAO<Viagem, String> {
     private void getKeysCidadesTest(){
         keysCidadesTest = new ArrayList<>();
         TrechoLinhaDAO trechoLinhaDAO = new TrechoLinhaDAO();
-        List<TrechoLinha> tl = trechoLinhaDAO.getListTrechoLinha();
+        List<TrechoLinha> tl = trechoLinhaDAO.selectAll();
         for (TrechoLinha t : tl){
             keysCidadesTest.add(new String[]{
                     t.getTrecho().getCidadeOrigem(), t.getTrecho().getCidadeDestino(), ""+t.getLinha().getId()});

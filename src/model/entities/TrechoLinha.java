@@ -22,6 +22,16 @@ public class TrechoLinha {
         this.dPlus = dPlus;
     }
 
+    public TrechoLinha(int ordem, Date horarioSaida, int dPlus, Trecho trecho, Linha linha, long id) {
+        this.horarioSaida = horarioSaida;
+        this.ordem = ordem;
+        this.dPlus = dPlus;
+        this.trecho = trecho;
+        this.linha = linha;
+        this.id = id;
+        trecho.setTrechoLinha(this);
+        linha.setTrechoLinha(this);
+    }
     public TrechoLinha(int ordem, Date horarioSaida, int dPlus, Trecho trecho, Linha linha) {
         this.horarioSaida = horarioSaida;
         this.ordem = ordem;
@@ -29,7 +39,7 @@ public class TrechoLinha {
         this.trecho = trecho;
         this.linha = linha;
         trecho.setTrechoLinha(this);
-        linha.addTrechoLinha(this);
+        linha.setTrechoLinha(this);
     }
 
 

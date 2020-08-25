@@ -2,11 +2,8 @@ package database.dao;
 
 import database.utils.ConnectionFactory;
 import database.utils.DAO;
-import model.entities.AssentoTrechoLinha;
-import model.entities.Linha;
 import model.entities.Trecho;
 import model.entities.TrechoLinha;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,8 +15,6 @@ import java.util.List;
 
 public class TrechoLinhaDAO implements DAO<TrechoLinha, String> {
 
-    private List<TrechoLinha> trechosLinhas = new ArrayList<>();
-    private List<AssentoTrechoLinha> assentosVendScuff = new ArrayList<>();
     private LinhaDAO linhadao = new LinhaDAO();
     private TrechoDAO trechoDAO = new TrechoDAO();
 
@@ -64,7 +59,7 @@ public class TrechoLinhaDAO implements DAO<TrechoLinha, String> {
 
     @Override
     public void update(TrechoLinha model) {
-        TrechoLinha tLinha = searchTrechoLinha(model);
+        TrechoLinha tLinha = selectById(model.getId()+"");
         tLinha.setHorarioSaida(model.getHorarioSaida());
     }
 
@@ -84,13 +79,12 @@ public class TrechoLinhaDAO implements DAO<TrechoLinha, String> {
     public TrechoLinha selectById(String id) {
         int num = Integer.parseInt(id);
         String sql = "Select * from TrechoLinha where id = ?;";
-        SimpleDateFormat formatador = new SimpleDateFormat("HH:mm");
         TrechoLinha trechoL = null;
         try (PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
             stmt.setInt(1, num);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                 trechoL = new TrechoLinha(rs.getInt(3), formatador.parse(rs.getString(2)), rs.getInt(4), trechoDAO.selectById(rs.getString(6)), linhadao.selectById(rs.getString(5)));
+                 trechoL = this.setResultTrechoLinha(rs);
             }
             ConnectionFactory.closeStatements(stmt);
         } catch (SQLException | ParseException throwables) {
@@ -102,27 +96,31 @@ public class TrechoLinhaDAO implements DAO<TrechoLinha, String> {
     @Override
     public List<TrechoLinha> selectAll() {
         String sql = "Select * from TrechoLinha;";
-        SimpleDateFormat formatador = new SimpleDateFormat("HH:mm");
         List<TrechoLinha> trechosLinha = new ArrayList<>();
         try (PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                TrechoLinha trecholinha = new TrechoLinha(rs.getInt(3), formatador.parse(rs.getString(2)), rs.getInt(4), trechoDAO.selectById(rs.getString(6)), linhadao.selectById(rs.getString(5)));
+                TrechoLinha trecholinha = this.setResultTrechoLinha(rs);
                 trechosLinha.add(trecholinha);
             }
             ConnectionFactory.closeStatements(stmt);
         } catch (SQLException | ParseException throwables) {
             throwables.printStackTrace();
         }
+        for (TrechoLinha tl : trechosLinha) {
+            System.out.println("trecho linha daoTrechoLinha  " + tl);
+            System.out.println("linha daoTrechoLinha   " + tl.getLinha());
+            System.out.println("trecho daoTrechoLinha   " + tl.getTrecho());
+            System.out.println("\n");
+        }
         return trechosLinha;
-
-
     }
+
 
     @Override
     public List<TrechoLinha> selectAllByArg(String arg) {
         /*arg = idLinha*/
-        String sql = "SELECT * FROM vTrechoLinhaByLinha WHERE idLinha = "+arg+";";
+        String sql = "SELECT * FROM vTrechoLinhaByLinha WHERE idLinha = "+ arg +";";
         List<TrechoLinha> tls = null;
         try (Statement stmt = ConnectionFactory.createStatement()) {
             ResultSet rs = stmt.executeQuery(sql);
@@ -151,22 +149,23 @@ public class TrechoLinhaDAO implements DAO<TrechoLinha, String> {
 
     private TrechoLinha setResultTrechoLinha(ResultSet rs) throws SQLException, ParseException {
         SimpleDateFormat formatador = new SimpleDateFormat("HH:mm");
-        return new TrechoLinha(rs.getLong("idTrechoLinha"),
-                formatador.parse(rs.getString("horarioSaida")),
-                rs.getInt("ordem"),
-                rs.getInt("dPlus"));
+        return new TrechoLinha(rs.getInt(3),
+                formatador.parse(rs.getString(2)),
+                rs.getInt(4),
+                trechoDAO.selectById(rs.getString(6)),
+                linhadao.selectById(rs.getString(5)),
+                rs.getLong(1));
     }
-
 
     @Override
     public List<TrechoLinha> selectByArgs(String... args) {
         return null;
     }
 
-    public TrechoLinha searchTrechoLinha(TrechoLinha trechoLinha){
+    /*public TrechoLinha searchTrechoLinha(TrechoLinha trechoLinha){
         return trechosLinhas.contains(trechoLinha) ? trechoLinha : null;
     }
     public List<TrechoLinha> getListTrechoLinha(){
         return trechosLinhas;
-    }
+    }*/
 }

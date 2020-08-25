@@ -60,7 +60,7 @@ public class LinhaDAO implements DAO<Linha, String> {
             stmt.setLong(1, num);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                linha = new Linha(rs.getString(2));
+                linha = new Linha(rs.getLong(1), rs.getString(2));
             }
             ConnectionFactory.closeStatements(stmt);
         } catch (SQLException throwables) {

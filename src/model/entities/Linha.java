@@ -10,22 +10,14 @@ public class Linha {
     private String nome;
     private double quilometragemTotal;
     private double valorTotalLinha;
-
     private ArrayList<TrechoLinha> trechosLinha = new ArrayList<>();;
 
+    public Linha() {
 
-    public String getNome() {
-        return nome;
     }
 
     public Linha( String nome) {
         this.nome = nome;
-    }
-
-    public Linha(long id, String nome, List<TrechoLinha> trechoslinha) {
-        this.id = id;
-        this.nome = nome;
-        trechosLinha.addAll(trechoslinha);
     }
 
     public Linha(long id, String nome) {
@@ -33,12 +25,7 @@ public class Linha {
         this.nome = nome;
     }
 
-    public List<TrechoLinha> getArray(){
-        return trechosLinha;
-    }
-
-
-    public void addTrechoLinha(TrechoLinha tl){
+    public void setTrechoLinha(TrechoLinha tl){
         trechosLinha.add(tl);
         setValorTotalLinha();
         setQuilometragem();
@@ -71,7 +58,6 @@ public class Linha {
     }
 
     public void deleteTrechoLinha(TrechoLinha trecho){
-
         trechosLinha.remove(trechosLinha.indexOf(trecho));
         setValorTotalLinha();
         setQuilometragem();
@@ -83,9 +69,6 @@ public class Linha {
             trechos.add(x.getTrecho());
         }
         return trechos;
-    }
-    public Linha() {
-
     }
 
     public List<TrechoLinha> generateTrechosViagem(String cidadeOrigem, String cidadeDestino){
@@ -138,5 +121,9 @@ public class Linha {
     @Override
     public int hashCode() {
         return Objects.hash(getId());
+    }
+
+    public String getNome() {
+        return nome;
     }
 }

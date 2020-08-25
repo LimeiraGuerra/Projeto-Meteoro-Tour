@@ -142,6 +142,8 @@ public class TrechoController {
     @FXML
     private void seeTrecho(ActionEvent actionEvent) {
         Trecho t = searchTrechoTable();
+        System.out.println("trecho contrller   " + t.getId());
+        System.out.println("trecho controller   " + t);
         if (t != null){
             setFieldsTrecho(t);
             setDisableOrigemDestino(true);
