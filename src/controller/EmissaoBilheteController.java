@@ -33,7 +33,6 @@ public class EmissaoBilheteController {
         this.getConnectedPrinters();
         this.startPrinterJob();
         this.addChangeListener();
-
     }
 
     private void setPrintersListToCheckButton(){
