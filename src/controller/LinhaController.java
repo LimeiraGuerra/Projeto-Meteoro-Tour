@@ -16,7 +16,6 @@ import model.usecases.GerenciarTrechoUC;
 import model.usecases.GerenciarTrechoLinhaUC;
 import view.util.AlertWindow;
 import view.util.DataValidator;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -64,6 +63,7 @@ public class LinhaController{
         bindLinha();
         setImgVisible();
         setVisibleTimeFieldsEdit(false);
+        ucTrechoLinha.getListTrechosLinhas();
     }
 
     private void bindLinha(){
@@ -116,6 +116,7 @@ public class LinhaController{
             loadCombobox();
         }
     }
+
 
     private void loadCombobox(){
         if (trechosListTabela.size() == 0){
@@ -302,7 +303,6 @@ public class LinhaController{
 
     private boolean checkHoraMinuto(TextField t1, TextField t2){
        return DataValidator.isHora(t1.getText()) && DataValidator.isMinuto(t2.getText());
-
     }
 
     private boolean isFirstOrLastTrecho(Trecho trecho){

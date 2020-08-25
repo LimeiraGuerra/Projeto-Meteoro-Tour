@@ -20,14 +20,6 @@ public class GerenciarTrechoLinhaUC {
         ucTrecho.updateTrecho(trecho);
     }
 
-    public TrechoLinha searchTrechoLinha() {
-        return searchTrechoLinha();
-    }
-
-    public TrechoLinha searchTrechoLinha(TrechoLinha tL){
-        return daoTrechoLinha.searchTrechoLinha(tL);
-    }
-
     public void deleteTrechoLinha(TrechoLinha trechoLinha) {
         Trecho trecho = trechoLinha.getTrecho();
         Linha linha = trechoLinha.getLinha();
@@ -38,9 +30,9 @@ public class GerenciarTrechoLinhaUC {
         ucTrecho.updateTrecho(trecho);
 
     }
-
-    public List<TrechoLinha> getListTrechoLinha() {
-        return daoTrechoLinha.getListTrechoLinha();
+    public List<TrechoLinha> getListTrechosLinhas(){
+        return daoTrechoLinha.selectAll();
     }
+
 
 }

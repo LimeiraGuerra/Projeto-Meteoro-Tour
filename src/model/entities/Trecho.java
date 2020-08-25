@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Trecho {
+    private int id;
     private String cidadeOrigem;
     private String cidadeDestino;
     private double quilometragem;
@@ -16,6 +17,18 @@ public class Trecho {
     private List<TrechoLinha> trechoLinha = new ArrayList<>();
 
     public Trecho() {
+    }
+
+    public Trecho(String cidadeOrigem, String cidadeDestino, double quilometragem, int tempoDuracao, double valorPassagem, double taxaEmbarque, double valorSeguro, int id) {
+        this.cidadeOrigem = cidadeOrigem;
+        this.cidadeDestino = cidadeDestino;
+        this.quilometragem = quilometragem;
+        this.tempoDuracao = tempoDuracao;
+        this.valorPassagem = valorPassagem;
+        this.taxaEmbarque = taxaEmbarque;
+        this.valorSeguro = valorSeguro;
+        this.valorTotal = valorPassagem + taxaEmbarque;
+        this.id = id;
     }
 
     public Trecho(String cidadeOrigem, String cidadeDestino, double quilometragem, int tempoDuracao, double valorPassagem, double taxaEmbarque, double valorSeguro) {
@@ -98,5 +111,13 @@ public class Trecho {
     @Override
     public String toString() {
         return cidadeOrigem + " - " + cidadeDestino;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

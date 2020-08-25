@@ -81,7 +81,7 @@ public class TrechoDAO implements DAO<Trecho, String> {
             stmt.setInt(1, Integer.parseInt(id));
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                t = new Trecho(rs.getString(2), rs.getString(3), rs.getDouble(4), rs.getInt(5), rs.getDouble(6), rs.getDouble(7), rs.getDouble(8));
+                t = new Trecho(rs.getString(2), rs.getString(3), rs.getDouble(4), rs.getInt(5), rs.getDouble(6), rs.getDouble(7), rs.getDouble(8), rs.getInt(1));
             }
             ConnectionFactory.closeStatements(stmt);
         } catch (SQLException throwables) {
@@ -97,7 +97,7 @@ public class TrechoDAO implements DAO<Trecho, String> {
         try (PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sqlSelect)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                Trecho t = new Trecho(rs.getString(2), rs.getString(3), rs.getDouble(4), rs.getInt(5), rs.getDouble(6), rs.getDouble(7), rs.getDouble(8));
+                Trecho t = new Trecho(rs.getString(2), rs.getString(3), rs.getDouble(4), rs.getInt(5), rs.getDouble(6), rs.getDouble(7), rs.getDouble(8), rs.getInt(1));
                 trechos.add(t);
             }
             ConnectionFactory.closeStatements(stmt);
@@ -121,7 +121,7 @@ public class TrechoDAO implements DAO<Trecho, String> {
             stmt.setString(2, args[1]);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                Trecho t = new Trecho(rs.getString(2), rs.getString(3), rs.getDouble(4), rs.getInt(5), rs.getDouble(6), rs.getDouble(7), rs.getDouble(8));
+                Trecho t = new Trecho(rs.getString(2), rs.getString(3), rs.getDouble(4), rs.getInt(5), rs.getDouble(6), rs.getDouble(7), rs.getDouble(8), rs.getInt(1));
                 trechos.add(t);
             }
             ConnectionFactory.closeStatements(stmt);
