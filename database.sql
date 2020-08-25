@@ -69,12 +69,23 @@ CREATE TABLE Passagem(
 	rgCliente TEXT NOT NULL,
 	telefoneCliente TEXT NOT NULL,
 	precoPago REAL NOT NULL,
+	desconto REAL NOT NULL,
 	seguro INTEGER NOT NULL,
 	dataCompra DATETIME NOT NULL
 );
 
-CREATE VIEW vPassagensVendidas (numPassagem, nomeCliente, cpfCliente, rgCliente, telefoneCliente, precoPago, seguro, 
-dataCompra, dataViagem,idAssento, cidadeOrigem, cidadeDestino, idLinha, nomeLinha, valorViagem, valorSeguro) AS
+CREATE VIEW vInfoRelatorio (data, nomeLinha, horarioSaida, nomeTrecho, uso, lucro) AS
+	SELECT date(v.data), l.nome, tl.horarioSaida, t.cidadeOrigem||' - '||t.cidadeDestino,
+	count(ast.idTrechoLinha), (sum(t.valorPassagem)+sum(t.taxaEmbarque))*avg(p.desconto) + t.valorSeguro*sum(p.seguro) 
+	FROM Viagem v JOIN Linha l ON l.id = v.idLinha
+	JOIN TrechoLinha tl ON tl.idLinha = l.id
+	JOIN Trecho t ON t.id = tl.idTrecho
+	JOIN AssentoTrechoLinha ast ON ast.idTrechoLinha = tl.id AND ast.idPassagem = v.idPassagem
+	JOIN Passagem p ON p.numPassagem = v.idPassagem
+	GROUP BY tl.id ORDER BY v.data, l.nome, tl.horarioSaida;
+
+CREATE VIEW vPassagensVendidas (numPassagem, nomeCliente, cpfCliente, rgCliente, telefoneCliente, precoPago, desconto, seguro, 
+dataCompra, dataViagem, idAssento, cidadeOrigem, cidadeDestino, idLinha, nomeLinha, valorViagem, valorSeguro) AS
 	SELECT p.*, v.data,ast.idAssento, v.cidadeOrigem, v.cidadeDestino, 
 	l.id, l.nome, sum(t.valorPassagem+t.taxaEmbarque), sum(t.valorSeguro) FROM Passagem p
 	JOIN Viagem v ON p.numPassagem = v.idPassagem
@@ -85,30 +96,39 @@ dataCompra, dataViagem,idAssento, cidadeOrigem, cidadeDestino, idLinha, nomeLinh
 	GROUP BY p.numPassagem;
 
 CREATE VIEW vLinhaByCidades(idLinha, nomeLinha) AS
-SELECT l.* FROM linha l
-GROUP by l.id;
+	SELECT l.* FROM linha l
+	GROUP by l.id;
 
 CREATE VIEW vTrechoLinhaByLinha (idTrechoLinha, horarioSaida, ordem, dPlus, idLinha, idTrecho,
 cidadeOrigem, cidadeDestino, quilometragem, tempoDuracao, valorPassagem, taxaEmbarque, valorSeguro) AS
 SELECT tl.id, tl.horarioSaida, tl.ordem, tl.dPlus, tl.idLinha , t.* 
 FROM  trechoLinha tl JOIN trecho t ON tl.idTrecho = t.id;
-INSERT INTO administrador(senha) VALUES ("1234");
+
+SELECT tl.id, tl.horarioSaida, tl.ordem, tl.dPlus, tl.idLinha , t.*
+FROM  trechoLinha tl JOIN trecho t ON tl.idTrecho = t.id;
+	
+INSERT INTO Administrador VALUES('d033e22ae348aeb5660fc2140aec35850c4da997');
+
 INSERT INTO Trecho(cidadeOrigem, cidadeDestino, quilometragem, tempoDuracao, valorPassagem, taxaEmbarque, valorSeguro)
 VALUES('Descalvado', 'São Carlos', 40.0, 50, 10.0, 5.0, 0.3);
+
 INSERT INTO Trecho(cidadeOrigem, cidadeDestino, quilometragem, tempoDuracao, valorPassagem, taxaEmbarque, valorSeguro)
 VALUES('São Carlos', 'Ibaté', 15.0, 20, 5.0, 3.0, 0.1);
+
 INSERT INTO Trecho(cidadeOrigem, cidadeDestino, quilometragem, tempoDuracao, valorPassagem, taxaEmbarque, valorSeguro)
 VALUES('São Carlos', 'Araraquara', 30.0, 35, 8.0, 4.0, 0.2);
+
 INSERT INTO Trecho(cidadeOrigem, cidadeDestino, quilometragem, tempoDuracao, valorPassagem, taxaEmbarque, valorSeguro)
 VALUES('Araraquara', 'Ibaté', 20.0, 25, 6.0, 3.5, 0.25);
+
 INSERT INTO Linha(nome) VALUES('Descalvado - Ibaté curto');
+
 INSERT INTO Linha(nome) VALUES('Descalvado - Ibaté longo');
+
 INSERT INTO TrechoLinha(horarioSaida, ordem, dPlus, idLinha, idTrecho) VALUES(time('12:00'), 1, 0, 1, 1);
 INSERT INTO TrechoLinha(horarioSaida, ordem, dPlus, idLinha, idTrecho) VALUES(time('12:55'), 2, 0, 1, 2);
 INSERT INTO TrechoLinha(horarioSaida, ordem, dPlus, idLinha, idTrecho) VALUES(time('09:00'), 1, 0, 2, 1);
 INSERT INTO TrechoLinha(horarioSaida, ordem, dPlus, idLinha, idTrecho) VALUES(time('09:55'), 2, 0, 2, 3);
 INSERT INTO TrechoLinha(horarioSaida, ordem, dPlus, idLinha, idTrecho) VALUES(time('10:30'), 3, 0, 2, 4);
---INSERT INTO AssentoTrechoLinha(data, idTrechoLinha, idAssento) VALUES(date('2020-10-11'), 2, '04');
---INSERT INTO AssentoTrechoLinha(data, idTrechoLinha, idAssento) VALUES(date('2020-10-10'), 1, '05');
---INSERT INTO AssentoTrechoLinha(data, idTrechoLinha, idAssento) VALUES(date('2020-10-11'), 1, '03');
---INSERT INTO AssentoTrechoLinha(data, idTrechoLinha, idAssento) VALUES(date('2020-10-12'), 2, '06');
+INSERT INTO TrechoLinha(horarioSaida, ordem, dPlus, idLinha, idTrecho) VALUES(time('10:30'), 3, 0, 2, 4);
+

@@ -13,9 +13,9 @@ import java.util.Date;
 import java.util.List;
 
 public class EmitirRelatoriosUC {
-    private InfoRelatorioDAO daoRelatorio;
+    private DAO<InfoLinhaTrechoRelatorio, String> daoRelatorio;
 
-    public EmitirRelatoriosUC(InfoRelatorioDAO daoRelatorio) {
+    public EmitirRelatoriosUC(DAO<InfoLinhaTrechoRelatorio, String> daoRelatorio) {
         this.daoRelatorio = daoRelatorio;
     }
 

@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface DAO<E, I> {
-    /**Lançar "NotImplementedException" caso não use algum método*/
+    /*Lançar "NotImplementedException" caso não use algum método*/
 
     void save(E model) throws SQLException;
 

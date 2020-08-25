@@ -1,7 +1,6 @@
 package controller;
 
 import database.dao.PassagemDAO;
-import database.dao.ViagemDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -10,6 +9,7 @@ import model.entities.Passagem;
 import model.entities.Viagem;
 import model.usecases.DevolverPassagensUC;
 import model.usecases.VenderPassagensUC;
+import view.loader.EmissaoBilheteLoader;
 import view.util.AlertWindow;
 import view.util.DataValidator;
 import view.util.TipoEspecial;
@@ -32,12 +32,12 @@ public class FinalizacaoVendaController {
     private VenderPassagensUC venderPassagensUC;
     private DevolverPassagensUC devolverPassagensUC;
     private String messageBody;
-    private double valueViagem, valueSeguro, totalToPay;
+    private double valueViagem, valueSeguro, totalToPay, valueDiscount;
     private Passagem passagemR;
 
     public FinalizacaoVendaController(){
         this.devolverPassagensUC = new DevolverPassagensUC(new PassagemDAO());
-        this.venderPassagensUC = new VenderPassagensUC(new PassagemDAO(), new ViagemDAO());
+        this.venderPassagensUC = new VenderPassagensUC(new PassagemDAO());
     }
 
     private void setInfoToView(){
@@ -62,8 +62,14 @@ public class FinalizacaoVendaController {
                 this.deleteOldPassagem();
                 this.soldSuccess = true;
                 this.closeWindow();
+                this.printPassagem(p);
             }
         }
+    }
+
+    private void printPassagem(Passagem passagem) {
+        EmissaoBilheteLoader janelaBilhete = new EmissaoBilheteLoader();
+        janelaBilhete.start(passagem);
     }
 
     private void deleteOldPassagem(){
@@ -71,10 +77,11 @@ public class FinalizacaoVendaController {
     }
 
     private void addInfoToPassagem(Passagem passagem){
-        passagem.setPrecoPago(this.totalToPay +
-                (this.passagemR != null ? this.totalToPay += passagemR.getPrecoPago(): 0));
+        passagem.setPrecoPago(this.totalToPay);
+        passagem.setDiscount(this.valueDiscount);
         passagem.setAssentoId(this.chosenSitId);
         passagem.setViagem(this.chosenViagem);
+        passagem.setSeguro(this.insurance);
         passagem.setDataCompra(this.getSystemTime());
     }
 
@@ -115,16 +122,18 @@ public class FinalizacaoVendaController {
 
     private void setTotalToPay(){
         this.checkInsuranceRadio();
-        this.totalToPay = this.valueViagem * getDiscount();
+        this.valueDiscount = this.getDiscount();
+        this.totalToPay = this.valueViagem * this.valueDiscount;
         if(this.insurance)
             this.totalToPay += this.valueSeguro;
-        if (this.passagemR != null) this.totalToPay -= passagemR.getPrecoPago();
+        //if (this.passagemR != null) this.totalToPay -= passagemR.getPrecoPago();
     }
 
     private void setPayMessage(){
-        if (this.totalToPay >= 0.00) this.messageBody = "Valor a pagar: ";
+        Double paid = this.passagemR != null? passagemR.getPrecoPago() : 0.0;
+        if (this.totalToPay - paid >= 0.00) this.messageBody = "Valor a pagar: ";
         else this.messageBody = "Valor a devolver para o cliente: ";
-        this.messageBody += DataValidator.formatCurrencyView(Math.abs(this.totalToPay));
+        this.messageBody += DataValidator.formatCurrencyView(Math.abs(this.totalToPay - paid));
     }
 
     private double getDiscount(){

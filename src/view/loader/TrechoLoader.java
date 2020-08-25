@@ -20,7 +20,7 @@ public class TrechoLoader {
             Scene cena = new Scene(grafico);
             Stage stage = new Stage();
             stage.setResizable(false);
-
+            stage.sizeToScene();
             stage.setTitle("Meteoro Tour - Trechos");
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(cena);

@@ -22,6 +22,7 @@ public class PassagemLoader {
             stage.setScene(new Scene(graph));
             stage.setTitle("Meteoro Tour - Busca de Passagens");
             stage.setResizable(false);
+            stage.sizeToScene();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
             this.passagemReagendamento = ctrl.getPassagemReagendamento();

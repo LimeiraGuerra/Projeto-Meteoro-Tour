@@ -5,24 +5,10 @@ import database.utils.DAO;
 import model.entities.Administrador;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 public class AdministradorDAO implements DAO<Administrador, String> {
-
-    public Administrador getAdministrador(){
-        String sqlAdm = "SELECT * FROM administrador;";
-        Administrador administrador = null;
-        try(PreparedStatement stmtAdm = ConnectionFactory.createPreparedStatement(sqlAdm)){
-            ResultSet rs = stmtAdm.executeQuery();
-            while(rs.next()){
-                administrador = (new Administrador(rs.getString("senha")));
-            }
-            ConnectionFactory.closeStatements(stmtAdm);
-        }catch (Exception throwables){
-            throwables.printStackTrace();
-        }
-        return administrador;
-    }
 
     @Override
     public void save(Administrador model) {
@@ -38,7 +24,18 @@ public class AdministradorDAO implements DAO<Administrador, String> {
 
     @Override
     public Administrador selectById(String id) {
-        return null;
+        String sql = "SELECT * FROM administrador WHERE senha = ?";
+        Administrador adm = null;
+        try (PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
+            stmt.setString(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next())
+                adm = new Administrador(rs.getString("senha"));
+            ConnectionFactory.closeStatements(stmt);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return adm;
     }
 
     @Override
@@ -55,6 +52,4 @@ public class AdministradorDAO implements DAO<Administrador, String> {
     public List<Administrador> selectByArgs(String... args) {
         return null;
     }
-
-
 }

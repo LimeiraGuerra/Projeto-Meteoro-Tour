@@ -6,7 +6,7 @@ import java.util.Date;
 public class Passagem {
 
     private long numPassagem;
-    private double precoPago;
+    private double precoPago, discount;
     private String nome;
     private String cpf;
     private String rg;
@@ -17,10 +17,11 @@ public class Passagem {
 
     private Viagem viagem;
 
-    public Passagem(long numPassagem, double precoPago, String nome, String cpf, String rg,
-                    String telefone, boolean seguro, Date dataCompra, String assentoId) {
+    public Passagem(long numPassagem, double precoPago, double discount, String nome, String cpf,
+                    String rg, String telefone, boolean seguro, Date dataCompra, String assentoId) {
         this.numPassagem = numPassagem;
         this.precoPago = precoPago;
+        this.discount = discount;
         this.nome = nome;
         this.cpf = cpf;
         this.rg = rg;
@@ -60,6 +61,14 @@ public class Passagem {
         return assentoId;
     }
 
+    public double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+
     public void setAssentoId(String assentoId) {
         this.assentoId = assentoId;
     }
@@ -76,12 +85,21 @@ public class Passagem {
         this.cpf = cpf;
     }
 
+    public String getFormatedCpf(){
+        return cpf.replaceAll("([0-9]{3})([0-9]{3})([0-9]{3})([0-9]{2})","$1\\.$2\\.$3-$4");
+    }
+
     public String getTelefone() {
         return telefone;
     }
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public String getFormatedTelefone(){
+        int aux = telefone.length() == 11 ? 5 : 4;
+        return telefone.replaceAll("([0-9]{2})([0-9]{"+aux+"})([0-9]{4})", "\\($1\\)$2\\-$3");
     }
 
     public boolean isSeguro() {
@@ -133,6 +151,11 @@ public class Passagem {
         return dateFormat.format(this.getViagem().getData());
     }
 
+    public String getDataVendaStr(){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        return dateFormat.format(dataCompra);
+    }
+
     public String getNomeLinha(){
         return viagem.getLinhaName();
     }
@@ -143,6 +166,10 @@ public class Passagem {
 
     public String getCidadeDestino(){
         return viagem.getCidadeDestino();
+    }
+
+    public double getPaidSeguro(){
+        return seguro ? viagem.getValueSeguroViagem() : 0.0;
     }
 }
 

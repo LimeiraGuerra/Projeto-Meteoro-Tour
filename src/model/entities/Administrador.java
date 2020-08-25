@@ -18,5 +18,4 @@ public class Administrador extends Vendedor {
     public void setSenha(String s) {
         senha =s;
     }
-
 }
