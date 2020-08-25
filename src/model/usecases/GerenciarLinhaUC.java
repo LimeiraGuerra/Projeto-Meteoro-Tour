@@ -15,21 +15,30 @@ public class GerenciarLinhaUC {
         Linha linha = new Linha(str);
         daoLinha.save(linha);
     }
+    public void addLinha(Linha l) {
+        Linha linha = daoLinha.selectById(l.getId() + "");
+        if (linha == null) {
+            daoLinha.save(l);
+        } else {
+            linha.setNome(l.getNome());
+            daoLinha.update(linha);
+        }
+    }
 
     public void deleteLinha(Linha linha) {
         daoLinha.delete(linha);
     }
 
-    public List<Linha> getListLinha() {
-        List<Linha> linhas = daoLinha.selectAll();
-        for (Linha l : linhas) {
-            List<TrechoLinha> trechosLinhas = daoTrechoLinha.selectAllByArg(l.getId()+"");
-            l.addAllTrechosLinha(trechosLinhas);
-            l.setQuilometragem();
-            l.setValorTotalLinha();
-    }
-        return linhas;
-    }
+    public List<Linha> getListLinha(){
+            List<Linha> linhas = daoLinha.selectAll();
+            for (Linha l : linhas) {
+                List<TrechoLinha> trechosLinhas = daoTrechoLinha.selectByParent(l);
+                l.addAllTrechosLinha(trechosLinhas);
+                l.setQuilometragem();
+                l.setValorTotalLinha();
+            }
+            return linhas;
+        }
 
 
     public void updateLinha(Linha linha) {

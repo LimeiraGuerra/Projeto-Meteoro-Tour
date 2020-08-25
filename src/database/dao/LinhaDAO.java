@@ -1,29 +1,27 @@
 package database.dao;
-import database.utils.DAO;
+
 import model.entities.Linha;
 import database.utils.ConnectionFactory;
+import database.utils.DAOCrud;
+import database.utils.DAOSelects;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-public class LinhaDAO implements DAO<Linha, String> {
-
-    @Override
-    public void save(Linha model){
+public class LinhaDAO implements DAOCrud<Linha, String>, DAOSelects<Linha, String> {
+    public void save(Linha model) {
         String sqlLinha = "INSERT INTO LINHA(nome) VALUES(?);";
-        try(PreparedStatement stmtLinha = ConnectionFactory.createPreparedStatement(sqlLinha)){
+        try (PreparedStatement stmtLinha = ConnectionFactory.createPreparedStatement(sqlLinha)) {
             stmtLinha.setString(1, model.getNome());
             stmtLinha.execute();
             ConnectionFactory.closeStatements(stmtLinha);
-        }
-        catch (SQLException throwables) {
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
 
-    @Override
     public void update(Linha model) {
         String sqlEdite = "UPDATE linha set nome = ? where id = ?;";
         try(PreparedStatement stmtLinha = ConnectionFactory.createPreparedStatement(sqlEdite)){
@@ -35,11 +33,10 @@ public class LinhaDAO implements DAO<Linha, String> {
         catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
     }
 
-    @Override
     public void delete(Linha model) {
+
         String sqlEdite = "Delete from linha where id = ?;";
         try(PreparedStatement stmtLinha = ConnectionFactory.createPreparedStatement(sqlEdite)){
             stmtLinha.setLong(1, model.getId());
@@ -87,15 +84,17 @@ public class LinhaDAO implements DAO<Linha, String> {
     }
 
     @Override
-    public List<Linha> selectAllByArg(String arg) {
+    public List<Linha> selectAllByKeyword(String key) {
         return null;
     }
 
+
+    public List<Linha> selectByParent(String parent) {
+        throw new NotImplementedException();
+    }
+
     @Override
-    public List<Linha> selectByArgs(String... args) {
-        /*args[0] = cidadeOrigem
-         * args[1] = cidadeDestino
-         */
+    public List<Linha> selectByInterval(String ini, String end) {
         String sql = "SELECT * FROM vLinhaByCidades WHERE idLinha IN (\n"
                 + "SELECT tl.idLinha FROM trechoLinha tl JOIN trecho t ON t.id = tl.idTrecho\n"
                 + "WHERE t.cidadeOrigem = ? AND idLinha IN (\n"
@@ -103,7 +102,7 @@ public class LinhaDAO implements DAO<Linha, String> {
                 + "WHERE t.cidadeDestino = ?));";
         List<Linha> linhas = null;
         try (PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
-            setKeysCidades(stmt, args[0], args[1]);
+            setKeysCidades(stmt, ini, end);
             linhas = setResultLinhas(stmt.executeQuery());
             ConnectionFactory.closeStatements(stmt);
         } catch (SQLException throwables) {

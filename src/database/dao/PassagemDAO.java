@@ -1,7 +1,7 @@
 package database.dao;
 
 import database.utils.ConnectionFactory;
-import database.utils.DAO;
+import database.utils.DAOCrud;
 import model.entities.Linha;
 import model.entities.Passagem;
 import model.entities.TrechoLinha;
@@ -14,7 +14,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class PassagemDAO implements DAO<Passagem, String> {
+public class PassagemDAO implements DAOCrud<Passagem, String> {
     private Map<String, Passagem> passagens = new HashMap<>();
 
     @Override
@@ -151,11 +151,11 @@ public class PassagemDAO implements DAO<Passagem, String> {
     }
 
     @Override
-    public List<Passagem> selectAllByArg(String arg) {
+    public List<Passagem> selectAllByKeyword(String key) {
         String sql = "SELECT * FROM vPassagensVendidas WHERE cpfCliente = ?";
         List<Passagem> passagens = new ArrayList<>();
         try (PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
-            stmt.setString(1, arg);
+            stmt.setString(1, key);
             ResultSet rs = stmt.executeQuery();
             while (rs.next())
                 passagens.add(this.setResultPassagem(rs));
@@ -164,22 +164,5 @@ public class PassagemDAO implements DAO<Passagem, String> {
             throwables.printStackTrace();
         }
         return passagens;
-    }
-
-    @Override
-    public List<Passagem> selectByArgs(String... args) {
-        return null;
-    }
-
-    public List<Passagem> selectByDateInterval(String ini, String end){
-        /*List<Passagem> pAux = new ArrayList<>();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        for (Passagem p : passagens.values()){
-            String date = df.format(p.getDataViagem());
-            if (ini.compareTo(date) <= 0 && end.compareTo(date) >= 0){
-                pAux.add(p);
-            }
-        }*/
-        return null;
     }
 }

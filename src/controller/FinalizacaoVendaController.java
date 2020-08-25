@@ -61,8 +61,8 @@ public class FinalizacaoVendaController {
                 this.venderPassagensUC.saveSale(p);
                 this.deleteOldPassagem();
                 this.soldSuccess = true;
-                this.closeWindow();
                 this.printPassagem(p);
+                this.closeWindow();
             }
         }
     }

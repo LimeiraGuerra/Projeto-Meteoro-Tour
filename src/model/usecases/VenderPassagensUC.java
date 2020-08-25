@@ -1,15 +1,14 @@
 package model.usecases;
 
-import database.utils.DAO;
+import database.utils.DAOCrud;
 import model.entities.Passagem;
-import model.entities.Viagem;
 
 import java.sql.SQLException;
 
 public class VenderPassagensUC {
-    private DAO<Passagem, String> daoPassagem;
+    private DAOCrud<Passagem, String> daoPassagem;
 
-    public VenderPassagensUC(DAO<Passagem, String> daoPassagem){
+    public VenderPassagensUC(DAOCrud<Passagem, String> daoPassagem){
         this.daoPassagem = daoPassagem;
     }
 

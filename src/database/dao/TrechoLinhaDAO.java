@@ -1,10 +1,15 @@
 package database.dao;
 
 import database.utils.ConnectionFactory;
-import database.utils.DAO;
 import model.entities.Trecho;
 import model.entities.TrechoLinha;
 import java.sql.PreparedStatement;
+
+import database.utils.DAOCrud;
+import database.utils.DAOSelects;
+import model.entities.Linha;
+
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -13,26 +18,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TrechoLinhaDAO implements DAO<TrechoLinha, String> {
+public class TrechoLinhaDAO implements DAOCrud<TrechoLinha, String>, DAOSelects<TrechoLinha, Linha> {
 
     private LinhaDAO linhadao = new LinhaDAO();
     private TrechoDAO trechoDAO = new TrechoDAO();
-
-    /*public List<TrechoLinha> selectTrechosByLinha(Linha linha, String data){
-        List<TrechoLinha> trechosLinhaTemp = new ArrayList<>();
-        int cont = 0;
-        for(TrechoLinha tl : trechosLinhas){
-            if(tl.getLinha().equals(linha)){
-                if(data != null && assentosVendScuff.get(cont).getData().compareTo(java.sql.Date.valueOf(data)) == 0) {
-                    tl.setAssentoTrechoLinha(assentosVendScuff.get(cont));
-                }
-                else tl.setAssentoTrechoLinha(null);
-                cont++;
-                trechosLinhaTemp.add(tl);
-            }
-        }
-        return trechosLinhaTemp;
-    }*/
 
     @Override
     public void save(TrechoLinha model) {
@@ -56,6 +45,7 @@ public class TrechoLinhaDAO implements DAO<TrechoLinha, String> {
         stmt.setInt(5, model.getTrecho().getId());
         stmt.execute();
     }
+
 
     @Override
     public void update(TrechoLinha model) {
@@ -85,12 +75,12 @@ public class TrechoLinhaDAO implements DAO<TrechoLinha, String> {
             stmt.setInt(1, num);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                 trechoL = new TrechoLinha(rs.getInt(3),
-                         formatador.parse(rs.getString(2)),
-                         rs.getInt(4),
-                         trechoDAO.selectById(rs.getString(6)),
-                         linhadao.selectById(rs.getString(5)),
-                         rs.getLong(1));
+                trechoL = new TrechoLinha(rs.getInt(3),
+                        formatador.parse(rs.getString(2)),
+                        rs.getInt(4),
+                        trechoDAO.selectById(rs.getString(6)),
+                        linhadao.selectById(rs.getString(5)),
+                        rs.getLong(1));
             }
             ConnectionFactory.closeStatements(stmt);
         } catch (SQLException | ParseException throwables) {
@@ -128,11 +118,14 @@ public class TrechoLinhaDAO implements DAO<TrechoLinha, String> {
         return trechosLinha;
     }
 
+    @Override
+    public List<TrechoLinha> selectAllByKeyword(String key) {
+        return null;
+    }
 
     @Override
-    public List<TrechoLinha> selectAllByArg(String arg) {
-        /*arg = idLinha*/
-        String sql = "SELECT * FROM vTrechoLinhaByLinha WHERE idLinha = "+ arg +";";
+    public List<TrechoLinha> selectByParent(Linha parent) {
+        String sql = "SELECT * FROM vTrechoLinhaByLinha WHERE idLinha = "+ parent.getId() +";";
         List<TrechoLinha> tls = null;
         try (Statement stmt = ConnectionFactory.createStatement()) {
             ResultSet rs = stmt.executeQuery(sql);
@@ -140,6 +133,7 @@ public class TrechoLinhaDAO implements DAO<TrechoLinha, String> {
             while (rs.next()){
                 TrechoLinha tl = this.setResultTrechoLinha(rs);
                 tl.setTrecho(this.setResultTrecho(rs));
+                tl.setLinha(parent);
                 tls.add(tl);
             }
             ConnectionFactory.closeStatements(stmt);
@@ -167,7 +161,6 @@ public class TrechoLinhaDAO implements DAO<TrechoLinha, String> {
                 rs.getInt("dPlus"));
     }
 
-    @Override
     public List<TrechoLinha> selectByArgs(String... args) {
         /*arg = idTrecho*/
         String sql = "SELECT * FROM  trechoLinha WHERE idTrecho ="+args[0]+";";
@@ -186,4 +179,7 @@ public class TrechoLinhaDAO implements DAO<TrechoLinha, String> {
         return tls;
     }
 
+    public List<TrechoLinha> selectByInterval(Linha ini, Linha end) {
+        return null;
+    }
 }

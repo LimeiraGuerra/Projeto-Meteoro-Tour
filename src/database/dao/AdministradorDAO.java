@@ -1,25 +1,30 @@
 package database.dao;
 
 import database.utils.ConnectionFactory;
-import database.utils.DAO;
+import database.utils.DAOCrud;
 import model.entities.Administrador;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class AdministradorDAO implements DAO<Administrador, String> {
+public class AdministradorDAO implements DAOCrud<Administrador, String> {
 
     @Override
     public void save(Administrador model) {
+        throw new NotImplementedException();
     }
 
     @Override
     public void update(Administrador model) {
+        throw new NotImplementedException();
     }
 
     @Override
     public void delete(Administrador model) {
+        throw new NotImplementedException();
     }
 
     @Override
@@ -40,16 +45,11 @@ public class AdministradorDAO implements DAO<Administrador, String> {
 
     @Override
     public List<Administrador> selectAll() {
-        return null;
+        throw new NotImplementedException();
     }
 
     @Override
-    public List<Administrador> selectAllByArg(String arg) {
-        return null;
-    }
-
-    @Override
-    public List<Administrador> selectByArgs(String... args) {
-        return null;
+    public List<Administrador> selectAllByKeyword(String key) {
+        throw new NotImplementedException();
     }
 }

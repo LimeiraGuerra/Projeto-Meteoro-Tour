@@ -1,15 +1,17 @@
 package database.dao;
-
 import database.utils.ConnectionFactory;
-import database.utils.DAO;
 import model.entities.Trecho;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-public class TrechoDAO implements DAO<Trecho, String> {
+import database.utils.DAOCrud;
+
+
+public class TrechoDAO implements DAOCrud<Trecho, String> {
+    private static TrechoDAO instancia;
+    private List<Trecho> trechos = new ArrayList<>();
 
     @Override
     public void save(Trecho model) {
@@ -107,12 +109,7 @@ public class TrechoDAO implements DAO<Trecho, String> {
         return trechos;
     }
 
-    @Override
-    public List<Trecho> selectAllByArg(String arg) {
-        return null;
-    }
 
-    @Override
     public List<Trecho> selectByArgs(String... args) {
         String sqlSelect = "Select * from trecho where cidadeOrigem = ? and cidadeDestino = ?;";
         ArrayList<Trecho> trechos = new ArrayList<>();
@@ -130,4 +127,9 @@ public class TrechoDAO implements DAO<Trecho, String> {
         }
         return trechos;
     }
+    public List<Trecho> selectAllByKeyword(String key) {
+        return null;
+    }
+
+
 }

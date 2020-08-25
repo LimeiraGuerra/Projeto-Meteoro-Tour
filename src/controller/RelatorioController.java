@@ -27,7 +27,8 @@ public class RelatorioController {
             colData, colLinha, colHorarioSaida, colTrecho, colUso, colLucro;
     @FXML Pane paneFilter;
     @FXML Button btnExport;
-    @FXML TextField txtFieldLinha, txtFieldTrecho, txtFieldHorarioIni, txtFieldHorarioFim;
+    @FXML TextField txtFieldLinha, txtFieldTrechoIni, txtFieldTrechoFim, txtFieldHorarioIni,
+            txtFieldHorarioFim, txtFieldUsoIni, txtFieldUsoFim, txtFieldLucroIni, txtFieldLucroFim;
 
     private EmitirRelatoriosUC emitirRelatoriosUC;
     private ObservableList<InfoLinhaTrechoRelatorio> tableDataRelatorio;
@@ -125,7 +126,7 @@ public class RelatorioController {
 
     public void filterResults(ActionEvent actionEvent) {
         String nomeLinha = this.txtFieldLinha.getText().trim();
-        String nomeTrecho = this.txtFieldTrecho.getText().trim();
+        String nomeTrecho = this.txtFieldTrechoIni.getText().trim();
         String horaIni = DataValidator.verifyTime(this.txtFieldHorarioIni.getText());
         String horaFim = DataValidator.verifyTime(this.txtFieldHorarioFim.getText());
         List<InfoLinhaTrechoRelatorio> filteredList = new ArrayList<>();

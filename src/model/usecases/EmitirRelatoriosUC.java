@@ -1,10 +1,8 @@
 package model.usecases;
 
-import database.dao.InfoRelatorioDAO;
-import database.dao.PassagemDAO;
-import database.utils.DAO;
+import database.utils.DAOCrud;
+import database.utils.DAOSelects;
 import model.entities.InfoLinhaTrechoRelatorio;
-import model.entities.Passagem;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -13,15 +11,15 @@ import java.util.Date;
 import java.util.List;
 
 public class EmitirRelatoriosUC {
-    private DAO<InfoLinhaTrechoRelatorio, String> daoRelatorio;
+    private DAOSelects<InfoLinhaTrechoRelatorio, String> daoRelatorio;
 
-    public EmitirRelatoriosUC(DAO<InfoLinhaTrechoRelatorio, String> daoRelatorio) {
+    public EmitirRelatoriosUC(DAOSelects<InfoLinhaTrechoRelatorio, String> daoRelatorio) {
         this.daoRelatorio = daoRelatorio;
     }
 
     public List<InfoLinhaTrechoRelatorio> searchInfoByInterval(Date ini, Date end){
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        return daoRelatorio.selectByArgs(df.format(ini), df.format(end));
+        return daoRelatorio.selectByInterval(df.format(ini), df.format(end));
     }
 
     public void exportToCsv(List<InfoLinhaTrechoRelatorio> tableData, String path) {
