@@ -53,9 +53,6 @@ public class Linha {
         }
         return null;
     }
-    public List<TrechoLinha> getListTrechosLinha(){
-        return trechosLinha;
-    }
 
     public void deleteTrechoLinha(TrechoLinha trecho){
         trechosLinha.remove(trechosLinha.indexOf(trecho));
@@ -65,8 +62,9 @@ public class Linha {
 
     public List<Trecho> getListTrechos(){
         List<Trecho> trechos = new ArrayList<>();
-        for (TrechoLinha x: trechosLinha) {
-            trechos.add(x.getTrecho());
+        for (TrechoLinha tL: trechosLinha) {
+            Trecho t = tL.getTrecho();
+            trechos.add(t);
         }
         return trechos;
     }

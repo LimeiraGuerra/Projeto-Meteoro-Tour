@@ -1,11 +1,15 @@
 package model.usecases;
 import database.dao.TrechoDAO;
+import database.dao.TrechoLinhaDAO;
 import model.entities.Trecho;
+import model.entities.TrechoLinha;
+
 import java.util.List;
 
 public class GerenciarTrechoUC {
 
     private TrechoDAO daoTrecho = new TrechoDAO();
+    private TrechoLinhaDAO trechoLinhaDAO = new TrechoLinhaDAO();
 
     public Trecho searchForOrigemDestino(String origem, String destino){
         for (Trecho trecho : getListTrechos()){
@@ -22,14 +26,11 @@ public class GerenciarTrechoUC {
         return t;
     }
     public void atualizaTrecho(double km, int tempo, double valorP, double valorE, double valorS, Trecho trecho){
-        System.out.println(trecho.toString() + "\n" + trecho.getQuilometragem());
         trecho.setTaxaEmbarque(valorE);
         trecho.setQuilometragem(km);
         trecho.setTempoDuracao(tempo);
         trecho.setValorSeguro(valorS);
         trecho.setValorPassagem(valorP);
-        System.out.println("Depois");
-        System.out.println(trecho.toString() + "\n" + trecho.getQuilometragem());
         updateTrecho(trecho);
 
     }
@@ -38,9 +39,8 @@ public class GerenciarTrechoUC {
     }
 
     public List<Trecho> getListTrechos() {
-       return  daoTrecho.selectAll();
+        return daoTrecho.selectAll();
     }
-
     public void addTrecho(Trecho trecho) {
         daoTrecho.save(trecho);
     }
@@ -55,5 +55,14 @@ public class GerenciarTrechoUC {
 
     public void updateTrecho(Trecho trecho) {
         daoTrecho.update(trecho);
+    }
+
+    public boolean ContainsTrechoLinha(Trecho trecho){
+        if (trechoLinhaDAO.selectByArgs(trecho.getId()+"") != null){
+            if (trechoLinhaDAO.selectByArgs(trecho.getId()+"").size() > 0){
+                return false;
+            }
+        }
+        return true;
     }
 }

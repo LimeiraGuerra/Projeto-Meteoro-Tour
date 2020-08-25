@@ -104,7 +104,7 @@ cidadeOrigem, cidadeDestino, quilometragem, tempoDuracao, valorPassagem, taxaEmb
 SELECT tl.id, tl.horarioSaida, tl.ordem, tl.dPlus, tl.idLinha , t.* 
 FROM  trechoLinha tl JOIN trecho t ON tl.idTrecho = t.id;
 
-SELECT tl.id, tl.horarioSaida, tl.ordem, tl.dPlus, tl.idLinha , t.*
+SELECT tl.id, tl.horarioSaida, tl.ordem, tl.dPlus
 FROM  trechoLinha tl JOIN trecho t ON tl.idTrecho = t.id;
 	
 INSERT INTO Administrador VALUES('d033e22ae348aeb5660fc2140aec35850c4da997');
@@ -130,5 +130,5 @@ INSERT INTO TrechoLinha(horarioSaida, ordem, dPlus, idLinha, idTrecho) VALUES(ti
 INSERT INTO TrechoLinha(horarioSaida, ordem, dPlus, idLinha, idTrecho) VALUES(time('09:00'), 1, 0, 2, 1);
 INSERT INTO TrechoLinha(horarioSaida, ordem, dPlus, idLinha, idTrecho) VALUES(time('09:55'), 2, 0, 2, 3);
 INSERT INTO TrechoLinha(horarioSaida, ordem, dPlus, idLinha, idTrecho) VALUES(time('10:30'), 3, 0, 2, 4);
-INSERT INTO TrechoLinha(horarioSaida, ordem, dPlus, idLinha, idTrecho) VALUES(time('10:30'), 3, 0, 2, 4);
+
 

@@ -80,11 +80,17 @@ public class TrechoLinhaDAO implements DAO<TrechoLinha, String> {
         int num = Integer.parseInt(id);
         String sql = "Select * from TrechoLinha where id = ?;";
         TrechoLinha trechoL = null;
+        SimpleDateFormat formatador = new SimpleDateFormat("HH:mm");
         try (PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
             stmt.setInt(1, num);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                 trechoL = this.setResultTrechoLinha(rs);
+                 trechoL = new TrechoLinha(rs.getInt(3),
+                         formatador.parse(rs.getString(2)),
+                         rs.getInt(4),
+                         trechoDAO.selectById(rs.getString(6)),
+                         linhadao.selectById(rs.getString(5)),
+                         rs.getLong(1));
             }
             ConnectionFactory.closeStatements(stmt);
         } catch (SQLException | ParseException throwables) {
@@ -97,10 +103,16 @@ public class TrechoLinhaDAO implements DAO<TrechoLinha, String> {
     public List<TrechoLinha> selectAll() {
         String sql = "Select * from TrechoLinha;";
         List<TrechoLinha> trechosLinha = new ArrayList<>();
+        SimpleDateFormat formatador = new SimpleDateFormat("HH:mm");
         try (PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                TrechoLinha trecholinha = this.setResultTrechoLinha(rs);
+                TrechoLinha trecholinha = new TrechoLinha(rs.getInt(3),
+                        formatador.parse(rs.getString(2)),
+                        rs.getInt(4),
+                        trechoDAO.selectById(rs.getString(6)),
+                        linhadao.selectById(rs.getString(5)),
+                        rs.getLong(1));
                 trechosLinha.add(trecholinha);
             }
             ConnectionFactory.closeStatements(stmt);
@@ -144,28 +156,34 @@ public class TrechoLinhaDAO implements DAO<TrechoLinha, String> {
                 rs.getDouble("valorPassagem"),
                 rs.getDouble("taxaEmbarque"),
                 rs.getDouble("valorSeguro"),
-                rs.getInt("id"));
+                rs.getInt(1));
     }
 
     private TrechoLinha setResultTrechoLinha(ResultSet rs) throws SQLException, ParseException {
         SimpleDateFormat formatador = new SimpleDateFormat("HH:mm");
-        return new TrechoLinha(rs.getInt(3),
-                formatador.parse(rs.getString(2)),
-                rs.getInt(4),
-                trechoDAO.selectById(rs.getString(6)),
-                linhadao.selectById(rs.getString(5)),
-                rs.getLong(1));
+        return new TrechoLinha(rs.getLong(1),
+                formatador.parse(rs.getString("horarioSaida")),
+                rs.getInt("ordem"),
+                rs.getInt("dPlus"));
     }
 
     @Override
     public List<TrechoLinha> selectByArgs(String... args) {
-        return null;
+        /*arg = idTrecho*/
+        String sql = "SELECT * FROM  trechoLinha WHERE idTrecho ="+args[0]+";";
+        List<TrechoLinha> tls = null;
+        try (Statement stmt = ConnectionFactory.createStatement()) {
+            ResultSet rs = stmt.executeQuery(sql);
+            tls = new ArrayList<>();
+            while (rs.next()){
+                TrechoLinha tl = this.setResultTrechoLinha(rs);
+                tls.add(tl);
+            }
+            ConnectionFactory.closeStatements(stmt);
+        } catch (SQLException | ParseException throwables) {
+            throwables.printStackTrace();
+        }
+        return tls;
     }
 
-    /*public TrechoLinha searchTrechoLinha(TrechoLinha trechoLinha){
-        return trechosLinhas.contains(trechoLinha) ? trechoLinha : null;
-    }
-    public List<TrechoLinha> getListTrechoLinha(){
-        return trechosLinhas;
-    }*/
 }

@@ -53,7 +53,7 @@ public class LinhaDAO implements DAO<Linha, String> {
 
     @Override
     public Linha selectById(String id) {
-        Long num = Long.parseLong(id);
+        long num = Long.parseLong(id);
         String sql = "Select * from linha where id = ?;";
         Linha linha = null;
         try (PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {

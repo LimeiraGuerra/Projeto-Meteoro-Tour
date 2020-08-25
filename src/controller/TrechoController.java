@@ -114,16 +114,11 @@ public class TrechoController {
         paneTrecho.setVisible(true);
     }
 
-
-    private boolean trechoNoContainsTrechoLinha(Trecho trecho){
-        return trecho.sizeListTrechoLinha() == 0;
-    }
-
     @FXML
     private void deleteTrecho(ActionEvent actionEvent) {
        Trecho trecho = searchTrechoTable();
        if (trecho != null){
-           if (trechoNoContainsTrechoLinha(trecho)){
+           if (ucTrecho.ContainsTrechoLinha(trecho)){
                if (AlertWindow.verificationAlert("Deseja excluir o trecho: " + trecho.toString() + " ?", "Exclusão de trecho.")){
                    ucTrecho.deleteTrecho(trecho);
                    trechos.remove(trecho);
@@ -142,8 +137,6 @@ public class TrechoController {
     @FXML
     private void seeTrecho(ActionEvent actionEvent) {
         Trecho t = searchTrechoTable();
-        System.out.println("trecho contrller   " + t.getId());
-        System.out.println("trecho controller   " + t);
         if (t != null){
             setFieldsTrecho(t);
             setDisableOrigemDestino(true);

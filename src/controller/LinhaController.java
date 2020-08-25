@@ -1,5 +1,4 @@
 package controller;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -63,29 +62,6 @@ public class LinhaController{
         bindLinha();
         setImgVisible();
         setVisibleTimeFieldsEdit(false);
-        ucTrechoLinha.getListTrechosLinhas();
-
-        System.out.println("\n\n\n\n");
-        for (Linha l : ucLinha.getListLinha() ) {
-            System.out.println(l.getNome());
-            System.out.println(l.getListTrechosLinha().size());
-            for (TrechoLinha tl : l.getListTrechosLinha() ) {
-                System.out.println(tl.getTrecho().toString());
-            }
-        }
-        System.out.println("acabou as linhas\n");
-
-        for (Trecho t : ucTrecho.getListTrechos()){
-            System.out.println(t.toString());
-            System.out.println(t.getListTrechoLinha().size());
-            for (TrechoLinha tl :  t.getListTrechoLinha()){
-                System.out.println("linha");
-                System.out.println(tl.getLinha());
-                System.out.println("\nTrecho");
-                System.out.println(tl.getTrecho());
-            }
-        }
-
     }
 
     private void bindLinha(){
@@ -131,8 +107,6 @@ public class LinhaController{
     @FXML
     private void seeLinha(ActionEvent actionEvent) {
         Linha linha = searchLinhaTable();
-        System.out.println("linha numero        " + linha.getId());
-        System.out.println("Linha controller    " + linha);
         if (linha != null){
             bindLinhaTrecho(linha);
             fixVisionPane();

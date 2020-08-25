@@ -14,9 +14,6 @@ public class Trecho {
     private double taxaEmbarque;
     private double valorSeguro;
     private double valorTotal;
-
-    private List<TrechoLinha> trechoLinha = new ArrayList<>();
-
     public Trecho() {
     }
 
@@ -41,14 +38,6 @@ public class Trecho {
         this.taxaEmbarque = taxaEmbarque;
         this.valorSeguro = valorSeguro;
         this.valorTotal = valorPassagem + taxaEmbarque;
-    }
-
-    public void setTrechoLinha(TrechoLinha trechoL){
-        trechoLinha.add(trechoL);
-    }
-
-    public void deleteTrechoLinha(TrechoLinha trechoL) {
-        trechoLinha.remove(trechoL);
     }
 
     public void setValorTotal() {
@@ -106,13 +95,10 @@ public class Trecho {
     public void setValorSeguro(double valorSeguro) {
         this.valorSeguro = valorSeguro;
     }
-    public int sizeListTrechoLinha(){
-        return trechoLinha.size();
-    }
-   /* @Override
+    @Override
     public String toString() {
         return cidadeOrigem + " - " + cidadeDestino;
-    }*/
+    }
 
     public int getId() {
         return id;
@@ -122,9 +108,6 @@ public class Trecho {
         this.id = id;
     }
 
-    public List<TrechoLinha> getListTrechoLinha(){
-        return trechoLinha;
-    }
 
     @Override
     public boolean equals(Object o) {

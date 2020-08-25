@@ -23,7 +23,6 @@ public class GerenciarTrechoLinhaUC {
     public void deleteTrechoLinha(TrechoLinha trechoLinha) {
         Trecho trecho = trechoLinha.getTrecho();
         Linha linha = trechoLinha.getLinha();
-        trecho.deleteTrechoLinha(trechoLinha);
         linha.deleteTrechoLinha(trechoLinha);
         daoTrechoLinha.delete(trechoLinha);
         ucLinha.updateLinha(linha);
@@ -33,6 +32,5 @@ public class GerenciarTrechoLinhaUC {
     public List<TrechoLinha> getListTrechosLinhas(){
         return daoTrechoLinha.selectAll();
     }
-
 
 }
