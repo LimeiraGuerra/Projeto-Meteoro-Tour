@@ -8,7 +8,6 @@ public class TrechoLinha {
     private Date horarioSaida;
     private int ordem;
     private int dPlus;
-    private AssentoTrechoLinha assentoTrechoLinha;
     private Trecho trecho;
     private Linha linha;
 
@@ -30,15 +29,6 @@ public class TrechoLinha {
         this.linha = linha;
         trecho.setTrechoLinha(this);
         linha.addTrechoLinha(this);
-    }
-
-
-    public AssentoTrechoLinha getAssentoTrechoLinha() {
-        return assentoTrechoLinha;
-    }
-
-    public void setAssentoTrechoLinha(AssentoTrechoLinha assentoTrechoLinha) {
-        this.assentoTrechoLinha = assentoTrechoLinha;
     }
 
     public long getId() {

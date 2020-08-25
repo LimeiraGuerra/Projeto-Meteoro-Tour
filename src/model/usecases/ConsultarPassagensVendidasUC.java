@@ -1,15 +1,14 @@
 package model.usecases;
 
-import database.dao.PassagemDAO;
-import database.utils.DAO;
+import database.utils.DAOCrud;
 import model.entities.Passagem;
 
 import java.util.List;
 
 public class ConsultarPassagensVendidasUC {
-    private DAO<Passagem, String> daoPassagem;
+    private DAOCrud<Passagem, String> daoPassagem;
 
-    public ConsultarPassagensVendidasUC(DAO<Passagem, String> daoPassagem){
+    public ConsultarPassagensVendidasUC(DAOCrud<Passagem, String> daoPassagem){
         this.daoPassagem = daoPassagem;
     }
 
@@ -18,6 +17,6 @@ public class ConsultarPassagensVendidasUC {
     }
 
     public List<Passagem> searchPassagensByCpf(String cpf){
-        return this.daoPassagem.selectAllByArg(cpf);
+        return this.daoPassagem.selectAllByKeyword(cpf);
     }
 }

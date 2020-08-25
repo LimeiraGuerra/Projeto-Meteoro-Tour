@@ -31,7 +31,6 @@ public class Viagem {
         this.linha = linha;
         this.trechosLinha = linha.generateTrechosViagem(cidadeOrigem, cidadeDestino);
         this.data = dateTimeUnion(data, this.trechosLinha.get(0).getHorarioSaida());
-        //this.verifyDisponibility();
     }
 
     private Date dateTimeUnion(Date data, Date time){
@@ -50,18 +49,6 @@ public class Viagem {
         calendarA.set(Calendar.MILLISECOND, calendarB.get(Calendar.MILLISECOND));
         return calendarA.getTime();
     }
-
-    /*public void verifyDisponibility(){
-        double valueViagem = 0.0;
-        double valueSeguroViagem = 0.0;
-        for(TrechoLinha tl: trechosLinha){
-            valueViagem += tl.getTrecho().getValorTotal();
-            valueSeguroViagem += tl.getTrecho().getValorSeguro();
-            if (tl.getAssentoTrechoLinha() != null)
-                this.assentosVendidosViagem.addAll(tl.getAssentoTrechoLinha().getAssentosVendidos());
-        }
-        this.setValuesOfViagem(valueViagem, valueSeguroViagem);
-    }*/
 
     public void setAssentosVendidosViagem(List<String> assentosVendidosViagem){
         this.assentosVendidosViagem.addAll(assentosVendidosViagem);
@@ -97,6 +84,23 @@ public class Viagem {
     public String getHorarioSaida(){
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
         return dateFormat.format(data);
+    }
+
+    public String getTrechoLinhaIdsAndSetValues(){
+        StringBuilder st = new StringBuilder();
+        Iterator<TrechoLinha> itTl = this.getTrechosLinha();
+        double valueViagem = 0.0;
+        double valueSeguroViagem = 0.0;
+        while (true) {
+            TrechoLinha tl = itTl.next();
+            st.append(tl.getId());
+            valueViagem += tl.getTrecho().getValorTotal();
+            valueSeguroViagem += tl.getTrecho().getValorSeguro();
+            if (itTl.hasNext()) st.append(", ");
+            else break;
+        }
+        this.setValuesOfViagem(valueViagem, valueSeguroViagem);
+        return st.toString();
     }
 
     public void setLinha(Linha linha) {

@@ -15,28 +15,28 @@ public class GerenciarLinhaUC {
 
     }
     public void addLinha(Linha l) {
-        Linha linha = daoLinha.searchLinha(l);
+        /*Linha linha = daoLinha.searchLinha(l);
         if (linha == null){
             daoLinha.save(l);
         }
         else{
             linha.setNome(l.getNome());
             daoLinha.update(linha);
-        }
+        }*/
 
     }
     public void deleteLinha(Linha linha) {
         daoLinha.delete(linha);
     }
     public Linha searchLinha(Linha l){
-        return  daoLinha.searchLinha(l);
+        return null;
     }
     public Linha searchLinhaNome(String nome){
-        return daoLinha.searchLinhaNome(nome);
+        return null;
     }
 
     public List<Linha> getListLinha() {
-        return daoLinha.getListLinha();
+        return null;
     }
 
 

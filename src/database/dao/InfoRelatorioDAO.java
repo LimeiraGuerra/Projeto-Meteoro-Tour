@@ -1,60 +1,26 @@
 package database.dao;
 
 import database.utils.ConnectionFactory;
-import database.utils.DAO;
+import database.utils.DAOCrud;
+import database.utils.DAOSelects;
 import model.entities.InfoLinhaTrechoRelatorio;
-import model.entities.Linha;
-import model.entities.Passagem;
-import model.entities.TrechoLinha;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class InfoRelatorioDAO implements DAO<InfoLinhaTrechoRelatorio, String> {
+public class InfoRelatorioDAO implements DAOSelects<InfoLinhaTrechoRelatorio, String> {
 
     @Override
-    public void save(InfoLinhaTrechoRelatorio model) {
-
+    public List<InfoLinhaTrechoRelatorio> selectByParent(String parent) {
+        throw new NotImplementedException();
     }
 
     @Override
-    public void update(InfoLinhaTrechoRelatorio model) {
-
-    }
-
-    @Override
-    public void delete(InfoLinhaTrechoRelatorio model) {
-
-    }
-
-    @Override
-    public InfoLinhaTrechoRelatorio selectById(String id) {
-        return null;
-    }
-
-    @Override
-    public List<InfoLinhaTrechoRelatorio> selectAll() {
-        return null;
-    }
-
-    @Override
-    public List<InfoLinhaTrechoRelatorio> selectAllByArg(String arg) {
-        return null;
-    }
-
-    @Override
-    public List<InfoLinhaTrechoRelatorio> selectByArgs(String... args) {
-        return this.findInfoByInterval(args[0], args[1]);
-    }
-
-    public List<InfoLinhaTrechoRelatorio> findInfoByInterval(String ini, String end){
+    public List<InfoLinhaTrechoRelatorio> selectByInterval(String ini, String end) {
         String sql = "SELECT * FROM vInfoRelatorio where data BETWEEN ? AND ?;";
         List<InfoLinhaTrechoRelatorio> infosRelatorio = new ArrayList<>();
         try(PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {

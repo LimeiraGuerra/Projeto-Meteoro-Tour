@@ -1,16 +1,15 @@
 package model.usecases;
 
-import database.dao.AdministradorDAO;
-import database.utils.DAO;
+import database.utils.DAOCrud;
 import model.entities.Administrador;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class LoginUC {
-    private DAO<Administrador, String> daoAdministrador;
+    private DAOCrud<Administrador, String> daoAdministrador;
 
-    public LoginUC(DAO<Administrador, String> daoAdministrador) {
+    public LoginUC(DAOCrud<Administrador, String> daoAdministrador) {
         this.daoAdministrador = daoAdministrador;
     }
 

@@ -1,7 +1,7 @@
 package controller;
 
 import database.dao.PassagemDAO;
-import database.utils.DAO;
+import database.utils.DAOCrud;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -38,7 +38,7 @@ public class PassagemController {
     private DevolverPassagensUC ucDevolverPassagens;
 
     public PassagemController() {
-        DAO<Passagem, String> passagemDAO = new PassagemDAO();
+        DAOCrud<Passagem, String> passagemDAO = new PassagemDAO();
         this.ucPassagensVendidas = new ConsultarPassagensVendidasUC(passagemDAO);
         this.ucDevolverPassagens = new DevolverPassagensUC(passagemDAO);
     }

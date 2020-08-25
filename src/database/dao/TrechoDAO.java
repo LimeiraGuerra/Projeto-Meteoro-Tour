@@ -1,15 +1,11 @@
 package database.dao;
 
-import database.utils.DAO;
-import model.entities.AssentoTrechoLinha;
-import model.entities.Linha;
+import database.utils.DAOCrud;
 import model.entities.Trecho;
-import model.entities.TrechoLinha;
 
-import java.sql.Time;
 import java.util.*;
 
-public class TrechoDAO implements DAO<Trecho, String> {
+public class TrechoDAO implements DAOCrud<Trecho, String> {
     private static TrechoDAO instancia;
     private List<Trecho> trechos = new ArrayList<>();
 
@@ -58,12 +54,7 @@ public class TrechoDAO implements DAO<Trecho, String> {
     }
 
     @Override
-    public List<Trecho> selectAllByArg(String arg) {
-        return null;
-    }
-
-    @Override
-    public List<Trecho> selectByArgs(String... args) {
+    public List<Trecho> selectAllByKeyword(String key) {
         return null;
     }
 

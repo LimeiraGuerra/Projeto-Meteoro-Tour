@@ -2,7 +2,7 @@ package database.utils;
 
 import java.util.List;
 
-public interface DAO<E, I> {
+public interface DAOCrud<E, I> {
     /**Lançar "NotImplementedException" caso não use algum método*/
 
     void save(E model);
@@ -15,7 +15,5 @@ public interface DAO<E, I> {
 
     List<E> selectAll();
 
-    List<E> selectAllByArg(I arg);
-
-    List<E> selectByArgs(I... args); /*Usar somente quando necessário*/
+    List<E> selectAllByKeyword(I key);
 }

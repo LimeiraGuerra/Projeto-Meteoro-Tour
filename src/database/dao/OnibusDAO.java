@@ -1,13 +1,12 @@
 package database.dao;
 
-import database.utils.DAO;
-import model.entities.Funcionario;
+import database.utils.DAOCrud;
 import model.entities.Onibus;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class OnibusDAO implements DAO<Onibus,String> {
+public class OnibusDAO implements DAOCrud<Onibus,String> {
     private static OnibusDAO instancia;
     private List<Onibus> onibus = new ArrayList<>();
 
@@ -43,12 +42,7 @@ public class OnibusDAO implements DAO<Onibus,String> {
     }
 
     @Override
-    public List<Onibus> selectAllByArg(String arg) {
-        return null;
-    }
-
-    @Override
-    public List<Onibus> selectByArgs(String... args) {
+    public List<Onibus> selectAllByKeyword(String key) {
         return null;
     }
 
