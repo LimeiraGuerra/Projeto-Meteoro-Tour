@@ -58,6 +58,7 @@ public class LinhaController{
     private GerenciarTrechoUC ucTrecho = new GerenciarTrechoUC(new TrechoDAO(), new TrechoLinhaDAO());
     private GerenciarLinhaUC ucLinha = new GerenciarLinhaUC(new LinhaDAO(), new TrechoLinhaDAO());
     private GerenciarTrechoLinhaUC ucTrechoLinha = new GerenciarTrechoLinhaUC(new TrechoLinhaDAO());
+    private int dPlusHolder = 0;
 
     public void initialize() {
         bindLinha();
@@ -122,6 +123,7 @@ public class LinhaController{
             fixVisionPane();
             btAdicionarLinha.setVisible(false);
             loadCombobox();
+            calcDplus();
         }
     }
 
@@ -211,6 +213,7 @@ public class LinhaController{
                 TrechoLinha trechoL = new TrechoLinha(calcOrdemLinha(), returnHora(txtHoraTrecho, txtMinTrecho),
                         trecho, linha);
                 atualizaHora(trechoL);
+                trechoL.setdPlus(dPlusHolder);
                 ucTrechoLinha.saveTrechoLinha(trechoL);
                 //ucTrechoLinha.createTrechoLinha(linha, trecho, returnHora(txtHoraTrecho, txtMinTrecho), calcOrdemLinha());
                 loadTableLinhaTrecho(linha);
@@ -341,20 +344,26 @@ public class LinhaController{
     private String calculateTimeOfExitTrecho(TrechoLinha tl) throws ParseException {
         GregorianCalendar gregorianCalendar = new GregorianCalendar();
         gregorianCalendar.setTime(returnHora(txtHoraTrecho, txtMinTrecho));
-        Date before = gregorianCalendar.getTime();
         int amount = tl.getTrecho().getTempoDuracao();
         gregorianCalendar.add(Calendar.MINUTE, amount);
-        Date after = gregorianCalendar.getTime();
-        calcDplus(tl, before, after);
+        calcDplus();
         SimpleDateFormat formatador = new SimpleDateFormat("HH:mm");
         return formatador.format(gregorianCalendar.getTime());
     }
 
-    private void calcDplus(TrechoLinha tl, Date before, Date after){
-        int dPlus = after.compareTo(before);
+    private void calcDplus(){
         if (trechosListTabela.size() > 0){
-            tl.setdPlus(trechosListTabela.get(indexLastTrechoList()).getTrechoLinha().getdPlus() + dPlus);
+            GregorianCalendar gc = new GregorianCalendar();
+            SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
+            gc.setTime(getLastTrechoLinha().getHorarioSaida());
+            gc.add(Calendar.MINUTE, trechosListTabela.get(indexLastTrechoList()).getTempoDuracao());
+            int dPlus = ft.format(gc.getTime()).compareTo(ft.format(getLastTrechoLinha().getHorarioSaida()));
+            dPlusHolder = getLastTrechoLinha().getdPlus() + dPlus;
         }
+    }
+
+    private TrechoLinha getLastTrechoLinha(){
+        return trechosListTabela.get(indexLastTrechoList()).getTrechoLinha();
     }
 
     private void atualizaHora(TrechoLinha tl) throws ParseException{
