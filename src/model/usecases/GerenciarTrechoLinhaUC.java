@@ -1,14 +1,20 @@
 package model.usecases;
-import database.dao.TrechoLinhaDAO;
+import database.utils.DAOCrud;
 import model.entities.Linha;
 import model.entities.Trecho;
 import model.entities.TrechoLinha;
+import java.sql.SQLException;
 import java.util.Date;
 
 public class GerenciarTrechoLinhaUC {
-    private TrechoLinhaDAO daoTrechoLinha = new TrechoLinhaDAO();
 
-    public void createTrechoLinha(Linha linha, Trecho trecho, Date horario, int ordem){
+    private DAOCrud<TrechoLinha, String> daoTrechoLinha;
+
+    public GerenciarTrechoLinhaUC(DAOCrud<TrechoLinha, String> daoTrechoLinha) {
+        this.daoTrechoLinha = daoTrechoLinha;
+    }
+
+    public void createTrechoLinha(Linha linha, Trecho trecho, Date horario, int ordem) throws SQLException {
         TrechoLinha trechoL = new TrechoLinha(ordem, horario,0, trecho, linha);
         daoTrechoLinha.save(trechoL);
     }

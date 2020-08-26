@@ -1,6 +1,5 @@
 package model.usecases;
 
-import database.utils.DAOCrud;
 import database.utils.DAOSelects;
 import model.entities.InfoLinhaTrechoRelatorio;
 
@@ -11,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 public class EmitirRelatoriosUC {
+
     private DAOSelects<InfoLinhaTrechoRelatorio, String> daoRelatorio;
 
     public EmitirRelatoriosUC(DAOSelects<InfoLinhaTrechoRelatorio, String> daoRelatorio) {

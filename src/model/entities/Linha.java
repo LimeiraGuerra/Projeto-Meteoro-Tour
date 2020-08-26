@@ -69,6 +69,10 @@ public class Linha {
         return trechos;
     }
 
+    public List<TrechoLinha> getListTrechoLinha(){
+        return trechosLinha;
+    }
+
     public List<TrechoLinha> generateTrechosViagem(String cidadeOrigem, String cidadeDestino){
         List<TrechoLinha> trechosViagem = new ArrayList<>();
         boolean viagemOrigin = false;

@@ -1,5 +1,7 @@
 package controller;
 
+import database.dao.TrechoDAO;
+import database.dao.TrechoLinhaDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,6 +13,8 @@ import model.entities.Trecho;
 import model.usecases.GerenciarTrechoUC;
 import view.util.DataValidator;
 import view.util.AlertWindow;
+
+import java.sql.SQLException;
 
 public class TrechoController {
 
@@ -33,7 +37,7 @@ public class TrechoController {
     @FXML private Label lbValorTotal;
 
     private ObservableList<Trecho> trechos = FXCollections.observableArrayList();
-    private GerenciarTrechoUC ucTrecho = new GerenciarTrechoUC();
+    private GerenciarTrechoUC ucTrecho = new GerenciarTrechoUC(new TrechoDAO(), new TrechoLinhaDAO());
 
     public void initialize(){
         bind();
@@ -58,7 +62,7 @@ public class TrechoController {
         return tabelaTrecho.getSelectionModel().getSelectedItem();
     }
 
-    private Trecho createTrecho(){
+    private Trecho createTrecho() throws SQLException {
 
         return ucTrecho.createTrecho(tfOrigem.getText(), tfDestino.getText(), Double.parseDouble(tfQuilometragem.getText()),
                 Integer.parseInt(tfTempoDuracao.getText()), Double.parseDouble(tfValorPassagem.getText()),
@@ -78,7 +82,7 @@ public class TrechoController {
     }
 
     @FXML
-    private void saveOrUpdateTrecho(ActionEvent actionEvent) {
+    private void saveOrUpdateTrecho(ActionEvent actionEvent) throws SQLException {
         if (checkTextField()) {
             if (searchTrechoOrigemDestino() == null) {
                 Trecho trecho = createTrecho();

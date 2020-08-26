@@ -1,15 +1,19 @@
 package model.usecases;
-import database.dao.TrechoDAO;
 import database.dao.TrechoLinhaDAO;
+import database.utils.DAOCrud;
 import model.entities.Trecho;
-import model.entities.TrechoLinha;
-
+import java.sql.SQLException;
 import java.util.List;
 
 public class GerenciarTrechoUC {
 
-    private TrechoDAO daoTrecho = new TrechoDAO();
-    private TrechoLinhaDAO trechoLinhaDAO = new TrechoLinhaDAO();
+    private DAOCrud<Trecho, String> daoTrecho;
+    private TrechoLinhaDAO trechoLinhaDAO;
+
+    public GerenciarTrechoUC(DAOCrud<Trecho, String> daoTrecho, TrechoLinhaDAO trechoLinhaDAO) {
+        this.daoTrecho = daoTrecho;
+        this.trechoLinhaDAO = trechoLinhaDAO;
+    }
 
     public Trecho searchForOrigemDestino(String origem, String destino){
         for (Trecho trecho : getListTrechos()){
@@ -20,7 +24,7 @@ public class GerenciarTrechoUC {
         return  null;
     }
 
-    public  Trecho createTrecho(String origem, String destino, double km, int tempo, double valorP, double valorE, double valorS){
+    public  Trecho createTrecho(String origem, String destino, double km, int tempo, double valorP, double valorE, double valorS) throws SQLException {
         Trecho t = new Trecho(origem, destino, km, tempo, valorP, valorE, valorS);
         this.addTrecho(t);
         return t;
@@ -41,7 +45,8 @@ public class GerenciarTrechoUC {
     public List<Trecho> getListTrechos() {
         return daoTrecho.selectAll();
     }
-    public void addTrecho(Trecho trecho) {
+
+    public void addTrecho(Trecho trecho) throws SQLException {
         daoTrecho.save(trecho);
     }
 

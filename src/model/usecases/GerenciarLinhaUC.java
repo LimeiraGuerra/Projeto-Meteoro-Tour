@@ -1,32 +1,33 @@
 package model.usecases;
 
-import database.dao.LinhaDAO;
 import database.dao.TrechoLinhaDAO;
+import database.utils.DAOCrud;
 import model.entities.Linha;
 import model.entities.TrechoLinha;
+import java.sql.SQLException;
 import java.util.List;
 
 public class GerenciarLinhaUC {
 
-    LinhaDAO daoLinha = new LinhaDAO();
-    TrechoLinhaDAO daoTrechoLinha = new TrechoLinhaDAO();
+    private DAOCrud<Linha, String> daoLinha;
+    private TrechoLinhaDAO daoTrechoLinha;
 
-    public void createLinha(String str) {
+    public GerenciarLinhaUC(DAOCrud<Linha, String> daoLinha, TrechoLinhaDAO daoTrechoLinha) {
+        this.daoLinha = daoLinha;
+        this.daoTrechoLinha = daoTrechoLinha;
+    }
+
+    public void createLinha(String str) throws SQLException {
         Linha linha = new Linha(str);
         daoLinha.save(linha);
     }
-    public void addLinha(Linha l) {
-        Linha linha = daoLinha.selectById(l.getId() + "");
-        if (linha == null) {
-            daoLinha.save(l);
-        } else {
-            linha.setNome(l.getNome());
-            daoLinha.update(linha);
-        }
-    }
 
     public void deleteLinha(Linha linha) {
+        for (TrechoLinha tl : linha.getListTrechoLinha()){
+            daoTrechoLinha.delete(tl);
+        }
         daoLinha.delete(linha);
+
     }
 
     public List<Linha> getListLinha(){

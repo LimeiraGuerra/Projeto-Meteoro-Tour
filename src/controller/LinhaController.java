@@ -1,4 +1,7 @@
 package controller;
+import database.dao.LinhaDAO;
+import database.dao.TrechoDAO;
+import database.dao.TrechoLinhaDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,6 +18,7 @@ import model.usecases.GerenciarTrechoUC;
 import model.usecases.GerenciarTrechoLinhaUC;
 import view.util.AlertWindow;
 import view.util.DataValidator;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -52,9 +56,9 @@ public class LinhaController{
 
     private ObservableList<Trecho> trechosListTabela = FXCollections.observableArrayList();
     private ObservableList<Linha> linhasListTabela = FXCollections.observableArrayList();
-    private GerenciarTrechoUC ucTrecho = new GerenciarTrechoUC();
-    private GerenciarLinhaUC ucLinha = new GerenciarLinhaUC();
-    private GerenciarTrechoLinhaUC ucTrechoLinha = new GerenciarTrechoLinhaUC();
+    private GerenciarTrechoUC ucTrecho = new GerenciarTrechoUC(new TrechoDAO(), new TrechoLinhaDAO());
+    private GerenciarLinhaUC ucLinha = new GerenciarLinhaUC(new LinhaDAO(), new TrechoLinhaDAO());
+    private GerenciarTrechoLinhaUC ucTrechoLinha = new GerenciarTrechoLinhaUC(new TrechoLinhaDAO());
 
     public void initialize() {
         bindLinha();
@@ -147,14 +151,14 @@ public class LinhaController{
         TrechoLinha trechoLinha = linha.getTrechoLinha(trecho);
 
         if (trecho != null && trechoLinha != null){
-            if (isFirstOrLastTrecho(trecho)){
+            if (isLastTrecho(trecho)){
                 if (AlertWindow.verificationAlert("Deseja excluir o trecho: " + trecho.toString() + " ?", "Exclusão do trecho na linha: " + linha.getNome())){
                     ucTrechoLinha.deleteTrechoLinha(trechoLinha);
                     loadTableLinhaTrecho(linha);
 
                 }
             }else{
-                AlertWindow.informationAlerta("O trecho não pode ser excluído.\nOs trechos só podem ser excluidos se for o primeiro ou o útimo trecho da linha.", "Trecho não excluido");
+                AlertWindow.informationAlerta("O trecho não pode ser excluído.\nOs trechos só podem ser excluidos se for o útimo trecho da linha.", "Trecho não excluido");
             }
 
         }
@@ -200,7 +204,7 @@ public class LinhaController{
     }
 
     @FXML
-    private void addTrecho(ActionEvent actionEvent) throws ParseException {
+    private void addTrecho(ActionEvent actionEvent) throws ParseException, SQLException {
         Linha linha = searchLinhaTable();
         Trecho trecho = cbTrechos.getSelectionModel().getSelectedItem();
         if (isFieldTrechoHoraSet()){
@@ -249,7 +253,7 @@ public class LinhaController{
     }
 
     @FXML
-    private void addLinha(ActionEvent actionEvent) {
+    private void addLinha(ActionEvent actionEvent) throws SQLException {
         if (searchLinhaNome(txtNomeLinha.getText()) == null){
             ucLinha.createLinha(txtNomeLinha.getText());
         }else{
@@ -261,7 +265,7 @@ public class LinhaController{
     }
 
     @FXML
-    private void saveTrecho(ActionEvent actionEvent) {
+    private void saveTrecho(ActionEvent actionEvent) throws SQLException {
         if(checkTextField()){
             if (ucTrecho.searchForOrigemDestino(tfOrigem.getText(), tfDestino.getText()) == null)
                 ucTrecho.createTrecho(tfOrigem.getText(), tfDestino.getText(), Double.parseDouble(tfQuilometragem.getText()),
@@ -314,8 +318,8 @@ public class LinhaController{
        return DataValidator.isHora(t1.getText()) && DataValidator.isMinuto(t2.getText());
     }
 
-    private boolean isFirstOrLastTrecho(Trecho trecho){
-        return trechosListTabela.indexOf(trecho)  == 0 || trechosListTabela.indexOf(trecho) == indexLastTrechoList();
+    private boolean isLastTrecho(Trecho trecho){
+        return trechosListTabela.indexOf(trecho) == indexLastTrechoList();
     }
     private boolean isFieldTrechoHoraSet(){
         return (cbTrechos.getSelectionModel().getSelectedItem() != null) && !txtMinTrecho.getText().isEmpty() && !txtHoraTrecho.getText().isEmpty();

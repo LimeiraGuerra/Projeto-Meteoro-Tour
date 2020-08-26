@@ -1,18 +1,15 @@
 package model.usecases;
 
-import database.dao.AssentosTrechoLinhaDAO;
-import database.utils.DAOCrud;
 import database.utils.DAOSelects;
 import model.entities.Linha;
 import model.entities.TrechoLinha;
 import model.entities.Viagem;
-
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 public class GerarViagensUC {
+
     private DAOSelects<Linha, String> daoLinha;
     private DAOSelects<TrechoLinha, Linha> daoTrechoLinha;
     private DAOSelects<String, Viagem> daoAssentos;
