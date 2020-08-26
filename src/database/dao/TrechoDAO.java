@@ -109,23 +109,4 @@ public class TrechoDAO implements DAOCrud<Trecho, String>{
         throw new NotImplementedException();
     }
 
-    /*public List<Trecho> selectByArgs(String... args) {
-        String sqlSelect = "Select * from trecho where cidadeOrigem = ? and cidadeDestino = ?;";
-        ArrayList<Trecho> trechos = new ArrayList<>();
-        try (PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sqlSelect)) {
-            stmt.setString(1, args[0]);
-            stmt.setString(2, args[1]);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                Trecho t = new Trecho(rs.getString(2), rs.getString(3), rs.getDouble(4), rs.getInt(5), rs.getDouble(6), rs.getDouble(7), rs.getDouble(8), rs.getInt(1));
-                trechos.add(t);
-            }
-            ConnectionFactory.closeStatements(stmt);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return trechos;
-
-    }*/
-
 }

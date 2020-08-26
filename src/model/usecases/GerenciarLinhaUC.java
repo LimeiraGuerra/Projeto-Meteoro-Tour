@@ -4,7 +4,6 @@ import database.dao.TrechoLinhaDAO;
 import database.utils.DAOCrud;
 import model.entities.Linha;
 import model.entities.TrechoLinha;
-import java.sql.SQLException;
 import java.util.List;
 
 public class GerenciarLinhaUC {
@@ -17,7 +16,7 @@ public class GerenciarLinhaUC {
         this.daoTrechoLinha = daoTrechoLinha;
     }
 
-    public void createLinha(String str) throws SQLException {
+    public void createLinha(String str){
         Linha linha = new Linha(str);
         daoLinha.save(linha);
     }

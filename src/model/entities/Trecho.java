@@ -11,6 +11,7 @@ public class Trecho {
     private double taxaEmbarque;
     private double valorSeguro;
     private double valorTotal;
+    private TrechoLinha trechoLinha;
 
     public Trecho() {
     }
@@ -36,6 +37,14 @@ public class Trecho {
         this.taxaEmbarque = taxaEmbarque;
         this.valorSeguro = valorSeguro;
         this.valorTotal = valorPassagem + taxaEmbarque;
+    }
+
+    public TrechoLinha getTrechoLinha() {
+        return trechoLinha;
+    }
+
+    public void setTrechoLinha(TrechoLinha trechoLinha) {
+        this.trechoLinha = trechoLinha;
     }
 
     public void setValorTotal() {

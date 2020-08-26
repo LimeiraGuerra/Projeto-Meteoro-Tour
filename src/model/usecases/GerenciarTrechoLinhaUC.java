@@ -3,7 +3,6 @@ import database.utils.DAOCrud;
 import model.entities.Linha;
 import model.entities.Trecho;
 import model.entities.TrechoLinha;
-import java.sql.SQLException;
 import java.util.Date;
 
 public class GerenciarTrechoLinhaUC {
@@ -14,8 +13,12 @@ public class GerenciarTrechoLinhaUC {
         this.daoTrechoLinha = daoTrechoLinha;
     }
 
-    public void createTrechoLinha(Linha linha, Trecho trecho, Date horario, int ordem) throws SQLException {
-        TrechoLinha trechoL = new TrechoLinha(ordem, horario,0, trecho, linha);
+    public void saveTrechoLinha(TrechoLinha trechoLinha){
+        daoTrechoLinha.save(trechoLinha);
+    }
+
+    public void createTrechoLinha(Linha linha, Trecho trecho, Date horario, int ordem) {
+        TrechoLinha trechoL = new TrechoLinha(ordem, horario, trecho, linha);
         daoTrechoLinha.save(trechoL);
     }
 

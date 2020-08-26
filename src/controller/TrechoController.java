@@ -14,8 +14,6 @@ import model.usecases.GerenciarTrechoUC;
 import view.util.DataValidator;
 import view.util.AlertWindow;
 
-import java.sql.SQLException;
-
 public class TrechoController {
 
     @FXML private TableView<Trecho> tabelaTrecho;
@@ -62,7 +60,7 @@ public class TrechoController {
         return tabelaTrecho.getSelectionModel().getSelectedItem();
     }
 
-    private Trecho createTrecho() throws SQLException {
+    private Trecho createTrecho() {
 
         return ucTrecho.createTrecho(tfOrigem.getText(), tfDestino.getText(), Double.parseDouble(tfQuilometragem.getText()),
                 Integer.parseInt(tfTempoDuracao.getText()), Double.parseDouble(tfValorPassagem.getText()),
@@ -82,7 +80,7 @@ public class TrechoController {
     }
 
     @FXML
-    private void saveOrUpdateTrecho(ActionEvent actionEvent) throws SQLException {
+    private void saveOrUpdateTrecho(ActionEvent actionEvent) {
         if (checkTextField()) {
             if (searchTrechoOrigemDestino() == null) {
                 Trecho trecho = createTrecho();

@@ -3,8 +3,6 @@ package model.usecases;
 import database.utils.DAOCrud;
 import model.entities.Passagem;
 
-import java.sql.SQLException;
-
 public class VenderPassagensUC {
     private DAOCrud<Passagem, String> daoPassagem;
 
@@ -12,7 +10,7 @@ public class VenderPassagensUC {
         this.daoPassagem = daoPassagem;
     }
 
-    public void saveSale(Passagem p) throws SQLException {
+    public void saveSale(Passagem p){
         this.daoPassagem.save(p);
     }
 }

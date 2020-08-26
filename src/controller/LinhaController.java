@@ -18,7 +18,6 @@ import model.usecases.GerenciarTrechoUC;
 import model.usecases.GerenciarTrechoLinhaUC;
 import view.util.AlertWindow;
 import view.util.DataValidator;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -204,15 +203,18 @@ public class LinhaController{
     }
 
     @FXML
-    private void addTrecho(ActionEvent actionEvent) throws ParseException, SQLException {
+    private void addTrecho(ActionEvent actionEvent) throws ParseException {
         Linha linha = searchLinhaTable();
         Trecho trecho = cbTrechos.getSelectionModel().getSelectedItem();
         if (isFieldTrechoHoraSet()){
             if (checkHoraMinuto(txtHoraTrecho, txtMinTrecho)){
-                ucTrechoLinha.createTrechoLinha(linha, trecho, returnHora(txtHoraTrecho, txtMinTrecho), calcOrdemLinha());
+                TrechoLinha trechoL = new TrechoLinha(calcOrdemLinha(), returnHora(txtHoraTrecho, txtMinTrecho),
+                        trecho, linha);
+                atualizaHora(trechoL);
+                ucTrechoLinha.saveTrechoLinha(trechoL);
+                //ucTrechoLinha.createTrechoLinha(linha, trecho, returnHora(txtHoraTrecho, txtMinTrecho), calcOrdemLinha());
                 loadTableLinhaTrecho(linha);
                 loadCombobox();
-                atualizaHora();
             }
             else{
                 AlertWindow.errorAlert("Informe hora e minutos válidos\nNo padrão: hh:mm.", "Hora informada inválida!");
@@ -221,12 +223,10 @@ public class LinhaController{
         else{
             AlertWindow.errorAlert("Não foi possível adicionar o trecho na linha\nConfira se os campos de hora e minuto estão preenchidos e um trecho selecionado.", "Trecho não adicionado.");
         }
-
     }
 
     private int calcOrdemLinha(){
-        return trechosListTabela.size();
-
+        return trechosListTabela.size() + 1;
     }
 
     private List<Trecho> updateComboBox(String destino){
@@ -253,7 +253,7 @@ public class LinhaController{
     }
 
     @FXML
-    private void addLinha(ActionEvent actionEvent) throws SQLException {
+    private void addLinha(ActionEvent actionEvent) {
         if (searchLinhaNome(txtNomeLinha.getText()) == null){
             ucLinha.createLinha(txtNomeLinha.getText());
         }else{
@@ -265,7 +265,7 @@ public class LinhaController{
     }
 
     @FXML
-    private void saveTrecho(ActionEvent actionEvent) throws SQLException {
+    private void saveTrecho(ActionEvent actionEvent) {
         if(checkTextField()){
             if (ucTrecho.searchForOrigemDestino(tfOrigem.getText(), tfDestino.getText()) == null)
                 ucTrecho.createTrecho(tfOrigem.getText(), tfDestino.getText(), Double.parseDouble(tfQuilometragem.getText()),
@@ -338,20 +338,27 @@ public class LinhaController{
         return 0;
     }
 
-    private String calculateTimeOfExitTrecho() throws ParseException {
+    private String calculateTimeOfExitTrecho(TrechoLinha tl) throws ParseException {
         GregorianCalendar gregorianCalendar = new GregorianCalendar();
-        if (trechosListTabela.size() > 0){
-            gregorianCalendar.setTime(returnHora(txtHoraTrecho, txtMinTrecho));
-            int amount = trechosListTabela.get(indexLastTrechoList()).getTempoDuracao();
-            gregorianCalendar.add(Calendar.MINUTE, amount);
-            SimpleDateFormat formatador = new SimpleDateFormat("HH:mm");
-            return formatador.format(gregorianCalendar.getTime());
-        }
-       return "";
+        gregorianCalendar.setTime(returnHora(txtHoraTrecho, txtMinTrecho));
+        Date before = gregorianCalendar.getTime();
+        int amount = tl.getTrecho().getTempoDuracao();
+        gregorianCalendar.add(Calendar.MINUTE, amount);
+        Date after = gregorianCalendar.getTime();
+        calcDplus(tl, before, after);
+        SimpleDateFormat formatador = new SimpleDateFormat("HH:mm");
+        return formatador.format(gregorianCalendar.getTime());
     }
 
-    private void atualizaHora() throws ParseException{
-        String[] str = calculateTimeOfExitTrecho().split(":");
+    private void calcDplus(TrechoLinha tl, Date before, Date after){
+        int dPlus = after.compareTo(before);
+        if (trechosListTabela.size() > 0){
+            tl.setdPlus(trechosListTabela.get(indexLastTrechoList()).getTrechoLinha().getdPlus() + dPlus);
+        }
+    }
+
+    private void atualizaHora(TrechoLinha tl) throws ParseException{
+        String[] str = calculateTimeOfExitTrecho(tl).split(":");
         if (!str[0].equals("")){
             txtHoraTrecho.setText(str[0]);
             txtMinTrecho.setText(str[1]);

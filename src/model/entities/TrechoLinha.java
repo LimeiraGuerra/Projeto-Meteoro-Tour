@@ -28,15 +28,11 @@ public class TrechoLinha {
         this.trecho = trecho;
         this.linha = linha;
         this.id = id;
+        trecho.setTrechoLinha(this);
         linha.setTrechoLinha(this);
     }
-    public TrechoLinha(int ordem, Date horarioSaida, int dPlus, Trecho trecho, Linha linha) {
-        this.horarioSaida = horarioSaida;
-        this.ordem = ordem;
-        this.dPlus = dPlus;
-        this.trecho = trecho;
-        this.linha = linha;
-        linha.setTrechoLinha(this);
+    public TrechoLinha(int ordem, Date horarioSaida, Trecho trecho, Linha linha) {
+        this(ordem, horarioSaida, 0, trecho, linha, 0);
     }
 
     public long getId() {
@@ -61,6 +57,7 @@ public class TrechoLinha {
 
     public void setTrecho(Trecho trecho) {
         this.trecho = trecho;
+        trecho.setTrechoLinha(this);
     }
 
     public Date getHorarioSaida() {

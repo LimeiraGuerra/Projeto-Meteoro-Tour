@@ -127,24 +127,6 @@ public class TrechoLinhaDAO implements DAOCrud<TrechoLinha, String>, DAOSelects<
         return tls;
     }
 
-    public List<TrechoLinha> selectByArgs(String... args) {
-        /*arg = idTrecho*/
-        String sql = "SELECT * FROM  trechoLinha WHERE idTrecho ="+args[0]+";";
-        List<TrechoLinha> tls = null;
-        try (Statement stmt = ConnectionFactory.createStatement()) {
-            ResultSet rs = stmt.executeQuery(sql);
-            tls = new ArrayList<>();
-            while (rs.next()){
-                TrechoLinha tl = this.setResultTrechoLinha(rs);
-                tls.add(tl);
-            }
-            ConnectionFactory.closeStatements(stmt);
-        } catch (SQLException | ParseException throwables) {
-            throwables.printStackTrace();
-        }
-        return tls;
-    }
-
     private void setStatementTrecho(PreparedStatement stmt, TrechoLinha model) throws SQLException {
         SimpleDateFormat formatador = new SimpleDateFormat("HH:mm");
         stmt.setString(1, formatador.format(model.getHorarioSaida()));
@@ -180,7 +162,19 @@ public class TrechoLinhaDAO implements DAOCrud<TrechoLinha, String>, DAOSelects<
 
     @Override
     public List<TrechoLinha> selectAllByKeyword(String key) {
-        throw new NotImplementedException();
+        String sql = "SELECT * FROM  trechoLinha WHERE idTrecho ="+key+";";
+        List<TrechoLinha> tls = new ArrayList<>();
+        try (Statement stmt = ConnectionFactory.createStatement()) {
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()){
+                TrechoLinha tl = this.setResultTrechoLinha(rs);
+                tls.add(tl);
+            }
+            ConnectionFactory.closeStatements(stmt);
+        } catch (SQLException | ParseException throwables) {
+            throwables.printStackTrace();
+        }
+        return tls;
     }
 
 }

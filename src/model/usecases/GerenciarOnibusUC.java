@@ -2,7 +2,6 @@ package model.usecases;
 
 
 import database.dao.OnibusDAO;
-import model.entities.Funcionario;
 import model.entities.Onibus;
 
 import java.util.List;

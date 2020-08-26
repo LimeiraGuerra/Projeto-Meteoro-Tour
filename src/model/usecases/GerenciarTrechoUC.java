@@ -2,7 +2,6 @@ package model.usecases;
 import database.dao.TrechoLinhaDAO;
 import database.utils.DAOCrud;
 import model.entities.Trecho;
-import java.sql.SQLException;
 import java.util.List;
 
 public class GerenciarTrechoUC {
@@ -24,7 +23,7 @@ public class GerenciarTrechoUC {
         return  null;
     }
 
-    public  Trecho createTrecho(String origem, String destino, double km, int tempo, double valorP, double valorE, double valorS) throws SQLException {
+    public  Trecho createTrecho(String origem, String destino, double km, int tempo, double valorP, double valorE, double valorS) {
         Trecho t = new Trecho(origem, destino, km, tempo, valorP, valorE, valorS);
         this.addTrecho(t);
         return t;
@@ -46,7 +45,7 @@ public class GerenciarTrechoUC {
         return daoTrecho.selectAll();
     }
 
-    public void addTrecho(Trecho trecho) throws SQLException {
+    public void addTrecho(Trecho trecho){
         daoTrecho.save(trecho);
     }
 
@@ -63,10 +62,8 @@ public class GerenciarTrechoUC {
     }
 
     public boolean ContainsTrechoLinha(Trecho trecho){
-        if (trechoLinhaDAO.selectByArgs(trecho.getId()+"") != null){
-            if (trechoLinhaDAO.selectByArgs(trecho.getId()+"").size() > 0){
-                return false;
-            }
+        if (trechoLinhaDAO.selectAllByKeyword(trecho.getId()+"").size() > 0){
+            return false;
         }
         return true;
     }
