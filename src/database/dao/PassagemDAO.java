@@ -6,6 +6,8 @@ import model.entities.Linha;
 import model.entities.Passagem;
 import model.entities.TrechoLinha;
 import model.entities.Viagem;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,7 +17,6 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class PassagemDAO implements DAOCrud<Passagem, String> {
-    private Map<String, Passagem> passagens = new HashMap<>();
 
     @Override
     public void save(Passagem model) {
@@ -89,11 +90,6 @@ public class PassagemDAO implements DAOCrud<Passagem, String> {
     }
 
     @Override
-    public void update(Passagem model) {
-
-    }
-
-    @Override
     public void delete(Passagem model) {
         String sql = "DELETE FROM Passagem WHERE numPassagem = ?;";
         try(Statement stmtConfig = ConnectionFactory.createStatement();
@@ -146,11 +142,6 @@ public class PassagemDAO implements DAOCrud<Passagem, String> {
     }
 
     @Override
-    public List<Passagem> selectAll() {
-        return null;
-    }
-
-    @Override
     public List<Passagem> selectAllByKeyword(String key) {
         String sql = "SELECT * FROM vPassagensVendidas WHERE cpfCliente = ?";
         List<Passagem> passagens = new ArrayList<>();
@@ -165,4 +156,15 @@ public class PassagemDAO implements DAOCrud<Passagem, String> {
         }
         return passagens;
     }
+
+    @Override
+    public void update(Passagem model) {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public List<Passagem> selectAll() {
+        throw new NotImplementedException();
+    }
+
 }

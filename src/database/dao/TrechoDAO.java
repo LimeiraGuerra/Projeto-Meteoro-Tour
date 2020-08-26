@@ -5,13 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
-
 import database.utils.DAOCrud;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-
-public class TrechoDAO implements DAOCrud<Trecho, String> {
-    private static TrechoDAO instancia;
-    private List<Trecho> trechos = new ArrayList<>();
+public class TrechoDAO implements DAOCrud<Trecho, String>{
 
     @Override
     public void save(Trecho model) {
@@ -23,31 +20,8 @@ public class TrechoDAO implements DAOCrud<Trecho, String> {
             setStatementTrechoSave(stmtTrecho, model);
             ConnectionFactory.closeStatements(stmtTrecho);
         } catch (SQLException throwables) {
-
             throwables.printStackTrace();
         }
-    }
-
-    private void setStatementTrechoSave(PreparedStatement stmt, Trecho t) throws SQLException {
-        stmt.setString(1, t.getCidadeOrigem());
-        stmt.setString(2, t.getCidadeDestino());
-        stmt.setDouble(3, t.getQuilometragem());
-        stmt.setInt(4, t.getTempoDuracao());
-        stmt.setDouble(5, t.getValorPassagem());
-        stmt.setDouble(6, t.getTaxaEmbarque());
-        stmt.setDouble(7, t.getValorSeguro());
-        stmt.execute();
-    }
-
-    private void setStatementTrechoEdit(PreparedStatement stmt, Trecho t) throws SQLException {
-        stmt.setDouble(1, t.getQuilometragem());
-        stmt.setInt(2, t.getTempoDuracao());
-        stmt.setDouble(3, t.getValorPassagem());
-        stmt.setDouble(4, t.getTaxaEmbarque());
-        stmt.setDouble(5, t.getValorSeguro());
-        stmt.setString(6, t.getCidadeOrigem());
-        stmt.setString(7, t.getCidadeDestino());
-        stmt.execute();
     }
 
     @Override
@@ -109,8 +83,33 @@ public class TrechoDAO implements DAOCrud<Trecho, String> {
         return trechos;
     }
 
+    private void setStatementTrechoSave(PreparedStatement stmt, Trecho t) throws SQLException {
+        stmt.setString(1, t.getCidadeOrigem());
+        stmt.setString(2, t.getCidadeDestino());
+        stmt.setDouble(3, t.getQuilometragem());
+        stmt.setInt(4, t.getTempoDuracao());
+        stmt.setDouble(5, t.getValorPassagem());
+        stmt.setDouble(6, t.getTaxaEmbarque());
+        stmt.setDouble(7, t.getValorSeguro());
+        stmt.execute();
+    }
 
-    public List<Trecho> selectByArgs(String... args) {
+    private void setStatementTrechoEdit(PreparedStatement stmt, Trecho t) throws SQLException {
+        stmt.setDouble(1, t.getQuilometragem());
+        stmt.setInt(2, t.getTempoDuracao());
+        stmt.setDouble(3, t.getValorPassagem());
+        stmt.setDouble(4, t.getTaxaEmbarque());
+        stmt.setDouble(5, t.getValorSeguro());
+        stmt.setString(6, t.getCidadeOrigem());
+        stmt.setString(7, t.getCidadeDestino());
+        stmt.execute();
+    }
+
+    public List<Trecho> selectAllByKeyword(String key) {
+        throw new NotImplementedException();
+    }
+
+    /*public List<Trecho> selectByArgs(String... args) {
         String sqlSelect = "Select * from trecho where cidadeOrigem = ? and cidadeDestino = ?;";
         ArrayList<Trecho> trechos = new ArrayList<>();
         try (PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sqlSelect)) {
@@ -126,10 +125,7 @@ public class TrechoDAO implements DAOCrud<Trecho, String> {
             throwables.printStackTrace();
         }
         return trechos;
-    }
-    public List<Trecho> selectAllByKeyword(String key) {
-        return null;
-    }
 
+    }*/
 
 }

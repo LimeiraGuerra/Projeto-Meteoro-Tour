@@ -12,9 +12,6 @@ import model.usecases.GerenciarFuncionarioUC;
 import view.util.AlertWindow;
 import view.util.DataValidator;
 
-import java.util.Iterator;
-import java.util.Optional;
-
 public class FuncionarioController{
 
     public TextField txtFieldCPF;

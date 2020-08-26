@@ -150,17 +150,9 @@ public class FinalizacaoVendaController {
         stage.close();
     }
 
-    public Viagem getChosenViagem() {
-        return chosenViagem;
-    }
-
     public void setChosenViagem(Viagem chosenViagem) {
         this.chosenViagem = chosenViagem;
         this.setInfoToView();
-    }
-
-    public TipoEspecial getClientType() {
-        return clientType;
     }
 
     public void setClientType(TipoEspecial clientType) {

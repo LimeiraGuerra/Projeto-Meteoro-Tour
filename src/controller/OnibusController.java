@@ -21,7 +21,6 @@ public class OnibusController {
     @FXML private TableColumn<Onibus, String> cPlaca;
     @FXML private TextField txtFieldRenavam;
     @FXML private TextField txtFieldPlaca;
-    @FXML private Pane paneOnibus;
 
     private String msgBody;
     private ObservableList<Onibus> onibus = FXCollections.observableArrayList();
@@ -153,7 +152,6 @@ public class OnibusController {
 
     private boolean verifyTextFields(){
         StringBuilder str = new StringBuilder();
-        //todo verify renavam e placa
         if (DataValidator.txtInputVerifier(txtFieldRenavam.getText())== null) str.append("Campo Renavam inválido. \n");
         if (DataValidator.txtInputVerifier(txtFieldPlaca.getText())== null) str.append("Campo Placa inválido. \n");
         msgBody = str.toString();

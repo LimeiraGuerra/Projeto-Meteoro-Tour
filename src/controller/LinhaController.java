@@ -50,8 +50,6 @@ public class LinhaController{
     @FXML private Label lbEdit;
     @FXML private Button btAtualizarHora;
 
-
-
     private ObservableList<Trecho> trechosListTabela = FXCollections.observableArrayList();
     private ObservableList<Linha> linhasListTabela = FXCollections.observableArrayList();
     private GerenciarTrechoUC ucTrecho = new GerenciarTrechoUC();
@@ -98,6 +96,15 @@ public class LinhaController{
 
     private Linha searchLinhaTable(){
         return tabelaLinha.getSelectionModel().getSelectedItem();
+    }
+
+    private boolean searchNomeLinhaTable(String nome){
+        for (Linha l : linhasListTabela ) {
+            if (l.getNome().equals(nome)){
+                return false;
+            }
+        }
+        return true;
     }
 
     private void cleanTxtNome(){
@@ -172,9 +179,14 @@ public class LinhaController{
     private void saveChange(ActionEvent actionEvent) {
 
         if (searchLinhaTable() != null){
-            searchLinhaTable().setNome(txtNomeLinha.getText());
-            ucLinha.updateLinha(searchLinhaTable());
-            loadTableLinhaTrecho(searchLinhaTable());
+            if (searchNomeLinhaTable(txtNomeLinha.getText()) || searchLinhaTable().getNome().equals(txtNomeLinha.getText())){
+                searchLinhaTable().setNome(txtNomeLinha.getText());
+                ucLinha.updateLinha(searchLinhaTable());
+                loadTableLinhaTrecho(searchLinhaTable());
+            }else{
+                AlertWindow.informationAlerta("Já existe uma linha com esse nome", "Nome da linha não editado.");
+            }
+
         }
         updateTableLinha();
         setImgVisible();
@@ -209,7 +221,6 @@ public class LinhaController{
     }
 
     private int calcOrdemLinha(){
-        System.out.println(trechosListTabela.size());
         return trechosListTabela.size();
 
     }
@@ -401,6 +412,7 @@ public class LinhaController{
             Trecho t = tabelaLinhaTrecho.getSelectionModel().getSelectedItem();
             TrechoLinha trechoL = searchLinhaTable().getTrechoLinha(t);
             trechoL.setHorarioSaida(hora);
+            ucTrechoLinha.updateTrechoLinha(trechoL);
             setVisibleTimeFieldsEdit(false);
             sizeTableTrechoLinha(292.0);
         }else{

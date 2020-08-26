@@ -10,7 +10,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 public class LinhaDAO implements DAOCrud<Linha, String>, DAOSelects<Linha, String> {
+
     public void save(Linha model) {
         String sqlLinha = "INSERT INTO LINHA(nome) VALUES(?);";
         try (PreparedStatement stmtLinha = ConnectionFactory.createPreparedStatement(sqlLinha)) {
@@ -84,16 +86,6 @@ public class LinhaDAO implements DAOCrud<Linha, String>, DAOSelects<Linha, Strin
     }
 
     @Override
-    public List<Linha> selectAllByKeyword(String key) {
-        return null;
-    }
-
-
-    public List<Linha> selectByParent(String parent) {
-        throw new NotImplementedException();
-    }
-
-    @Override
     public List<Linha> selectByInterval(String ini, String end) {
         String sql = "SELECT * FROM vLinhaByCidades WHERE idLinha IN (\n"
                 + "SELECT tl.idLinha FROM trechoLinha tl JOIN trecho t ON t.id = tl.idTrecho\n"
@@ -122,5 +114,15 @@ public class LinhaDAO implements DAOCrud<Linha, String>, DAOSelects<Linha, Strin
             throws SQLException {
         stmt.setString(1, cidadeOrigem);
         stmt.setString(2, cidadeDestino);
+    }
+
+    @Override
+    public List<Linha> selectAllByKeyword(String key) {
+        throw new NotImplementedException();
+    }
+
+
+    public List<Linha> selectByParent(String parent) {
+        throw new NotImplementedException();
     }
 }

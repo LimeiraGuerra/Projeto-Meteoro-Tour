@@ -8,14 +8,5 @@ public class Administrador extends Vendedor {
     }
 
     public Administrador() {
-
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String s) {
-        senha =s;
     }
 }

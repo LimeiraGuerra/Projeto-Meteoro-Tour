@@ -1,15 +1,12 @@
 package database.dao;
-
 import database.utils.ConnectionFactory;
 import model.entities.Trecho;
 import model.entities.TrechoLinha;
 import java.sql.PreparedStatement;
-
 import database.utils.DAOCrud;
 import database.utils.DAOSelects;
 import model.entities.Linha;
-
-
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -30,27 +27,25 @@ public class TrechoLinhaDAO implements DAOCrud<TrechoLinha, String>, DAOSelects<
             setStatementTrecho(stmtTrechoLinha, model);
             ConnectionFactory.closeStatements(stmtTrechoLinha);
         }
-        catch (SQLException | ParseException throwables) {
+        catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
     }
 
-    private void setStatementTrecho(PreparedStatement stmt, TrechoLinha model) throws ParseException, SQLException {
-        SimpleDateFormat formatador = new SimpleDateFormat("HH:mm");
-        stmt.setString(1, formatador.format(model.getHorarioSaida()));
-        stmt.setInt(2, model.getOrdem());
-        stmt.setInt(3, model.getdPlus());
-        stmt.setLong(4, model.getLinha().getId());
-        stmt.setInt(5, model.getTrecho().getId());
-        stmt.execute();
-    }
-
-
     @Override
     public void update(TrechoLinha model) {
-        TrechoLinha tLinha = selectById(model.getId()+"");
-        tLinha.setHorarioSaida(model.getHorarioSaida());
+        String sqlEdite = "UPDATE trechoLinha set horarioSaida = ? where id = ?;";
+        SimpleDateFormat formatador = new SimpleDateFormat("HH:mm");
+        try(PreparedStatement stmtTrechoL = ConnectionFactory.createPreparedStatement(sqlEdite)){
+            stmtTrechoL.setString(1, formatador.format(model.getHorarioSaida()));
+            stmtTrechoL.setLong(2, model.getId());
+            stmtTrechoL.execute();
+            ConnectionFactory.closeStatements(stmtTrechoL);
+        }
+        catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     @Override
@@ -109,18 +104,7 @@ public class TrechoLinhaDAO implements DAOCrud<TrechoLinha, String>, DAOSelects<
         } catch (SQLException | ParseException throwables) {
             throwables.printStackTrace();
         }
-        for (TrechoLinha tl : trechosLinha) {
-            System.out.println("trecho linha daoTrechoLinha  " + tl);
-            System.out.println("linha daoTrechoLinha   " + tl.getLinha());
-            System.out.println("trecho daoTrechoLinha   " + tl.getTrecho());
-            System.out.println("\n");
-        }
         return trechosLinha;
-    }
-
-    @Override
-    public List<TrechoLinha> selectAllByKeyword(String key) {
-        return null;
     }
 
     @Override
@@ -143,24 +127,6 @@ public class TrechoLinhaDAO implements DAOCrud<TrechoLinha, String>, DAOSelects<
         return tls;
     }
 
-    private Trecho setResultTrecho(ResultSet rs) throws SQLException {
-        return new Trecho(rs.getString("cidadeOrigem"), rs.getString("cidadeDestino"),
-                rs.getDouble("quilometragem"),
-                rs.getInt("tempoDuracao"),
-                rs.getDouble("valorPassagem"),
-                rs.getDouble("taxaEmbarque"),
-                rs.getDouble("valorSeguro"),
-                rs.getInt(1));
-    }
-
-    private TrechoLinha setResultTrechoLinha(ResultSet rs) throws SQLException, ParseException {
-        SimpleDateFormat formatador = new SimpleDateFormat("HH:mm");
-        return new TrechoLinha(rs.getLong(1),
-                formatador.parse(rs.getString("horarioSaida")),
-                rs.getInt("ordem"),
-                rs.getInt("dPlus"));
-    }
-
     public List<TrechoLinha> selectByArgs(String... args) {
         /*arg = idTrecho*/
         String sql = "SELECT * FROM  trechoLinha WHERE idTrecho ="+args[0]+";";
@@ -179,7 +145,42 @@ public class TrechoLinhaDAO implements DAOCrud<TrechoLinha, String>, DAOSelects<
         return tls;
     }
 
-    public List<TrechoLinha> selectByInterval(Linha ini, Linha end) {
-        return null;
+    private void setStatementTrecho(PreparedStatement stmt, TrechoLinha model) throws SQLException {
+        SimpleDateFormat formatador = new SimpleDateFormat("HH:mm");
+        stmt.setString(1, formatador.format(model.getHorarioSaida()));
+        stmt.setInt(2, model.getOrdem());
+        stmt.setInt(3, model.getdPlus());
+        stmt.setLong(4, model.getLinha().getId());
+        stmt.setInt(5, model.getTrecho().getId());
+        stmt.execute();
     }
+
+    private Trecho setResultTrecho(ResultSet rs) throws SQLException {
+        return new Trecho(rs.getString("cidadeOrigem"), rs.getString("cidadeDestino"),
+                rs.getDouble("quilometragem"),
+                rs.getInt("tempoDuracao"),
+                rs.getDouble("valorPassagem"),
+                rs.getDouble("taxaEmbarque"),
+                rs.getDouble("valorSeguro"),
+                rs.getInt(1));
+    }
+
+    private TrechoLinha setResultTrechoLinha(ResultSet rs) throws SQLException, ParseException {
+        SimpleDateFormat formatador = new SimpleDateFormat("HH:mm");
+        return new TrechoLinha(rs.getLong(1),
+                formatador.parse(rs.getString("horarioSaida")),
+                rs.getInt("ordem"),
+                rs.getInt("dPlus"));
+    }
+
+    public List<TrechoLinha> selectByInterval(Linha ini, Linha end) {
+        throw new NotImplementedException();
+    }
+
+
+    @Override
+    public List<TrechoLinha> selectAllByKeyword(String key) {
+        throw new NotImplementedException();
+    }
+
 }

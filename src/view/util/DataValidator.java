@@ -74,7 +74,7 @@ public class DataValidator {
     }
 
     public static String rgVerifier(String rg){
-        /**RG tem padrão diferente para cada estado, e não é obrigatório*/
+        /*RG tem padrão diferente para cada estado, e não é obrigatório*/
         rg = txtInputVerifier(rg);
         if (rg == null) return "";
         if (rg.length() < 14) return rg;

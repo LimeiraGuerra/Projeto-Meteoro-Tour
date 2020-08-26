@@ -13,21 +13,6 @@ import java.util.List;
 public class AdministradorDAO implements DAOCrud<Administrador, String> {
 
     @Override
-    public void save(Administrador model) {
-        throw new NotImplementedException();
-    }
-
-    @Override
-    public void update(Administrador model) {
-        throw new NotImplementedException();
-    }
-
-    @Override
-    public void delete(Administrador model) {
-        throw new NotImplementedException();
-    }
-
-    @Override
     public Administrador selectById(String id) {
         String sql = "SELECT * FROM administrador WHERE senha = ?";
         Administrador adm = null;
@@ -50,6 +35,21 @@ public class AdministradorDAO implements DAOCrud<Administrador, String> {
 
     @Override
     public List<Administrador> selectAllByKeyword(String key) {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public void save(Administrador model) {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public void update(Administrador model) {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public void delete(Administrador model) {
         throw new NotImplementedException();
     }
 }

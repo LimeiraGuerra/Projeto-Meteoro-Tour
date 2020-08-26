@@ -1,10 +1,7 @@
 package model.entities;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
 public class Trecho {
+
     private int id;
     private String cidadeOrigem;
     private String cidadeDestino;
@@ -14,6 +11,7 @@ public class Trecho {
     private double taxaEmbarque;
     private double valorSeguro;
     private double valorTotal;
+
     public Trecho() {
     }
 
@@ -107,7 +105,6 @@ public class Trecho {
     public void setId(int id) {
         this.id = id;
     }
-
 
     @Override
     public boolean equals(Object o) {

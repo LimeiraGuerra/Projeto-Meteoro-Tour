@@ -20,8 +20,6 @@ public class OnibusLoader {
             Scene scene = new Scene(graph);
             Stage stage = new Stage();
             stage.setTitle("Meteoro Tour - Ônibus");
-            OnibusLoader onibusController = loader.getController();
-
             stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(false);

@@ -1,7 +1,6 @@
 package database.dao;
 
 import database.utils.ConnectionFactory;
-import database.utils.DAOCrud;
 import database.utils.DAOSelects;
 import model.entities.Viagem;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;

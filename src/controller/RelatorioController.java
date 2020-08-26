@@ -13,7 +13,6 @@ import model.entities.InfoLinhaTrechoRelatorio;
 import model.usecases.EmitirRelatoriosUC;
 import view.util.AlertWindow;
 import view.util.DataValidator;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
@@ -94,7 +93,7 @@ public class RelatorioController {
     }
 
     private void setMathOfData(List<InfoLinhaTrechoRelatorio> listData){
-        Double lucro = 0.0;
+        double  lucro = 0.0;
         int uso = 0;
         for (InfoLinhaTrechoRelatorio info : listData){
             lucro += info.getLucro();

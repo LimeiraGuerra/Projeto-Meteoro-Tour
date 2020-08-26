@@ -6,6 +6,7 @@ import javafx.scene.control.ButtonType;
 import java.util.Optional;
 
 public class AlertWindow {
+
     public static void informationAlerta(String msg, String header){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Aviso!");
