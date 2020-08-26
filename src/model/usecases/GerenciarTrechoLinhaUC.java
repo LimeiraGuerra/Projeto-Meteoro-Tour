@@ -1,9 +1,7 @@
 package model.usecases;
 import database.utils.DAOCrud;
 import model.entities.Linha;
-import model.entities.Trecho;
 import model.entities.TrechoLinha;
-import java.util.Date;
 
 public class GerenciarTrechoLinhaUC {
 
@@ -15,11 +13,6 @@ public class GerenciarTrechoLinhaUC {
 
     public void saveTrechoLinha(TrechoLinha trechoLinha){
         daoTrechoLinha.save(trechoLinha);
-    }
-
-    public void createTrechoLinha(Linha linha, Trecho trecho, Date horario, int ordem) {
-        TrechoLinha trechoL = new TrechoLinha(ordem, horario, trecho, linha);
-        daoTrechoLinha.save(trechoL);
     }
 
     public void deleteTrechoLinha(TrechoLinha trechoLinha) {

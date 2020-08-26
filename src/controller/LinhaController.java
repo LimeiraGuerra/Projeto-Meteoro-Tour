@@ -101,17 +101,12 @@ public class LinhaController{
         return tabelaLinha.getSelectionModel().getSelectedItem();
     }
 
-    private boolean searchNomeLinhaTable(String nome){
-        for (Linha l : linhasListTabela ) {
-            if (l.getNome().equals(nome)){
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private void cleanTxtNome(){
+    private void cleanTxt(){
         txtNomeLinha.clear();
+        txtMinTrechoEdit.clear();
+        txtMinTrecho.clear();
+        txtHoraTrechoEdit.clear();
+        txtHoraTrecho.clear();
     }
 
     @FXML
@@ -138,7 +133,7 @@ public class LinhaController{
 
     @FXML
     private void viewCreateLinha(ActionEvent actionEvent) {
-        cleanTxtNome();
+        cleanTxt();
         setVisibleButtonTxtLinha(true);
         paneLinhaTrecho.setVisible(false);
     }
@@ -182,7 +177,7 @@ public class LinhaController{
     private void saveChange(ActionEvent actionEvent) {
 
         if (searchLinhaTable() != null){
-            if (searchNomeLinhaTable(txtNomeLinha.getText()) || searchLinhaTable().getNome().equals(txtNomeLinha.getText())){
+            if (searchLinhaNome(txtNomeLinha.getText()) == null || searchLinhaTable().getNome().equals(txtNomeLinha.getText())){
                 searchLinhaTable().setNome(txtNomeLinha.getText());
                 ucLinha.updateLinha(searchLinhaTable());
                 loadTableLinhaTrecho(searchLinhaTable());
@@ -199,6 +194,7 @@ public class LinhaController{
         paneLinhaTrecho.setVisible(false);
         paneCriaTrecho.setVisible(false);
         setVisibleButtonTxtLinha(false);
+        cleanTxt();
         paneImg.setVisible(true);
     }
 
@@ -212,7 +208,6 @@ public class LinhaController{
                         trecho, linha);
                 atualizaHora(trechoL);
                 ucTrechoLinha.saveTrechoLinha(trechoL);
-                //ucTrechoLinha.createTrechoLinha(linha, trecho, returnHora(txtHoraTrecho, txtMinTrecho), calcOrdemLinha());
                 loadTableLinhaTrecho(linha);
                 loadCombobox();
             }

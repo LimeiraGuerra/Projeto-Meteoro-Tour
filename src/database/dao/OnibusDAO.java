@@ -2,9 +2,7 @@ package database.dao;
 
 
 import database.utils.DAOCrud;
-
 import model.entities.Onibus;
-
 import java.util.ArrayList;
 import java.util.List;
 

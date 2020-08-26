@@ -2,8 +2,6 @@ package model.entities;
 
 import view.util.DataValidator;
 
-import java.util.Date;
-
 public class InfoLinhaTrechoRelatorio {
     private String data, horarioSaida;
     private String nomeLinha, nomeTrecho;
