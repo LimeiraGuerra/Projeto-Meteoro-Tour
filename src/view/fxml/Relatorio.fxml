@@ -6,10 +6,10 @@
 <?import javafx.scene.text.*?>
 <?import view.util.mask.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="459.0" prefWidth="976.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RelatorioController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="490.0" prefWidth="976.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RelatorioController">
    <children>
-      <Line endX="-101.0" endY="-10.0" layoutX="885.0" layoutY="311.0" opacity="0.25" startX="100.0" startY="-10.0" />
-      <TableView fx:id="tableRelatorio" layoutX="14.0" layoutY="14.0" prefHeight="383.0" prefWidth="770.0">
+      <Line endX="-101.0" endY="-10.0" layoutX="885.0" layoutY="338.0" opacity="0.25" startX="100.0" startY="-10.0" />
+      <TableView fx:id="tableRelatorio" layoutX="14.0" layoutY="14.0" prefHeight="413.0" prefWidth="770.0">
         <columns>
           <TableColumn fx:id="colData" editable="false" minWidth="-Infinity" prefWidth="90.0" resizable="false" text="Data Viagem" />
             <TableColumn fx:id="colLinha" editable="false" prefWidth="200.0" resizable="false" text="Linha" />
@@ -19,62 +19,62 @@
             <TableColumn fx:id="colLucro" editable="false" minWidth="-Infinity" prefWidth="94.0" resizable="false" text="Lucro R$" />
         </columns>
       </TableView>
-      <Label layoutX="798.0" layoutY="305.0" text="Intervalo:">
+      <Label layoutX="798.0" layoutY="335.0" text="Intervalo:">
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Label>
-      <Button fx:id="btnGerar" layoutX="797.0" layoutY="392.0" mnemonicParsing="false" onAction="#searchDateInterval" prefHeight="25.0" prefWidth="168.0" text="Gerar Relatório" />
-      <DatePicker fx:id="dtPickerIni" layoutX="824.0" layoutY="329.0" prefHeight="25.0" prefWidth="138.0" />
-      <DatePicker fx:id="dtPickerFim" layoutX="824.0" layoutY="361.0" prefHeight="25.0" prefWidth="138.0" />
-      <Label layoutX="797.0" layoutY="365.0" text="Até:" />
-      <Label layoutX="558.0" layoutY="401.0" text="Total:">
+      <Button fx:id="btnGerar" layoutX="797.0" layoutY="422.0" mnemonicParsing="false" onAction="#searchDateInterval" prefHeight="25.0" prefWidth="168.0" text="Gerar Relatório" />
+      <DatePicker fx:id="dtPickerIni" layoutX="824.0" layoutY="359.0" prefHeight="25.0" prefWidth="138.0" />
+      <DatePicker fx:id="dtPickerFim" layoutX="824.0" layoutY="391.0" prefHeight="25.0" prefWidth="138.0" />
+      <Label layoutX="797.0" layoutY="395.0" text="Até:" />
+      <Label layoutX="558.0" layoutY="431.0" text="Total:">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Rectangle fill="#ffffff00" height="25.0" layoutX="595.0" layoutY="397.0" opacity="0.25" stroke="BLACK" strokeType="INSIDE" width="189.0" />
-      <Line endX="-0.5" endY="1.5" layoutX="690.0" layoutY="419.0" opacity="0.25" startX="-0.5" startY="-20.5" />
-      <Label fx:id="lbTotalUso" alignment="CENTER" contentDisplay="CENTER" layoutX="595.0" layoutY="401.0" prefHeight="17.0" prefWidth="95.0" text="" textAlignment="CENTER" />
-      <Label fx:id="lbTotalLucro" alignment="CENTER" contentDisplay="CENTER" layoutX="689.0" layoutY="401.0" prefHeight="17.0" prefWidth="95.0" text="" textAlignment="CENTER" />
-      <Label layoutX="552.0" layoutY="426.0" text="Média:">
+      <Rectangle fill="#ffffff00" height="25.0" layoutX="595.0" layoutY="427.0" opacity="0.25" stroke="BLACK" strokeType="INSIDE" width="189.0" />
+      <Line endX="-0.5" endY="1.5" layoutX="690.0" layoutY="449.0" opacity="0.25" startX="-0.5" startY="-20.5" />
+      <Label fx:id="lbTotalUso" alignment="CENTER" contentDisplay="CENTER" layoutX="595.0" layoutY="431.0" prefHeight="17.0" prefWidth="95.0" text="" textAlignment="CENTER" />
+      <Label fx:id="lbTotalLucro" alignment="CENTER" contentDisplay="CENTER" layoutX="689.0" layoutY="431.0" prefHeight="17.0" prefWidth="95.0" text="" textAlignment="CENTER" />
+      <Label layoutX="552.0" layoutY="456.0" text="Média:">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Rectangle fill="#ffffff00" height="25.0" layoutX="595.0" layoutY="422.0" opacity="0.25" stroke="BLACK" strokeType="INSIDE" width="189.0" />
-      <Line endX="-0.5" endY="1.5" layoutX="690.0" layoutY="444.0" opacity="0.25" startX="-0.5" startY="-20.5" />
-      <Label fx:id="lbMediaUso" alignment="CENTER" contentDisplay="CENTER" layoutX="595.0" layoutY="426.0" prefHeight="17.0" prefWidth="95.0" text="" textAlignment="CENTER" />
-      <Label fx:id="lbMediaLucro" alignment="CENTER" contentDisplay="CENTER" layoutX="689.0" layoutY="426.0" prefHeight="17.0" prefWidth="95.0" text="" textAlignment="CENTER" />
-      <Pane fx:id="paneFilter" disable="true" layoutX="784.0" layoutY="11.0" prefHeight="288.0" prefWidth="201.0">
+      <Rectangle fill="#ffffff00" height="25.0" layoutX="595.0" layoutY="452.0" opacity="0.25" stroke="BLACK" strokeType="INSIDE" width="189.0" />
+      <Line endX="-0.5" endY="1.5" layoutX="690.0" layoutY="474.0" opacity="0.25" startX="-0.5" startY="-20.5" />
+      <Label fx:id="lbMediaUso" alignment="CENTER" contentDisplay="CENTER" layoutX="595.0" layoutY="456.0" prefHeight="17.0" prefWidth="95.0" text="" textAlignment="CENTER" />
+      <Label fx:id="lbMediaLucro" alignment="CENTER" contentDisplay="CENTER" layoutX="689.0" layoutY="456.0" prefHeight="17.0" prefWidth="95.0" text="" textAlignment="CENTER" />
+      <Pane fx:id="paneFilter" disable="true" layoutX="784.0" layoutY="11.0" prefHeight="318.0" prefWidth="201.0">
          <children>
-            <Label layoutX="14.0" text="Filtrar por:">
+            <Label layoutX="14.0" layoutY="7.0" text="Filtrar por:">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Label layoutX="14.0" layoutY="21.0" text="Linha:" />
-            <TextField fx:id="txtFieldLinha" layoutX="12.0" layoutY="38.0" prefHeight="25.0" prefWidth="168.0" />
-            <TextField fx:id="txtFieldTrechoIni" layoutX="40.0" layoutY="83.0" prefHeight="25.0" prefWidth="140.0" />
-            <Label layoutX="14.0" layoutY="66.0" text="Trecho intervalo:" />
-            <MaskedTextField fx:id="txtFieldHorarioIni" layoutX="12.0" layoutY="161.0" mask="##:##" prefHeight="25.0" prefWidth="72.0" />
-            <MaskedTextField fx:id="txtFieldHorarioFim" layoutX="108.0" layoutY="161.0" mask="##:##" prefHeight="25.0" prefWidth="72.0" />
-            <Label layoutX="14.0" layoutY="144.0" text="Horário Saída intervalo:" />
-            <Button layoutX="12.0" layoutY="256.0" mnemonicParsing="false" onAction="#filterResults" prefHeight="25.0" prefWidth="168.0" text="Filtrar Resultados" />
-            <Label layoutX="88.0" layoutY="165.0" text="até" />
-            <TextField fx:id="txtFieldUsoIni" layoutX="50.0" layoutY="193.0" prefHeight="25.0" prefWidth="54.0" />
-            <TextField fx:id="txtFieldUsoFim" layoutX="126.0" layoutY="193.0" prefHeight="25.0" prefWidth="54.0" />
-            <Label layoutX="23.0" layoutY="197.0" text="Uso:" />
-            <Label layoutX="107.0" layoutY="197.0" text="até" />
-            <Label layoutX="14.0" layoutY="229.0" text="Lucro:" />
-            <TextField fx:id="txtFieldLucroFim" layoutX="126.0" layoutY="225.0" prefHeight="25.0" prefWidth="54.0" />
-            <TextField fx:id="txtFieldLucroIni" layoutX="50.0" layoutY="225.0" prefHeight="25.0" prefWidth="54.0" />
-            <Label layoutX="107.0" layoutY="229.0" text="até" />
-            <Label layoutX="17.0" layoutY="87.0" text="De:" />
-            <TextField fx:id="txtFieldTrechoFim" layoutX="40.0" layoutY="114.0" prefHeight="25.0" prefWidth="140.0" />
-            <Label layoutX="14.0" layoutY="118.0" text="Até:" />
+            <Label layoutX="14.0" layoutY="28.0" text="Linha:" />
+            <TextField fx:id="txtFieldLinha" layoutX="12.0" layoutY="45.0" prefHeight="25.0" prefWidth="168.0" />
+            <TextField fx:id="txtFieldTrechoIni" layoutX="40.0" layoutY="96.0" prefHeight="25.0" prefWidth="140.0" />
+            <Label layoutX="14.0" layoutY="78.0" text="Trecho intervalo:" />
+            <MaskedTextField fx:id="txtFieldHorarioIni" layoutX="12.0" layoutY="178.0" mask="##:##" prefHeight="25.0" prefWidth="72.0" />
+            <MaskedTextField fx:id="txtFieldHorarioFim" layoutX="108.0" layoutY="178.0" mask="##:##" prefHeight="25.0" prefWidth="72.0" />
+            <Label layoutX="14.0" layoutY="160.0" text="Horário Saída intervalo:" />
+            <Button layoutX="12.0" layoutY="282.0" mnemonicParsing="false" onAction="#filterResults" prefHeight="25.0" prefWidth="168.0" text="Filtrar Resultados" />
+            <Label layoutX="88.0" layoutY="182.0" text="até" />
+            <TextField fx:id="txtFieldUsoIni" layoutX="50.0" layoutY="213.0" prefHeight="25.0" prefWidth="54.0" />
+            <TextField fx:id="txtFieldUsoFim" layoutX="126.0" layoutY="213.0" prefHeight="25.0" prefWidth="54.0" />
+            <Label layoutX="23.0" layoutY="217.0" text="Uso:" />
+            <Label layoutX="107.0" layoutY="217.0" text="até" />
+            <Label layoutX="14.0" layoutY="252.0" text="Lucro:" />
+            <TextField fx:id="txtFieldLucroFim" layoutX="126.0" layoutY="248.0" prefHeight="25.0" prefWidth="54.0" />
+            <TextField fx:id="txtFieldLucroIni" layoutX="50.0" layoutY="248.0" prefHeight="25.0" prefWidth="54.0" />
+            <Label layoutX="107.0" layoutY="252.0" text="até" />
+            <Label layoutX="17.0" layoutY="100.0" text="De:" />
+            <TextField fx:id="txtFieldTrechoFim" layoutX="40.0" layoutY="127.0" prefHeight="25.0" prefWidth="140.0" />
+            <Label layoutX="14.0" layoutY="131.0" text="Até:" />
          </children>
       </Pane>
-      <Label layoutX="800.0" layoutY="333.0" text="De:" />
-      <Button fx:id="btnExport" disable="true" layoutX="797.0" layoutY="422.0" mnemonicParsing="false" onAction="#tableExport" prefHeight="25.0" prefWidth="168.0" text="Exportar Planilha" />
+      <Label layoutX="800.0" layoutY="363.0" text="De:" />
+      <Button fx:id="btnExport" disable="true" layoutX="797.0" layoutY="452.0" mnemonicParsing="false" onAction="#tableExport" prefHeight="25.0" prefWidth="168.0" text="Exportar Planilha" />
    </children>
 </AnchorPane>

@@ -38,7 +38,12 @@
                   <MenuItem mnemonicParsing="false" onAction="#openLinha" text="Linhas" />
                      </items></Menu>
             <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem fx:id="menuOptRelatorio" disable="true" mnemonicParsing="false" onAction="#openRelatorios" text="Relatórios" />
+                  <Menu fx:id="menuRelatorio" disable="true" mnemonicParsing="false" text="Relatórios">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#openRelatorios" text="Relatórios Gerais" />
+                      <MenuItem mnemonicParsing="false" onAction="#generateDailyReport" text="Relatório Diário" />
+                    </items>
+                  </Menu>
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem fx:id="menuOptPassagens" mnemonicParsing="false" onAction="#openBuscarPassagens" text="Buscar Passagens" />
           </items>
