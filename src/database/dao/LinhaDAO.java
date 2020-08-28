@@ -14,9 +14,10 @@ import java.util.List;
 public class LinhaDAO implements DAOCrud<Linha, String>, DAOSelects<Linha, String> {
 
     public void save(Linha model) {
-        String sqlLinha = "INSERT INTO LINHA(nome, inativo) VALUES(?, 0);";
+        String sqlLinha = "INSERT INTO LINHA(nome, inativo) VALUES(?, ?);";
         try (PreparedStatement stmtLinha = ConnectionFactory.createPreparedStatement(sqlLinha)) {
             stmtLinha.setString(1, model.getNome());
+            stmtLinha.setBoolean(2, model.isInativo());
             stmtLinha.execute();
             ConnectionFactory.closeStatements(stmtLinha);
         } catch (SQLException throwables) {
@@ -25,10 +26,11 @@ public class LinhaDAO implements DAOCrud<Linha, String>, DAOSelects<Linha, Strin
     }
 
     public void update(Linha model) {
-        String sqlEdite = "UPDATE linha set nome = ? where id = ?;";
+        String sqlEdite = "UPDATE linha set nome = ?, inativo = ? where id = ?;";
         try(PreparedStatement stmtLinha = ConnectionFactory.createPreparedStatement(sqlEdite)){
             stmtLinha.setString(1, model.getNome());
-            stmtLinha.setLong(2, model.getId());
+            stmtLinha.setBoolean(2, model.isInativo());
+            stmtLinha.setLong(3, model.getId());
             stmtLinha.execute();
             ConnectionFactory.closeStatements(stmtLinha);
         }
@@ -50,16 +52,15 @@ public class LinhaDAO implements DAOCrud<Linha, String>, DAOSelects<Linha, Strin
         }
     }
 
-    @Override
     public Linha selectById(String id) {
         long num = Long.parseLong(id);
-        String sql = "Select * from linha where id = ?;";
+        String sql = "SELECT * FROM LINHA WHERE id = (SELECT idLinha FROM vPassagensVendidas where idLinha = ?) and inativo = 0;";
         Linha linha = null;
         try (PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
             stmt.setLong(1, num);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                linha = new Linha(rs.getLong(1), rs.getString(2));
+                linha = new Linha(rs.getLong(1), rs.getString(2), rs.getBoolean(3));
             }
             ConnectionFactory.closeStatements(stmt);
         } catch (SQLException throwables) {
@@ -75,7 +76,7 @@ public class LinhaDAO implements DAOCrud<Linha, String>, DAOSelects<Linha, Strin
         try (PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                Linha linha = new Linha(rs. getLong(1), rs.getString(2));
+                Linha linha = new Linha(rs. getLong(1), rs.getString(2), rs.getBoolean(3));
                 linhas.add(linha);
             }
             ConnectionFactory.closeStatements(stmt);
@@ -106,7 +107,7 @@ public class LinhaDAO implements DAOCrud<Linha, String>, DAOSelects<Linha, Strin
     private List<Linha> setResultLinhas(ResultSet rs) throws SQLException {
         List<Linha> linhas = new ArrayList<>();
         while (rs.next())
-            linhas.add(new Linha(rs.getLong("idLinha"), rs.getString("nomeLinha")));
+            linhas.add(new Linha(rs.getLong("idLinha"), rs.getString("nomeLinha"), rs.getBoolean("inativo")));
         return linhas;
     }
 
@@ -125,34 +126,5 @@ public class LinhaDAO implements DAOCrud<Linha, String>, DAOSelects<Linha, Strin
     public List<Linha> selectByParent(String parent) {
         throw new NotImplementedException();
     }
-
-    public boolean checkLinhaPassagem(long id){
-        String sql = "SELECT idLinha FROM vPassagensVendidas where idLinha = ?;";
-        try (PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
-            stmt.setLong(1, id);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                return false;
-            }
-            ConnectionFactory.closeStatements(stmt);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return true;
-    }
-
-    public void update(Linha model, int num) {
-        String sqlEdite = "UPDATE linha set inativo = ? where id = ?;";
-        try(PreparedStatement stmtLinha = ConnectionFactory.createPreparedStatement(sqlEdite)){
-            stmtLinha.setInt(1, num);
-            stmtLinha.setLong(2, model.getId());
-            stmtLinha.execute();
-            ConnectionFactory.closeStatements(stmtLinha);
-        }
-        catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
-
 
 }

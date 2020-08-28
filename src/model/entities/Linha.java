@@ -8,6 +8,7 @@ public class Linha {
 
     private long id;
     private String nome;
+    private boolean inativo;
     private double quilometragemTotal;
     private double valorTotalLinha;
     private ArrayList<TrechoLinha> trechosLinha = new ArrayList<>();;
@@ -18,6 +19,12 @@ public class Linha {
 
     public Linha( String nome) {
         this.nome = nome;
+    }
+
+    public Linha(long id, String nome, boolean inativo) {
+        this.id = id;
+        this.nome = nome;
+        this.inativo = inativo;
     }
 
     public Linha(long id, String nome) {
@@ -105,6 +112,14 @@ public class Linha {
 
     public double getValorTotalLinha() {
         return valorTotalLinha;
+    }
+
+    public boolean isInativo() {
+        return inativo;
+    }
+
+    public void setInativo(boolean inativo) {
+        this.inativo = inativo;
     }
 
     public void setNome(String nomeNovo) {

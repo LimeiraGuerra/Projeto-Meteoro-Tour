@@ -128,8 +128,6 @@ INSERT INTO Linha(nome, inativo) VALUES('Descalvado - Ibaté curto', 0);
 
 INSERT INTO Linha(nome, inativo) VALUES('Descalvado - Ibaté longo', 0);
 
-INSERT INTO Linha(nome, inativo) VALUES('Descalvado - Ibaté TESTE', 1);
-
 INSERT INTO TrechoLinha(horarioSaida, ordem, dPlus, idLinha, idTrecho) VALUES(time('12:00'), 1, 0, 1, 1);
 INSERT INTO TrechoLinha(horarioSaida, ordem, dPlus, idLinha, idTrecho) VALUES(time('12:55'), 2, 0, 1, 2);
 INSERT INTO TrechoLinha(horarioSaida, ordem, dPlus, idLinha, idTrecho) VALUES(time('09:00'), 1, 0, 2, 1);

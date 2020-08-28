@@ -1,17 +1,17 @@
 package model.usecases;
 
-import database.dao.LinhaDAO;
 import database.dao.TrechoLinhaDAO;
+import database.utils.DAOCrud;
 import model.entities.Linha;
 import model.entities.TrechoLinha;
 import java.util.List;
 
 public class GerenciarLinhaUC {
 
-    private LinhaDAO daoLinha;
+    private DAOCrud<Linha, String> daoLinha;
     private TrechoLinhaDAO daoTrechoLinha;
 
-    public GerenciarLinhaUC(LinhaDAO daoLinha, TrechoLinhaDAO daoTrechoLinha) {
+    public GerenciarLinhaUC(DAOCrud<Linha, String> daoLinha, TrechoLinhaDAO daoTrechoLinha) {
         this.daoLinha = daoLinha;
         this.daoTrechoLinha = daoTrechoLinha;
     }
@@ -40,17 +40,11 @@ public class GerenciarLinhaUC {
             return linhas;
         }
 
-
     public void updateLinha(Linha linha) {
         daoLinha.update(linha);
     }
 
-    public void updateInativo(Linha l){
-        daoLinha.update(l, 1);
+    public boolean checkDeleteLinha(Linha linha) {
+        return daoLinha.selectById(linha.getId() + "") == null;
     }
-
-    public boolean checkDeleteLinha(Linha l){
-        return daoLinha.checkLinhaPassagem(l.getId());
-    }
-
 }

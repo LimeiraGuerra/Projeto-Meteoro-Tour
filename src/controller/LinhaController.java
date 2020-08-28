@@ -173,7 +173,8 @@ public class LinhaController{
                 }
             }else{
                 if (AlertWindow.verificationAlert("Essa linha não pode ser excluida, pois já possui vendas.\nDeseja colocar essa linha como INATIVA?", "Linha não deletada")){
-                    ucLinha.updateInativo(linha);
+                    linha.setInativo(true);
+                    ucLinha.updateLinha(linha);
                 }
             }
             updateTableLinha();
