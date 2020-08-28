@@ -34,7 +34,7 @@ public class RelatorioController {
     private String messageBody;
     private String messageHead;
     private List<InfoLinhaTrechoRelatorio> relatorioData;
-    private List<InfoLinhaTrechoRelatorio> relatorioFilteredData;
+    //private List<InfoLinhaTrechoRelatorio> relatorioFilteredData;
 
     public RelatorioController() {
         this.emitirRelatoriosUC = new EmitirRelatoriosUC(new InfoRelatorioDAO());
@@ -145,8 +145,6 @@ public class RelatorioController {
         fileChooser.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
         File file = fileChooser.showSaveDialog(tableRelatorio.getScene().getWindow());
-
-        if(file != null)
-            this.emitirRelatoriosUC.exportToCsv(this.tableRelatorio.getItems(), file.getAbsolutePath());
+        this.emitirRelatoriosUC.export(file, this.tableRelatorio.getItems());
     }
 }

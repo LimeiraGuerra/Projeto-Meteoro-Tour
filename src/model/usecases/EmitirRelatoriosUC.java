@@ -22,7 +22,17 @@ public class EmitirRelatoriosUC {
         return daoRelatorio.selectByInterval(df.format(ini), df.format(end));
     }
 
-    public void exportToCsv(List<InfoLinhaTrechoRelatorio> tableData, String path) {
+    public void exportDailyReport(File file, Date todayDate){
+        List<InfoLinhaTrechoRelatorio> infos = this.searchInfoByInterval(todayDate, todayDate);
+        this.export(file, infos);
+    }
+
+    public void export(File file, List<InfoLinhaTrechoRelatorio> infos){
+        if(file != null)
+            this.writeToCsv(infos, file.getAbsolutePath());
+    }
+
+    public void writeToCsv(List<InfoLinhaTrechoRelatorio> tableData, String path) {
         try (OutputStreamWriter writer =
                      new OutputStreamWriter(new FileOutputStream(new File(path)), StandardCharsets.ISO_8859_1)) {
             writer.append("Data Viagem;" +

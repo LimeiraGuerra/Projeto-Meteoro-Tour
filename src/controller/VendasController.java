@@ -1,6 +1,7 @@
 package controller;
 
 import database.dao.AssentosTrechoLinhaDAO;
+import database.dao.InfoRelatorioDAO;
 import database.dao.LinhaDAO;
 import database.dao.TrechoLinhaDAO;
 import javafx.collections.FXCollections;
@@ -12,13 +13,17 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 import model.entities.Passagem;
+import model.usecases.EmitirRelatoriosUC;
 import view.loader.*;
 import model.entities.Viagem;
 import model.usecases.GerarViagensUC;
 import view.util.AlertWindow;
 import view.util.DataValidator;
 import view.util.TipoEspecial;
+
+import java.io.File;
 import java.util.*;
 
 public class VendasController {
@@ -27,7 +32,8 @@ public class VendasController {
     @FXML AnchorPane popupReagendamento;
     @FXML TextField txtFieldOrigem, txtFieldDestino;
     @FXML DatePicker datePickerSaida;
-    @FXML MenuItem menuOptPassagens, menuOptRelatorio;
+    @FXML MenuItem menuOptPassagens;
+    @FXML Menu menuRelatorio;
     @FXML ToggleGroup clienteEspecial;
     @FXML TableView<Viagem> tableViagens;
     @FXML TableColumn<Viagem, String> colLinha, colHorarioSaida;
@@ -35,6 +41,7 @@ public class VendasController {
     private Scene scene;
     private TipoEspecial clientType = TipoEspecial.NÃO;
     private GerarViagensUC gerarViagensUC;
+    private EmitirRelatoriosUC emitirRelatoriosUC;
     private ObservableList<Viagem> tableDataViagens;
     private Viagem selectedViagem;
     private String messageHead, messageBody;
@@ -45,6 +52,7 @@ public class VendasController {
         this.gerarViagensUC = new GerarViagensUC(new LinhaDAO(),
                 new TrechoLinhaDAO(),
                 new AssentosTrechoLinhaDAO());
+        this.emitirRelatoriosUC = new EmitirRelatoriosUC(new InfoRelatorioDAO());
     }
 
     @FXML
@@ -65,7 +73,7 @@ public class VendasController {
 
     public void setAdminPrivileges() {
         this.menuGerenciar.setDisable(false);
-        this.menuOptRelatorio.setDisable(false);
+        this.menuRelatorio.setDisable(false);
     }
 
     public void setModeReagendamento() {
@@ -261,6 +269,14 @@ public class VendasController {
         janelaRelatorio.start();
     }
 
+    public void generateDailyReport(ActionEvent actionEvent) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
+        File file = fileChooser.showSaveDialog(this.scene.getWindow());
+        this.emitirRelatoriosUC.exportDailyReport(file, this.getSystemTime());
+    }
+
     public TipoEspecial getClientType() {
         return clientType;
     }
@@ -276,4 +292,5 @@ public class VendasController {
     public void setScene(Scene scene) {
         this.scene = scene;
     }
+
 }
