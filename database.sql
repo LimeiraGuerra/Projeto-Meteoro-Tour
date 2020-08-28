@@ -27,7 +27,8 @@ CREATE TABLE Trecho(
 
 CREATE TABLE Linha(
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
-	nome TEXT NOT NULL UNIQUE
+	nome TEXT NOT NULL UNIQUE,
+	inativo INTEGER
 );
 
 CREATE TABLE TrechoLinha(
@@ -95,7 +96,7 @@ dataCompra, dataViagem, idAssento, cidadeOrigem, cidadeDestino, idLinha, nomeLin
 	JOIN Trecho t ON t.id = tl.idTrecho
 	GROUP BY p.numPassagem;
 
-CREATE VIEW vLinhaByCidades(idLinha, nomeLinha) AS
+CREATE VIEW vLinhaByCidades(idLinha, nomeLinha, inativo) AS
 	SELECT l.* FROM linha l
 	GROUP by l.id;
 
@@ -106,6 +107,8 @@ FROM  trechoLinha tl JOIN trecho t ON tl.idTrecho = t.id;
 
 SELECT tl.id, tl.horarioSaida, tl.ordem, tl.dPlus
 FROM  trechoLinha tl JOIN trecho t ON tl.idTrecho = t.id;
+
+CREATE VIEW vLinhaViagem(id) AS SELECT l.id FROM Linha l JOIN Viagem V on l.id = V.idLinham;
 	
 INSERT INTO Administrador VALUES('d033e22ae348aeb5660fc2140aec35850c4da997');
 
@@ -121,9 +124,11 @@ VALUES('São Carlos', 'Araraquara', 30.0, 35, 8.0, 4.0, 0.2);
 INSERT INTO Trecho(cidadeOrigem, cidadeDestino, quilometragem, tempoDuracao, valorPassagem, taxaEmbarque, valorSeguro)
 VALUES('Araraquara', 'Ibaté', 20.0, 25, 6.0, 3.5, 0.25);
 
-INSERT INTO Linha(nome) VALUES('Descalvado - Ibaté curto');
+INSERT INTO Linha(nome, inativo) VALUES('Descalvado - Ibaté curto', 0);
 
-INSERT INTO Linha(nome) VALUES('Descalvado - Ibaté longo');
+INSERT INTO Linha(nome, inativo) VALUES('Descalvado - Ibaté longo', 0);
+
+INSERT INTO Linha(nome, inativo) VALUES('Descalvado - Ibaté TESTE', 1);
 
 INSERT INTO TrechoLinha(horarioSaida, ordem, dPlus, idLinha, idTrecho) VALUES(time('12:00'), 1, 0, 1, 1);
 INSERT INTO TrechoLinha(horarioSaida, ordem, dPlus, idLinha, idTrecho) VALUES(time('12:55'), 2, 0, 1, 2);

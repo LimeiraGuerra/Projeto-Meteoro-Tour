@@ -167,9 +167,15 @@ public class LinhaController{
     private void deleteLinha(ActionEvent actionEvent) {
         Linha linha = searchLinhaTable();
         if (linha != null){
-          if (AlertWindow.verificationAlert("Deseja excluir essa linha?", "Exclusão da linha: " + linha.getNome())){
-               ucLinha.deleteLinha(linha);
-           }
+            if (ucLinha.checkDeleteLinha(linha)){
+                if (AlertWindow.verificationAlert("Deseja excluir essa linha?", "Exclusão da linha: " + linha.getNome())){
+                    ucLinha.deleteLinha(linha);
+                }
+            }else{
+                if (AlertWindow.verificationAlert("Essa linha não pode ser excluida, pois já possui vendas.\nDeseja colocar essa linha como INATIVA?", "Linha não deletada")){
+                    ucLinha.updateInativo(linha);
+                }
+            }
             updateTableLinha();
             setImgVisible();
         }
