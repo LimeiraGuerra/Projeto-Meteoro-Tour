@@ -43,10 +43,13 @@ CREATE TABLE TrechoLinha(
 
 CREATE TABLE AssentoTrechoLinha(
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
-	data DATE NOT NULL,
+	data DATETIME NOT NULL,
 	idTrechoLinha INTEGER NOT NULL,
 	idPassagem INTEGER NOT NULL,
 	idAssento TEXT NOT NULL,
+	precoPago REAL NOT NULL,
+	precoTrecho REAL NOT NULL,
+	seguroTrecho REAL NOT NULL,
 	FOREIGN KEY(idPassagem) REFERENCES Passagem(numPassagem) ON DELETE CASCADE,
 	FOREIGN KEY(idTrechoLinha) REFERENCES TrechoLinha(id)
 );
@@ -57,6 +60,7 @@ CREATE TABLE Viagem(
 	cidadeOrigem TEXT NOT NULL,
 	cidadeDestino TEXT NOT NULL,
 	idLinha INTEGER NOT NULL,
+	nomeLinha TEXT NOT NULL,
 	PRIMARY KEY(idPassagem),
 	FOREIGN KEY(idPassagem) REFERENCES Passagem(numPassagem) ON DELETE CASCADE,
 	FOREIGN KEY(idLinha) REFERENCES Linha(id)
@@ -68,31 +72,27 @@ CREATE TABLE Passagem(
 	cpfCliente TEXT NOT NULL,
 	rgCliente TEXT NOT NULL,
 	telefoneCliente TEXT NOT NULL,
-	precoPago REAL NOT NULL,
 	desconto REAL NOT NULL,
 	seguro INTEGER NOT NULL,
 	dataCompra DATETIME NOT NULL
 );
 
-CREATE VIEW vInfoRelatorio (data, nomeLinha, horarioSaida, cidadeOrigem, cidadeDestino, uso, lucro) AS
-	SELECT date(v.data), l.nome, tl.horarioSaida, t.cidadeOrigem, t.cidadeDestino,
+/*CREATE VIEW vInfoRelatorio (data, nomeLinha, horarioSaida, cidadeOrigem, cidadeDestino, uso, lucro) AS
+	SELECT date(v.data), v.nomeLinha, tl.horarioSaida, t.cidadeOrigem, t.cidadeDestino,
 	count(ast.idTrechoLinha), (sum(t.valorPassagem)+sum(t.taxaEmbarque))*avg(p.desconto) + t.valorSeguro*sum(p.seguro) 
 	FROM Viagem v JOIN Linha l ON l.id = v.idLinha
 	JOIN TrechoLinha tl ON tl.idLinha = l.id
 	JOIN Trecho t ON t.id = tl.idTrecho
 	JOIN AssentoTrechoLinha ast ON ast.idTrechoLinha = tl.id AND ast.idPassagem = v.idPassagem
 	JOIN Passagem p ON p.numPassagem = v.idPassagem
-	GROUP BY tl.id ORDER BY l.nome, tl.ordem;
+	GROUP BY tl.id ORDER BY l.nome, tl.ordem*/
 
-CREATE VIEW vPassagensVendidas (numPassagem, nomeCliente, cpfCliente, rgCliente, telefoneCliente, precoPago, desconto, seguro, 
-dataCompra, dataViagem, idAssento, cidadeOrigem, cidadeDestino, idLinha, nomeLinha, valorViagem, valorSeguro) AS
-	SELECT p.*, v.data,ast.idAssento, v.cidadeOrigem, v.cidadeDestino, 
-	l.id, l.nome, sum(t.valorPassagem+t.taxaEmbarque), sum(t.valorSeguro) FROM Passagem p
+CREATE VIEW vPassagensVendidas (numPassagem, nomeCliente, cpfCliente, rgCliente, telefoneCliente, desconto, seguro, 
+dataCompra, dataViagem, idAssento, cidadeOrigem, cidadeDestino, idLinha, nomeLinha, valorViagem, valorSeguro, precoPago) AS
+	SELECT p.*, v.data, ast.idAssento, v.cidadeOrigem, v.cidadeDestino, v.idLinha, v.nomeLinha, 
+		sum(ast.precoTrecho), sum(ast.seguroTrecho), sum(ast.precoPago) FROM Passagem p
 	JOIN Viagem v ON p.numPassagem = v.idPassagem
-	JOIN Linha l ON l.id = v.idLinha
 	JOIN AssentoTrechoLinha ast ON ast.idPassagem = p.numPassagem
-	JOIN TrechoLinha tl ON tl.id = ast.idTrechoLinha
-	JOIN Trecho t ON t.id = tl.idTrecho
 	GROUP BY p.numPassagem;
 
 CREATE VIEW vLinhaByCidades(idLinha, nomeLinha) AS

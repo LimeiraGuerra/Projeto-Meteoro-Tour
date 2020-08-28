@@ -21,11 +21,11 @@ public class PassagemDAO implements DAOCrud<Passagem, String> {
     @Override
     public void save(Passagem model) {
         String sqlPassagem = "INSERT INTO Passagem (nomeCliente, cpfCliente, rgCliente, telefoneCliente," +
-                "precoPago, desconto, seguro, dataCompra) VALUES (?, ?, ?, ?, ?, ?, ?, datetime(?));";
-        String sqlViagem = "INSERT INTO Viagem (idPassagem, data, cidadeOrigem, cidadeDestino, idLinha) " +
-                "VALUES (?, datetime(?), ?, ?, ?);";
-        String sqlAssento = "INSERT INTO AssentoTrechoLinha (data, idTrechoLinha, idPassagem, idAssento)" +
-                "VALUES (date(?, '+'||?||' day'), ?, ?, ?);";
+                "desconto, seguro, dataCompra) VALUES (?, ?, ?, ?, ?, ?, datetime(?));";
+        String sqlViagem = "INSERT INTO Viagem (idPassagem, data, cidadeOrigem, cidadeDestino, idLinha, nomeLinha) " +
+                "VALUES (?, datetime(?), ?, ?, ?, ?);";
+        String sqlAssento = "INSERT INTO AssentoTrechoLinha (data, idTrechoLinha, idPassagem, idAssento, " +
+                "precoPago, precoTrecho, seguroTrecho) VALUES (datetime(?, '+'||?||' day'), ?, ?, ?, ?, ?, ?);";
 
         try(PreparedStatement stmtPassagem = ConnectionFactory.createPreparedStatement(sqlPassagem);
             PreparedStatement stmtViagem = ConnectionFactory.createPreparedStatement(sqlViagem);
@@ -60,10 +60,9 @@ public class PassagemDAO implements DAOCrud<Passagem, String> {
         stmt.setString(2, model.getCpf());
         stmt.setString(3, model.getRg());
         stmt.setString(4, model.getTelefone());
-        stmt.setDouble(5, model.getPrecoPago());
-        stmt.setDouble(6, model.getDiscount());
-        stmt.setInt(7, model.isSeguro() ? 1 : 0);
-        stmt.setString(8, dateFormat.format(model.getDataCompra()));
+        stmt.setDouble(5, model.getDiscount());
+        stmt.setInt(6, model.isSeguro() ? 1 : 0);
+        stmt.setString(7, dateFormat.format(model.getDataCompra()));
         stmt.execute();
     }
 
@@ -75,17 +74,22 @@ public class PassagemDAO implements DAOCrud<Passagem, String> {
         stmt.setString(3, model.getViagem().getCidadeOrigem());
         stmt.setString(4, model.getViagem().getCidadeDestino());
         stmt.setLong(5, model.getViagem().getLinha().getId());
+        stmt.setString(6, model.getViagem().getLinha().getNome());
         stmt.execute();
     }
 
     private void setKeysStatementAssento(PreparedStatement stmt, Passagem model, TrechoLinha tl)
             throws SQLException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         stmt.setString(1, dateFormat.format(model.getViagem().getData()));
         stmt.setInt(2, tl.getdPlus()-model.getViagem().getDatePlusCorrection());
         stmt.setLong(3, tl.getId());
         stmt.setLong(4, model.getNumPassagem());
         stmt.setString(5, model.getAssentoId());
+        Double precoPago = tl.getTrecho().getValorTotal()*model.getDiscount()+tl.getTrecho().getValorSeguro();
+        stmt.setDouble(6, precoPago);
+        stmt.setDouble(7, tl.getTrecho().getValorTotal());
+        stmt.setDouble(8, tl.getTrecho().getValorSeguro());
         stmt.addBatch();
     }
 

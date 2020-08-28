@@ -16,7 +16,7 @@ public class Linha {
 
     }
 
-    public Linha( String nome) {
+    public Linha(String nome) {
         this.nome = nome;
     }
 
