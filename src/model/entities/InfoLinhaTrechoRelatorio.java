@@ -3,21 +3,23 @@ package model.entities;
 import view.util.DataValidator;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class InfoLinhaTrechoRelatorio {
     private String data, horarioSaida;
-    private String nomeLinha, nomeTrecho;
+    private String nomeLinha, cidadeOrigem, cidadeDestino;
     private int uso;
     private double lucro;
 
     public InfoLinhaTrechoRelatorio() {
     }
 
-    public InfoLinhaTrechoRelatorio(String data, String horarioSaida, String nomeLinha, String nomeTrecho, int uso, double lucro) {
+    public InfoLinhaTrechoRelatorio(String data, String horarioSaida, String nomeLinha, String cidadeOrigem, String cidadeDestino, int uso, double lucro) {
         this.data = data;
         this.horarioSaida = horarioSaida;
         this.nomeLinha = nomeLinha;
-        this.nomeTrecho = nomeTrecho;
+        this.cidadeOrigem = cidadeOrigem;
+        this.cidadeDestino = cidadeDestino;
         this.uso = uso;
         this.lucro = lucro;
     }
@@ -47,11 +49,23 @@ public class InfoLinhaTrechoRelatorio {
     }
 
     public String getNomeTrecho() {
-        return nomeTrecho;
+        return cidadeOrigem + " - " + cidadeDestino;
     }
 
-    public void setNomeTrecho(String nomeTrecho) {
-        this.nomeTrecho = nomeTrecho;
+    public String getCidadeOrigem() {
+        return cidadeOrigem;
+    }
+
+    public String getCidadeDestino() {
+        return cidadeDestino;
+    }
+
+    public void setCidadeOrigem(String cidadeOrigem) {
+        this.cidadeOrigem = cidadeOrigem;
+    }
+
+    public void setCidadeDestino(String cidadeDestino) {
+        this.cidadeDestino = cidadeDestino;
     }
 
     public int getUso() {
@@ -79,8 +93,23 @@ public class InfoLinhaTrechoRelatorio {
         return data + ";" +
                 nomeLinha + ";" +
                 horarioSaida + ";" +
-                nomeTrecho + ";" +
+                getNomeTrecho() + ";" +
                 uso + ";" +
                 getLucroFormated() + "\n";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof InfoLinhaTrechoRelatorio)) return false;
+        InfoLinhaTrechoRelatorio that = (InfoLinhaTrechoRelatorio) o;
+        return Objects.equals(getData(), that.getData()) &&
+                Objects.equals(getHorarioSaida(), that.getHorarioSaida()) &&
+                Objects.equals(getNomeLinha(), that.getNomeLinha());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getData(), getHorarioSaida(), getNomeLinha());
     }
 }

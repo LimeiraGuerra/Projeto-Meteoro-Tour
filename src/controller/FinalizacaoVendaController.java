@@ -13,7 +13,7 @@ import view.loader.EmissaoBilheteLoader;
 import view.util.AlertWindow;
 import view.util.DataValidator;
 import view.util.TipoEspecial;
-import view.util.mask.MaskedTextField;
+import view.util.sharedCodes.MaskedTextField;
 import java.util.Calendar;
 import java.util.Date;
 

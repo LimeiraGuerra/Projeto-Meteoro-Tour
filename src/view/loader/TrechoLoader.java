@@ -24,7 +24,7 @@ public class TrechoLoader {
             stage.setTitle("Meteoro Tour - Trechos");
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(cena);
-            stage.show();
+            stage.showAndWait();
 
         } catch (IOException e) {
             e.printStackTrace();

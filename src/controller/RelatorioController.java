@@ -1,6 +1,8 @@
 package controller;
 
 import database.dao.InfoRelatorioDAO;
+import database.dao.LinhaDAO;
+import database.dao.TrechoLinhaDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -10,13 +12,16 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import model.entities.InfoLinhaTrechoRelatorio;
+import model.usecases.AutoCompleteUC;
 import model.usecases.EmitirRelatoriosUC;
 import view.util.AlertWindow;
 import view.util.DataValidator;
+import view.util.sharedCodes.AutoCompleteComboBoxListener;
+import view.util.sharedCodes.CurrencyField;
+import view.util.sharedCodes.MaskedTextField;
+
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class RelatorioController {
     @FXML DatePicker dtPickerIni, dtPickerFim;
@@ -26,17 +31,21 @@ public class RelatorioController {
             colData, colLinha, colHorarioSaida, colTrecho, colUso, colLucro;
     @FXML Pane paneFilter;
     @FXML Button btnExport;
-    @FXML TextField txtFieldLinha, txtFieldTrechoIni, txtFieldTrechoFim, txtFieldHorarioIni,
-            txtFieldHorarioFim, txtFieldUsoIni, txtFieldUsoFim, txtFieldLucroIni, txtFieldLucroFim;
+    @FXML ComboBox<String> cBoxLinha, cBoxTrechoIni, cBoxTrechoFim;
+    @FXML TextField txtFieldHorarioIni, txtFieldHorarioFim;
+    @FXML MaskedTextField txtFieldUsoIni, txtFieldUsoFim;
+    @FXML CurrencyField txtFieldLucroIni, txtFieldLucroFim;
 
     private EmitirRelatoriosUC emitirRelatoriosUC;
+    private AutoCompleteUC autoCompleteUC;
     private ObservableList<InfoLinhaTrechoRelatorio> tableDataRelatorio;
     private String messageBody;
     private String messageHead;
     private List<InfoLinhaTrechoRelatorio> relatorioData;
-    //private List<InfoLinhaTrechoRelatorio> relatorioFilteredData;
+    private ObservableList<String> cityNames, lineNames;
 
     public RelatorioController() {
+        this.autoCompleteUC = new AutoCompleteUC(new TrechoLinhaDAO(), new LinhaDAO());
         this.emitirRelatoriosUC = new EmitirRelatoriosUC(new InfoRelatorioDAO());
     }
 
@@ -44,6 +53,32 @@ public class RelatorioController {
     private void initialize(){
         this.bindDataListToTable();
         this.bindColumnsToValues();
+        this.setAutoComplete();
+    }
+
+    private void setAutoComplete(){
+        this.cityNames = FXCollections.observableArrayList();
+        this.lineNames = FXCollections.observableArrayList();
+        this.getCityAndLineNames();
+        this.setValuesToComboBoxes();
+        this.setAutoCompleteListeners();
+    }
+
+    private void getCityAndLineNames(){
+        this.cityNames.setAll(autoCompleteUC.getCityNames());
+        this.lineNames.setAll(autoCompleteUC.getLineNames());
+    }
+
+    private void setAutoCompleteListeners(){
+        new AutoCompleteComboBoxListener<>(this.cBoxTrechoIni);
+        new AutoCompleteComboBoxListener<>(this.cBoxTrechoFim);
+        new AutoCompleteComboBoxListener<>(this.cBoxLinha);
+    }
+
+    private void setValuesToComboBoxes(){
+        this.cBoxTrechoIni.setItems(this.cityNames);
+        this.cBoxTrechoFim.setItems(this.cityNames);
+        this.cBoxLinha.setItems(this.lineNames);
     }
 
     private void bindDataListToTable() {
@@ -99,10 +134,20 @@ public class RelatorioController {
             lucro += info.getLucro();
             uso += info.getUso();
         }
-        this.lbTotalLucro.setText(DataValidator.formatCurrencyView(lucro));
-        this.lbTotalUso.setText(String.valueOf(uso));
-        this.lbMediaLucro.setText(DataValidator.formatCurrencyView(lucro/listData.size()));
-        this.lbMediaUso.setText(String.valueOf(uso/listData.size()));
+        if (listData.size() > 0 && lucro > 0.0 && uso > 0) {
+            this.lbTotalLucro.setText(DataValidator.formatCurrencyView(lucro));
+            this.lbTotalUso.setText(String.valueOf(uso));
+            this.lbMediaLucro.setText(DataValidator.formatCurrencyView(lucro / listData.size()));
+            this.lbMediaUso.setText(String.valueOf(uso / listData.size()));
+        }
+        else this.setZeroOfMathFields();
+    }
+
+    private void setZeroOfMathFields(){
+        this.lbTotalLucro.setText(DataValidator.formatCurrencyView(0.0));
+        this.lbTotalUso.setText(String.valueOf(0));
+        this.lbMediaLucro.setText(DataValidator.formatCurrencyView(0.0));
+        this.lbMediaUso.setText(String.valueOf(0));
     }
 
     private void clearTable(){
@@ -123,21 +168,51 @@ public class RelatorioController {
         this.tableDataRelatorio.setAll(listData);
     }
 
+    //todo -> precisa refatoracao
     public void filterResults(ActionEvent actionEvent) {
-        String nomeLinha = this.txtFieldLinha.getText().trim();
-        String nomeTrecho = this.txtFieldTrechoIni.getText().trim();
+        String nomeLinha = this.getValueComboBox(this.cBoxLinha);
+        String nomeTrechoIni = this.getValueComboBox(this.cBoxTrechoIni);
+        String nomeTrechoFim = this.getValueComboBox(this.cBoxTrechoFim);
         String horaIni = DataValidator.verifyTime(this.txtFieldHorarioIni.getText());
         String horaFim = DataValidator.verifyTime(this.txtFieldHorarioFim.getText());
+        String usoIni = this.txtFieldUsoIni.getPlainText();
+        String usoFim = this.txtFieldUsoFim.getPlainText();
+        double lucroIni = this.txtFieldLucroIni.amountProperty().doubleValue();
+        double lucroFim = this.txtFieldLucroFim.amountProperty().doubleValue();
+        List<InfoLinhaTrechoRelatorio> filteredListAux = new ArrayList<>();
         List<InfoLinhaTrechoRelatorio> filteredList = new ArrayList<>();
-        for (InfoLinhaTrechoRelatorio info : this.relatorioData){
-            if (!nomeLinha.isEmpty() && !info.getNomeLinha().contains(nomeLinha)) continue;
-            if (!nomeTrecho.isEmpty() && !info.getNomeTrecho().contains(nomeTrecho)) continue;
+        String linhaAux = "";
+        for (InfoLinhaTrechoRelatorio info : this.relatorioData) {
+            if (!nomeLinha.isEmpty() && !info.getNomeLinha().equals(nomeLinha)) continue;
+            if (!usoIni.isEmpty() && !usoFim.isEmpty() &&
+                    !(info.getUso() >= Integer.parseInt(usoIni) &&
+                            info.getUso() <= Integer.parseInt(usoFim))) continue;
+            if (!(lucroIni == 0.0) && !(lucroFim == 0.0) &&
+                    !(info.getLucro() >= lucroIni &&
+                            info.getLucro() <= lucroFim)) continue;
             if (!horaIni.isEmpty() && !horaFim.isEmpty() &&
                     (info.getHorarioSaida().compareTo(horaIni) < 0 ||
-                    info.getHorarioSaida().compareTo(horaFim) > 0)) continue;
+                            info.getHorarioSaida().compareTo(horaFim) > 0)) continue;
+            if (!nomeTrechoIni.isEmpty() && !info.getCidadeOrigem().equals(nomeTrechoIni)) {
+                if (!linhaAux.equals(info.getNomeLinha())) continue;
+            } else linhaAux = info.getNomeLinha();
+            filteredListAux.add(info);
+        }linhaAux = "";
+        Collections.reverse(filteredListAux);
+        for (InfoLinhaTrechoRelatorio info : filteredListAux) {
+            if (!nomeTrechoFim.isEmpty() && !info.getCidadeDestino().equals(nomeTrechoFim)){
+                if (!linhaAux.equals(info.getNomeLinha())) continue;}
+            else linhaAux = info.getNomeLinha();
             filteredList.add(info);
         }
+        Collections.reverse(filteredList);
         this.showResultsToTable(filteredList);
+        this.setMathOfData(filteredList);
+    }
+
+    private String getValueComboBox(ComboBox<String> comboBox){
+        String str = comboBox.getSelectionModel().getSelectedItem();
+        return str != null ? str.trim() : "";
     }
 
     public void tableExport(ActionEvent actionEvent) {
@@ -146,5 +221,19 @@ public class RelatorioController {
                 new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
         File file = fileChooser.showSaveDialog(tableRelatorio.getScene().getWindow());
         this.emitirRelatoriosUC.export(file, this.tableRelatorio.getItems());
+    }
+
+    public void clearFields(ActionEvent actionEvent) {
+        this.cBoxLinha.setValue("");
+        this.cBoxTrechoIni.setValue("");
+        this.cBoxTrechoFim.setValue("");
+        this.txtFieldHorarioIni.clear();
+        this.txtFieldHorarioFim.clear();
+        this.txtFieldUsoIni.clear();
+        this.txtFieldUsoFim.clear();
+        this.txtFieldLucroIni.setAmount(0.0);
+        this.txtFieldLucroFim.setAmount(0.0);
+        this.showResultsToTable(this.relatorioData);
+        this.setMathOfData(this.relatorioData);
     }
 }

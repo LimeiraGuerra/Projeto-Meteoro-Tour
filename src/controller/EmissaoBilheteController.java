@@ -8,6 +8,7 @@ import javafx.print.Printer;
 import javafx.print.PrinterJob;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -19,7 +20,7 @@ public class EmissaoBilheteController {
     @FXML Label lbPrintState, lbNumPassagem, lbNomeLinha, lbDataVenda, lbOrigem,
             lbDestino, lbDataViagem, lbHorarioSaida, lbAssento, lbValorViagem,
             lbSeguro, lbValorPago, lbNomeCliente, lbCpf, lbRg, lbTelefone;
-    @FXML ChoiceBox<Printer> chboxPrinters;
+    @FXML ComboBox<Printer> cBoxPrinters;
     @FXML Button btnPrint;
     @FXML Pane paneBilhete;
 
@@ -32,13 +33,13 @@ public class EmissaoBilheteController {
         this.setPrintersListToCheckButton();
         this.getConnectedPrinters();
         this.startPrinterJob();
-        this.addChangeListener();
+        this.setDefaultPrinter();
     }
 
     private void setPrintersListToCheckButton(){
         this.printersList = FXCollections.observableArrayList();
-        this.chboxPrinters.setItems(this.printersList);
-        this.chboxPrinters.setConverter(new ConverterPrinterName());
+        this.cBoxPrinters.setItems(this.printersList);
+        this.cBoxPrinters.setConverter(new ConverterPrinterName());
     }
 
     private void getConnectedPrinters(){
@@ -50,11 +51,12 @@ public class EmissaoBilheteController {
         this.setPrintStatus();
     }
 
-    private void addChangeListener(){
-        this.chboxPrinters.valueProperty().addListener((observable, oldValue, newValue) -> {
-            printerJob.setPrinter(newValue);
-            printerConfig();
-        });
+    private void setDefaultPrinter(){
+        Printer printer = Printer.getDefaultPrinter();
+        if (printer != null) {
+            this.cBoxPrinters.setValue(printer);
+            this.printerJob.setPrinter(printer);
+        }
     }
 
     private void setInfoToView(){
@@ -76,11 +78,13 @@ public class EmissaoBilheteController {
     }
 
     public void initPrint(ActionEvent actionEvent) {
-        if(this.printerJob.printPage(this.paneBilhete)) {
-            this.setPrintStatus();
-            if (this.printerJob.endJob()) {
+        if (this.printerJob != null && this.printerJob.getPrinter() != null){
+            if (this.printerJob.printPage(this.paneBilhete)) {
                 this.setPrintStatus();
-                this.closeWindow();
+                if (this.printerJob.endJob()) {
+                    this.setPrintStatus();
+                    this.closeWindow();
+                }
             }
         }
     }
@@ -90,8 +94,19 @@ public class EmissaoBilheteController {
         stage.close();
     }
 
+    public void configPage(ActionEvent actionEvent) {
+        if (this.printerJob != null && this.printerJob.getPrinter() != null)
+            this.printerConfig();
+    }
+
     private void printerConfig() {
         this.printerJob.showPageSetupDialog(this.paneBilhete.getScene().getWindow());
+    }
+
+    public void selectPrinter(ActionEvent actionEvent) {
+        Printer printer = cBoxPrinters.getSelectionModel().getSelectedItem();
+        if (printer != null)
+            this.printerJob.setPrinter(printer);
     }
 
     private void setPrintStatus(){

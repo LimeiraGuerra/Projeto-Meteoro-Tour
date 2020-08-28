@@ -15,6 +15,11 @@ import java.util.List;
 public class AssentosTrechoLinhaDAO implements DAOSelects<String, Viagem> {
 
     @Override
+    public List<String> selectStringForAutoComplete() {
+        throw new NotImplementedException();
+    }
+
+    @Override
     public List<String> selectByParent(Viagem parent) {
         String sql = "SELECT ast.idAssento FROM AssentoTrechoLinha ast\n" +
                 "JOIN TrechoLinha tl ON tl.id = ast.idTrechoLinha\n" +

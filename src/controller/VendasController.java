@@ -15,6 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import model.entities.Passagem;
+import model.usecases.AutoCompleteUC;
 import model.usecases.EmitirRelatoriosUC;
 import view.loader.*;
 import model.entities.Viagem;
@@ -22,15 +23,16 @@ import model.usecases.GerarViagensUC;
 import view.util.AlertWindow;
 import view.util.DataValidator;
 import view.util.TipoEspecial;
+import view.util.sharedCodes.AutoCompleteComboBoxListener;
 
 import java.io.File;
 import java.util.*;
 
 public class VendasController {
-    
+
+    @FXML ComboBox<String> cBoxOrigem, cBoxDestino;
     @FXML Menu menuGerenciar;
     @FXML AnchorPane popupReagendamento;
-    @FXML TextField txtFieldOrigem, txtFieldDestino;
     @FXML DatePicker datePickerSaida;
     @FXML MenuItem menuOptPassagens;
     @FXML Menu menuRelatorio;
@@ -42,13 +44,16 @@ public class VendasController {
     private TipoEspecial clientType = TipoEspecial.NÃO;
     private GerarViagensUC gerarViagensUC;
     private EmitirRelatoriosUC emitirRelatoriosUC;
+    private AutoCompleteUC autoCompleteUC;
     private ObservableList<Viagem> tableDataViagens;
     private Viagem selectedViagem;
     private String messageHead, messageBody;
     private Passagem passagemReagendamento;
     private boolean modeReagendamento = false;
+    private ObservableList<String> cityNames;
 
     public VendasController() {
+        this.autoCompleteUC = new AutoCompleteUC(new TrechoLinhaDAO(), new LinhaDAO());
         this.gerarViagensUC = new GerarViagensUC(new LinhaDAO(),
                 new TrechoLinhaDAO(),
                 new AssentosTrechoLinhaDAO());
@@ -59,6 +64,28 @@ public class VendasController {
     private void initialize(){
         this.bindDataListToTable();
         this.bindColumnsToValues();
+        this.setAutoComplete();
+    }
+
+    private void setAutoComplete(){
+        this.cityNames = FXCollections.observableArrayList();
+        this.getCityNames();
+        this.setValuesToComboBoxes();
+        this.setAutoCompleteListeners();
+    }
+
+    private void getCityNames(){
+        this.cityNames.setAll(autoCompleteUC.getCityNames());
+    }
+
+    private void setAutoCompleteListeners(){
+        new AutoCompleteComboBoxListener<>(this.cBoxOrigem);
+        new AutoCompleteComboBoxListener<>(this.cBoxDestino);
+    }
+
+    private void setValuesToComboBoxes(){
+        this.cBoxOrigem.setItems(this.cityNames);
+        this.cBoxDestino.setItems(this.cityNames);
     }
 
     private void bindDataListToTable() {
@@ -87,14 +114,14 @@ public class VendasController {
     }
 
     private void setInfoInFields(){
-        txtFieldOrigem.setText(this.passagemReagendamento.getViagem().getCidadeOrigem());
-        txtFieldDestino.setText(this.passagemReagendamento.getViagem().getCidadeDestino());
+        this.cBoxOrigem.setValue(this.passagemReagendamento.getViagem().getCidadeOrigem());
+        this.cBoxDestino.setValue(this.passagemReagendamento.getViagem().getCidadeDestino());
     }
 
     private void toggleModeReagendamento(boolean mode) {
         this.modeReagendamento = mode;
-        this.txtFieldOrigem.setDisable(mode);
-        this.txtFieldDestino.setDisable(mode);
+        this.cBoxOrigem.setDisable(mode);
+        this.cBoxDestino.setDisable(mode);
         this.popupReagendamento.setVisible(mode);
     }
 
@@ -116,6 +143,7 @@ public class VendasController {
     public void openLinha(ActionEvent actionEvent) {
         LinhaLoader janelaLinha = new LinhaLoader();
         janelaLinha.start();
+        this.getCityNames();
     }
 
     public void checkToggle() {
@@ -144,8 +172,8 @@ public class VendasController {
 
     public void searchForViagens(ActionEvent actionEvent) {
         Date data = DataValidator.LocalDateConverter(this.datePickerSaida.getValue());
-        String cidadeOrigem = DataValidator.txtInputVerifier(this.txtFieldOrigem.getText());
-        String cidadeDestino = DataValidator.txtInputVerifier(this.txtFieldDestino.getText());
+        String cidadeOrigem = DataValidator.txtInputVerifier(this.getValueComboBox(this.cBoxOrigem));
+        String cidadeDestino = DataValidator.txtInputVerifier(this.getValueComboBox(this.cBoxDestino));
         if (this.checkInputsValues(data, cidadeOrigem, cidadeDestino))
             this.verifyTimeOfResults(this.gerarViagensUC.searchForViagens(data, cidadeOrigem, cidadeDestino));
         else {
@@ -154,6 +182,10 @@ public class VendasController {
             AlertWindow.errorAlert(messageBody,messageHead);
         }
         this.selectedViagem = null;
+    }
+
+    private String getValueComboBox(ComboBox<String> comboBox){
+        return comboBox.getSelectionModel().getSelectedItem();
     }
 
     private void clearTable(){

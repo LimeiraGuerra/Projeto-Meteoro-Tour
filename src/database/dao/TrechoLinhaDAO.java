@@ -86,25 +86,22 @@ public class TrechoLinhaDAO implements DAOCrud<TrechoLinha, String>, DAOSelects<
 
     @Override
     public List<TrechoLinha> selectAll() {
-        String sql = "Select * from TrechoLinha;";
-        List<TrechoLinha> trechosLinha = new ArrayList<>();
-        SimpleDateFormat formatador = new SimpleDateFormat("HH:mm");
-        try (PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                TrechoLinha trecholinha = new TrechoLinha(rs.getInt(3),
-                        formatador.parse(rs.getString(2)),
-                        rs.getInt(4),
-                        trechoDAO.selectById(rs.getString(6)),
-                        linhadao.selectById(rs.getString(5)),
-                        rs.getLong(1));
-                trechosLinha.add(trecholinha);
-            }
+        return null;
+    }
+
+    @Override
+    public List<String> selectStringForAutoComplete() {
+        String sql = "SELECT * FROM vNomeCidades;";
+        List<String> names = new ArrayList<>();
+        try (Statement stmt = ConnectionFactory.createStatement()) {
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next())
+                names.add(rs.getString(1));
             ConnectionFactory.closeStatements(stmt);
-        } catch (SQLException | ParseException throwables) {
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return trechosLinha;
+        return names;
     }
 
     @Override

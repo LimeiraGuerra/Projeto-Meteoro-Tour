@@ -3,8 +3,6 @@ package database.utils;
 import java.util.List;
 
 public interface DAOCrud<E, I> {
-    /*Lançar "NotImplementedException" caso não use algum método*/
-
 
     void save(E model);
 

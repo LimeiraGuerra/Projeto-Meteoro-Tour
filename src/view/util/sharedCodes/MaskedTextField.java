@@ -1,4 +1,4 @@
-package view.util.mask;
+package view.util.sharedCodes;
 
 import java.util.ArrayList;
 import java.util.List;

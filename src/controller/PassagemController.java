@@ -16,7 +16,7 @@ import model.usecases.DevolverPassagensUC;
 import view.loader.EmissaoBilheteLoader;
 import view.util.AlertWindow;
 import view.util.DataValidator;
-import view.util.mask.MaskedTextField;
+import view.util.sharedCodes.MaskedTextField;
 import java.util.*;
 
 public class PassagemController {

@@ -14,6 +14,11 @@ import java.util.List;
 public class InfoRelatorioDAO implements DAOSelects<InfoLinhaTrechoRelatorio, String> {
 
     @Override
+    public List<String> selectStringForAutoComplete() {
+        throw new NotImplementedException();
+    }
+
+    @Override
     public List<InfoLinhaTrechoRelatorio> selectByParent(String parent) {
         throw new NotImplementedException();
     }
@@ -43,7 +48,8 @@ public class InfoRelatorioDAO implements DAOSelects<InfoLinhaTrechoRelatorio, St
         return new InfoLinhaTrechoRelatorio(rs.getString("data"),
                 rs.getString("horarioSaida"),
                 rs.getString("nomeLinha"),
-                rs.getString("nomeTrecho"),
+                rs.getString("cidadeOrigem"),
+                rs.getString("cidadeDestino"),
                 rs.getInt("uso"),
                 rs.getDouble("lucro"));
     }

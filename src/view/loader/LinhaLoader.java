@@ -17,7 +17,7 @@ public class LinhaLoader {
             stage.setTitle("Meteoro Tour - Linhas");
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(cena);
-            stage.show();
+            stage.showAndWait();
 
         } catch (IOException e) {
             e.printStackTrace();

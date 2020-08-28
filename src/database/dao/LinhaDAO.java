@@ -8,6 +8,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -121,7 +122,22 @@ public class LinhaDAO implements DAOCrud<Linha, String>, DAOSelects<Linha, Strin
         throw new NotImplementedException();
     }
 
+    @Override
+    public List<String> selectStringForAutoComplete() {
+        String sql = "SELECT nome FROM Linha;";
+        List<String> names = new ArrayList<>();
+        try (Statement stmt = ConnectionFactory.createStatement()) {
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next())
+                names.add(rs.getString(1));
+            ConnectionFactory.closeStatements(stmt);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return names;
+    }
 
+    @Override
     public List<Linha> selectByParent(String parent) {
         throw new NotImplementedException();
     }

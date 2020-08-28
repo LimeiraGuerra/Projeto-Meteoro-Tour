@@ -74,15 +74,15 @@ CREATE TABLE Passagem(
 	dataCompra DATETIME NOT NULL
 );
 
-CREATE VIEW vInfoRelatorio (data, nomeLinha, horarioSaida, nomeTrecho, uso, lucro) AS
-	SELECT date(v.data), l.nome, tl.horarioSaida, t.cidadeOrigem||' - '||t.cidadeDestino,
+CREATE VIEW vInfoRelatorio (data, nomeLinha, horarioSaida, cidadeOrigem, cidadeDestino, uso, lucro) AS
+	SELECT date(v.data), l.nome, tl.horarioSaida, t.cidadeOrigem, t.cidadeDestino,
 	count(ast.idTrechoLinha), (sum(t.valorPassagem)+sum(t.taxaEmbarque))*avg(p.desconto) + t.valorSeguro*sum(p.seguro) 
 	FROM Viagem v JOIN Linha l ON l.id = v.idLinha
 	JOIN TrechoLinha tl ON tl.idLinha = l.id
 	JOIN Trecho t ON t.id = tl.idTrecho
 	JOIN AssentoTrechoLinha ast ON ast.idTrechoLinha = tl.id AND ast.idPassagem = v.idPassagem
 	JOIN Passagem p ON p.numPassagem = v.idPassagem
-	GROUP BY tl.id ORDER BY v.data, l.nome, tl.horarioSaida;
+	GROUP BY tl.id ORDER BY l.nome, tl.ordem;
 
 CREATE VIEW vPassagensVendidas (numPassagem, nomeCliente, cpfCliente, rgCliente, telefoneCliente, precoPago, desconto, seguro, 
 dataCompra, dataViagem, idAssento, cidadeOrigem, cidadeDestino, idLinha, nomeLinha, valorViagem, valorSeguro) AS
@@ -101,8 +101,15 @@ CREATE VIEW vLinhaByCidades(idLinha, nomeLinha) AS
 
 CREATE VIEW vTrechoLinhaByLinha (idTrechoLinha, horarioSaida, ordem, dPlus, idLinha, idTrecho,
 cidadeOrigem, cidadeDestino, quilometragem, tempoDuracao, valorPassagem, taxaEmbarque, valorSeguro) AS
-SELECT tl.id, tl.horarioSaida, tl.ordem, tl.dPlus, tl.idLinha , t.* 
-FROM  trechoLinha tl JOIN trecho t ON tl.idTrecho = t.id;
+	SELECT tl.id, tl.horarioSaida, tl.ordem, tl.dPlus, tl.idLinha , t.* 
+	FROM  trechoLinha tl JOIN trecho t ON tl.idTrecho = t.id;
+
+CREATE VIEW vNomeCidades (nomes) AS
+	SELECT t.cidadeOrigem FROM Trecho t
+	JOIN TrechoLinha tl ON tl.idTrecho = t.id
+	UNION
+	SELECT t.cidadeDestino FROM Trecho t
+	JOIN TrechoLinha tl ON tl.idTrecho = t.id;
 
 SELECT tl.id, tl.horarioSaida, tl.ordem, tl.dPlus
 FROM  trechoLinha tl JOIN trecho t ON tl.idTrecho = t.id;

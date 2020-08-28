@@ -3,7 +3,8 @@ package database.utils;
 import java.util.List;
 
 public interface DAOSelects<E, T> {
-    /*Lançar "NotImplementedException" caso não use algum método*/
+
+    List<String> selectStringForAutoComplete();
 
     List<E> selectByParent(T parent);
 
