@@ -44,7 +44,7 @@ public class GerenciarLinhaUC {
         daoLinha.update(linha);
     }
 
-    public boolean checkDeleteLinha(Linha linha) {
+    public boolean checkLinha(Linha linha) {
         return daoLinha.selectById(linha.getId() + "") == null;
     }
 }
