@@ -99,7 +99,7 @@ public class RelatorioController {
         Date dateIni = DataValidator.LocalDateConverter(this.dtPickerIni.getValue());
         Date dateEnd = DataValidator.LocalDateConverter(this.dtPickerFim.getValue());
         if (this.checkDateValues(dateIni, dateEnd)) {
-            this.relatorioData = emitirRelatoriosUC.searchInfoByInterval(dateIni, dateEnd);
+            this.relatorioData = emitirRelatoriosUC.searchInfoByDateInterval(dateIni, dateEnd);
             this.setInfoToView(this.relatorioData);
         }
         else {

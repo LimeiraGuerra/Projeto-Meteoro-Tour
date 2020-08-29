@@ -25,7 +25,8 @@ public class InfoRelatorioDAO implements DAOSelects<InfoLinhaTrechoRelatorio, St
 
     @Override
     public List<InfoLinhaTrechoRelatorio> selectByInterval(String ini, String end) {
-        String sql = "SELECT * FROM vInfoRelatorio where data BETWEEN ? AND ?;";
+        String sql = "SELECT * FROM vInfoRelatorio where " +
+                this.chooseDataColumnForSearch(ini, end) + " BETWEEN date(?) AND date(?);";
         List<InfoLinhaTrechoRelatorio> infosRelatorio = new ArrayList<>();
         try(PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
             this.setKeysToStatement(stmt, ini, end);
@@ -37,6 +38,10 @@ public class InfoRelatorioDAO implements DAOSelects<InfoLinhaTrechoRelatorio, St
             throwables.printStackTrace();
         }
         return infosRelatorio;
+    }
+
+    private String chooseDataColumnForSearch(String ini, String end){
+        return (ini.length()==10 && end.length()==10) ? "data" : "dataCompra";
     }
 
     private void setKeysToStatement(PreparedStatement stmt, String ini, String end) throws SQLException {

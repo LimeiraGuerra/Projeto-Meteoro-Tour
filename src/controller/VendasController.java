@@ -136,11 +136,13 @@ public class VendasController {
     }
 
     public void openTrecho(ActionEvent actionEvent) {
+        this.clearViewFromResults();
         TrechoLoader janelaTrecho = new TrechoLoader();
         janelaTrecho.start();
     }
 
     public void openLinha(ActionEvent actionEvent) {
+        this.clearViewFromResults();
         LinhaLoader janelaLinha = new LinhaLoader();
         janelaLinha.start();
         this.getCityNames();

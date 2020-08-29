@@ -69,6 +69,7 @@ public class DataValidator {
     }
 
     public static String txtInputVerifier(String str){
+        if (str == null) return null;
         str = str.trim();
         return str.isEmpty() ? null : str;
     }

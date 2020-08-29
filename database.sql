@@ -77,15 +77,14 @@ CREATE TABLE Passagem(
 	dataCompra DATETIME NOT NULL
 );
 
-/*CREATE VIEW vInfoRelatorio (data, nomeLinha, horarioSaida, cidadeOrigem, cidadeDestino, uso, lucro) AS
-	SELECT date(v.data), v.nomeLinha, tl.horarioSaida, t.cidadeOrigem, t.cidadeDestino,
-	count(ast.idTrechoLinha), (sum(t.valorPassagem)+sum(t.taxaEmbarque))*avg(p.desconto) + t.valorSeguro*sum(p.seguro) 
-	FROM Viagem v JOIN Linha l ON l.id = v.idLinha
-	JOIN TrechoLinha tl ON tl.idLinha = l.id
+CREATE VIEW vInfoRelatorio (dataCompra, data, nomeLinha, horarioSaida, cidadeOrigem, cidadeDestino, uso, lucro) AS
+	SELECT date(p.dataCompra), date(v.data), v.nomeLinha, tl.horarioSaida, 
+		t.cidadeOrigem, t.cidadeDestino, count(ast.idTrechoLinha), sum(precoPago) 
+	FROM Viagem v JOIN Passagem p ON p.numPassagem = v.idPassagem
+	JOIN AssentoTrechoLinha ast ON ast.idPassagem = v.idPassagem
+	JOIN TrechoLinha tl ON ast.idTrechoLinha = tl.id
 	JOIN Trecho t ON t.id = tl.idTrecho
-	JOIN AssentoTrechoLinha ast ON ast.idTrechoLinha = tl.id AND ast.idPassagem = v.idPassagem
-	JOIN Passagem p ON p.numPassagem = v.idPassagem
-	GROUP BY tl.id ORDER BY l.nome, tl.ordem*/
+	GROUP BY date(v.data), tl.id ORDER BY date(v.data), v.nomeLinha, tl.ordem;
 
 CREATE VIEW vPassagensVendidas (numPassagem, nomeCliente, cpfCliente, rgCliente, telefoneCliente, desconto, seguro, 
 dataCompra, dataViagem, idAssento, cidadeOrigem, cidadeDestino, idLinha, nomeLinha, valorViagem, valorSeguro, precoPago) AS

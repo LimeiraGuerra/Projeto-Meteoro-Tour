@@ -17,13 +17,18 @@ public class EmitirRelatoriosUC {
         this.daoRelatorio = daoRelatorio;
     }
 
-    public List<InfoLinhaTrechoRelatorio> searchInfoByInterval(Date ini, Date end){
+    public List<InfoLinhaTrechoRelatorio> searchInfoByDateInterval(Date ini, Date end){
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        return daoRelatorio.selectByInterval(df.format(ini), df.format(end));
+        return this.searchInfoByInterval(df.format(ini), df.format(end));
+    }
+
+    private List<InfoLinhaTrechoRelatorio> searchInfoByInterval(String ini, String end){
+        return daoRelatorio.selectByInterval(ini, end);
     }
 
     public void exportDailyReport(File file, Date todayDate){
-        List<InfoLinhaTrechoRelatorio> infos = this.searchInfoByInterval(todayDate, todayDate);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        List<InfoLinhaTrechoRelatorio> infos = this.searchInfoByInterval(df.format(todayDate), df.format(todayDate));
         this.export(file, infos);
     }
 
