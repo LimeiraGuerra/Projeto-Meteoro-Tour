@@ -12,7 +12,6 @@ public class TrechoDAO implements DAOCrud<Trecho, String>{
 
     @Override
     public void save(Trecho model) {
-
         String sqlTrecho = "INSERT INTO Trecho(cidadeOrigem, cidadeDestino, quilometragem, tempoDuracao," +
                 " valorPassagem, taxaEmbarque, valorSeguro)" +
                 "VALUES(?, ?, ?, ?, ?, ?, ?);";
@@ -105,6 +104,7 @@ public class TrechoDAO implements DAOCrud<Trecho, String>{
         stmt.execute();
     }
 
+    @Override
     public List<Trecho> selectAllByKeyword(String key) {
         throw new NotImplementedException();
     }

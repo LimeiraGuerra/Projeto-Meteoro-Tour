@@ -4,6 +4,7 @@ import database.utils.ConnectionFactory;
 import database.utils.DAOCrud;
 import model.entities.Funcionario;
 import model.entities.Onibus;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,8 +22,9 @@ public class FuncionarioDAO implements DAOCrud<Funcionario, String> {
             stmt.setString(1, model.getCpf());
             stmt.setString(2, model.getRg());
             stmt.setString(3, model.getNome());
-            stmt.setString(4, model.getNome());
+            stmt.setString(4, model.getCargo());
             stmt.execute();
+            ConnectionFactory.closeStatements(stmt);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -37,6 +39,7 @@ public class FuncionarioDAO implements DAOCrud<Funcionario, String> {
             stmt.setString(3,model.getCargo());
             stmt.setString(4,model.getCpf());
             stmt.executeUpdate();
+            ConnectionFactory.closeStatements(stmt);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -48,6 +51,7 @@ public class FuncionarioDAO implements DAOCrud<Funcionario, String> {
         try (PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
             stmt.setString(1, model.getCpf());
             stmt.execute();
+            ConnectionFactory.closeStatements(stmt);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -55,7 +59,7 @@ public class FuncionarioDAO implements DAOCrud<Funcionario, String> {
 
     @Override
     public Funcionario selectById(String id) {
-        return null;
+        throw new NotImplementedException();
     }
 
     @Override
@@ -67,6 +71,7 @@ public class FuncionarioDAO implements DAOCrud<Funcionario, String> {
             while (rs.next()){
                 funcs.add(new Funcionario(rs.getString("cpf"),rs.getString("rg"), rs.getString("nome"),rs.getString("cargo")));
             }
+            ConnectionFactory.closeStatements(stmt);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -75,7 +80,7 @@ public class FuncionarioDAO implements DAOCrud<Funcionario, String> {
 
     @Override
     public List<Funcionario> selectAllByKeyword(String key) {
-        return null;
+        throw new NotImplementedException();
     }
 
 

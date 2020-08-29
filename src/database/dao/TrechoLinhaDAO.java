@@ -17,9 +17,6 @@ import java.util.List;
 
 public class TrechoLinhaDAO implements DAOCrud<TrechoLinha, String>, DAOSelects<TrechoLinha, Linha> {
 
-    private LinhaDAO linhadao = new LinhaDAO();
-    private TrechoDAO trechoDAO = new TrechoDAO();
-
     @Override
     public void save(TrechoLinha model) {
         String sql = "INSERT INTO TrechoLinha(horarioSaida, ordem, dPlus, idLinha, idTrecho) VALUES(time(?), ?, ?, ?, ?);";
@@ -62,31 +59,12 @@ public class TrechoLinhaDAO implements DAOCrud<TrechoLinha, String>, DAOSelects<
 
     @Override
     public TrechoLinha selectById(String id) {
-        int num = Integer.parseInt(id);
-        String sql = "Select * from TrechoLinha where id = ?;";
-        TrechoLinha trechoL = null;
-        SimpleDateFormat formatador = new SimpleDateFormat("HH:mm");
-        try (PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
-            stmt.setInt(1, num);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                trechoL = new TrechoLinha(rs.getInt(3),
-                        formatador.parse(rs.getString(2)),
-                        rs.getInt(4),
-                        trechoDAO.selectById(rs.getString(6)),
-                        linhadao.selectById(rs.getString(5)),
-                        rs.getLong(1));
-            }
-            ConnectionFactory.closeStatements(stmt);
-        } catch (SQLException | ParseException throwables) {
-            throwables.printStackTrace();
-        }
-        return trechoL;
+        throw new NotImplementedException();
     }
 
     @Override
     public List<TrechoLinha> selectAll() {
-        return null;
+        throw new NotImplementedException();
     }
 
     @Override
@@ -152,6 +130,7 @@ public class TrechoLinhaDAO implements DAOCrud<TrechoLinha, String>, DAOSelects<
                 rs.getInt("dPlus"));
     }
 
+    @Override
     public List<TrechoLinha> selectByInterval(Linha ini, Linha end) {
         throw new NotImplementedException();
     }

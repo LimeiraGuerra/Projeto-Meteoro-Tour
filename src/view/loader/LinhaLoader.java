@@ -1,5 +1,6 @@
 package view.loader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -12,6 +13,7 @@ public class LinhaLoader {
             Pane grafico = load(getClass().getResource("/view/fxml/Linha.fxml"));
             Scene cena = new Scene(grafico);
             Stage stage = new Stage();
+            stage.getIcons().add(new Image(getClass().getResourceAsStream( "/resources/onibus.png" )));
             stage.setResizable(false);
             stage.sizeToScene();
             stage.setTitle("Meteoro Tour - Linhas");

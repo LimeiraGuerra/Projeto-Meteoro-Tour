@@ -3,6 +3,7 @@ package view.loader;
 import controller.TrechoController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -21,6 +22,7 @@ public class TrechoLoader {
             Stage stage = new Stage();
             stage.setResizable(false);
             stage.sizeToScene();
+            stage.getIcons().add(new Image(getClass().getResourceAsStream( "/resources/onibus.png" )));
             stage.setTitle("Meteoro Tour - Trechos");
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(cena);

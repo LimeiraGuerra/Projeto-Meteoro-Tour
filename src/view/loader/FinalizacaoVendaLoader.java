@@ -3,6 +3,7 @@ package view.loader;
 import controller.FinalizacaoVendaController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -36,6 +37,7 @@ public class FinalizacaoVendaLoader {
 
             Stage stage = new Stage();
             stage.setScene(new Scene(graph));
+            stage.getIcons().add(new Image(getClass().getResourceAsStream( "/resources/onibus.png" )));
             stage.setTitle("Finalizar Compra");
             stage.setResizable(false);
             stage.sizeToScene();

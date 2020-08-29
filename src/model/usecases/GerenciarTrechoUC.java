@@ -1,15 +1,16 @@
 package model.usecases;
-import database.dao.TrechoLinhaDAO;
 import database.utils.DAOCrud;
 import model.entities.Trecho;
+import model.entities.TrechoLinha;
+
 import java.util.List;
 
 public class GerenciarTrechoUC {
 
     private DAOCrud<Trecho, String> daoTrecho;
-    private TrechoLinhaDAO trechoLinhaDAO;
+    private DAOCrud<TrechoLinha, String> trechoLinhaDAO;
 
-    public GerenciarTrechoUC(DAOCrud<Trecho, String> daoTrecho, TrechoLinhaDAO trechoLinhaDAO) {
+    public GerenciarTrechoUC(DAOCrud<Trecho, String> daoTrecho, DAOCrud<TrechoLinha, String> trechoLinhaDAO) {
         this.daoTrecho = daoTrecho;
         this.trechoLinhaDAO = trechoLinhaDAO;
     }
@@ -17,13 +18,13 @@ public class GerenciarTrechoUC {
     public Trecho searchForOrigemDestino(String origem, String destino){
         for (Trecho trecho : getListTrechos()){
             if (iscityOrigin(origem, trecho) && iscityDestiny(destino, trecho)){
-                return  trecho;
+                return trecho;
             }
         }
         return  null;
     }
 
-    public  Trecho createTrecho(String origem, String destino, double km, int tempo, double valorP, double valorE, double valorS) {
+    public Trecho createTrecho(String origem, String destino, double km, int tempo, double valorP, double valorE, double valorS) {
         Trecho t = new Trecho(origem, destino, km, tempo, valorP, valorE, valorS);
         this.addTrecho(t);
         return t;
@@ -62,9 +63,6 @@ public class GerenciarTrechoUC {
     }
 
     public boolean ContainsTrechoLinha(Trecho trecho){
-        if (trechoLinhaDAO.selectAllByKeyword(trecho.getId()+"").size() > 0){
-            return false;
-        }
-        return true;
+        return trechoLinhaDAO.selectAllByKeyword(String.valueOf(trecho.getId())).size() > 0;
     }
 }

@@ -3,6 +3,7 @@ package view.loader;
 import controller.EmissaoBilheteController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -20,6 +21,7 @@ public class EmissaoBilheteLoader {
             ctrl.setPassagem(passagem);
             Stage stage = new Stage();
             stage.setScene(new Scene(graph));
+            stage.getIcons().add(new Image(getClass().getResourceAsStream( "/resources/onibus.png" )));
             stage.setTitle("Meteoro Tour - Impressão de Bilhete");
             stage.setResizable(false);
             stage.sizeToScene();

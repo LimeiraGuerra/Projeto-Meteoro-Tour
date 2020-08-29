@@ -1,14 +1,14 @@
 package model.usecases;
 
-import database.dao.FuncionarioDAO;
+import database.utils.DAOCrud;
 import model.entities.Funcionario;
 
 import java.util.List;
 
 public class GerenciarFuncionarioUC {
-    private FuncionarioDAO daoFunc;
+    private DAOCrud<Funcionario, String> daoFunc;
 
-    public GerenciarFuncionarioUC(FuncionarioDAO daoFunc){
+    public GerenciarFuncionarioUC(DAOCrud<Funcionario, String> daoFunc){
         this.daoFunc = daoFunc;
     }
 

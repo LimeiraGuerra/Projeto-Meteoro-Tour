@@ -1,7 +1,7 @@
 package model.usecases;
 
-import database.dao.TrechoLinhaDAO;
 import database.utils.DAOCrud;
+import database.utils.DAOSelects;
 import model.entities.Linha;
 import model.entities.TrechoLinha;
 import java.util.List;
@@ -9,9 +9,9 @@ import java.util.List;
 public class GerenciarLinhaUC {
 
     private DAOCrud<Linha, String> daoLinha;
-    private TrechoLinhaDAO daoTrechoLinha;
+    private DAOSelects<TrechoLinha, Linha> daoTrechoLinha;
 
-    public GerenciarLinhaUC(DAOCrud<Linha, String> daoLinha, TrechoLinhaDAO daoTrechoLinha) {
+    public GerenciarLinhaUC(DAOCrud<Linha, String> daoLinha, DAOSelects<TrechoLinha, Linha> daoTrechoLinha) {
         this.daoLinha = daoLinha;
         this.daoTrechoLinha = daoTrechoLinha;
     }
@@ -22,11 +22,7 @@ public class GerenciarLinhaUC {
     }
 
     public void deleteLinha(Linha linha) {
-        for (TrechoLinha tl : linha.getListTrechoLinha()){
-            daoTrechoLinha.delete(tl);
-        }
         daoLinha.delete(linha);
-
     }
 
     public List<Linha> getListLinha(){
@@ -45,6 +41,6 @@ public class GerenciarLinhaUC {
     }
 
     public boolean checkLinha(Linha linha) {
-        return daoLinha.selectById(linha.getId() + "") == null;
+        return daoLinha.selectById(String.valueOf(linha.getId())) == null;
     }
 }
