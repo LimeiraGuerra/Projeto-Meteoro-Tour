@@ -13,7 +13,7 @@ public class GerenciarFuncionarioUC {
     }
 
     public List<Funcionario> getListFunc(){
-        return daoFunc.getListFuncs();
+        return daoFunc.selectAll();
     }
 
     public void saveFunc(Funcionario funcionario){

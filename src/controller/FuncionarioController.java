@@ -28,12 +28,11 @@ public class FuncionarioController{
     public TableColumn<Funcionario, String> cCargo;
 
     private String msgBody;
-    //variaveis validação
     private ObservableList<Funcionario> funcionarios = FXCollections.observableArrayList();
     private GerenciarFuncionarioUC ucFuncionario;
 
     public FuncionarioController(){
-        this.ucFuncionario = new GerenciarFuncionarioUC(FuncionarioDAO.getInstancia());
+        this.ucFuncionario = new GerenciarFuncionarioUC(new FuncionarioDAO());
     }
 
     public void initialize(){

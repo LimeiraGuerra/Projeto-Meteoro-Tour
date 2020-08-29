@@ -32,8 +32,12 @@ public class OnibusController {
     private ObservableList<Onibus> onibus = FXCollections.observableArrayList();
     private GerenciarOnibusUC ucOnibus;
 
-    public OnibusController(){
+    /*public OnibusController(){
         this.ucOnibus= new GerenciarOnibusUC(OnibusDAO.getInstancia());
+    }*/
+
+    public OnibusController(){
+        this.ucOnibus = new GerenciarOnibusUC(new OnibusDAO());
     }
 
     public void initialize(){

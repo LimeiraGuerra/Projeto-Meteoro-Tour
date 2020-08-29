@@ -18,7 +18,7 @@ public class ConnectionFactory implements AutoCloseable{
         return connection;
     }
 
-    public  static PreparedStatement createPreparedStatement(String sql) {
+    public static PreparedStatement createPreparedStatement(String sql) {
         try {preparedStatement = createConnection().prepareStatement(sql);}
         catch (SQLException e) { e.printStackTrace();}
         return preparedStatement;
