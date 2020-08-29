@@ -2,7 +2,6 @@ package view.util.sharedCodes;
 
 import java.text.NumberFormat;
 import java.util.Locale;
-
 import javafx.application.Platform;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
@@ -15,6 +14,7 @@ import javafx.scene.control.TextField;
  * @author Gustavo
  * @version 1.0
  */
+
 public class CurrencyField extends TextField{
 
     private NumberFormat format;

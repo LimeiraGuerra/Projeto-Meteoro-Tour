@@ -8,11 +8,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import model.entities.Trecho;
 import model.usecases.GerenciarTrechoUC;
 import view.util.DataValidator;
 import view.util.AlertWindow;
+import view.util.sharedCodes.CurrencyField;
 
 public class TrechoController {
 
@@ -23,11 +25,11 @@ public class TrechoController {
     @FXML private TableColumn<Trecho, Double> cValorTotal;
     @FXML private TextField tfOrigem;
     @FXML private TextField tfDestino;
-    @FXML private TextField tfValorPassagem;
-    @FXML private TextField tfValorSeguro;
     @FXML private TextField tfTempoDuracao;
     @FXML private TextField tfQuilometragem;
-    @FXML private TextField tfTaxaEmbarque;
+    @FXML private CurrencyField tfValorPassagem;
+    @FXML private CurrencyField tfValorSeguro;
+    @FXML private CurrencyField tfTaxaEmbarque;
     @FXML private Pane paneTrecho;
     @FXML private Pane paneImg;
     @FXML private Button btDeleteTrecho;
@@ -63,8 +65,8 @@ public class TrechoController {
     private Trecho createTrecho() {
 
         return ucTrecho.createTrecho(tfOrigem.getText(), tfDestino.getText(), Double.parseDouble(tfQuilometragem.getText()),
-                Integer.parseInt(tfTempoDuracao.getText()), Double.parseDouble(tfValorPassagem.getText()),
-                Double.parseDouble(tfTaxaEmbarque.getText()), Double.parseDouble(tfValorSeguro.getText()));
+                Integer.parseInt(tfTempoDuracao.getText()), tfValorPassagem.getAmount(),
+                tfTaxaEmbarque.getAmount(), tfValorSeguro.getAmount());
     }
 
     private Trecho searchTrechoOrigemDestino(){
@@ -74,7 +76,7 @@ public class TrechoController {
     private void updateTrecho(){
         Trecho trecho = searchTrechoOrigemDestino();
         ucTrecho.atualizaTrecho(Double.parseDouble(tfQuilometragem.getText()),Integer.parseInt(tfTempoDuracao.getText()),
-                Double.parseDouble(tfValorPassagem.getText()), Double.parseDouble(tfTaxaEmbarque.getText()),Double.parseDouble(tfValorSeguro.getText()), trecho);
+                tfValorPassagem.getAmount(), tfTaxaEmbarque.getAmount(),tfValorSeguro.getAmount(), trecho);
         trecho.setValorTotal();
         setValorTotal(trecho.getValorTotal());
     }
@@ -155,9 +157,9 @@ public class TrechoController {
         return !tfDestino.getText().isEmpty() && !tfOrigem.getText().isEmpty() &&
                 DataValidator.isDouble(tfQuilometragem.getText()) &&
                 DataValidator.isDouble(tfTempoDuracao.getText()) &&
-                DataValidator.isDouble(tfValorPassagem.getText()) &&
-                DataValidator.isDouble(tfTaxaEmbarque.getText()) &&
-                DataValidator.isDouble(tfValorSeguro.getText());
+                DataValidator.isDouble(tfValorPassagem.getAmount() +"") &&
+                DataValidator.isDouble(tfTaxaEmbarque.getAmount() +"") &&
+                DataValidator.isDouble(tfValorSeguro.getAmount() +"");
     }
 
     private void setFieldsTrecho(Trecho trecho){
@@ -195,5 +197,8 @@ public class TrechoController {
 
     private void setVisiblePaneImg(boolean bool) {
         paneImg.setVisible(bool);
+    }
+
+    public void verTrecho(MouseEvent mouseEvent) {
     }
 }

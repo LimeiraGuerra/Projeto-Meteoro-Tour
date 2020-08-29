@@ -4,7 +4,6 @@ import database.utils.ConnectionFactory;
 import database.utils.DAOCrud;
 import model.entities.Administrador;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

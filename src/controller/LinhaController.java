@@ -19,6 +19,8 @@ import model.usecases.GerenciarTrechoUC;
 import model.usecases.GerenciarTrechoLinhaUC;
 import view.util.AlertWindow;
 import view.util.DataValidator;
+import view.util.sharedCodes.CurrencyField;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -40,11 +42,11 @@ public class LinhaController{
     @FXML private Pane paneCriaTrecho;
     @FXML private TextField tfOrigem;
     @FXML private TextField tfDestino;
-    @FXML private TextField tfValorPassagem;
-    @FXML private TextField tfValorSeguro;
+    @FXML private CurrencyField tfValorPassagem;
+    @FXML private CurrencyField tfValorSeguro;
+    @FXML private CurrencyField tfTaxaEmbarque;
     @FXML private TextField tfTempoDuracao;
     @FXML private TextField tfQuilometragem;
-    @FXML private TextField tfTaxaEmbarque;
     @FXML private Pane paneImg;
     @FXML private TextField txtHoraTrecho;
     @FXML private TextField txtMinTrecho;
@@ -283,8 +285,8 @@ public class LinhaController{
         if(checkTextField()){
             if (ucTrecho.searchForOrigemDestino(tfOrigem.getText(), tfDestino.getText()) == null){
                 ucTrecho.createTrecho(tfOrigem.getText(), tfDestino.getText(), Double.parseDouble(tfQuilometragem.getText()),
-                        Integer.parseInt(tfTempoDuracao.getText()), Double.parseDouble(tfValorPassagem.getText()),
-                        Double.parseDouble(tfTaxaEmbarque.getText()), Double.parseDouble(tfValorSeguro.getText()));
+                        Integer.parseInt(tfTempoDuracao.getText()), tfValorPassagem.getAmount(),
+                        tfTaxaEmbarque.getAmount(), tfValorSeguro.getAmount());
             }else{
                 AlertWindow.informationAlerta("Trecho não pode ser salvo, pois há trecho com o mesmo conjunto de cidade Origem - cidade Destino", "Trecho não adicionado.");
             }
@@ -391,9 +393,9 @@ public class LinhaController{
         return !tfDestino.getText().isEmpty() && !tfOrigem.getText().isEmpty() &&
                 DataValidator.isDouble(tfQuilometragem.getText()) &&
                 DataValidator.isDouble(tfTempoDuracao.getText()) &&
-                DataValidator.isDouble(tfValorPassagem.getText()) &&
-                DataValidator.isDouble(tfTaxaEmbarque.getText()) &&
-                DataValidator.isDouble(tfValorSeguro.getText());
+                DataValidator.isDouble(tfValorPassagem.getAmount() +"") &&
+                DataValidator.isDouble(tfTaxaEmbarque.getAmount() +"") &&
+                DataValidator.isDouble(tfValorSeguro.getAmount() +"");
     }
 
     @FXML

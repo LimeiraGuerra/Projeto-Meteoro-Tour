@@ -19,7 +19,6 @@ import view.util.DataValidator;
 import view.util.sharedCodes.AutoCompleteComboBoxListener;
 import view.util.sharedCodes.CurrencyField;
 import view.util.sharedCodes.MaskedTextField;
-
 import java.io.File;
 import java.util.*;
 

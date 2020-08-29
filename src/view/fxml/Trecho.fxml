@@ -9,37 +9,37 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import view.util.sharedCodes.CurrencyField?>
 
 <AnchorPane prefHeight="500.0" prefWidth="773.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TrechoController">
    <children>
       <Pane fx:id="paneTrecho" blendMode="SRC_ATOP" layoutX="494.0" layoutY="48.0" prefHeight="451.0" prefWidth="277.0" style="visibility: false;">
          <children>
-            <TextField fx:id="tfOrigem" layoutX="114.0" layoutY="14.0" />
-            <TextField fx:id="tfDestino" layoutX="114.0" layoutY="51.0" />
-            <TextField fx:id="tfQuilometragem" layoutX="114.0" layoutY="88.0" />
-            <TextField fx:id="tfTaxaEmbarque" layoutX="114.0" layoutY="125.0" />
-            <TextField fx:id="tfValorSeguro" layoutX="114.0" layoutY="162.0" />
-            <TextField fx:id="tfValorPassagem" layoutX="114.0" layoutY="199.0" />
-            <TextField fx:id="tfTempoDuracao" layoutX="114.0" layoutY="236.0" />
-            <Label layoutX="7.0" layoutY="240.0" text="Tempo de Duração:" />
-            <Label layoutX="7.0" layoutY="129.0" text="Taxa de Embarque:" />
-            <Label layoutX="7.0" layoutY="203.0" text="Valor da Passagem:" />
-            <Label layoutX="7.0" layoutY="166.0" text="Valor do Seguro:" />
-            <Label layoutX="7.0" layoutY="92.0" text="Quilometragem:" />
-            <Label layoutX="7.0" layoutY="55.0" text="Cidade de Destino:" />
-            <Label layoutX="7.0" layoutY="18.0" text="Cidade de Origem:" />
+            <TextField fx:id="tfOrigem" alignment="CENTER" layoutX="114.0" layoutY="14.0" />
+            <TextField fx:id="tfDestino" alignment="CENTER" layoutX="114.0" layoutY="51.0" />
+            <TextField fx:id="tfQuilometragem" alignment="CENTER" layoutX="114.0" layoutY="88.0" promptText="KM"/>
+            <CurrencyField fx:id="tfTaxaEmbarque" alignment="CENTER" layoutX="114.0" layoutY="125.0"/>
+            <CurrencyField fx:id="tfValorSeguro" alignment="CENTER"  layoutX="114.0" layoutY="162.0"/>
+            <CurrencyField fx:id="tfValorPassagem" alignment="CENTER" layoutX="114.0" layoutY="199.0"/>
+            <TextField fx:id="tfTempoDuracao" alignment="CENTER" layoutX="114.0" layoutY="236.0" promptText="Minutos"/>
+            <Label layoutX="7.0" layoutY="240.0" text="Tempo de Duração:"/>
+            <Label layoutX="7.0" layoutY="129.0" text="Taxa de Embarque:"/>
+            <Label layoutX="7.0" layoutY="203.0" text="Valor da Passagem:"/>
+            <Label layoutX="7.0" layoutY="166.0" text="Valor do Seguro:"/>
+            <Label layoutX="7.0" layoutY="92.0" text="Quilometragem:"/>
+            <Label layoutX="7.0" layoutY="55.0" text="Cidade de Destino:"/>
+            <Label layoutX="7.0" layoutY="18.0" text="Cidade de Origem:"/>
             <Label fx:id="lbValorTotal" layoutX="6.0" layoutY="273.0" prefHeight="17.0" prefWidth="217.0" />
             <Button fx:id="btSalvaTrecho" layoutX="164.0" layoutY="413.0" mnemonicParsing="false" onAction="#saveOrUpdateTrecho" prefHeight="25.0" prefWidth="98.0" text="Salvar" />
             <Button fx:id="btDeleteTrecho" layoutX="46.0" layoutY="413.0" mnemonicParsing="false" onAction="#deleteTrecho" prefHeight="25.0" prefWidth="101.0" text="Excluir" />
          </children>
       </Pane>
-      <TableView fx:id="tabelaTrecho" layoutX="14.0" layoutY="29.0" prefHeight="423.0" prefWidth="477.0">
+      <TableView fx:id="tabelaTrecho" layoutX="14.0" layoutY="29.0" onMouseClicked="#verTrecho" prefHeight="423.0" prefWidth="477.0">
         <columns>
           <TableColumn fx:id="cOrigem" prefWidth="140" text="Origem" />
           <TableColumn fx:id="cDestino" prefWidth="138.0" text="Destino" />
            <TableColumn fx:id="cQuilometragem" prefWidth="112.0" text="Quilometragem" />
            <TableColumn fx:id="cValorTotal" prefWidth="90.0" text="Valor" />
-
         </columns>
       </TableView>
       <Button fx:id="criarTrecho" layoutX="15.0" layoutY="462.0" mnemonicParsing="false" onAction="#viewCreateTrecho" prefHeight="25.0" prefWidth="135.0" text="Criar Novo Trecho" />
