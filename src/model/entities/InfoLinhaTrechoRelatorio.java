@@ -5,6 +5,7 @@ import view.util.DataValidator;
 import java.util.Date;
 import java.util.Objects;
 
+
 public class InfoLinhaTrechoRelatorio {
     private String data, horarioSaida;
     private String nomeLinha, cidadeOrigem, cidadeDestino;

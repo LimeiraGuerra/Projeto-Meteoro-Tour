@@ -40,10 +40,11 @@ public class GerenciarLinhaUC {
             return linhas;
         }
 
-
     public void updateLinha(Linha linha) {
         daoLinha.update(linha);
     }
 
-
+    public boolean checkLinha(Linha linha) {
+        return daoLinha.selectById(linha.getId() + "") == null;
+    }
 }

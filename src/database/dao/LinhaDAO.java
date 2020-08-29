@@ -15,9 +15,10 @@ import java.util.List;
 public class LinhaDAO implements DAOCrud<Linha, String>, DAOSelects<Linha, String> {
 
     public void save(Linha model) {
-        String sqlLinha = "INSERT INTO LINHA(nome) VALUES(?);";
+        String sqlLinha = "INSERT INTO LINHA(nome, inativo) VALUES(?, ?);";
         try (PreparedStatement stmtLinha = ConnectionFactory.createPreparedStatement(sqlLinha)) {
             stmtLinha.setString(1, model.getNome());
+            stmtLinha.setBoolean(2, model.isInativo());
             stmtLinha.execute();
             ConnectionFactory.closeStatements(stmtLinha);
         } catch (SQLException throwables) {
@@ -26,10 +27,11 @@ public class LinhaDAO implements DAOCrud<Linha, String>, DAOSelects<Linha, Strin
     }
 
     public void update(Linha model) {
-        String sqlEdite = "UPDATE linha set nome = ? where id = ?;";
+        String sqlEdite = "UPDATE linha set nome = ?, inativo = ? where id = ?;";
         try(PreparedStatement stmtLinha = ConnectionFactory.createPreparedStatement(sqlEdite)){
             stmtLinha.setString(1, model.getNome());
-            stmtLinha.setLong(2, model.getId());
+            stmtLinha.setBoolean(2, model.isInativo());
+            stmtLinha.setLong(3, model.getId());
             stmtLinha.execute();
             ConnectionFactory.closeStatements(stmtLinha);
         }
@@ -51,16 +53,15 @@ public class LinhaDAO implements DAOCrud<Linha, String>, DAOSelects<Linha, Strin
         }
     }
 
-    @Override
     public Linha selectById(String id) {
         long num = Long.parseLong(id);
-        String sql = "Select * from linha where id = ?;";
+        String sql = "SELECT * FROM LINHA WHERE id = (SELECT idLinha FROM vPassagensVendidas where idLinha = ?) and inativo = 0;";
         Linha linha = null;
         try (PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
             stmt.setLong(1, num);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                linha = new Linha(rs.getLong(1), rs.getString(2));
+                linha = new Linha(rs.getLong(1), rs.getString(2), rs.getBoolean(3));
             }
             ConnectionFactory.closeStatements(stmt);
         } catch (SQLException throwables) {
@@ -71,12 +72,12 @@ public class LinhaDAO implements DAOCrud<Linha, String>, DAOSelects<Linha, Strin
 
     @Override
     public List<Linha> selectAll() {
-        String sql = "Select * from linha;";
+        String sql = "Select * from linha where inativo = 0;";
         List<Linha> linhas = new ArrayList<>();
         try (PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                Linha linha = new Linha(rs. getLong(1), rs.getString(2));
+                Linha linha = new Linha(rs. getLong(1), rs.getString(2), rs.getBoolean(3));
                 linhas.add(linha);
             }
             ConnectionFactory.closeStatements(stmt);
@@ -92,7 +93,7 @@ public class LinhaDAO implements DAOCrud<Linha, String>, DAOSelects<Linha, Strin
                 + "SELECT tl.idLinha FROM trechoLinha tl JOIN trecho t ON t.id = tl.idTrecho\n"
                 + "WHERE t.cidadeOrigem = ? AND idLinha IN (\n"
                 + "SELECT idLinha FROM trechoLinha tl JOIN trecho t ON t.id = tl.idTrecho\n"
-                + "WHERE t.cidadeDestino = ?));";
+                + "WHERE t.cidadeDestino = ? and inativo = 0));";
         List<Linha> linhas = null;
         try (PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
             setKeysCidades(stmt, ini, end);
@@ -107,7 +108,7 @@ public class LinhaDAO implements DAOCrud<Linha, String>, DAOSelects<Linha, Strin
     private List<Linha> setResultLinhas(ResultSet rs) throws SQLException {
         List<Linha> linhas = new ArrayList<>();
         while (rs.next())
-            linhas.add(new Linha(rs.getLong("idLinha"), rs.getString("nomeLinha")));
+            linhas.add(new Linha(rs.getLong("idLinha"), rs.getString("nomeLinha"), rs.getBoolean("inativo")));
         return linhas;
     }
 
@@ -141,4 +142,5 @@ public class LinhaDAO implements DAOCrud<Linha, String>, DAOSelects<Linha, Strin
     public List<Linha> selectByParent(String parent) {
         throw new NotImplementedException();
     }
+
 }
