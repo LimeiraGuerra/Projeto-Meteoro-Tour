@@ -1,46 +1,30 @@
 package model.usecases;
-
-
-import database.dao.TrechoLinhaDAO;
+import database.utils.DAOCrud;
 import model.entities.Linha;
-import model.entities.Trecho;
 import model.entities.TrechoLinha;
-import java.util.Date;
-import java.util.List;
 
 public class GerenciarTrechoLinhaUC {
-    private TrechoLinhaDAO daoTrechoLinha = new TrechoLinhaDAO();
-    private GerenciarTrechoUC ucTrecho = new GerenciarTrechoUC();
-    private GerenciarLinhaUC ucLinha = new GerenciarLinhaUC();
 
-    /*public void createTrechoLinha(Linha linha, Trecho trecho, Date horario, int ordem){
-        TrechoLinha trechoL = new TrechoLinha(ordem, horario, trecho, linha);
-        daoTrechoLinha.save(trechoL);
-        ucLinha.updateLinha(linha);
-        ucTrecho.updateTrecho(trecho);
-    }*/
+    private DAOCrud<TrechoLinha, String> daoTrechoLinha;
 
-    public TrechoLinha searchTrechoLinha() {
-        return searchTrechoLinha();
+    public GerenciarTrechoLinhaUC(DAOCrud<TrechoLinha, String> daoTrechoLinha) {
+        this.daoTrechoLinha = daoTrechoLinha;
     }
 
-    public TrechoLinha searchTrechoLinha(TrechoLinha tL){
-        return daoTrechoLinha.searchTrechoLinha(tL);
+    public void saveTrechoLinha(TrechoLinha trechoLinha){
+        daoTrechoLinha.save(trechoLinha);
     }
 
     public void deleteTrechoLinha(TrechoLinha trechoLinha) {
-        Trecho trecho = trechoLinha.getTrecho();
         Linha linha = trechoLinha.getLinha();
-        trecho.deleteTrechoLinha(trechoLinha);
         linha.deleteTrechoLinha(trechoLinha);
         daoTrechoLinha.delete(trechoLinha);
-        ucLinha.updateLinha(linha);
-        ucTrecho.updateTrecho(trecho);
-
     }
 
-    public List<TrechoLinha> getListTrechoLinha() {
-        return daoTrechoLinha.getListTrechoLinha();
+    public void updateTrechoLinha(TrechoLinha trechoLinha){
+        TrechoLinha tLinha = daoTrechoLinha.selectById(trechoLinha.getId()+"");
+        tLinha.setHorarioSaida(trechoLinha.getHorarioSaida());
+        daoTrechoLinha.update(tLinha);
     }
 
 }

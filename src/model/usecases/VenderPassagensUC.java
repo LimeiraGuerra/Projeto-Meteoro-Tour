@@ -1,19 +1,16 @@
 package model.usecases;
 
-import database.utils.DAO;
+import database.utils.DAOCrud;
 import model.entities.Passagem;
-import model.entities.Viagem;
 
 public class VenderPassagensUC {
-    private DAO<Passagem, String> daoPassagem;
-    private DAO<Viagem, String> daoViagem;
+    private DAOCrud<Passagem, String> daoPassagem;
 
-    public VenderPassagensUC(DAO<Passagem, String> daoPassagem,  DAO<Viagem, String> daoViagem){
+    public VenderPassagensUC(DAOCrud<Passagem, String> daoPassagem){
         this.daoPassagem = daoPassagem;
-        this.daoViagem = daoViagem;
     }
 
-    public void saveSale(Passagem p) {
+    public void saveSale(Passagem p){
         this.daoPassagem.save(p);
     }
 }

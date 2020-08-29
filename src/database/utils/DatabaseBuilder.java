@@ -14,7 +14,7 @@ public class DatabaseBuilder {
         clear();
         build();
     }
-
+    
     private static void clear() {
         System.out.println("Cleaning up...");
         try {
@@ -37,26 +37,4 @@ public class DatabaseBuilder {
             System.out.println(e.getMessage());
         }
     }
-
-    /*private static void build() {
-        try (Statement stmt = ConnectionFactory.createStatement()) {
-            stmt.addBatch("CREATE TABLE Declaracao (\n" +
-                    "\tid INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n" +
-                    "\tvalor_pago REAL,\n" +
-                    "\ttipo INTEGER NOT NULL,\n" +
-                    "\trenda REAL);");
-            stmt.addBatch("CREATE TABLE Deducao (\n" +
-                    "\tid INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n" +
-                    "\tdescricao TEXT,\n" +
-                    "\tcnpj TEXT,\n" +
-                    "\tinstituicao TEXT,\n" +
-                    "\tconselho TEXT,\n" +
-                    "\tvalor REAL);");
-            stmt.executeBatch();
-            stmt.close();
-            System.out.println("Database has been created ...");
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }*/
 }

@@ -30,6 +30,13 @@ public class ConnectionFactory implements AutoCloseable{
         return statement;
     }
 
+    public static void closeStatements(Statement... stmts){
+        for (Statement stmt : stmts) {
+            try {stmt.close(); }
+            catch (SQLException throwables) { throwables.printStackTrace(); }
+        }
+    }
+
     public static Connection getConnection(){
         return connection;
     }
@@ -41,7 +48,7 @@ public class ConnectionFactory implements AutoCloseable{
         }
     }
 
-    @Override
+
     public void close() throws Exception {
         if(connection != null){
             connection.close();

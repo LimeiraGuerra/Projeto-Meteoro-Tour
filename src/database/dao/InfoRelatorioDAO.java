@@ -1,85 +1,61 @@
 package database.dao;
 
-import database.utils.DAO;
+import database.utils.ConnectionFactory;
+import database.utils.DAOCrud;
+import database.utils.DAOSelects;
 import model.entities.InfoLinhaTrechoRelatorio;
-import model.entities.Linha;
-import model.entities.Passagem;
-import model.entities.TrechoLinha;
-
-import java.text.SimpleDateFormat;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class InfoRelatorioDAO implements DAO<InfoLinhaTrechoRelatorio, String> {
-    private static InfoRelatorioDAO instancia;
+public class InfoRelatorioDAO implements DAOSelects<InfoLinhaTrechoRelatorio, String> {
 
-    private InfoRelatorioDAO(){
-
+    @Override
+    public List<String> selectStringForAutoComplete() {
+        throw new NotImplementedException();
     }
 
-    public static InfoRelatorioDAO getInstancia(){
-        if (instancia == null){
-            instancia = new InfoRelatorioDAO();
+    @Override
+    public List<InfoLinhaTrechoRelatorio> selectByParent(String parent) {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public List<InfoLinhaTrechoRelatorio> selectByInterval(String ini, String end) {
+        String sql = "SELECT * FROM vInfoRelatorio where " +
+                this.chooseDataColumnForSearch(ini, end) + " BETWEEN date(?) AND date(?);";
+        List<InfoLinhaTrechoRelatorio> infosRelatorio = new ArrayList<>();
+        try(PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
+            this.setKeysToStatement(stmt, ini, end);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next())
+                infosRelatorio.add(this.setValuesToModel(rs));
+            ConnectionFactory.closeStatements(stmt);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
-        return instancia;
+        return infosRelatorio;
     }
 
-    @Override
-    public void save(InfoLinhaTrechoRelatorio model) {
-
+    private String chooseDataColumnForSearch(String ini, String end){
+        return (ini.length()==10 && end.length()==10) ? "data" : "dataCompra";
     }
 
-    @Override
-    public void update(InfoLinhaTrechoRelatorio model) {
-
+    private void setKeysToStatement(PreparedStatement stmt, String ini, String end) throws SQLException {
+        stmt.setString(1, ini);
+        stmt.setString(2, end);
     }
 
-    @Override
-    public void delete(InfoLinhaTrechoRelatorio model) {
-
-    }
-
-    @Override
-    public InfoLinhaTrechoRelatorio selectById(String id) {
-        return null;
-    }
-
-    @Override
-    public List<InfoLinhaTrechoRelatorio> selectAll() {
-        return null;
-    }
-
-    @Override
-    public List<InfoLinhaTrechoRelatorio> selectAllByArg(String arg) {
-        return null;
-    }
-
-    @Override
-    public List<InfoLinhaTrechoRelatorio> selectByArgs(String... args) {
-        return this.findInfoByInterval(args[0], args[1]);
-    }
-
-    public List<InfoLinhaTrechoRelatorio> findInfoByInterval(String ini, String end){
-        Map<String, Linha> formating = new HashMap<>();
-        List<Passagem> resultPassagem = null;//PassagemDAO.getInstancia().selectByDateInterval(ini, end);
-        List<InfoLinhaTrechoRelatorio> iltr = new ArrayList<>();
-        SimpleDateFormat df = new SimpleDateFormat("HH:mm");
-        for(Passagem rp : resultPassagem){
-            if (!formating.containsKey(rp.getDataViagemStr())){
-                formating.put(rp.getDataViagemStr(), rp.getViagem().getLinha());
-            }
-        }
-        for (String k : formating.keySet()){
-            for (TrechoLinha tl : formating.get(k).getListTrechosLinha()){
-                iltr.add(new InfoLinhaTrechoRelatorio(
-                        k, df.format(tl.getHorarioSaida()),
-                        formating.get(k).getNome(),
-                        tl.getTrecho().getCidadeOrigem() + " - " + tl.getTrecho().getCidadeDestino(),
-                        0, 0.0));
-            }
-        }
-        return iltr;
+    private InfoLinhaTrechoRelatorio setValuesToModel(ResultSet rs) throws SQLException {
+        return new InfoLinhaTrechoRelatorio(rs.getString("data"),
+                rs.getString("horarioSaida"),
+                rs.getString("nomeLinha"),
+                rs.getString("cidadeOrigem"),
+                rs.getString("cidadeDestino"),
+                rs.getInt("uso"),
+                rs.getDouble("lucro"));
     }
 }

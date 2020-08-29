@@ -6,19 +6,30 @@ import java.util.Date;
 public class Passagem {
 
     private long numPassagem;
-    private double precoPago;
+    private double precoPago, discount;
     private String nome;
     private String cpf;
     private String rg;
     private String telefone;
     private boolean seguro;
     private Date dataCompra;
-    private Date dataViagem;
-    private String cidadeOrigem, cidadeDestino;
     private String assentoId;
-    private Linha linha;
 
     private Viagem viagem;
+
+    public Passagem(long numPassagem, double precoPago, double discount, String nome, String cpf,
+                    String rg, String telefone, boolean seguro, Date dataCompra, String assentoId) {
+        this.numPassagem = numPassagem;
+        this.precoPago = precoPago;
+        this.discount = discount;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.rg = rg;
+        this.telefone = telefone;
+        this.seguro = seguro;
+        this.dataCompra = dataCompra;
+        this.assentoId = assentoId;
+    }
 
     public Passagem(String nome, String cpf, String rg, String telefone) {
         this.nome = nome;
@@ -46,36 +57,20 @@ public class Passagem {
         return nome;
     }
 
-    public void setInfoOfViagem(Viagem v){
-        this.dataViagem = v.getData();
-        this.cidadeOrigem = v.getCidadeOrigem();
-        this.cidadeDestino = v.getCidadeDestino();
-        this.linha = v.getLinha();
-        this.viagem = v;
-    }
-
     public String getAssentoId() {
         return assentoId;
     }
 
+    public double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+
     public void setAssentoId(String assentoId) {
         this.assentoId = assentoId;
-    }
-
-    public void setCidadeOrigem(String cidadeOrigem) {
-        this.cidadeOrigem = cidadeOrigem;
-    }
-
-    public void setCidadeDestino(String cidadeDestino) {
-        this.cidadeDestino = cidadeDestino;
-    }
-
-    public Linha getLinha() {
-        return linha;
-    }
-
-    public void setLinha(Linha linha) {
-        this.linha = linha;
     }
 
     public void setNome(String nome) {
@@ -90,12 +85,21 @@ public class Passagem {
         this.cpf = cpf;
     }
 
+    public String getFormatedCpf(){
+        return cpf.replaceAll("([0-9]{3})([0-9]{3})([0-9]{3})([0-9]{2})","$1\\.$2\\.$3-$4");
+    }
+
     public String getTelefone() {
         return telefone;
     }
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public String getFormatedTelefone(){
+        int aux = telefone.length() == 11 ? 5 : 4;
+        return telefone.replaceAll("([0-9]{2})([0-9]{"+aux+"})([0-9]{4})", "\\($1\\)$2\\-$3");
     }
 
     public boolean isSeguro() {
@@ -112,14 +116,6 @@ public class Passagem {
 
     public void setDataCompra(Date dataCompra) {
         this.dataCompra = dataCompra;
-    }
-
-    public Date getDataViagem() {
-        return dataViagem;
-    }
-
-    public void setDataViagem(Date dataViagem) {
-        this.dataViagem = dataViagem;
     }
 
     public Viagem getViagem() {
@@ -147,13 +143,17 @@ public class Passagem {
     }
 
     public String getHorarioSaida(){
-        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
-        return dateFormat.format(this.dataViagem);
+        return this.viagem.getHorarioSaida();
     }
 
     public String getDataViagemStr(){
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        return dateFormat.format(this.dataViagem);
+        return dateFormat.format(this.getViagem().getData());
+    }
+
+    public String getDataVendaStr(){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        return dateFormat.format(dataCompra);
     }
 
     public String getNomeLinha(){
@@ -166,6 +166,10 @@ public class Passagem {
 
     public String getCidadeDestino(){
         return viagem.getCidadeDestino();
+    }
+
+    public double getPaidSeguro(){
+        return seguro ? viagem.getValueSeguroViagem() : 0.0;
     }
 }
 

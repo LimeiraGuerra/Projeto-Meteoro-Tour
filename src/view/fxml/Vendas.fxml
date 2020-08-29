@@ -3,6 +3,7 @@
 <?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
@@ -13,7 +14,6 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
@@ -38,7 +38,12 @@
                   <MenuItem mnemonicParsing="false" onAction="#openLinha" text="Linhas" />
                      </items></Menu>
             <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem fx:id="menuOptRelatorio" disable="true" mnemonicParsing="false" onAction="#openRelatorios" text="Relatórios" />
+                  <Menu fx:id="menuRelatorio" disable="true" mnemonicParsing="false" text="Relatórios">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#openRelatorios" text="Relatórios Gerais" />
+                      <MenuItem mnemonicParsing="false" onAction="#generateDailyReport" text="Relatório Diário" />
+                    </items>
+                  </Menu>
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem fx:id="menuOptPassagens" mnemonicParsing="false" onAction="#openBuscarPassagens" text="Buscar Passagens" />
           </items>
@@ -745,8 +750,8 @@
                      </children>
                   </AnchorPane>
           <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="6.0" style="&#10;" text="Busca de Viagens" textAlignment="CENTER" wrapText="false" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="6.0" />
-                  <TextField fx:id="txtFieldOrigem" layoutX="394.0" layoutY="274.0" prefHeight="25.0" prefWidth="193.0" AnchorPane.bottomAnchor="274.0" AnchorPane.leftAnchor="394.0" />
-                  <TextField fx:id="txtFieldDestino" layoutX="394.0" layoutY="342.0" prefHeight="25.0" prefWidth="193.0" AnchorPane.bottomAnchor="206.0" AnchorPane.leftAnchor="394.0" />
+                  <ComboBox fx:id="cBoxOrigem" editable="true" layoutX="394.0" layoutY="274.0" prefHeight="25.0" prefWidth="193.0" />
+                  <ComboBox fx:id="cBoxDestino" editable="true" layoutX="394.0" layoutY="342.0" prefHeight="25.0" prefWidth="193.0" />
                   <DatePicker fx:id="datePickerSaida" layoutX="476.0" layoutY="389.0" prefHeight="25.0" prefWidth="111.0" AnchorPane.bottomAnchor="159.0" AnchorPane.rightAnchor="18.0" />
                   <Label layoutX="394.0" layoutY="253.0" text="Cidade Origem:" AnchorPane.bottomAnchor="303.0" AnchorPane.leftAnchor="394.0" />
                   <Label layoutX="394.0" layoutY="321.0" text="Cidade Destino:" AnchorPane.bottomAnchor="235.0" />

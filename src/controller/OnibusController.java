@@ -1,6 +1,5 @@
 package controller;
 
-import database.dao.FuncionarioDAO;
 import database.dao.OnibusDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,15 +8,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
-import model.entities.Funcionario;
 import model.entities.Onibus;
-import model.usecases.GerenciarFuncionarioUC;
 import model.usecases.GerenciarOnibusUC;
 import view.util.AlertWindow;
 import view.util.DataValidator;
-
-import java.util.Optional;
 
 public class OnibusController {
 
@@ -26,7 +20,6 @@ public class OnibusController {
     @FXML private TableColumn<Onibus, String> cPlaca;
     @FXML private TextField txtFieldRenavam;
     @FXML private TextField txtFieldPlaca;
-    @FXML private Pane paneOnibus;
 
     private String msgBody;
     private ObservableList<Onibus> onibus = FXCollections.observableArrayList();
@@ -162,7 +155,6 @@ public class OnibusController {
 
     private boolean verifyTextFields(){
         StringBuilder str = new StringBuilder();
-        //todo verify renavam e placa
         if (DataValidator.txtInputVerifier(txtFieldRenavam.getText())== null) str.append("Campo Renavam inválido. \n");
         if (DataValidator.txtInputVerifier(txtFieldPlaca.getText())== null) str.append("Campo Placa inválido. \n");
         msgBody = str.toString();

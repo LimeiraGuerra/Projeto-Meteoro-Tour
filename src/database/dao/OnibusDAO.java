@@ -1,10 +1,8 @@
 package database.dao;
 
 import database.utils.ConnectionFactory;
-import database.utils.DAO;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import model.entities.Funcionario;
+
+import database.utils.DAOCrud;
 import model.entities.Onibus;
 
 import java.sql.PreparedStatement;
@@ -14,13 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OnibusDAO implements DAO<Onibus,String> {
-    //private static OnibusDAO instancia;
-    //private List<Onibus> onibus = new ArrayList<>();
-
-    public OnibusDAO(){
-
-    }
+public class OnibusDAO implements DAOCrud<Onibus,String> {
 
     @Override
     public void save(Onibus model) {
@@ -80,19 +72,9 @@ public class OnibusDAO implements DAO<Onibus,String> {
     }
 
     @Override
-    public List<Onibus> selectAllByArg(String arg) {
-        return null;
-    }
-
-    @Override
-    public List<Onibus> selectByArgs(String... args) {
+    public List<Onibus> selectAllByKeyword(String key) {
         return null;
     }
 
 
-
-    /*public static OnibusDAO getInstancia(){
-        if (instancia == null) instancia = new OnibusDAO();
-        return instancia;
-    }*/
 }

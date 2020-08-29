@@ -1,7 +1,6 @@
 package controller;
 
 import database.dao.PassagemDAO;
-import database.dao.ViagemDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -10,11 +9,11 @@ import model.entities.Passagem;
 import model.entities.Viagem;
 import model.usecases.DevolverPassagensUC;
 import model.usecases.VenderPassagensUC;
+import view.loader.EmissaoBilheteLoader;
 import view.util.AlertWindow;
 import view.util.DataValidator;
 import view.util.TipoEspecial;
-import view.util.mask.MaskedTextField;
-
+import view.util.sharedCodes.MaskedTextField;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -31,12 +30,12 @@ public class FinalizacaoVendaController {
     private VenderPassagensUC venderPassagensUC;
     private DevolverPassagensUC devolverPassagensUC;
     private String messageBody;
-    private double valueViagem, valueSeguro, totalToPay;
+    private double valueViagem, valueSeguro, totalToPay, valueDiscount;
     private Passagem passagemR;
 
     public FinalizacaoVendaController(){
         this.devolverPassagensUC = new DevolverPassagensUC(new PassagemDAO());
-        this.venderPassagensUC = new VenderPassagensUC(new PassagemDAO(), new ViagemDAO());
+        this.venderPassagensUC = new VenderPassagensUC(new PassagemDAO());
     }
 
     private void setInfoToView(){
@@ -49,7 +48,7 @@ public class FinalizacaoVendaController {
         this.lbValorSeguro.setText(DataValidator.formatCurrencyView(this.valueSeguro));
     }
 
-    public void finalizeSale(ActionEvent actionEvent) {
+    public void finalizeSale(ActionEvent actionEvent){
         this.setTotalToPay();
         Passagem p = this.getClientDataFromView();
         if (p == null) AlertWindow.errorAlert(this.messageBody, "Parâmetros de pesquisa inválidos ou nulos!");
@@ -60,9 +59,15 @@ public class FinalizacaoVendaController {
                 this.venderPassagensUC.saveSale(p);
                 this.deleteOldPassagem();
                 this.soldSuccess = true;
+                this.printPassagem(p);
                 this.closeWindow();
             }
         }
+    }
+
+    private void printPassagem(Passagem passagem) {
+        EmissaoBilheteLoader janelaBilhete = new EmissaoBilheteLoader();
+        janelaBilhete.start(passagem);
     }
 
     private void deleteOldPassagem(){
@@ -71,8 +76,10 @@ public class FinalizacaoVendaController {
 
     private void addInfoToPassagem(Passagem passagem){
         passagem.setPrecoPago(this.totalToPay);
+        passagem.setDiscount(this.valueDiscount);
         passagem.setAssentoId(this.chosenSitId);
-        passagem.setInfoOfViagem(this.chosenViagem);
+        passagem.setViagem(this.chosenViagem);
+        passagem.setSeguro(this.insurance);
         passagem.setDataCompra(this.getSystemTime());
     }
 
@@ -113,16 +120,18 @@ public class FinalizacaoVendaController {
 
     private void setTotalToPay(){
         this.checkInsuranceRadio();
-        this.totalToPay = this.valueViagem * getDiscount();
+        this.valueDiscount = this.getDiscount();
+        this.totalToPay = this.valueViagem * this.valueDiscount;
         if(this.insurance)
             this.totalToPay += this.valueSeguro;
-        if (this.passagemR != null) this.totalToPay -= passagemR.getPrecoPago();
+        //if (this.passagemR != null) this.totalToPay -= passagemR.getPrecoPago();
     }
 
     private void setPayMessage(){
-        if (this.totalToPay >= 0.00) this.messageBody = "Valor a pagar: ";
+        Double paid = this.passagemR != null? passagemR.getPrecoPago() : 0.0;
+        if (this.totalToPay - paid >= 0.00) this.messageBody = "Valor a pagar: ";
         else this.messageBody = "Valor a devolver para o cliente: ";
-        this.messageBody += DataValidator.formatCurrencyView(Math.abs(this.totalToPay));
+        this.messageBody += DataValidator.formatCurrencyView(Math.abs(this.totalToPay - paid));
     }
 
     private double getDiscount(){
@@ -139,17 +148,9 @@ public class FinalizacaoVendaController {
         stage.close();
     }
 
-    public Viagem getChosenViagem() {
-        return chosenViagem;
-    }
-
     public void setChosenViagem(Viagem chosenViagem) {
         this.chosenViagem = chosenViagem;
         this.setInfoToView();
-    }
-
-    public TipoEspecial getClientType() {
-        return clientType;
     }
 
     public void setClientType(TipoEspecial clientType) {

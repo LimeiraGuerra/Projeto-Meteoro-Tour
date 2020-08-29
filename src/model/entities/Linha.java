@@ -8,33 +8,31 @@ public class Linha {
 
     private long id;
     private String nome;
+    private boolean inativo;
     private double quilometragemTotal;
     private double valorTotalLinha;
-
     private ArrayList<TrechoLinha> trechosLinha = new ArrayList<>();;
 
+    public Linha() {
 
-    public String getNome() {
-        return nome;
+    }
+
+    public Linha(String nome) {
+        this.nome = nome;
+    }
+
+    public Linha(long id, String nome, boolean inativo) {
+        this.id = id;
+        this.nome = nome;
+        this.inativo = inativo;
     }
 
     public Linha(long id, String nome) {
         this.id = id;
         this.nome = nome;
-
     }
 
-    public Linha(long id, String nome, List<TrechoLinha> trechoslinhas) {
-        this.id = id;
-        this.nome = nome;
-    }
-
-    public List<TrechoLinha> getArray(){
-        return trechosLinha;
-    }
-
-
-    public void addTrechoLinha(TrechoLinha tl){
+    public void setTrechoLinha(TrechoLinha tl){
         trechosLinha.add(tl);
         setValorTotalLinha();
         setQuilometragem();
@@ -62,12 +60,8 @@ public class Linha {
         }
         return null;
     }
-    public List<TrechoLinha> getListTrechosLinha(){
-        return trechosLinha;
-    }
 
     public void deleteTrechoLinha(TrechoLinha trecho){
-
         trechosLinha.remove(trechosLinha.indexOf(trecho));
         setValorTotalLinha();
         setQuilometragem();
@@ -75,13 +69,15 @@ public class Linha {
 
     public List<Trecho> getListTrechos(){
         List<Trecho> trechos = new ArrayList<>();
-        for (TrechoLinha x: trechosLinha) {
-            trechos.add(x.getTrecho());
+        for (TrechoLinha tL: trechosLinha) {
+            Trecho t = tL.getTrecho();
+            trechos.add(t);
         }
         return trechos;
     }
-    public Linha() {
 
+    public List<TrechoLinha> getListTrechoLinha(){
+        return trechosLinha;
     }
 
     public List<TrechoLinha> generateTrechosViagem(String cidadeOrigem, String cidadeDestino){
@@ -118,6 +114,14 @@ public class Linha {
         return valorTotalLinha;
     }
 
+    public boolean isInativo() {
+        return inativo;
+    }
+
+    public void setInativo(boolean inativo) {
+        this.inativo = inativo;
+    }
+
     public void setNome(String nomeNovo) {
         nome = nomeNovo;
     }
@@ -134,5 +138,9 @@ public class Linha {
     @Override
     public int hashCode() {
         return Objects.hash(getId());
+    }
+
+    public String getNome() {
+        return nome;
     }
 }

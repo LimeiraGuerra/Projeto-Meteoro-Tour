@@ -1,10 +1,7 @@
 package model.usecases;
 
-import database.dao.InfoRelatorioDAO;
-import database.dao.PassagemDAO;
-import database.utils.DAO;
+import database.utils.DAOSelects;
 import model.entities.InfoLinhaTrechoRelatorio;
-import model.entities.Passagem;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -13,18 +10,34 @@ import java.util.Date;
 import java.util.List;
 
 public class EmitirRelatoriosUC {
-    private InfoRelatorioDAO daoRelatorio;
 
-    public EmitirRelatoriosUC(InfoRelatorioDAO daoRelatorio) {
+    private DAOSelects<InfoLinhaTrechoRelatorio, String> daoRelatorio;
+
+    public EmitirRelatoriosUC(DAOSelects<InfoLinhaTrechoRelatorio, String> daoRelatorio) {
         this.daoRelatorio = daoRelatorio;
     }
 
-    public List<InfoLinhaTrechoRelatorio> searchInfoByInterval(Date ini, Date end){
+    public List<InfoLinhaTrechoRelatorio> searchInfoByDateInterval(Date ini, Date end){
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        return daoRelatorio.selectByArgs(df.format(ini), df.format(end));
+        return this.searchInfoByInterval(df.format(ini), df.format(end));
     }
 
-    public void exportToCsv(List<InfoLinhaTrechoRelatorio> tableData, String path) {
+    private List<InfoLinhaTrechoRelatorio> searchInfoByInterval(String ini, String end){
+        return daoRelatorio.selectByInterval(ini, end);
+    }
+
+    public void exportDailyReport(File file, Date todayDate){
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        List<InfoLinhaTrechoRelatorio> infos = this.searchInfoByInterval(df.format(todayDate), df.format(todayDate));
+        this.export(file, infos);
+    }
+
+    public void export(File file, List<InfoLinhaTrechoRelatorio> infos){
+        if(file != null)
+            this.writeToCsv(infos, file.getAbsolutePath());
+    }
+
+    public void writeToCsv(List<InfoLinhaTrechoRelatorio> tableData, String path) {
         try (OutputStreamWriter writer =
                      new OutputStreamWriter(new FileOutputStream(new File(path)), StandardCharsets.ISO_8859_1)) {
             writer.append("Data Viagem;" +

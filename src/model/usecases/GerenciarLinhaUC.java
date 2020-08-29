@@ -1,46 +1,50 @@
 package model.usecases;
 
-import database.dao.LinhaDAO;
+import database.dao.TrechoLinhaDAO;
+import database.utils.DAOCrud;
 import model.entities.Linha;
+import model.entities.TrechoLinha;
 import java.util.List;
 
 public class GerenciarLinhaUC {
 
-    LinhaDAO daoLinha = new LinhaDAO();
-    long idFicticio = 3;
+    private DAOCrud<Linha, String> daoLinha;
+    private TrechoLinhaDAO daoTrechoLinha;
 
-    public void createLinha(String nomeLinha){
-        Linha linha = new Linha(idFicticio++ , nomeLinha);
+    public GerenciarLinhaUC(DAOCrud<Linha, String> daoLinha, TrechoLinhaDAO daoTrechoLinha) {
+        this.daoLinha = daoLinha;
+        this.daoTrechoLinha = daoTrechoLinha;
+    }
+
+    public void createLinha(String str){
+        Linha linha = new Linha(str);
         daoLinha.save(linha);
-
     }
-    public void addLinha(Linha l) {
-        Linha linha = daoLinha.searchLinha(l);
-        if (linha == null){
-            daoLinha.save(l);
-        }
-        else{
-            linha.setNome(l.getNome());
-            daoLinha.update(linha);
-        }
 
-    }
     public void deleteLinha(Linha linha) {
+        for (TrechoLinha tl : linha.getListTrechoLinha()){
+            daoTrechoLinha.delete(tl);
+        }
         daoLinha.delete(linha);
-    }
-    public Linha searchLinha(Linha l){
-        return  daoLinha.searchLinha(l);
-    }
-    public Linha searchLinhaNome(String nome){
-        return daoLinha.searchLinhaNome(nome);
+
     }
 
-    public List<Linha> getListLinha() {
-        return daoLinha.getListLinha();
-    }
-
+    public List<Linha> getListLinha(){
+            List<Linha> linhas = daoLinha.selectAll();
+            for (Linha l : linhas) {
+                List<TrechoLinha> trechosLinhas = daoTrechoLinha.selectByParent(l);
+                l.addAllTrechosLinha(trechosLinhas);
+                l.setQuilometragem();
+                l.setValorTotalLinha();
+            }
+            return linhas;
+        }
 
     public void updateLinha(Linha linha) {
         daoLinha.update(linha);
+    }
+
+    public boolean checkLinha(Linha linha) {
+        return daoLinha.selectById(linha.getId() + "") == null;
     }
 }

@@ -38,6 +38,7 @@ public class FinalizacaoVendaLoader {
             stage.setScene(new Scene(graph));
             stage.setTitle("Finalizar Compra");
             stage.setResizable(false);
+            stage.sizeToScene();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
 

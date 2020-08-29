@@ -1,7 +1,7 @@
 package controller;
 
 import database.dao.PassagemDAO;
-import database.utils.DAO;
+import database.utils.DAOCrud;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,10 +13,10 @@ import javafx.stage.Stage;
 import model.entities.Passagem;
 import model.usecases.ConsultarPassagensVendidasUC;
 import model.usecases.DevolverPassagensUC;
+import view.loader.EmissaoBilheteLoader;
 import view.util.AlertWindow;
 import view.util.DataValidator;
-import view.util.mask.MaskedTextField;
-
+import view.util.sharedCodes.MaskedTextField;
 import java.util.*;
 
 public class PassagemController {
@@ -37,7 +37,7 @@ public class PassagemController {
     private DevolverPassagensUC ucDevolverPassagens;
 
     public PassagemController() {
-        DAO<Passagem, String> passagemDAO = new PassagemDAO();
+        DAOCrud<Passagem, String> passagemDAO = new PassagemDAO();
         this.ucPassagensVendidas = new ConsultarPassagensVendidasUC(passagemDAO);
         this.ucDevolverPassagens = new DevolverPassagensUC(passagemDAO);
     }
@@ -50,7 +50,7 @@ public class PassagemController {
 
     private void bindTableColumnsToSource() {
         colNumero.setCellValueFactory(new PropertyValueFactory<>("numPassagem"));
-        colCpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
+        colCpf.setCellValueFactory(new PropertyValueFactory<>("formatedCpf"));
         colData.setCellValueFactory(new PropertyValueFactory<>("dataViagemStr"));
         colHorarioSaida.setCellValueFactory(new PropertyValueFactory<>("horarioSaida"));
         colLinha.setCellValueFactory(new PropertyValueFactory<>("nomeLinha"));
@@ -129,6 +129,8 @@ public class PassagemController {
     }
 
     public void printPassagem(ActionEvent actionEvent) {
+        EmissaoBilheteLoader janelaBilhete = new EmissaoBilheteLoader();
+        janelaBilhete.start(this.selectedPassagem);
     }
 
     private Date getSystemTime(){
@@ -136,7 +138,7 @@ public class PassagemController {
     }
 
     private boolean verifyValidity(){
-        return this.getSystemTime().compareTo(this.selectedPassagem.getDataViagem()) < 0;
+        return this.getSystemTime().compareTo(this.selectedPassagem.getViagem().getData()) < 0;
     }
 
     private void informErrorExpiredPassagem(){

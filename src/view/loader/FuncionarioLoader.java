@@ -24,6 +24,7 @@ public class FuncionarioLoader {
             stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(false);
+            stage.sizeToScene();
             stage.showAndWait();
 
         } catch (IOException e) {

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="473.0" prefWidth="378.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EmissaoBilheteController">
+   <children>
+      <Pane fx:id="paneBilhete" layoutX="14.0" layoutY="46.0" prefHeight="400.0" prefWidth="351.0" style="-fx-background-color: white; -fx-border-color: grey;">
+         <children>
+            <Label layoutX="69.0" layoutY="3.0" text="METEORO TOUR">
+               <font>
+                  <Font name="Arial Bold" size="26.0" />
+               </font>
+            </Label>
+            <Line endX="181.0" layoutX="169.0" layoutY="49.0" startX="-168.0" startY="-7.62939453125E-6" stroke="GREY" strokeLineJoin="ROUND" />
+            <Label layoutX="8.0" layoutY="57.0" text="BILHETE DE PASSAGEM RODOVIÁRIO">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Line endX="181.0" layoutX="169.0" layoutY="81.0" startX="-168.0" startY="-7.62939453125E-6" stroke="GREY" strokeLineJoin="ROUND" />
+            <Line endX="-21.0" endY="47.292884826660156" layoutX="248.0" layoutY="33.0" startX="-21.0" startY="16.70709991455078" stroke="GREY" strokeLineJoin="ROUND" />
+            <Label layoutX="230.0" layoutY="49.0" text="Nº" textFill="GREY">
+               <font>
+                  <Font size="8.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbNumPassagem" alignment="CENTER" contentDisplay="CENTER" layoutX="227.0" layoutY="60.0" prefHeight="17.0" prefWidth="124.0" text="00000000000" textAlignment="CENTER" />
+            <Line endX="181.0" layoutX="169.0" layoutY="113.0" startX="-168.0" startY="-7.62939453125E-6" stroke="GREY" strokeLineJoin="ROUND" />
+            <Label layoutX="3.0" layoutY="81.0" text="LINHA" textFill="GREY">
+               <font>
+                  <Font size="8.0" />
+               </font>
+            </Label>
+            <Line endX="-21.0" endY="47.292884826660156" layoutX="248.0" layoutY="65.0" startX="-21.0" startY="16.70709991455078" stroke="GREY" strokeLineJoin="ROUND" />
+            <Label fx:id="lbNomeLinha" layoutX="8.0" layoutY="92.0" text="NOME DA LINHA ESCOLHIDA" />
+            <Label layoutX="230.0" layoutY="81.0" text="DATA DE COMPRA" textFill="GREY">
+               <font>
+                  <Font size="8.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbDataVenda" alignment="CENTER" contentDisplay="CENTER" layoutX="227.0" layoutY="92.0" prefHeight="17.0" prefWidth="124.0" text="00/00/0000" textAlignment="CENTER" />
+            <Line endX="181.0" layoutX="169.0" layoutY="145.0" startX="-168.0" startY="-7.62939453125E-6" stroke="GREY" strokeLineJoin="ROUND" />
+            <Label layoutX="3.0" layoutY="113.0" text="ORIGEM" textFill="GREY">
+               <font>
+                  <Font size="8.0" />
+               </font>
+            </Label>
+            <Line endX="-21.0" endY="47.292884826660156" layoutX="196.0" layoutY="97.0" startX="-21.0" startY="16.70709991455078" stroke="GREY" strokeLineJoin="ROUND" />
+            <Label layoutX="178.0" layoutY="113.0" text="DESTINO" textFill="GREY">
+               <font>
+                  <Font size="8.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbOrigem" layoutX="8.0" layoutY="124.0" text="CIDADE ORIGEM NOME" />
+            <Label fx:id="lbDestino" layoutX="182.0" layoutY="124.0" text="CIDADE DESTINO NOME" />
+            <Line endX="181.0" layoutX="169.0" layoutY="177.0" startX="-168.0" startY="-7.62939453125E-6" stroke="GREY" strokeLineJoin="ROUND" />
+            <Label layoutX="3.0" layoutY="145.0" text="DATA DA VIAGEM" textFill="GREY">
+               <font>
+                  <Font size="8.0" />
+               </font>
+            </Label>
+            <Line endX="-21.0" endY="47.292884826660156" layoutX="147.0" layoutY="129.0" startX="-21.0" startY="16.70709991455078" stroke="GREY" strokeLineJoin="ROUND" />
+            <Label layoutX="129.0" layoutY="145.0" text="HORÁRIO DE SAÍDA" textFill="GREY">
+               <font>
+                  <Font size="8.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbHorarioSaida" alignment="CENTER" contentDisplay="CENTER" layoutX="126.0" layoutY="156.0" prefHeight="17.0" prefWidth="113.0" text="00:00" textAlignment="CENTER" />
+            <Label fx:id="lbDataViagem" alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="156.0" prefHeight="17.0" prefWidth="124.0" text="00/00/0000" textAlignment="CENTER" />
+            <Line endX="-21.0" endY="47.292884826660156" layoutX="261.0" layoutY="129.0" startX="-21.0" startY="16.70709991455078" stroke="GREY" strokeLineJoin="ROUND" />
+            <Label layoutX="243.0" layoutY="145.0" text="POLTRONA" textFill="GREY">
+               <font>
+                  <Font size="8.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbAssento" alignment="CENTER" contentDisplay="CENTER" layoutX="238.0" layoutY="156.0" prefHeight="17.0" prefWidth="114.0" text="00" textAlignment="CENTER" />
+            <Line endX="181.0" layoutX="169.0" layoutY="209.0" startX="-168.0" startY="-7.62939453125E-6" stroke="GREY" strokeLineJoin="ROUND" />
+            <Label layoutX="3.0" layoutY="177.0" text="VALOR DA VIAGEM" textFill="GREY">
+               <font>
+                  <Font size="8.0" />
+               </font>
+            </Label>
+            <Line endX="-21.0" endY="47.292884826660156" layoutX="147.0" layoutY="161.0" startX="-21.0" startY="16.70709991455078" stroke="GREY" strokeLineJoin="ROUND" />
+            <Label layoutX="129.0" layoutY="177.0" text="SEGURO FACULTATIVO" textFill="GREY">
+               <font>
+                  <Font size="8.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbSeguro" alignment="CENTER" contentDisplay="CENTER" layoutX="126.0" layoutY="188.0" prefHeight="17.0" prefWidth="113.0" text="R$ 00,00" textAlignment="CENTER" />
+            <Label fx:id="lbValorViagem" alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="188.0" prefHeight="17.0" prefWidth="124.0" text="R$ 000,00" textAlignment="CENTER" />
+            <Line endX="-21.0" endY="47.292884826660156" layoutX="261.0" layoutY="161.0" startX="-21.0" startY="16.70709991455078" stroke="GREY" strokeLineJoin="ROUND" />
+            <Label layoutX="243.0" layoutY="177.0" text="VALOR PAGO" textFill="GREY">
+               <font>
+                  <Font size="8.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbValorPago" alignment="CENTER" contentDisplay="CENTER" layoutX="238.0" layoutY="188.0" prefHeight="17.0" prefWidth="114.0" text="R$ 000,00" textAlignment="CENTER" />
+            <Line endX="181.0" layoutX="169.0" layoutY="241.0" startX="-168.0" startY="-7.62939453125E-6" stroke="GREY" strokeLineJoin="ROUND" />
+            <Label layoutX="3.0" layoutY="209.0" text="NOME DO CLIENTE" textFill="GREY">
+               <font>
+                  <Font size="8.0" />
+               </font>
+            </Label>
+            <Line endX="-21.0" endY="47.292884826660156" layoutX="239.0" layoutY="193.0" startX="-21.0" startY="16.70709991455078" stroke="GREY" strokeLineJoin="ROUND" />
+            <Label layoutX="221.0" layoutY="209.0" text="CPF" textFill="GREY">
+               <font>
+                  <Font size="8.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbNomeCliente" layoutX="8.0" layoutY="220.0" text="NOME DO CLIENTE" />
+            <Label fx:id="lbCpf" layoutX="225.0" layoutY="220.0" text="000.000.000-10" />
+            <Line endX="181.0" layoutX="169.0" layoutY="273.0" startX="-168.0" startY="-7.62939453125E-6" stroke="GREY" strokeLineJoin="ROUND" />
+            <Label layoutX="3.0" layoutY="241.0" text="RG" textFill="GREY">
+               <font>
+                  <Font size="8.0" />
+               </font>
+            </Label>
+            <Line endX="-21.0" endY="47.292884826660156" layoutX="198.0" layoutY="225.0" startX="-21.0" startY="16.70709991455078" stroke="GREY" strokeLineJoin="ROUND" />
+            <Label layoutX="180.0" layoutY="241.0" text="TELEFONE PARA CONTATO" textFill="GREY">
+               <font>
+                  <Font size="8.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbRg" layoutX="8.0" layoutY="252.0" text="00.000.000.00" />
+            <Label fx:id="lbTelefone" layoutX="184.0" layoutY="252.0" text="(00)00000-0000" />
+            <Label layoutX="4.0" layoutY="273.0" text="OBS." textFill="GREY">
+               <font>
+                  <Font size="8.0" />
+               </font>
+            </Label>
+            <Line endX="181.0" layoutX="169.0" layoutY="385.0" startX="-168.0" startY="-7.62939453125E-6" stroke="GREY" strokeLineJoin="ROUND" />
+            <Label layoutX="83.0" layoutY="386.0" text="AGRADECEMOS PELA PREFERÊNCIA E CONFIANÇA!" textFill="GREY">
+               <font>
+                  <Font size="8.0" />
+               </font>
+            </Label>
+            <Label layoutX="4.0" layoutY="34.0" text="Rua Santa Ernestina,110, Jardim Cruzado, Ibaté -SP" textFill="GREY">
+               <font>
+                  <Font size="8.0" />
+               </font>
+            </Label>
+            <Label layoutX="194.0" layoutY="34.0" text="(16)99123-0789    meteorotour@gmail.com" textFill="GREY">
+               <font>
+                  <Font size="8.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Label layoutX="14.0" layoutY="15.0" text="Impressora:" />
+      <Button fx:id="btnPrint" layoutX="268.0" layoutY="11.0" mnemonicParsing="false" onAction="#initPrint" prefHeight="25.0" prefWidth="97.0" text="Imprimir" />
+      <Label fx:id="lbPrintState" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="14.0" layoutY="451.0" prefHeight="17.0" prefWidth="351.0" text="Estado da impressão" textAlignment="RIGHT" textFill="#727272" />
+      <ComboBox fx:id="cBoxPrinters" layoutX="14.0" layoutY="11.0" onAction="#selectPrinter" prefHeight="25.0" prefWidth="153.0" promptText="Impressora..." />
+      <Button layoutX="174.0" layoutY="11.0" mnemonicParsing="false" onAction="#configPage" text="Configuração" />
+   </children>
+</AnchorPane>

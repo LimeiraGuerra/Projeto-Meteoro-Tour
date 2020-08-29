@@ -1,7 +1,7 @@
 package database.dao;
 
 import database.utils.ConnectionFactory;
-import database.utils.DAO;
+import database.utils.DAOCrud;
 import model.entities.Funcionario;
 import model.entities.Onibus;
 
@@ -12,7 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FuncionarioDAO implements DAO<Funcionario, String> {
+public class FuncionarioDAO implements DAOCrud<Funcionario, String> {
 
     @Override
     public void save(Funcionario model) {
@@ -74,12 +74,7 @@ public class FuncionarioDAO implements DAO<Funcionario, String> {
     }
 
     @Override
-    public List<Funcionario> selectAllByArg(String arg) {
-        return null;
-    }
-
-    @Override
-    public List<Funcionario> selectByArgs(String... args) {
+    public List<Funcionario> selectAllByKeyword(String key) {
         return null;
     }
 

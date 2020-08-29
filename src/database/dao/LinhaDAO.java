@@ -1,9 +1,10 @@
 package database.dao;
 
-import database.utils.ConnectionFactory;
-import database.utils.DAO;
 import model.entities.Linha;
-
+import database.utils.ConnectionFactory;
+import database.utils.DAOCrud;
+import database.utils.DAOSelects;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,59 +12,93 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LinhaDAO implements DAO<Linha, String> {
-    private List<Linha> linhas = new ArrayList<>();
+public class LinhaDAO implements DAOCrud<Linha, String>, DAOSelects<Linha, String> {
 
-    @Override
     public void save(Linha model) {
-        linhas.add(model);
-    }
-
-    @Override
-    public void update(Linha model) {
-        int index = linhas.indexOf(model);
-        linhas.remove(index);
-        linhas.add(index, model);
-    }
-
-    @Override
-    public void delete(Linha model) {
-        linhas.remove(model);
-    }
-
-    @Override
-    public Linha selectById(String id) {
-        Long num = Long.parseLong(id);
-        for (Linha l : linhas){
-            if (l.equals(num)) return l;
+        String sqlLinha = "INSERT INTO LINHA(nome, inativo) VALUES(?, ?);";
+        try (PreparedStatement stmtLinha = ConnectionFactory.createPreparedStatement(sqlLinha)) {
+            stmtLinha.setString(1, model.getNome());
+            stmtLinha.setBoolean(2, model.isInativo());
+            stmtLinha.execute();
+            ConnectionFactory.closeStatements(stmtLinha);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
-        return null;
+    }
+
+    public void update(Linha model) {
+        String sqlEdite = "UPDATE linha set nome = ?, inativo = ? where id = ?;";
+        try(PreparedStatement stmtLinha = ConnectionFactory.createPreparedStatement(sqlEdite)){
+            stmtLinha.setString(1, model.getNome());
+            stmtLinha.setBoolean(2, model.isInativo());
+            stmtLinha.setLong(3, model.getId());
+            stmtLinha.execute();
+            ConnectionFactory.closeStatements(stmtLinha);
+        }
+        catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void delete(Linha model) {
+
+        String sqlEdite = "Delete from linha where id = ?;";
+        try(PreparedStatement stmtLinha = ConnectionFactory.createPreparedStatement(sqlEdite)){
+            stmtLinha.setLong(1, model.getId());
+            stmtLinha.execute();
+            ConnectionFactory.closeStatements(stmtLinha);
+        }
+        catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public Linha selectById(String id) {
+        long num = Long.parseLong(id);
+        String sql = "SELECT * FROM LINHA WHERE id = (SELECT idLinha FROM vPassagensVendidas where idLinha = ?) and inativo = 0;";
+        Linha linha = null;
+        try (PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
+            stmt.setLong(1, num);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                linha = new Linha(rs.getLong(1), rs.getString(2), rs.getBoolean(3));
+            }
+            ConnectionFactory.closeStatements(stmt);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return linha;
     }
 
     @Override
     public List<Linha> selectAll() {
-        return null;
+        String sql = "Select * from linha where inativo = 0;";
+        List<Linha> linhas = new ArrayList<>();
+        try (PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Linha linha = new Linha(rs. getLong(1), rs.getString(2), rs.getBoolean(3));
+                linhas.add(linha);
+            }
+            ConnectionFactory.closeStatements(stmt);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return linhas;
     }
 
     @Override
-    public List<Linha> selectAllByArg(String arg) {
-        return null;
-    }
-
-    @Override
-    public List<Linha> selectByArgs(String... args) {
-        /**args[0] = cidadeOrigem
-         * args[1] = cidadeDestino
-         */
+    public List<Linha> selectByInterval(String ini, String end) {
         String sql = "SELECT * FROM vLinhaByCidades WHERE idLinha IN (\n"
                 + "SELECT tl.idLinha FROM trechoLinha tl JOIN trecho t ON t.id = tl.idTrecho\n"
                 + "WHERE t.cidadeOrigem = ? AND idLinha IN (\n"
                 + "SELECT idLinha FROM trechoLinha tl JOIN trecho t ON t.id = tl.idTrecho\n"
-                + "WHERE t.cidadeDestino = ?));";
+                + "WHERE t.cidadeDestino = ? and inativo = 0));";
         List<Linha> linhas = null;
         try (PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
-            setKeysCidades(stmt, args[0], args[1]);
+            setKeysCidades(stmt, ini, end);
             linhas = setResultLinhas(stmt.executeQuery());
+            ConnectionFactory.closeStatements(stmt);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -73,7 +108,7 @@ public class LinhaDAO implements DAO<Linha, String> {
     private List<Linha> setResultLinhas(ResultSet rs) throws SQLException {
         List<Linha> linhas = new ArrayList<>();
         while (rs.next())
-            linhas.add(new Linha(rs.getLong("idLinha"), rs.getString("nomeLinha")));
+            linhas.add(new Linha(rs.getLong("idLinha"), rs.getString("nomeLinha"), rs.getBoolean("inativo")));
         return linhas;
     }
 
@@ -83,21 +118,29 @@ public class LinhaDAO implements DAO<Linha, String> {
         stmt.setString(2, cidadeDestino);
     }
 
-    public Linha searchLinha(Linha linha){
-        return linhas.contains(linha) ? linha : null;
+    @Override
+    public List<Linha> selectAllByKeyword(String key) {
+        throw new NotImplementedException();
     }
 
-    //Melhor verificar se existe na tabela da view do que fazer um metodo de dao
-    public Linha searchLinhaNome(String nome){
-        for (Linha linha: linhas) {
-            if(linha.getNome().equals(nome)){
-                return linha;
-            }
+    @Override
+    public List<String> selectStringForAutoComplete() {
+        String sql = "SELECT nome FROM Linha;";
+        List<String> names = new ArrayList<>();
+        try (Statement stmt = ConnectionFactory.createStatement()) {
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next())
+                names.add(rs.getString(1));
+            ConnectionFactory.closeStatements(stmt);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
-        return null;
+        return names;
     }
 
-    public List<Linha> getListLinha(){
-        return linhas;
+    @Override
+    public List<Linha> selectByParent(String parent) {
+        throw new NotImplementedException();
     }
+
 }

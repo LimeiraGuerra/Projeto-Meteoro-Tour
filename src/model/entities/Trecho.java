@@ -1,9 +1,8 @@
 package model.entities;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Trecho {
+
+    private int id;
     private String cidadeOrigem;
     private String cidadeDestino;
     private double quilometragem;
@@ -12,10 +11,21 @@ public class Trecho {
     private double taxaEmbarque;
     private double valorSeguro;
     private double valorTotal;
-
-    private List<TrechoLinha> trechoLinha = new ArrayList<>();
+    private TrechoLinha trechoLinha;
 
     public Trecho() {
+    }
+
+    public Trecho(String cidadeOrigem, String cidadeDestino, double quilometragem, int tempoDuracao, double valorPassagem, double taxaEmbarque, double valorSeguro, int id) {
+        this.cidadeOrigem = cidadeOrigem;
+        this.cidadeDestino = cidadeDestino;
+        this.quilometragem = quilometragem;
+        this.tempoDuracao = tempoDuracao;
+        this.valorPassagem = valorPassagem;
+        this.taxaEmbarque = taxaEmbarque;
+        this.valorSeguro = valorSeguro;
+        this.valorTotal = valorPassagem + taxaEmbarque;
+        this.id = id;
     }
 
     public Trecho(String cidadeOrigem, String cidadeDestino, double quilometragem, int tempoDuracao, double valorPassagem, double taxaEmbarque, double valorSeguro) {
@@ -29,12 +39,12 @@ public class Trecho {
         this.valorTotal = valorPassagem + taxaEmbarque;
     }
 
-    public void setTrechoLinha(TrechoLinha trechoL){
-        trechoLinha.add(trechoL);
+    public TrechoLinha getTrechoLinha() {
+        return trechoLinha;
     }
 
-    public void deleteTrechoLinha(TrechoLinha trechoL) {
-        trechoLinha.remove(trechoL);
+    public void setTrechoLinha(TrechoLinha trechoLinha) {
+        this.trechoLinha = trechoLinha;
     }
 
     public void setValorTotal() {
@@ -92,11 +102,24 @@ public class Trecho {
     public void setValorSeguro(double valorSeguro) {
         this.valorSeguro = valorSeguro;
     }
-    public int sizeListTrechoLinha(){
-        return trechoLinha.size();
-    }
     @Override
     public String toString() {
         return cidadeOrigem + " - " + cidadeDestino;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Trecho)) return false;
+        Trecho trecho = (Trecho) o;
+        return getId() == trecho.getId();
     }
 }

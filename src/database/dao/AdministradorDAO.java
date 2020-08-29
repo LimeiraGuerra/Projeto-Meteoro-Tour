@@ -1,60 +1,55 @@
 package database.dao;
 
-import database.utils.DAO;
+import database.utils.ConnectionFactory;
+import database.utils.DAOCrud;
 import model.entities.Administrador;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
-public class AdministradorDAO implements DAO<Administrador, String> {
-    private Administrador administrador = new Administrador();
-    private static AdministradorDAO instancia;
-
-    private AdministradorDAO() {
-        administrador.setSenha("1234");
-        administrador.setNome("José");
-    }
-
-    @Override
-    public void save(Administrador model) {
-        administrador = model;
-    }
-
-    public Administrador getAdministrador(){
-        return administrador;
-    }
-
-    @Override
-    public void update(Administrador model) {
-    }
-
-    @Override
-    public void delete(Administrador model) {
-    }
+public class AdministradorDAO implements DAOCrud<Administrador, String> {
 
     @Override
     public Administrador selectById(String id) {
-        return null;
+        String sql = "SELECT * FROM administrador WHERE senha = ?";
+        Administrador adm = null;
+        try (PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
+            stmt.setString(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next())
+                adm = new Administrador(rs.getString("senha"));
+            ConnectionFactory.closeStatements(stmt);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return adm;
     }
 
     @Override
     public List<Administrador> selectAll() {
-        return null;
+        throw new NotImplementedException();
     }
 
     @Override
-    public List<Administrador> selectAllByArg(String arg) {
-        return null;
+    public List<Administrador> selectAllByKeyword(String key) {
+        throw new NotImplementedException();
     }
 
     @Override
-    public List<Administrador> selectByArgs(String... args) {
-        return null;
+    public void save(Administrador model) {
+        throw new NotImplementedException();
     }
 
-    public static AdministradorDAO getInstancia(){
-        if (instancia == null){
-            instancia = new AdministradorDAO();
-        }
-        return instancia;
+    @Override
+    public void update(Administrador model) {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public void delete(Administrador model) {
+        throw new NotImplementedException();
     }
 }

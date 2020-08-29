@@ -1,85 +1,112 @@
 package database.dao;
-
-import database.utils.DAO;
-import model.entities.AssentoTrechoLinha;
-import model.entities.Linha;
+import database.utils.ConnectionFactory;
 import model.entities.Trecho;
-import model.entities.TrechoLinha;
-
-import java.sql.Time;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
+import database.utils.DAOCrud;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-public class TrechoDAO implements DAO<Trecho, String> {
-    private static TrechoDAO instancia;
-    private List<Trecho> trechos = new ArrayList<>();
-
-    private TrechoDAO(){
-        trechos.add(new Trecho("Descalvado", "São Carlos", 40.0, 30, 10.0, 1.0, 0.2));
-        trechos.add(new Trecho("São Carlos", "Araraquara", 30.0, 20, 7.0, 0.8, 0.2));
-        trechos.add(new Trecho("São Carlos", "Ibaté", 15.0, 5, 5.0, 0.5, 0.2));
-        trechos.add(new Trecho("Araraquara", "Ibaté", 20.0, 15, 8.0, 1.0, 0.2));
-
-    }
+public class TrechoDAO implements DAOCrud<Trecho, String>{
 
     @Override
     public void save(Trecho model) {
-        trechos.add(model);
+
+        String sqlTrecho = "INSERT INTO Trecho(cidadeOrigem, cidadeDestino, quilometragem, tempoDuracao," +
+                " valorPassagem, taxaEmbarque, valorSeguro)" +
+                "VALUES(?, ?, ?, ?, ?, ?, ?);";
+        try (PreparedStatement stmtTrecho = ConnectionFactory.createPreparedStatement(sqlTrecho)) {
+            setStatementTrechoSave(stmtTrecho, model);
+            ConnectionFactory.closeStatements(stmtTrecho);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     @Override
     public void update(Trecho model) {
-        int index = trechos.indexOf(model);
-        Trecho trecho = trechos.get(index);
-        if (trecho != null){
-            trecho.setTaxaEmbarque(model.getTaxaEmbarque());
-            trecho.setQuilometragem(model.getQuilometragem());
-            trecho.setTempoDuracao(model.getTempoDuracao());
-            trecho.setValorSeguro(model.getValorSeguro());
-            trecho.setValorPassagem(model.getValorPassagem());
+        String sql = "UPDATE trecho set quilometragem = ?, tempoDuracao  = ?,  valorPassagem = ?, taxaEmbarque = ?, valorSeguro = ? where cidadeOrigem = ? and cidadeDestino = ?";
+        try (PreparedStatement stmtTrecho = ConnectionFactory.createPreparedStatement(sql)) {
+            setStatementTrechoEdit(stmtTrecho, model);
+            ConnectionFactory.closeStatements(stmtTrecho);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
-        trechos.remove(index);
-        trechos.add(index, trecho);
     }
 
     @Override
     public void delete(Trecho model) {
-        trechos.remove(model);
+        String sqlDelete = "DELETE FROM trecho where cidadeOrigem = ? and cidadeDestino = ?";
+        try (PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sqlDelete)) {
+            stmt.setString(1, model.getCidadeOrigem());
+            stmt.setString(2, model.getCidadeDestino());
+            stmt.execute();
+            ConnectionFactory.closeStatements(stmt);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
     }
 
     @Override
     public Trecho selectById(String id) {
-        int num = Integer.parseInt(id);
-        return trechos.get(num);
+        String sqlSelect = "Select * from trecho where id = ?;";
+        Trecho t = null;
+        try (PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sqlSelect)) {
+            stmt.setInt(1, Integer.parseInt(id));
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                t = new Trecho(rs.getString(2), rs.getString(3), rs.getDouble(4), rs.getInt(5), rs.getDouble(6), rs.getDouble(7), rs.getDouble(8), rs.getInt(1));
+            }
+            ConnectionFactory.closeStatements(stmt);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return t;
     }
 
     @Override
     public List<Trecho> selectAll() {
-        return null;
-    }
-
-    @Override
-    public List<Trecho> selectAllByArg(String arg) {
-        return null;
-    }
-
-    @Override
-    public List<Trecho> selectByArgs(String... args) {
-        return null;
-    }
-
-    public  Trecho searchTrecho(Trecho trecho){
-        return trechos.contains(trecho) ? trecho : null;
-    }
-
-    public List<Trecho> getListTrechos() {
+        String sqlSelect = "Select * from trecho;";
+        ArrayList<Trecho> trechos = new ArrayList<>();
+        try (PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sqlSelect)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Trecho t = new Trecho(rs.getString(2), rs.getString(3), rs.getDouble(4), rs.getInt(5), rs.getDouble(6), rs.getDouble(7), rs.getDouble(8), rs.getInt(1));
+                trechos.add(t);
+            }
+            ConnectionFactory.closeStatements(stmt);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
         return trechos;
     }
 
-    public static TrechoDAO getInstancia(){
-        if (instancia == null){
-            instancia = new TrechoDAO();
-        }
-        return instancia;
+    private void setStatementTrechoSave(PreparedStatement stmt, Trecho t) throws SQLException {
+        stmt.setString(1, t.getCidadeOrigem());
+        stmt.setString(2, t.getCidadeDestino());
+        stmt.setDouble(3, t.getQuilometragem());
+        stmt.setInt(4, t.getTempoDuracao());
+        stmt.setDouble(5, t.getValorPassagem());
+        stmt.setDouble(6, t.getTaxaEmbarque());
+        stmt.setDouble(7, t.getValorSeguro());
+        stmt.execute();
+    }
+
+    private void setStatementTrechoEdit(PreparedStatement stmt, Trecho t) throws SQLException {
+        stmt.setDouble(1, t.getQuilometragem());
+        stmt.setInt(2, t.getTempoDuracao());
+        stmt.setDouble(3, t.getValorPassagem());
+        stmt.setDouble(4, t.getTaxaEmbarque());
+        stmt.setDouble(5, t.getValorSeguro());
+        stmt.setString(6, t.getCidadeOrigem());
+        stmt.setString(7, t.getCidadeDestino());
+        stmt.execute();
+    }
+
+    public List<Trecho> selectAllByKeyword(String key) {
+        throw new NotImplementedException();
     }
 
 }
