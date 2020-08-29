@@ -1,7 +1,5 @@
 package view.util;
 
-import javafx.scene.control.TextField;
-
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.Date;
