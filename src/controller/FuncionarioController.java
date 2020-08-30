@@ -11,10 +11,11 @@ import model.entities.Funcionario;
 import model.usecases.GerenciarFuncionarioUC;
 import view.util.AlertWindow;
 import view.util.DataValidator;
+import view.util.sharedCodes.MaskedTextField;
 
 public class FuncionarioController{
 
-    public TextField txtFieldCPF;
+    public MaskedTextField txtFieldCPF;
     public TextField txtFieldNome;
     public TextField txtFieldCargo;
     public TextField txtFieldRG;
@@ -58,6 +59,7 @@ public class FuncionarioController{
 
     public void addFunc(ActionEvent actionEvent) {
         tabelaFunc.getSelectionModel().select(null);
+        txtFieldCPF.setDisable(false);
         clearTextField();
     }
 
@@ -67,6 +69,7 @@ public class FuncionarioController{
         }
         refreshTable();
         clearTextField();
+        txtFieldCPF.setDisable(false);
     }
 
     public void saveFunc(ActionEvent actionEvent) {
@@ -76,12 +79,12 @@ public class FuncionarioController{
     }
 
     private void addOrEditFunc(){
-        int selectedRow = getIndexOfSelectedRow();
-        if (verifyTextFields()) {
-            if (selectedRow >= 0) {
+        Funcionario funcionario = newFunc();
+        if (verifyTextFields(funcionario)) {
+            if (getIndexOfSelectedRow() >= 0) {
                 editFunc(getIndexOfSelectedRow());
             } else {
-                createFunc();
+                createFunc(funcionario);
             }
         } else {
             AlertWindow.informationAlerta(msgBody, "Alerta.");
@@ -99,6 +102,7 @@ public class FuncionarioController{
         }else {
             AlertWindow.errorAlert("CPF ou RG já cadastrados no sistema", "");
         }
+        txtFieldCPF.setDisable(false);
     }
 
     private boolean ifTableNotHaveCpfORg(Funcionario func) {
@@ -111,14 +115,12 @@ public class FuncionarioController{
     }
 
     private void setFuncByTextFields(Funcionario func){
-        func.setCpf(txtFieldCPF.getText());
         func.setNome(txtFieldNome.getText());
         func.setRg(txtFieldRG.getText());
         func.setCargo(txtFieldCargo.getText());
     }
 
-    private void createFunc(){
-        Funcionario func = newFunc();
+    private void createFunc(Funcionario func){
         if (ifTableNotContainsFunc(func)) {
             ucFuncionario.saveFunc(func);
             AlertWindow.informationAlerta("Funcionario: \n"+ func +"adicionado com sucesso", "Funcionário adicionado");
@@ -130,7 +132,7 @@ public class FuncionarioController{
     }
 
     private Funcionario newFunc() {
-        String cpf = DataValidator.cpfVerifier(txtFieldCPF.getText());
+        String cpf = DataValidator.cpfVerifier(txtFieldCPF.getPlainText());
         String nome = DataValidator.txtInputVerifier(txtFieldNome.getText());
         String rg = DataValidator.rgVerifier(txtFieldRG.getText());
         String cargo = DataValidator.txtInputVerifier(txtFieldCargo.getText());
@@ -151,11 +153,14 @@ public class FuncionarioController{
     }
 
     private void setTextField(){
-        Funcionario func = getFuncOfSelectedRow();
-        txtFieldCPF.setText(func.getCpf());
-        txtFieldNome.setText(func.getNome());
-        txtFieldRG.setText(func.getRg());
-        txtFieldCargo.setText(func.getCargo());
+        if (getIndexOfSelectedRow() != -1) {
+            Funcionario func = getFuncOfSelectedRow();
+            txtFieldCPF.setPlainText(func.getCpf());
+            txtFieldCPF.setDisable(true);
+            txtFieldNome.setText(func.getNome());
+            txtFieldRG.setText(func.getRg());
+            txtFieldCargo.setText(func.getCargo());
+        }
     }
 
     private void clearTextField() {
@@ -165,12 +170,12 @@ public class FuncionarioController{
         txtFieldRG.clear();
     }
 
-    private boolean verifyTextFields(){
+    private boolean verifyTextFields(Funcionario func){
         StringBuilder str = new StringBuilder();
-        if (DataValidator.cpfVerifier(txtFieldCPF.getText())== null) str.append("Campo CPF inválido. \n");
-        if (DataValidator.txtInputVerifier(txtFieldNome.getText())== null) str.append("Campo nome inválido. \n");
-        if (DataValidator.rgVerifier(txtFieldRG.getText())==null) str.append("Campo RG inválido. \n");
-        if (DataValidator.txtInputVerifier(txtFieldCargo.getText())==null) str.append("Campo Cargo inválido. \n");
+        if (func.getCpf() == null) str.append("Campo CPF inválido. \n");
+        if (func.getNome() == null) str.append("Campo nome inválido. \n");
+        if (func.getRg() ==null) str.append("Campo RG inválido. \n");
+        if (func.getCargo() ==null) str.append("Campo Cargo inválido. \n");
         msgBody = str.toString();
         return str.length() == 0;
     }
