@@ -3,6 +3,7 @@ package view.loader;
 import controller.VendasController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.entities.Administrador;
@@ -29,6 +30,7 @@ public class VendasLoader {
 
             Stage stage = new Stage();
             stage.setScene(new Scene(graph));
+            stage.getIcons().add(new Image(getClass().getResourceAsStream( "/resources/onibus.png" )));
             ctrl.setScene(stage.getScene()); //Passo a cena para o controle para usar css selector
             stage.setTitle("Meteoro Tour - Venda de Passagens");
             stage.setResizable(false);

@@ -9,10 +9,6 @@ import java.util.List;
 public class GerenciarOnibusUC {
     private DAOCrud<Onibus,String> daoOnibus;
 
-    /*public GerenciarOnibusUC(OnibusDAO daoOnibus){
-        this.daoOnibus = daoOnibus;
-    }*/
-
     public GerenciarOnibusUC(DAOCrud<Onibus, String> daoOnibus) {
         this.daoOnibus = daoOnibus;
     }

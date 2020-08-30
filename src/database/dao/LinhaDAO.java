@@ -14,6 +14,7 @@ import java.util.List;
 
 public class LinhaDAO implements DAOCrud<Linha, String>, DAOSelects<Linha, String> {
 
+    @Override
     public void save(Linha model) {
         String sqlLinha = "INSERT INTO LINHA(nome, inativo) VALUES(?, ?);";
         try (PreparedStatement stmtLinha = ConnectionFactory.createPreparedStatement(sqlLinha)) {
@@ -26,6 +27,7 @@ public class LinhaDAO implements DAOCrud<Linha, String>, DAOSelects<Linha, Strin
         }
     }
 
+    @Override
     public void update(Linha model) {
         String sqlEdite = "UPDATE linha set nome = ?, inativo = ? where id = ?;";
         try(PreparedStatement stmtLinha = ConnectionFactory.createPreparedStatement(sqlEdite)){
@@ -40,10 +42,12 @@ public class LinhaDAO implements DAOCrud<Linha, String>, DAOSelects<Linha, Strin
         }
     }
 
+    @Override
     public void delete(Linha model) {
-
         String sqlEdite = "Delete from linha where id = ?;";
-        try(PreparedStatement stmtLinha = ConnectionFactory.createPreparedStatement(sqlEdite)){
+        try(Statement stmtConfig = ConnectionFactory.createStatement();
+                PreparedStatement stmtLinha = ConnectionFactory.createPreparedStatement(sqlEdite)){
+            stmtConfig.execute("PRAGMA foreign_keys=on;");
             stmtLinha.setLong(1, model.getId());
             stmtLinha.execute();
             ConnectionFactory.closeStatements(stmtLinha);
@@ -53,6 +57,7 @@ public class LinhaDAO implements DAOCrud<Linha, String>, DAOSelects<Linha, Strin
         }
     }
 
+    @Override
     public Linha selectById(String id) {
         long num = Long.parseLong(id);
         String sql = "SELECT * FROM LINHA WHERE id = (SELECT idLinha FROM vPassagensVendidas where idLinha = ?) and inativo = 0;";

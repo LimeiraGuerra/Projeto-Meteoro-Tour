@@ -22,9 +22,7 @@ public class GerenciarTrechoLinhaUC {
     }
 
     public void updateTrechoLinha(TrechoLinha trechoLinha){
-        TrechoLinha tLinha = daoTrechoLinha.selectById(trechoLinha.getId()+"");
-        tLinha.setHorarioSaida(trechoLinha.getHorarioSaida());
-        daoTrechoLinha.update(tLinha);
+        daoTrechoLinha.update(trechoLinha);
     }
 
 }

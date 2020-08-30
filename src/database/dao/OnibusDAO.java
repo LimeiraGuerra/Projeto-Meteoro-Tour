@@ -4,6 +4,7 @@ import database.utils.ConnectionFactory;
 
 import database.utils.DAOCrud;
 import model.entities.Onibus;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,6 +23,7 @@ public class OnibusDAO implements DAOCrud<Onibus,String> {
             stmt.setString(1, model.getRenavam());
             stmt.setString(2,model.getPlaca());
             stmt.execute();
+            ConnectionFactory.closeStatements(stmt);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -34,6 +36,7 @@ public class OnibusDAO implements DAOCrud<Onibus,String> {
             stmt.setString(1, model.getPlaca());
             stmt.setString(2,model.getRenavam());
             stmt.executeUpdate();
+            ConnectionFactory.closeStatements(stmt);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -45,6 +48,7 @@ public class OnibusDAO implements DAOCrud<Onibus,String> {
         try (PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
             stmt.setString(1, model.getRenavam());
             stmt.execute();
+            ConnectionFactory.closeStatements(stmt);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -52,7 +56,7 @@ public class OnibusDAO implements DAOCrud<Onibus,String> {
 
     @Override
     public Onibus selectById(String id) {
-        return null;
+        throw new NotImplementedException();
     }
 
     @Override
@@ -64,7 +68,7 @@ public class OnibusDAO implements DAOCrud<Onibus,String> {
             while (rs.next()){
                 onibus.add(new Onibus(rs.getString("renavam"),rs.getString("placa")));
             }
-            stmt.getGeneratedKeys();
+            ConnectionFactory.closeStatements(stmt);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -73,7 +77,7 @@ public class OnibusDAO implements DAOCrud<Onibus,String> {
 
     @Override
     public List<Onibus> selectAllByKeyword(String key) {
-        return null;
+        throw new NotImplementedException();
     }
 
 
