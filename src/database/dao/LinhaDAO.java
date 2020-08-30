@@ -59,11 +59,10 @@ public class LinhaDAO implements DAOCrud<Linha, String>, DAOSelects<Linha, Strin
 
     @Override
     public Linha selectById(String id) {
-        long num = Long.parseLong(id);
         String sql = "SELECT * FROM LINHA WHERE id = (SELECT idLinha FROM vPassagensVendidas where idLinha = ?) and inativo = 0;";
         Linha linha = null;
         try (PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
-            stmt.setLong(1, num);
+            stmt.setString(1, id);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 linha = new Linha(rs.getLong(1), rs.getString(2), rs.getBoolean(3));
