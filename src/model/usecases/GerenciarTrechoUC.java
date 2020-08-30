@@ -65,6 +65,6 @@ public class GerenciarTrechoUC {
     }
 
     public boolean ContainsTrechoLinha(Trecho trecho){
-        return trechoLinhaDAO.selectAllByKeyword(String.valueOf(trecho.getId())).size() > 0;
+        return trechoLinhaDAO.selectAllByKeyword(String.valueOf(trecho.getId())).size() == 0;
     }
 }
