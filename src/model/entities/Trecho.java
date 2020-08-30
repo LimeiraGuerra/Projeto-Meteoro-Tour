@@ -1,5 +1,10 @@
 package model.entities;
 
+import view.util.DataValidator;
+
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class Trecho {
 
     private int id;
@@ -55,6 +60,10 @@ public class Trecho {
         return valorTotal;
     }
 
+    public String getFormatedValorTotal(){
+        return DataValidator.formatCurrencyView(valorTotal);
+    }
+
     public String getCidadeOrigem() {
         return cidadeOrigem;
     }
@@ -65,6 +74,10 @@ public class Trecho {
 
     public double getQuilometragem() {
         return quilometragem;
+    }
+
+    public String getFormatedQuilometragem(){
+        return DataValidator.doubleWithDecimalsFormater(quilometragem).concat(" Km") ;
     }
 
     public void setQuilometragem(double quilometragem) {
@@ -102,6 +115,7 @@ public class Trecho {
     public void setValorSeguro(double valorSeguro) {
         this.valorSeguro = valorSeguro;
     }
+
     @Override
     public String toString() {
         return cidadeOrigem + " - " + cidadeDestino;

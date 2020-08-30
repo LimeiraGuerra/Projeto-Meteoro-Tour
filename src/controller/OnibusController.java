@@ -12,22 +12,20 @@ import model.entities.Onibus;
 import model.usecases.GerenciarOnibusUC;
 import view.util.AlertWindow;
 import view.util.DataValidator;
+import view.util.sharedCodes.MaskedTextField;
 
 public class OnibusController {
 
     @FXML private TableView<Onibus> tabelaOnibus;
     @FXML private TableColumn<Onibus, String> cRenavam;
     @FXML private TableColumn<Onibus, String> cPlaca;
-    @FXML private TextField txtFieldRenavam;
-    @FXML private TextField txtFieldPlaca;
+    @FXML private MaskedTextField txtFieldRenavam;
+    @FXML private MaskedTextField txtFieldPlaca;
 
     private String msgBody;
     private ObservableList<Onibus> onibus = FXCollections.observableArrayList();
     private GerenciarOnibusUC ucOnibus;
 
-    /*public OnibusController(){
-        this.ucOnibus= new GerenciarOnibusUC(OnibusDAO.getInstancia());
-    }*/
 
     public OnibusController(){
         this.ucOnibus = new GerenciarOnibusUC(new OnibusDAO());
@@ -39,7 +37,7 @@ public class OnibusController {
 
     public void bind(){
         cRenavam.setCellValueFactory(new PropertyValueFactory<>("renavam"));
-        cPlaca.setCellValueFactory(new PropertyValueFactory<>("placa"));
+        cPlaca.setCellValueFactory(new PropertyValueFactory<>("formatedPlaca"));
         tabelaOnibus.setItems(loadTable());
     }
 
@@ -48,7 +46,7 @@ public class OnibusController {
         return onibus;
     }
 
-    private void  refreshTable(){
+    private void refreshTable(){
         onibus.clear();
         onibus.addAll(ucOnibus.getListOnibus());
         tabelaOnibus.refresh();
@@ -56,6 +54,7 @@ public class OnibusController {
 
     public void addOnibus(ActionEvent actionEvent) {
         tabelaOnibus.getSelectionModel().select(null);
+        txtFieldRenavam.setDisable(false);
         clearTextField();
     }
 
@@ -65,6 +64,7 @@ public class OnibusController {
         }
         refreshTable();
         clearTextField();
+        txtFieldRenavam.setDisable(false);
     }
 
     public void saveOnibus(ActionEvent actionEvent) {
@@ -74,12 +74,13 @@ public class OnibusController {
     }
 
     private void addOrEditFunc(){
-        if (verifyTextFields()){
+        Onibus onibus = newOnibus();
+        if (verifyTextFields(onibus)){
             if (getIndexOfSelectedRow() >= 0){
                 editOnibus(getIndexOfSelectedRow());
             }
             else {
-                createOnibus();
+                createOnibus(onibus);
             }
         }else {
             AlertWindow.informationAlerta(msgBody, "Alerta.");
@@ -97,6 +98,7 @@ public class OnibusController {
         }else {
             AlertWindow.errorAlert("Renavam ou placa já cadastrados no sistema", "");
         }
+        txtFieldRenavam.setDisable(false);
     }
 
     private boolean ifTableNotHaveRenavamOrPlaca(Onibus bus) {
@@ -113,8 +115,7 @@ public class OnibusController {
         bus.setPlaca(txtFieldPlaca.getText());
     }
 
-    public void createOnibus(){
-        Onibus bus = newOnibus();
+    public void createOnibus(Onibus bus){
         if (ifTableNotContainsFunc(bus)) {
             ucOnibus.saveOnibus(bus);
             AlertWindow.informationAlerta("Onibus: \n"+bus+" adicionado com sucesso", "");
@@ -126,7 +127,8 @@ public class OnibusController {
     }
 
     private Onibus newOnibus(){
-        return new Onibus(txtFieldRenavam.getText(), txtFieldPlaca.getText());
+        return new Onibus(DataValidator.txtInputVerifier(txtFieldRenavam.getPlainText()),
+                DataValidator.txtInputVerifier(txtFieldPlaca.getPlainText()));
     }
 
     private boolean ifTableNotContainsFunc(Onibus bus){
@@ -143,9 +145,12 @@ public class OnibusController {
     }
 
     private void setTextField(){
-        Onibus bus = getOnibusOfSelectedRow();
-        txtFieldRenavam.setText(bus.getRenavam());
-        txtFieldPlaca.setText(bus.getPlaca());
+        if (getIndexOfSelectedRow() != -1) {
+            Onibus bus = getOnibusOfSelectedRow();
+            txtFieldRenavam.setPlainText(bus.getRenavam());
+            txtFieldRenavam.setDisable(true);
+            txtFieldPlaca.setPlainText(bus.getPlaca());
+        }
     }
 
     private void clearTextField(){
@@ -153,10 +158,10 @@ public class OnibusController {
         txtFieldRenavam.clear();
     }
 
-    private boolean verifyTextFields(){
+    private boolean verifyTextFields(Onibus bus){
         StringBuilder str = new StringBuilder();
-        if (DataValidator.txtInputVerifier(txtFieldRenavam.getText())== null) str.append("Campo Renavam inválido. \n");
-        if (DataValidator.txtInputVerifier(txtFieldPlaca.getText())== null) str.append("Campo Placa inválido. \n");
+        if (bus.getRenavam() == null) str.append("Campo Renavam inválido. \n");
+        if (bus.getPlaca() == null) str.append("Campo Placa inválido. \n");
         msgBody = str.toString();
         return str.length() == 0;
     }

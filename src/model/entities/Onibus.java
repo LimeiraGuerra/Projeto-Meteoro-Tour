@@ -20,6 +20,10 @@ public class Onibus {
         return placa;
     }
 
+    public String getFormatedPlaca(){
+        return placa.replaceAll("([A-Z]{3})","$1-");
+    }
+
     public void setPlaca(String placa) {
         this.placa = placa;
     }

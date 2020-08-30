@@ -53,7 +53,7 @@ public class TrechoDAO implements DAOCrud<Trecho, String>{
         String sqlSelect = "Select * from trecho where id = ?;";
         Trecho t = null;
         try (PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sqlSelect)) {
-            stmt.setInt(1, Integer.parseInt(id));
+            stmt.setString(1, id);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 t = new Trecho(rs.getString(2), rs.getString(3), rs.getDouble(4), rs.getInt(5), rs.getDouble(6), rs.getDouble(7), rs.getDouble(8), rs.getInt(1));

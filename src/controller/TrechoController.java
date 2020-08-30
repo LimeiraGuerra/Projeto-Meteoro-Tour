@@ -8,26 +8,30 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import model.entities.Trecho;
 import model.usecases.GerenciarTrechoUC;
 import view.util.DataValidator;
 import view.util.AlertWindow;
+import view.util.sharedCodes.CurrencyField;
+import view.util.sharedCodes.DoubleField;
+import view.util.sharedCodes.IntegerField;
 
 public class TrechoController {
 
     @FXML private TableView<Trecho> tabelaTrecho;
     @FXML private TableColumn<Trecho, String> cOrigem;
     @FXML private TableColumn<Trecho, String> cDestino;
-    @FXML private TableColumn<Trecho, Double> cQuilometragem;
-    @FXML private TableColumn<Trecho, Double> cValorTotal;
+    @FXML private TableColumn<Trecho, String> cQuilometragem;
+    @FXML private TableColumn<Trecho, String> cValorTotal;
     @FXML private TextField tfOrigem;
     @FXML private TextField tfDestino;
-    @FXML private TextField tfValorPassagem;
-    @FXML private TextField tfValorSeguro;
-    @FXML private TextField tfTempoDuracao;
-    @FXML private TextField tfQuilometragem;
-    @FXML private TextField tfTaxaEmbarque;
+    @FXML private IntegerField tfTempoDuracao;
+    @FXML private DoubleField tfQuilometragem;
+    @FXML private CurrencyField tfValorPassagem;
+    @FXML private CurrencyField tfValorSeguro;
+    @FXML private CurrencyField tfTaxaEmbarque;
     @FXML private Pane paneTrecho;
     @FXML private Pane paneImg;
     @FXML private Button btDeleteTrecho;
@@ -46,8 +50,8 @@ public class TrechoController {
     private void bind(){
         cDestino.setCellValueFactory(new PropertyValueFactory<>("cidadeDestino"));
         cOrigem.setCellValueFactory(new PropertyValueFactory<>("cidadeOrigem"));
-        cQuilometragem.setCellValueFactory(new PropertyValueFactory<>("quilometragem"));
-        cValorTotal.setCellValueFactory(new PropertyValueFactory<>("valorTotal"));
+        cQuilometragem.setCellValueFactory(new PropertyValueFactory<>("formatedQuilometragem"));
+        cValorTotal.setCellValueFactory(new PropertyValueFactory<>("formatedValorTotal"));
         tabelaTrecho.setItems(loadTable());
     }
 
@@ -62,9 +66,9 @@ public class TrechoController {
 
     private Trecho createTrecho() {
 
-        return ucTrecho.createTrecho(tfOrigem.getText(), tfDestino.getText(), Double.parseDouble(tfQuilometragem.getText()),
-                Integer.parseInt(tfTempoDuracao.getText()), Double.parseDouble(tfValorPassagem.getText()),
-                Double.parseDouble(tfTaxaEmbarque.getText()), Double.parseDouble(tfValorSeguro.getText()));
+        return ucTrecho.createTrecho(tfOrigem.getText(), tfDestino.getText(), tfQuilometragem.getAmount(),
+                tfTempoDuracao.getAmount().intValue(), tfValorPassagem.getAmount(),
+                tfTaxaEmbarque.getAmount(), tfValorSeguro.getAmount());
     }
 
     private Trecho searchTrechoOrigemDestino(){
@@ -73,8 +77,8 @@ public class TrechoController {
 
     private void updateTrecho(){
         Trecho trecho = searchTrechoOrigemDestino();
-        ucTrecho.atualizaTrecho(Double.parseDouble(tfQuilometragem.getText()),Integer.parseInt(tfTempoDuracao.getText()),
-                Double.parseDouble(tfValorPassagem.getText()), Double.parseDouble(tfTaxaEmbarque.getText()),Double.parseDouble(tfValorSeguro.getText()), trecho);
+        ucTrecho.atualizaTrecho(tfQuilometragem.getAmount(), tfTempoDuracao.getAmount().intValue(),
+                tfValorPassagem.getAmount(), tfTaxaEmbarque.getAmount(),tfValorSeguro.getAmount(), trecho);
         trecho.setValorTotal();
         setValorTotal(trecho.getValorTotal());
     }
@@ -148,26 +152,26 @@ public class TrechoController {
     }
 
     private void setValorTotal(double valor){
-        lbValorTotal.setText("O valor total do trecho é: " + valor);
+        lbValorTotal.setText("O valor total do trecho é: " + DataValidator.formatCurrencyView(valor));
     }
 
     private boolean checkTextField() {
         return !tfDestino.getText().isEmpty() && !tfOrigem.getText().isEmpty() &&
-                DataValidator.isDouble(tfQuilometragem.getText()) &&
-                DataValidator.isDouble(tfTempoDuracao.getText()) &&
-                DataValidator.isDouble(tfValorPassagem.getText()) &&
-                DataValidator.isDouble(tfTaxaEmbarque.getText()) &&
-                DataValidator.isDouble(tfValorSeguro.getText());
+                DataValidator.isDouble(tfQuilometragem.getAmount() + "") &&
+                DataValidator.isDouble(tfTempoDuracao.getAmount() + "") &&
+                DataValidator.isDouble(tfValorPassagem.getAmount() +"") &&
+                DataValidator.isDouble(tfTaxaEmbarque.getAmount() +"") &&
+                DataValidator.isDouble(tfValorSeguro.getAmount() +"");
     }
 
     private void setFieldsTrecho(Trecho trecho){
         tfOrigem.setText(trecho.getCidadeOrigem());
         tfDestino.setText(trecho.getCidadeDestino());
-        tfQuilometragem.setText(String.valueOf(trecho.getQuilometragem()));
-        tfTempoDuracao.setText(String.valueOf(trecho.getTempoDuracao()));
-        tfValorPassagem.setText(String.valueOf(trecho.getValorPassagem()));
-        tfTaxaEmbarque.setText(String.valueOf(trecho.getTaxaEmbarque()));
-        tfValorSeguro.setText(String.valueOf(trecho.getValorSeguro()));
+        tfQuilometragem.setAmount(trecho.getQuilometragem());
+        tfTempoDuracao.setAmount(trecho.getTempoDuracao());
+        tfValorPassagem.setAmount(trecho.getValorPassagem());
+        tfTaxaEmbarque.setAmount(trecho.getTaxaEmbarque());
+        tfValorSeguro.setAmount(trecho.getValorSeguro());
         setValorTotal(trecho.getValorTotal());
     }
 
@@ -195,5 +199,8 @@ public class TrechoController {
 
     private void setVisiblePaneImg(boolean bool) {
         paneImg.setVisible(bool);
+    }
+
+    public void verTrecho(MouseEvent mouseEvent) {
     }
 }
