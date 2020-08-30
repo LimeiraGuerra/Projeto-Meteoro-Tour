@@ -1,14 +1,9 @@
 package view.util;
-
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.Date;
 
 public class DataValidator {
-
-    public static boolean isDouble(String str){
-        return str.matches("-?\\d+|\\d+.\\d+");
-    }
 
     public static boolean isInteger(String num){
         return num.matches("^\\d+$");
@@ -58,9 +53,6 @@ public class DataValidator {
         // Verifica se os digitos calculados conferem com os digitos informados.
         if ((dig10 == cpf.charAt(9)) && (dig11 == cpf.charAt(10))) return true;
         else return false;
-
-
-        //return cpf.matches("^([0-9]{3}?){3}?[0-9]{2}$");
     }
 
     public static boolean isPhone(String num){
@@ -141,5 +133,9 @@ public class DataValidator {
         if (isTime(time))
             return time;
         return "";
+    }
+
+    public static boolean verifyNumeric(Double d){
+        return d != 0;
     }
 }

@@ -86,7 +86,8 @@ public class PassagemDAO implements DAOCrud<Passagem, String> {
         stmt.setLong(3, tl.getId());
         stmt.setLong(4, model.getNumPassagem());
         stmt.setString(5, model.getAssentoId());
-        Double precoPago = tl.getTrecho().getValorTotal()*model.getDiscount()+tl.getTrecho().getValorSeguro();
+        Double precoPago = tl.getTrecho().getValorTotal()*model.getDiscount()+
+                (model.isSeguro() ? tl.getTrecho().getValorSeguro() : 0.0);
         stmt.setDouble(6, precoPago);
         stmt.setDouble(7, tl.getTrecho().getValorTotal());
         stmt.setDouble(8, tl.getTrecho().getValorSeguro());

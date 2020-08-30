@@ -96,22 +96,18 @@ public class FuncionarioController{
         if (ifTableNotHaveCpfORg(selectedFunc)){
             setFuncByTextFields(selectedFunc);
             ucFuncionario.updateFunc(selectedFunc);
-            AlertWindow.informationAlerta("Funcionario: \n"+selectedFunc +"editado com sucesso", "");
+            AlertWindow.informationAlerta("Funcionário: \n"+selectedFunc +"editado com sucesso", "");
             refreshTable();
             clearTextField();
-        }else {
+        }
+        else {
             AlertWindow.errorAlert("CPF ou RG já cadastrados no sistema", "");
         }
         txtFieldCPF.setDisable(false);
     }
 
     private boolean ifTableNotHaveCpfORg(Funcionario func) {
-        for (Funcionario f : funcionarios){
-            if (!f.equals(func) &&(f.getCpf().equals(func.getCpf()) || f.getRg().equals(func.getRg()))){
-                return false;
-            }
-        }
-        return true;
+        return !funcionarios.contains(func);
     }
 
     private void setFuncByTextFields(Funcionario func){
@@ -123,7 +119,7 @@ public class FuncionarioController{
     private void createFunc(Funcionario func){
         if (ifTableNotContainsFunc(func)) {
             ucFuncionario.saveFunc(func);
-            AlertWindow.informationAlerta("Funcionario: \n"+ func +"adicionado com sucesso", "Funcionário adicionado");
+            AlertWindow.informationAlerta("Funcionário: \n"+ func +"adicionado com sucesso", "Funcionário adicionado");
             refreshTable();
             clearTextField();
         } else {

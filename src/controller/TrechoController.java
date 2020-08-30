@@ -65,7 +65,6 @@ public class TrechoController {
     }
 
     private Trecho createTrecho() {
-
         return ucTrecho.createTrecho(tfOrigem.getText(), tfDestino.getText(), tfQuilometragem.getAmount(),
                 tfTempoDuracao.getAmount().intValue(), tfValorPassagem.getAmount(),
                 tfTaxaEmbarque.getAmount(), tfValorSeguro.getAmount());
@@ -138,30 +137,18 @@ public class TrechoController {
        setVisiblePaneImg(true);
        cleanFields();
     }
-
-
-    @FXML
-    private void seeTrecho(ActionEvent actionEvent) {
-        Trecho t = searchTrechoTable();
-        if (t != null){
-            setFieldsTrecho(t);
-            setDisableOrigemDestino(true);
-            setVisibleButtonPane(true);
-            setVisiblePaneImg(false);
-        }
-    }
-
+    
     private void setValorTotal(double valor){
         lbValorTotal.setText("O valor total do trecho é: " + DataValidator.formatCurrencyView(valor));
     }
 
     private boolean checkTextField() {
         return !tfDestino.getText().isEmpty() && !tfOrigem.getText().isEmpty() &&
-                DataValidator.isDouble(tfQuilometragem.getAmount() + "") &&
-                DataValidator.isDouble(tfTempoDuracao.getAmount() + "") &&
-                DataValidator.isDouble(tfValorPassagem.getAmount() +"") &&
-                DataValidator.isDouble(tfTaxaEmbarque.getAmount() +"") &&
-                DataValidator.isDouble(tfValorSeguro.getAmount() +"");
+                DataValidator.verifyNumeric(tfQuilometragem.getAmount()) &&
+                DataValidator.verifyNumeric(tfTempoDuracao.getAmount()) &&
+                DataValidator.verifyNumeric(tfValorPassagem.getAmount()) &&
+                DataValidator.verifyNumeric(tfTaxaEmbarque.getAmount()) &&
+                DataValidator.verifyNumeric(tfValorSeguro.getAmount());
     }
 
     private void setFieldsTrecho(Trecho trecho){
@@ -185,8 +172,7 @@ public class TrechoController {
         tfValorSeguro.clear();
         lbValorTotal.setText("");
     }
-
-
+    
     private void setDisableOrigemDestino(boolean bool){
         tfOrigem.setDisable(bool);
         tfDestino.setDisable(bool);
@@ -201,6 +187,16 @@ public class TrechoController {
         paneImg.setVisible(bool);
     }
 
-    public void verTrecho(MouseEvent mouseEvent) {
+    @FXML
+    private void seeTrechoByClick(MouseEvent mouseEvent) {
+        Trecho t = searchTrechoTable();
+        if (t != null){
+            setFieldsTrecho(t);
+            setDisableOrigemDestino(true);
+            setVisibleButtonPane(true);
+            setVisiblePaneImg(false);
+        }
+
     }
+
 }

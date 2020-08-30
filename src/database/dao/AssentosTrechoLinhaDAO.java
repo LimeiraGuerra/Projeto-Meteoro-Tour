@@ -24,7 +24,7 @@ public class AssentosTrechoLinhaDAO implements DAOSelects<String, Viagem> {
         String sql = "SELECT ast.idAssento FROM AssentoTrechoLinha ast\n" +
                 "JOIN TrechoLinha tl ON tl.id = ast.idTrechoLinha\n" +
                 "AND tl.id IN ("+parent.getTrechoLinhaIdsAndSetValues()+")\n" +
-                "AND ast.data = date('"+this.getStringData(parent.getData())+
+                "AND date(ast.data) = date('"+this.getStringData(parent.getData())+
                 "', '+'||(tl.dPlus-"+parent.getDatePlusCorrection()+")||' day')\n" +
                 "GROUP BY ast.idAssento;";
         List<String> ast = new ArrayList<>();

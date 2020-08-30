@@ -20,6 +20,8 @@ import model.usecases.GerenciarTrechoLinhaUC;
 import view.util.AlertWindow;
 import view.util.DataValidator;
 import view.util.sharedCodes.CurrencyField;
+import view.util.sharedCodes.DoubleField;
+import view.util.sharedCodes.IntegerField;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -42,11 +44,11 @@ public class LinhaController{
     @FXML private Pane paneCriaTrecho;
     @FXML private TextField tfOrigem;
     @FXML private TextField tfDestino;
+    @FXML private IntegerField tfTempoDuracao;
+    @FXML private DoubleField tfQuilometragem;
     @FXML private CurrencyField tfValorPassagem;
     @FXML private CurrencyField tfValorSeguro;
     @FXML private CurrencyField tfTaxaEmbarque;
-    @FXML private TextField tfTempoDuracao;
-    @FXML private TextField tfQuilometragem;
     @FXML private Pane paneImg;
     @FXML private TextField txtHoraTrecho;
     @FXML private TextField txtMinTrecho;
@@ -116,24 +118,6 @@ public class LinhaController{
         txtHoraTrecho.clear();
     }
 
-    @FXML
-    private void seeLinha(ActionEvent actionEvent) {
-        setDisableText(false);
-        Linha linha = searchLinhaTable();
-        if (linha != null){
-            bindLinhaTrecho(linha);
-            fixVisionPane();
-            btAdicionarLinha.setVisible(false);
-            loadCombobox();
-            calcDplus();
-
-            if (!ucLinha.checkLinha(linha)){
-                AlertWindow.informationAlerta("Essa linha já possui vendas.\nPor isso é impossível alterar seus dados", "Linha não editável");
-                setDisableText(true);
-            }
-        }
-    }
-
     private void loadCombobox(){
         if (trechosListTabela.size() == 0){
             fillComboBox(ucTrecho.getListTrechos());
@@ -163,13 +147,13 @@ public class LinhaController{
                 if (AlertWindow.verificationAlert("Deseja excluir o trecho: " + trecho.toString() + " ?", "Exclusão do trecho na linha: " + linha.getNome())){
                     ucTrechoLinha.deleteTrechoLinha(trechoLinha);
                     loadTableLinhaTrecho(linha);
-
                 }
-            }else{
+            }
+            else{
                 AlertWindow.informationAlerta("O trecho não pode ser excluído.\nOs trechos só podem ser excluidos se for o útimo trecho da linha.", "Trecho não excluido");
             }
-
         }
+
         setVisibleTimeFieldsEdit(false);
         sizeTableTrechoLinha(292.0);
         loadCombobox();
@@ -203,9 +187,8 @@ public class LinhaController{
                 ucLinha.updateLinha(searchLinhaTable());
                 loadTableLinhaTrecho(searchLinhaTable());
             }else{
-                AlertWindow.informationAlerta("Já existe uma linha com esse nome", "Nome da linha não editado.");
+                AlertWindow.informationAlerta("Já existe uma linha com esse nome", "Linha não editada.");
             }
-
         }
         setDisableText(false);
         updateTableLinha();
@@ -270,10 +253,16 @@ public class LinhaController{
 
     @FXML
     private void addLinha(ActionEvent actionEvent) {
-        if (searchLinhaNome(txtNomeLinha.getText()) == null){
-            ucLinha.createLinha(txtNomeLinha.getText());
-        }else{
-            AlertWindow.informationAlerta("Já existe uma linha com esse nome", "Linha não adicionada.");
+        if (!txtNomeLinha.getText().isEmpty()) {
+            if (searchLinhaNome(txtNomeLinha.getText()) == null) {
+                ucLinha.createLinha(txtNomeLinha.getText());
+            }
+            else {
+                AlertWindow.informationAlerta("Já existe uma linha com esse nome", "Linha não adicionada.");
+            }
+        }
+        else{
+            AlertWindow.errorAlert("Nome da linha não inserido", "Linha não adicionada.");
         }
         setVisibleButtonTxtLinha(false);
         updateTableLinha();
@@ -391,11 +380,11 @@ public class LinhaController{
 
     private boolean checkTextField() {
         return !tfDestino.getText().isEmpty() && !tfOrigem.getText().isEmpty() &&
-                DataValidator.isDouble(tfQuilometragem.getText()) &&
-                DataValidator.isDouble(tfTempoDuracao.getText()) &&
-                DataValidator.isDouble(tfValorPassagem.getAmount() +"") &&
-                DataValidator.isDouble(tfTaxaEmbarque.getAmount() +"") &&
-                DataValidator.isDouble(tfValorSeguro.getAmount() +"");
+                DataValidator.verifyNumeric(tfQuilometragem.getAmount()) &&
+                DataValidator.verifyNumeric(tfTempoDuracao.getAmount()) &&
+                DataValidator.verifyNumeric(tfValorPassagem.getAmount()) &&
+                DataValidator.verifyNumeric(tfTaxaEmbarque.getAmount()) &&
+                DataValidator.verifyNumeric(tfValorSeguro.getAmount());
     }
 
     @FXML
@@ -475,6 +464,26 @@ public class LinhaController{
         btExcluirTrecho.setDisable(bool);
         btAdicionarTrecho.setDisable(bool);
         btCadastrarTrecho.setDisable(bool);
+        tabelaLinhaTrecho.setDisable(bool);
     }
+
+    @FXML
+    private void seeLinhadByClick(MouseEvent mouseEvent) {
+        setDisableText(false);
+        Linha linha = searchLinhaTable();
+        if (linha != null){
+            bindLinhaTrecho(linha);
+            fixVisionPane();
+            btAdicionarLinha.setVisible(false);
+            loadCombobox();
+            calcDplus();
+            if (!ucLinha.checkLinha(linha)){
+                AlertWindow.informationAlerta("Essa linha já possui vendas.\nPor isso é impossível alterar seus dados", "Linha não editável");
+                setDisableText(true);
+            }
+
+        }
+    }
+
 }
 

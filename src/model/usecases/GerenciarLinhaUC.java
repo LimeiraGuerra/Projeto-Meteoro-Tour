@@ -4,6 +4,7 @@ import database.utils.DAOCrud;
 import database.utils.DAOSelects;
 import model.entities.Linha;
 import model.entities.TrechoLinha;
+import view.util.DataValidator;
 import java.util.List;
 
 public class GerenciarLinhaUC {
@@ -17,7 +18,7 @@ public class GerenciarLinhaUC {
     }
 
     public void createLinha(String str){
-        Linha linha = new Linha(str);
+        Linha linha = new Linha(validatorTrim(str));
         daoLinha.save(linha);
     }
 
@@ -37,10 +38,15 @@ public class GerenciarLinhaUC {
         }
 
     public void updateLinha(Linha linha) {
+        linha.setNome(validatorTrim(linha.getNome()));
         daoLinha.update(linha);
     }
 
     public boolean checkLinha(Linha linha) {
         return daoLinha.selectById(String.valueOf(linha.getId())) == null;
+    }
+
+    private String validatorTrim(String str){
+        return DataValidator.txtInputVerifier(str);
     }
 }

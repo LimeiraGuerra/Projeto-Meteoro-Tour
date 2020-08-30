@@ -29,7 +29,8 @@ public class Viagem {
         this.cidadeDestino = cidadeDestino;
         this.linha = linha;
         this.trechosLinha = linha.generateTrechosViagem(cidadeOrigem, cidadeDestino);
-        this.data = dateTimeUnion(data, this.trechosLinha.get(0).getHorarioSaida());
+        if (this.trechosLinha.size() > 0)
+            this.data = dateTimeUnion(data, this.trechosLinha.get(0).getHorarioSaida());
     }
 
     private Date dateTimeUnion(Date data, Date time){

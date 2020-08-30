@@ -11,8 +11,8 @@
 <?import javafx.scene.layout.Pane?>
 <?import view.util.sharedCodes.CurrencyField?>
 <?import view.util.sharedCodes.DoubleField?>
-
 <?import view.util.sharedCodes.IntegerField?>
+
 <AnchorPane prefHeight="500.0" prefWidth="773.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TrechoController">
    <children>
       <Pane fx:id="paneTrecho" blendMode="SRC_ATOP" layoutX="494.0" layoutY="48.0" prefHeight="451.0" prefWidth="277.0" style="visibility: false;">
@@ -36,7 +36,7 @@
             <Button fx:id="btDeleteTrecho" layoutX="46.0" layoutY="413.0" mnemonicParsing="false" onAction="#deleteTrecho" prefHeight="25.0" prefWidth="101.0" text="Excluir" />
          </children>
       </Pane>
-      <TableView fx:id="tabelaTrecho" layoutX="14.0" layoutY="29.0" onMouseClicked="#verTrecho" prefHeight="423.0" prefWidth="477.0">
+      <TableView fx:id="tabelaTrecho" layoutX="14.0" layoutY="29.0" onMouseClicked="#seeTrechoByClick" prefHeight="423.0" prefWidth="477.0">
         <columns>
           <TableColumn fx:id="cOrigem" prefWidth="140" text="Origem" />
           <TableColumn fx:id="cDestino" prefWidth="138.0" text="Destino" />
@@ -45,7 +45,6 @@
         </columns>
       </TableView>
       <Button fx:id="criarTrecho" layoutX="15.0" layoutY="462.0" mnemonicParsing="false" onAction="#viewCreateTrecho" prefHeight="25.0" prefWidth="135.0" text="Criar Novo Trecho" />
-      <Button fx:id="verTrecho" layoutX="166.0" layoutY="462.0" mnemonicParsing="false" onAction="#seeTrecho" prefHeight="25.0" prefWidth="179.0" text="Visualizar Trecho Selecionado" />
       <Pane fx:id="paneImg" blendMode="SRC_ATOP" layoutX="493.0" layoutY="5.0" prefHeight="493.0" prefWidth="277.0" style="visibility: true;">
          <children>
             <ImageView fitHeight="263.0" fitWidth="264.0" layoutX="11.0" layoutY="87.0" pickOnBounds="true" preserveRatio="true">
