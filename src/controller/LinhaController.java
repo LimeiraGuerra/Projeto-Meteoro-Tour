@@ -464,6 +464,7 @@ public class LinhaController{
         btExcluirTrecho.setDisable(bool);
         btAdicionarTrecho.setDisable(bool);
         btCadastrarTrecho.setDisable(bool);
+        tabelaLinhaTrecho.setDisable(bool);
     }
 
     @FXML
@@ -471,17 +472,16 @@ public class LinhaController{
         setDisableText(false);
         Linha linha = searchLinhaTable();
         if (linha != null){
+            bindLinhaTrecho(linha);
+            fixVisionPane();
+            btAdicionarLinha.setVisible(false);
+            loadCombobox();
+            calcDplus();
             if (!ucLinha.checkLinha(linha)){
                 AlertWindow.informationAlerta("Essa linha já possui vendas.\nPor isso é impossível alterar seus dados", "Linha não editável");
                 setDisableText(true);
             }
-            else{
-                bindLinhaTrecho(linha);
-                fixVisionPane();
-                btAdicionarLinha.setVisible(false);
-                loadCombobox();
-                calcDplus();
-            }
+
         }
     }
 

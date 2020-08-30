@@ -38,6 +38,7 @@ public class LoginController implements Initializable {
         Stage stage = (Stage) lbIncorreto.getScene().getWindow();
         stage.close();
     }
+
     @FXML
     private void login(ActionEvent actionEvent) {
         String senha = DataValidator.txtInputVerifier(txtSenha.getText());
