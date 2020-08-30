@@ -14,6 +14,10 @@ public class Funcionario {
         return cpf;
     }
 
+    public String getFormatedCpf(){
+        return cpf.replaceAll("([0-9]{3})([0-9]{3})([0-9]{3})([0-9]{2})","$1\\.$2\\.$3-$4");
+    }
+
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }

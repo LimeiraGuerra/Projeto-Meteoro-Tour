@@ -38,7 +38,7 @@ public class FuncionarioController{
     }
 
     public void bind(){
-        cCPF.setCellValueFactory(new PropertyValueFactory<>("cpf"));
+        cCPF.setCellValueFactory(new PropertyValueFactory<>("formatedCpf"));
         cNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         cRG.setCellValueFactory(new PropertyValueFactory<>("rg"));
         cCargo.setCellValueFactory(new PropertyValueFactory<>("cargo"));

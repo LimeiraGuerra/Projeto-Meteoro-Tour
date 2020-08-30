@@ -66,8 +66,8 @@ public class TrechoController {
 
     private Trecho createTrecho() {
 
-        return ucTrecho.createTrecho(tfOrigem.getText(), tfDestino.getText(), Double.parseDouble(tfQuilometragem.getText()),
-                Integer.parseInt(tfTempoDuracao.getText()), tfValorPassagem.getAmount(),
+        return ucTrecho.createTrecho(tfOrigem.getText(), tfDestino.getText(), tfQuilometragem.getAmount(),
+                tfTempoDuracao.getAmount().intValue(), tfValorPassagem.getAmount(),
                 tfTaxaEmbarque.getAmount(), tfValorSeguro.getAmount());
     }
 
@@ -77,7 +77,7 @@ public class TrechoController {
 
     private void updateTrecho(){
         Trecho trecho = searchTrechoOrigemDestino();
-        ucTrecho.atualizaTrecho(Double.parseDouble(tfQuilometragem.getText()),Integer.parseInt(tfTempoDuracao.getText()),
+        ucTrecho.atualizaTrecho(tfQuilometragem.getAmount(), tfTempoDuracao.getAmount().intValue(),
                 tfValorPassagem.getAmount(), tfTaxaEmbarque.getAmount(),tfValorSeguro.getAmount(), trecho);
         trecho.setValorTotal();
         setValorTotal(trecho.getValorTotal());
@@ -157,8 +157,8 @@ public class TrechoController {
 
     private boolean checkTextField() {
         return !tfDestino.getText().isEmpty() && !tfOrigem.getText().isEmpty() &&
-                DataValidator.isDouble(tfQuilometragem.getText()) &&
-                DataValidator.isDouble(tfTempoDuracao.getText()) &&
+                DataValidator.isDouble(tfQuilometragem.getAmount() + "") &&
+                DataValidator.isDouble(tfTempoDuracao.getAmount() + "") &&
                 DataValidator.isDouble(tfValorPassagem.getAmount() +"") &&
                 DataValidator.isDouble(tfTaxaEmbarque.getAmount() +"") &&
                 DataValidator.isDouble(tfValorSeguro.getAmount() +"");

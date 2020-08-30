@@ -37,7 +37,7 @@ public class OnibusController {
 
     public void bind(){
         cRenavam.setCellValueFactory(new PropertyValueFactory<>("renavam"));
-        cPlaca.setCellValueFactory(new PropertyValueFactory<>("placa"));
+        cPlaca.setCellValueFactory(new PropertyValueFactory<>("formatedPlaca"));
         tabelaOnibus.setItems(loadTable());
     }
 
