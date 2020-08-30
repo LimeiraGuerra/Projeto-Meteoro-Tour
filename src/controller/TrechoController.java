@@ -15,18 +15,20 @@ import model.usecases.GerenciarTrechoUC;
 import view.util.DataValidator;
 import view.util.AlertWindow;
 import view.util.sharedCodes.CurrencyField;
+import view.util.sharedCodes.DoubleField;
+import view.util.sharedCodes.IntegerField;
 
 public class TrechoController {
 
     @FXML private TableView<Trecho> tabelaTrecho;
     @FXML private TableColumn<Trecho, String> cOrigem;
     @FXML private TableColumn<Trecho, String> cDestino;
-    @FXML private TableColumn<Trecho, Double> cQuilometragem;
-    @FXML private TableColumn<Trecho, Double> cValorTotal;
+    @FXML private TableColumn<Trecho, String> cQuilometragem;
+    @FXML private TableColumn<Trecho, String> cValorTotal;
     @FXML private TextField tfOrigem;
     @FXML private TextField tfDestino;
-    @FXML private TextField tfTempoDuracao;
-    @FXML private TextField tfQuilometragem;
+    @FXML private IntegerField tfTempoDuracao;
+    @FXML private DoubleField tfQuilometragem;
     @FXML private CurrencyField tfValorPassagem;
     @FXML private CurrencyField tfValorSeguro;
     @FXML private CurrencyField tfTaxaEmbarque;
@@ -48,8 +50,8 @@ public class TrechoController {
     private void bind(){
         cDestino.setCellValueFactory(new PropertyValueFactory<>("cidadeDestino"));
         cOrigem.setCellValueFactory(new PropertyValueFactory<>("cidadeOrigem"));
-        cQuilometragem.setCellValueFactory(new PropertyValueFactory<>("quilometragem"));
-        cValorTotal.setCellValueFactory(new PropertyValueFactory<>("valorTotal"));
+        cQuilometragem.setCellValueFactory(new PropertyValueFactory<>("formatedQuilometragem"));
+        cValorTotal.setCellValueFactory(new PropertyValueFactory<>("formatedValorTotal"));
         tabelaTrecho.setItems(loadTable());
     }
 
@@ -150,7 +152,7 @@ public class TrechoController {
     }
 
     private void setValorTotal(double valor){
-        lbValorTotal.setText("O valor total do trecho é: " + valor);
+        lbValorTotal.setText("O valor total do trecho é: " + DataValidator.formatCurrencyView(valor));
     }
 
     private boolean checkTextField() {
@@ -165,11 +167,11 @@ public class TrechoController {
     private void setFieldsTrecho(Trecho trecho){
         tfOrigem.setText(trecho.getCidadeOrigem());
         tfDestino.setText(trecho.getCidadeDestino());
-        tfQuilometragem.setText(String.valueOf(trecho.getQuilometragem()));
-        tfTempoDuracao.setText(String.valueOf(trecho.getTempoDuracao()));
-        tfValorPassagem.setText(String.valueOf(trecho.getValorPassagem()));
-        tfTaxaEmbarque.setText(String.valueOf(trecho.getTaxaEmbarque()));
-        tfValorSeguro.setText(String.valueOf(trecho.getValorSeguro()));
+        tfQuilometragem.setAmount(trecho.getQuilometragem());
+        tfTempoDuracao.setAmount(trecho.getTempoDuracao());
+        tfValorPassagem.setAmount(trecho.getValorPassagem());
+        tfTaxaEmbarque.setAmount(trecho.getTaxaEmbarque());
+        tfValorSeguro.setAmount(trecho.getValorSeguro());
         setValorTotal(trecho.getValorTotal());
     }
 

@@ -53,13 +53,13 @@ public class DataValidator {
         return null;
     }
 
-    public static String doubleToCurrencyFormater(double value){
+    public static String doubleWithDecimalsFormater(double value){
         DecimalFormat df = new DecimalFormat("####0.00");
         return df.format(value);
     }
 
     public static String formatCurrencyView(double value){
-        return "R$ ".concat(DataValidator.doubleToCurrencyFormater(value));
+        return "R$ ".concat(DataValidator.doubleWithDecimalsFormater(value));
     }
 
     public static Date LocalDateConverter(LocalDate localDate){
