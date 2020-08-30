@@ -8,19 +8,19 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
+<?import view.util.sharedCodes.MaskedTextField?>
 <AnchorPane prefHeight="427.0" prefWidth="830.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FuncionarioController">
     <children>
         <Pane fx:id="paneFunc" blendMode="SRC_ATOP" layoutX="605.0" layoutY="30.0" prefHeight="162.0" prefWidth="221.0">
             <children>
-                <TextField fx:id="txtFieldCPF" layoutX="54.0" layoutY="14.0" prefHeight="25.0" prefWidth="157.0" />
+                <MaskedTextField fx:id="txtFieldCPF" layoutX="54.0" layoutY="14.0" prefHeight="25.0" prefWidth="157.0" mask="###.###.###-##" />
                 <Label layoutX="10.0" layoutY="54.0" text="Nome:" />
                 <TextField fx:id="txtFieldNome" layoutX="54.0" layoutY="50.0" prefHeight="25.0" prefWidth="157.0" />
                 <Label layoutX="10.0" layoutY="18.0" text="CPF:" />
-            <Label layoutX="10.0" layoutY="90.0" text="RG:" />
-            <Label layoutX="10.0" layoutY="126.0" text="Cargo:" />
-            <TextField fx:id="txtFieldRG" layoutX="54.0" layoutY="86.0" prefHeight="25.0" prefWidth="157.0" />
-
-            <TextField fx:id="txtFieldCargo" layoutX="54.0" layoutY="122.0" prefHeight="25.0" prefWidth="157.0" />
+                <Label layoutX="10.0" layoutY="90.0" text="RG:" />
+                <Label layoutX="10.0" layoutY="126.0" text="Cargo:" />
+                <TextField fx:id="txtFieldRG" layoutX="54.0" layoutY="86.0" prefHeight="25.0" prefWidth="157.0" />
+                <TextField fx:id="txtFieldCargo" layoutX="54.0" layoutY="122.0" prefHeight="25.0" prefWidth="157.0" />
 
             </children>
         </Pane>

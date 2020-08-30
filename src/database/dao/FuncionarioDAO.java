@@ -21,7 +21,7 @@ public class FuncionarioDAO implements DAOCrud<Funcionario, String> {
             stmt.setString(1, model.getCpf());
             stmt.setString(2, model.getRg());
             stmt.setString(3, model.getNome());
-            stmt.setString(4, model.getNome());
+            stmt.setString(4, model.getCargo());
             stmt.execute();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -65,7 +65,7 @@ public class FuncionarioDAO implements DAOCrud<Funcionario, String> {
         try (Statement stmt = ConnectionFactory.createStatement()) {
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()){
-                funcs.add(new Funcionario(rs.getString("cpf"),rs.getString("rg"), rs.getString("nome"),rs.getString("cargo")));
+                funcs.add(new Funcionario(rs.getString("cpf"),rs.getString("nome"), rs.getString("rg"),rs.getString("cargo")));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
