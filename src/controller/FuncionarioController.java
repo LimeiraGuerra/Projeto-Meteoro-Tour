@@ -99,7 +99,8 @@ public class FuncionarioController{
             AlertWindow.informationAlerta("Funcionario: \n"+selectedFunc +"editado com sucesso", "");
             refreshTable();
             clearTextField();
-        }else {
+        }
+        else {
             AlertWindow.errorAlert("CPF ou RG já cadastrados no sistema", "");
         }
         txtFieldCPF.setDisable(false);

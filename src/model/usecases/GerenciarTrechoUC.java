@@ -2,7 +2,7 @@ package model.usecases;
 import database.utils.DAOCrud;
 import model.entities.Trecho;
 import model.entities.TrechoLinha;
-
+import view.util.DataValidator;
 import java.util.List;
 
 public class GerenciarTrechoUC {
@@ -25,6 +25,8 @@ public class GerenciarTrechoUC {
     }
 
     public Trecho createTrecho(String origem, String destino, double km, int tempo, double valorP, double valorE, double valorS) {
+        origem = DataValidator.txtInputVerifier(origem);
+        destino = DataValidator.txtInputVerifier(destino);
         Trecho t = new Trecho(origem, destino, km, tempo, valorP, valorE, valorS);
         this.addTrecho(t);
         return t;

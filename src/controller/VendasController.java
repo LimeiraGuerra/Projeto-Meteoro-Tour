@@ -39,7 +39,6 @@ public class VendasController {
     @FXML ToggleGroup clienteEspecial;
     @FXML TableView<Viagem> tableViagens;
     @FXML TableColumn<Viagem, String> colLinha, colHorarioSaida;
-
     private Scene scene;
     private TipoEspecial clientType = TipoEspecial.NÃO;
     private GerarViagensUC gerarViagensUC;
@@ -53,6 +52,7 @@ public class VendasController {
     private ObservableList<String> cityNames;
 
     public VendasController() {
+
         this.autoCompleteUC = new AutoCompleteUC(new TrechoLinhaDAO(), new LinhaDAO());
         this.gerarViagensUC = new GerarViagensUC(new LinhaDAO(),
                 new TrechoLinhaDAO(),
