@@ -38,7 +38,7 @@ public class FuncionarioController{
     }
 
     public void bind(){
-        cCPF.setCellValueFactory(new PropertyValueFactory<>("cpf"));
+        cCPF.setCellValueFactory(new PropertyValueFactory<>("formatedCpf"));
         cNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         cRG.setCellValueFactory(new PropertyValueFactory<>("rg"));
         cCargo.setCellValueFactory(new PropertyValueFactory<>("cargo"));
@@ -96,7 +96,7 @@ public class FuncionarioController{
         setFuncByTextFields(selectedFunc);
         if (ifTableNotHaveCpfOrRg(selectedFunc)){
             ucFuncionario.updateFunc(selectedFunc);
-            AlertWindow.informationAlerta("Funcionario: \n"+selectedFunc +"editado com sucesso", "");
+            AlertWindow.informationAlerta("Funcionário: \n"+selectedFunc +"editado com sucesso", "");
             refreshTable();
             clearTextField();
             txtFieldCPF.setDisable(false);
@@ -127,7 +127,7 @@ public class FuncionarioController{
     private void createFunc(Funcionario func){
         if (ifTableNotContainsFunc(func)) {
             ucFuncionario.saveFunc(func);
-            AlertWindow.informationAlerta("Funcionario: \n"+ func +"adicionado com sucesso", "Funcionário adicionado");
+            AlertWindow.informationAlerta("Funcionário: \n"+ func +"adicionado com sucesso", "Funcionário adicionado");
             refreshTable();
             clearTextField();
         } else {
@@ -178,7 +178,7 @@ public class FuncionarioController{
         StringBuilder str = new StringBuilder();
         if (func.getCpf() == null) str.append("Campo CPF inválido. \n");
         if (func.getNome() == null) str.append("Campo nome inválido. \n");
-        if (func.getRg() ==null) str.append("Campo RG inválido. \n");
+        if (func.getRg() ==null || func.getRg().isEmpty()) str.append("Campo RG inválido. \n");
         if (func.getCargo() ==null) str.append("Campo Cargo inválido. \n");
         msgBody = str.toString();
         return str.length() == 0;
