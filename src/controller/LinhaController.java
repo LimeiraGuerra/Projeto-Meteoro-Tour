@@ -481,7 +481,6 @@ public class LinhaController{
                 AlertWindow.informationAlerta("Essa linha já possui vendas.\nPor isso é impossível alterar seus dados", "Linha não editável");
                 setDisableText(true);
             }
-
         }
     }
 
