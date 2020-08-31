@@ -1,5 +1,7 @@
 package model.entities;
 
+import view.util.DataValidator;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -112,6 +114,14 @@ public class Linha {
 
     public double getValorTotalLinha() {
         return valorTotalLinha;
+    }
+
+    public String getFormatedQuilometragemTotal() {
+        return DataValidator.doubleWithDecimalsFormater(quilometragemTotal).concat(" Km");
+    }
+
+    public String getFormatedValorTotalLinha() {
+        return DataValidator.formatCurrencyView(valorTotalLinha);
     }
 
     public boolean isInativo() {

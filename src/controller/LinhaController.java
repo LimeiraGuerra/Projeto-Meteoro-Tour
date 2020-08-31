@@ -33,8 +33,8 @@ public class LinhaController{
 
     @FXML private TableView<Linha> tabelaLinha;
     @FXML private TableColumn<Linha, String> cNome;
-    @FXML private TableColumn<Linha, Double> cQuilometragemLinha;
-    @FXML private TableColumn<Linha, Double> cValorLinha;
+    @FXML private TableColumn<Linha, String> cQuilometragemLinha;
+    @FXML private TableColumn<Linha, String> cValorLinha;
     @FXML private Pane paneLinhaTrecho;
     @FXML private TextField txtNomeLinha;
     @FXML private TableView<Trecho> tabelaLinhaTrecho;
@@ -104,8 +104,8 @@ public class LinhaController{
 
     private void bindLinha(){
         cNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        cQuilometragemLinha.setCellValueFactory(new PropertyValueFactory<>("quilometragemTotal"));
-        cValorLinha.setCellValueFactory(new PropertyValueFactory<>("valorTotalLinha"));
+        cQuilometragemLinha.setCellValueFactory(new PropertyValueFactory<>("formatedQuilometragemTotal"));
+        cValorLinha.setCellValueFactory(new PropertyValueFactory<>("formatedValorTotalLinha"));
         tabelaLinha.setItems(loadTable());
     }
 
