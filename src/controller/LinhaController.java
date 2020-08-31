@@ -24,7 +24,6 @@ import view.util.sharedCodes.AutoCompleteComboBoxListener;
 import view.util.sharedCodes.CurrencyField;
 import view.util.sharedCodes.DoubleField;
 import view.util.sharedCodes.IntegerField;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -44,8 +43,6 @@ public class LinhaController{
     @FXML private Label lbLinha;
     @FXML private Button btAdicionarLinha;
     @FXML private Pane paneCriaTrecho;
-    //@FXML private TextField tfOrigem;
-    //@FXML private TextField tfDestino;
     @FXML private ComboBox<String> cBoxOrigem;
     @FXML private ComboBox<String> cBoxDestino;
     @FXML private IntegerField tfTempoDuracao;
@@ -338,8 +335,6 @@ public class LinhaController{
     private void clearFieldsTrecho(){
         cBoxOrigem.getEditor().setText("");
         cBoxDestino.getEditor().setText("");
-        //tfOrigem.clear();
-        //tfDestino.clear();
         tfQuilometragem.clear();
         tfTempoDuracao.clear();
         tfValorPassagem.clear();
@@ -372,7 +367,6 @@ public class LinhaController{
         if (indexLastTrechoList() != 0){
             Trecho t = trechosListTabela.get(indexLastTrechoList());
             cBoxOrigem.setValue(t.getCidadeDestino());
-            //tfOrigem.setText(t.getCidadeDestino());
         }
     }
 
