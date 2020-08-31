@@ -62,8 +62,8 @@
             <Label layoutX="14.0" layoutY="160.0" text="Horário Saída intervalo:" />
             <Button layoutX="12.0" layoutY="282.0" mnemonicParsing="false" onAction="#filterResults" prefHeight="25.0" prefWidth="78.0" text="Filtrar" />
             <Label layoutX="88.0" layoutY="182.0" text="até" />
-            <MaskedTextField fx:id="txtFieldUsoIni" alignment="CENTER" layoutX="50.0" layoutY="213.0" mask="######" prefHeight="25.0" prefWidth="54.0" />
-            <MaskedTextField fx:id="txtFieldUsoFim" alignment="CENTER" layoutX="126.0" layoutY="213.0" mask="######" prefHeight="25.0" prefWidth="54.0" />
+            <IntegerField fx:id="txtFieldUsoIni" alignment="CENTER" layoutX="50.0" layoutY="213.0" labelR="" prefHeight="25.0" prefWidth="54.0" />
+            <IntegerField fx:id="txtFieldUsoFim" alignment="CENTER" layoutX="126.0" layoutY="213.0" labelR="" prefHeight="25.0" prefWidth="54.0" />
             <Label layoutX="23.0" layoutY="217.0" text="Uso:" />
             <Label layoutX="107.0" layoutY="217.0" text="até" />
             <Label layoutX="14.0" layoutY="252.0" text="Lucro:" />

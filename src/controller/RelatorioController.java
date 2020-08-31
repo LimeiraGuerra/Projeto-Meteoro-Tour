@@ -18,6 +18,7 @@ import view.util.AlertWindow;
 import view.util.DataValidator;
 import view.util.sharedCodes.AutoCompleteComboBoxListener;
 import view.util.sharedCodes.CurrencyField;
+import view.util.sharedCodes.IntegerField;
 import view.util.sharedCodes.MaskedTextField;
 import java.io.File;
 import java.util.*;
@@ -32,7 +33,7 @@ public class RelatorioController {
     @FXML Button btnExport;
     @FXML ComboBox<String> cBoxLinha, cBoxTrechoIni, cBoxTrechoFim;
     @FXML TextField txtFieldHorarioIni, txtFieldHorarioFim;
-    @FXML MaskedTextField txtFieldUsoIni, txtFieldUsoFim;
+    @FXML IntegerField txtFieldUsoIni, txtFieldUsoFim;
     @FXML CurrencyField txtFieldLucroIni, txtFieldLucroFim;
 
     private EmitirRelatoriosUC emitirRelatoriosUC;
@@ -174,8 +175,8 @@ public class RelatorioController {
         String nomeTrechoFim = this.getValueComboBox(this.cBoxTrechoFim);
         String horaIni = DataValidator.verifyTime(this.txtFieldHorarioIni.getText());
         String horaFim = DataValidator.verifyTime(this.txtFieldHorarioFim.getText());
-        String usoIni = this.txtFieldUsoIni.getPlainText();
-        String usoFim = this.txtFieldUsoFim.getPlainText();
+        int usoIni = this.txtFieldUsoIni.getAmount().intValue();
+        int usoFim = this.txtFieldUsoFim.getAmount().intValue();
         double lucroIni = this.txtFieldLucroIni.amountProperty().doubleValue();
         double lucroFim = this.txtFieldLucroFim.amountProperty().doubleValue();
         List<InfoLinhaTrechoRelatorio> filteredListAux = new ArrayList<>();
@@ -183,12 +184,10 @@ public class RelatorioController {
         String linhaAux = "";
         for (InfoLinhaTrechoRelatorio info : this.relatorioData) {
             if (!nomeLinha.isEmpty() && !info.getNomeLinha().equals(nomeLinha)) continue;
-            if (!usoIni.isEmpty() && !usoFim.isEmpty() &&
-                    !(info.getUso() >= Integer.parseInt(usoIni) &&
-                            info.getUso() <= Integer.parseInt(usoFim))) continue;
-            if (!(lucroIni == 0.0) && !(lucroFim == 0.0) &&
-                    !(info.getLucro() >= lucroIni &&
-                            info.getLucro() <= lucroFim)) continue;
+            if (!(usoIni == usoFim && usoFim == 0) &&
+                    !(info.getUso() >= usoIni && info.getUso() <= usoFim)) continue;
+            if (!(lucroIni == lucroFim && lucroFim == 0.0) &&
+                    !(info.getLucro() >= lucroIni && info.getLucro() <= lucroFim)) continue;
             if (!horaIni.isEmpty() && !horaFim.isEmpty() &&
                     (info.getHorarioSaida().compareTo(horaIni) < 0 ||
                             info.getHorarioSaida().compareTo(horaFim) > 0)) continue;

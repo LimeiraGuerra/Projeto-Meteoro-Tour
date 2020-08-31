@@ -23,5 +23,6 @@ public class IntegerField extends NumberField {
             amountProperty().set(newValue);
             setText(getFormat().format(newValue) + this.getLabelR());
         }
+        else setText(getFormat().format(0) + this.getLabelR());
     }
 }
