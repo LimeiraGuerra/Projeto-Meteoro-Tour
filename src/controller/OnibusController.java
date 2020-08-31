@@ -116,7 +116,7 @@ public class OnibusController {
 
     private void setOnibusByTextFields(Onibus bus){
         bus.setRenavam(txtFieldRenavam.getPlainText());
-        bus.setPlaca(txtFieldPlaca.getPlainText());
+        bus.setPlaca(txtFieldPlaca.getPlainText().toUpperCase());
     }
 
     public void createOnibus(Onibus bus){
@@ -132,7 +132,7 @@ public class OnibusController {
 
     private Onibus newOnibus(){
         return new Onibus(DataValidator.renavamVerifier(txtFieldRenavam.getPlainText()),
-                DataValidator.placaVerifier(txtFieldPlaca.getPlainText()));
+                DataValidator.placaVerifier(txtFieldPlaca.getPlainText().toUpperCase()));
     }
 
     private boolean ifTableNotContainsFunc(Onibus bus){
