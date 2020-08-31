@@ -14,7 +14,6 @@ public class Linha {
     private ArrayList<TrechoLinha> trechosLinha = new ArrayList<>();;
 
     public Linha() {
-
     }
 
     public Linha(String nome) {

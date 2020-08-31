@@ -18,7 +18,6 @@ public class PassagemLoader {
             FXMLLoader loader = new FXMLLoader();
             Pane graph = loader.load(getClass().getResource("/view/fxml/Passagem.fxml").openStream());
             PassagemController ctrl = loader.getController();
-
             Stage stage = new Stage();
             stage.setScene(new Scene(graph));
             stage.getIcons().add(new Image(getClass().getResourceAsStream( "/resources/onibus.png" )));

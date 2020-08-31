@@ -43,8 +43,8 @@ public class FinalizacaoVendaLoader {
             stage.sizeToScene();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
-
             this.success = ctrl.isSoldSuccess();
+
         } catch (IOException e) {
             e.printStackTrace();
         }

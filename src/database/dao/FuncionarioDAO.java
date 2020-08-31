@@ -58,11 +58,6 @@ public class FuncionarioDAO implements DAOCrud<Funcionario, String> {
     }
 
     @Override
-    public Funcionario selectById(String id) {
-        throw new NotImplementedException();
-    }
-
-    @Override
     public List<Funcionario> selectAll() {
         List<Funcionario> funcs= new ArrayList<>();
         String sql = "SELECT * FROM Funcionario";
@@ -80,6 +75,11 @@ public class FuncionarioDAO implements DAOCrud<Funcionario, String> {
 
     @Override
     public List<Funcionario> selectAllByKeyword(String key) {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public Funcionario selectById(String id) {
         throw new NotImplementedException();
     }
 

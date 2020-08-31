@@ -123,11 +123,6 @@ public class LinhaDAO implements DAOCrud<Linha, String>, DAOSelects<Linha, Strin
     }
 
     @Override
-    public List<Linha> selectAllByKeyword(String key) {
-        throw new NotImplementedException();
-    }
-
-    @Override
     public List<String> selectStringForAutoComplete() {
         String sql = "SELECT nome FROM Linha;";
         List<String> names = new ArrayList<>();
@@ -144,6 +139,11 @@ public class LinhaDAO implements DAOCrud<Linha, String>, DAOSelects<Linha, Strin
 
     @Override
     public List<Linha> selectByParent(String parent) {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public List<Linha> selectAllByKeyword(String key) {
         throw new NotImplementedException();
     }
 

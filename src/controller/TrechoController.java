@@ -27,8 +27,6 @@ public class TrechoController {
     @FXML private TableColumn<Trecho, String> cDestino;
     @FXML private TableColumn<Trecho, String> cQuilometragem;
     @FXML private TableColumn<Trecho, String> cValorTotal;
-    //@FXML private TextField tfOrigem;
-    //@FXML private TextField tfDestino;
     @FXML private ComboBox<String> cBoxOrigem;
     @FXML private ComboBox<String> cBoxDestino;
     @FXML private IntegerField tfTempoDuracao;
@@ -51,7 +49,7 @@ public class TrechoController {
         bind();
         setVisiblePaneImg(true);
         setVisibleButtonPane(false);
-        this.setAutoComplete();
+        setAutoComplete();
     }
 
     private void setAutoComplete(){
@@ -120,14 +118,15 @@ public class TrechoController {
                 trechos.add(trecho);
                 AlertWindow.informationAlerta("O trecho: " + trecho.toString() + " foi salvo!", "Trecho adicionado");
                 this.getCityNames();
-            }else if (searchTrechoTable() != null) {
+            }
+            else if (searchTrechoTable() != null) {
                 updateTrecho(trecho);
                 AlertWindow.informationAlerta("O trecho: " + searchTrechoTable().toString() + " foi editado!", "Trecho editado");
 
-            } else {
+            }
+            else {
                 AlertWindow.informationAlerta("O trecho não pode ser adicionado\nVerifique se não há esse trecho criado!", "Trecho não adicionado :(");
             }
-
             cleanFields();
             trechos.clear();
             trechos.addAll(ucTrecho.getListTrechos());
@@ -186,8 +185,6 @@ public class TrechoController {
     private void setFieldsTrecho(Trecho trecho){
         cBoxOrigem.setValue(trecho.getCidadeOrigem());
         cBoxDestino.setValue(trecho.getCidadeDestino());
-        //tfOrigem.setText(trecho.getCidadeOrigem());
-        //tfDestino.setText(trecho.getCidadeDestino());
         tfQuilometragem.setAmount(trecho.getQuilometragem());
         tfTempoDuracao.setAmount(trecho.getTempoDuracao());
         tfValorPassagem.setAmount(trecho.getValorPassagem());
@@ -199,8 +196,6 @@ public class TrechoController {
     private void cleanFields(){
         cBoxOrigem.getEditor().setText("");
         cBoxDestino.getEditor().setText("");
-        //tfOrigem.clear();
-        //tfDestino.clear();
         tfQuilometragem.clear();
         tfTempoDuracao.clear();
         tfValorPassagem.clear();
@@ -212,8 +207,6 @@ public class TrechoController {
     private void setDisableOrigemDestino(boolean bool){
         cBoxOrigem.setDisable(bool);
         cBoxDestino.setDisable(bool);
-        //tfOrigem.setDisable(bool);
-        //tfDestino.setDisable(bool);
     }
     private void setVisibleButtonPane(boolean bool){
         btDeleteTrecho.setVisible(bool);
@@ -234,7 +227,6 @@ public class TrechoController {
             setVisibleButtonPane(true);
             setVisiblePaneImg(false);
         }
-
     }
 
     private String getValueComboBox(ComboBox<String> comboBox){

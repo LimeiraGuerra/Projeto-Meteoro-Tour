@@ -1,7 +1,5 @@
 package view.loader;
 
-import controller.FuncionarioController;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;

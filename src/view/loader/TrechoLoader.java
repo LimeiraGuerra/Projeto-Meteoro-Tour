@@ -15,7 +15,6 @@ import static javafx.fxml.FXMLLoader.*;
 
 public class TrechoLoader {
     public void start(){
-        FXMLLoader loader = new FXMLLoader();
         try{
             Pane grafico = load(getClass().getResource("/view/fxml/Trecho.fxml"));
             Scene cena = new Scene(grafico);
