@@ -14,11 +14,13 @@ import javafx.scene.layout.Pane;
 import model.entities.Linha;
 import model.entities.Trecho;
 import model.entities.TrechoLinha;
+import model.usecases.AutoCompleteUC;
 import model.usecases.GerenciarLinhaUC;
 import model.usecases.GerenciarTrechoUC;
 import model.usecases.GerenciarTrechoLinhaUC;
 import view.util.AlertWindow;
 import view.util.DataValidator;
+import view.util.sharedCodes.AutoCompleteComboBoxListener;
 import view.util.sharedCodes.CurrencyField;
 import view.util.sharedCodes.DoubleField;
 import view.util.sharedCodes.IntegerField;
@@ -42,8 +44,10 @@ public class LinhaController{
     @FXML private Label lbLinha;
     @FXML private Button btAdicionarLinha;
     @FXML private Pane paneCriaTrecho;
-    @FXML private TextField tfOrigem;
-    @FXML private TextField tfDestino;
+    //@FXML private TextField tfOrigem;
+    //@FXML private TextField tfDestino;
+    @FXML private ComboBox<String> cBoxOrigem;
+    @FXML private ComboBox<String> cBoxDestino;
     @FXML private IntegerField tfTempoDuracao;
     @FXML private DoubleField tfQuilometragem;
     @FXML private CurrencyField tfValorPassagem;
@@ -63,15 +67,39 @@ public class LinhaController{
 
     private ObservableList<Trecho> trechosListTabela = FXCollections.observableArrayList();
     private ObservableList<Linha> linhasListTabela = FXCollections.observableArrayList();
+    private ObservableList<String> cityNames;
     private GerenciarTrechoUC ucTrecho = new GerenciarTrechoUC(new TrechoDAO(), new TrechoLinhaDAO());
     private GerenciarLinhaUC ucLinha = new GerenciarLinhaUC(new LinhaDAO(), new TrechoLinhaDAO());
     private GerenciarTrechoLinhaUC ucTrechoLinha = new GerenciarTrechoLinhaUC(new TrechoLinhaDAO());
+    private AutoCompleteUC autoCompleteUC = new AutoCompleteUC(new TrechoLinhaDAO(), null);
     private int dPlusHolder = 0;
 
     public void initialize() {
         bindLinha();
         setImgVisible();
         setVisibleTimeFieldsEdit(false);
+        this.setAutoComplete();
+    }
+
+    private void setAutoComplete(){
+        this.cityNames = FXCollections.observableArrayList();
+        this.getCityNames();
+        this.setValuesToComboBoxes();
+        this.setAutoCompleteListeners();
+    }
+
+    private void getCityNames(){
+        this.cityNames.setAll(autoCompleteUC.getCityNames());
+    }
+
+    private void setAutoCompleteListeners(){
+        new AutoCompleteComboBoxListener<>(this.cBoxOrigem);
+        new AutoCompleteComboBoxListener<>(this.cBoxDestino);
+    }
+
+    private void setValuesToComboBoxes(){
+        this.cBoxOrigem.setItems(this.cityNames);
+        this.cBoxDestino.setItems(this.cityNames);
     }
 
     private void bindLinha(){
@@ -269,13 +297,20 @@ public class LinhaController{
         paneImg.setVisible(true);
     }
 
+    private String getValueComboBox(ComboBox<String> comboBox){
+        return comboBox.getEditor().getText();
+    }
+
     @FXML
     private void saveTrecho(ActionEvent actionEvent) {
-        if(checkTextField()){
-            if (ucTrecho.searchForOrigemDestino(tfOrigem.getText(), tfDestino.getText()) == null){
-                ucTrecho.createTrecho(tfOrigem.getText(), tfDestino.getText(), Double.parseDouble(tfQuilometragem.getText()),
-                        Integer.parseInt(tfTempoDuracao.getText()), tfValorPassagem.getAmount(),
+        String cidadeOrigem = DataValidator.txtInputVerifier(this.getValueComboBox(this.cBoxOrigem));
+        String cidadeDestino = DataValidator.txtInputVerifier(this.getValueComboBox(this.cBoxDestino));
+        if(checkTextField(cidadeOrigem, cidadeDestino)){
+            if (ucTrecho.searchForOrigemDestino(cidadeOrigem, cidadeDestino) == null){
+                ucTrecho.createTrecho(cidadeOrigem, cidadeDestino, tfQuilometragem.getAmount(),
+                        tfTempoDuracao.getAmount().intValue(), tfValorPassagem.getAmount(),
                         tfTaxaEmbarque.getAmount(), tfValorSeguro.getAmount());
+                this.getCityNames();
             }else{
                 AlertWindow.informationAlerta("Trecho não pode ser salvo, pois há trecho com o mesmo conjunto de cidade Origem - cidade Destino", "Trecho não adicionado.");
             }
@@ -301,8 +336,10 @@ public class LinhaController{
     }
 
     private void clearFieldsTrecho(){
-        tfOrigem.clear();
-        tfDestino.clear();
+        cBoxOrigem.getEditor().setText("");
+        cBoxDestino.getEditor().setText("");
+        //tfOrigem.clear();
+        //tfDestino.clear();
         tfQuilometragem.clear();
         tfTempoDuracao.clear();
         tfValorPassagem.clear();
@@ -334,7 +371,8 @@ public class LinhaController{
     private void setOrigemTextField(){
         if (indexLastTrechoList() != 0){
             Trecho t = trechosListTabela.get(indexLastTrechoList());
-            tfOrigem.setText(t.getCidadeDestino());
+            cBoxOrigem.setValue(t.getCidadeDestino());
+            //tfOrigem.setText(t.getCidadeDestino());
         }
     }
 
@@ -378,8 +416,9 @@ public class LinhaController{
         }
     }
 
-    private boolean checkTextField() {
-        return !tfDestino.getText().isEmpty() && !tfOrigem.getText().isEmpty() &&
+    private boolean checkTextField(String cidadeOrigem, String cidadeDestino) {
+        return cidadeOrigem != null && cidadeDestino != null &&
+                !cidadeOrigem.equals(cidadeDestino) &&
                 DataValidator.verifyNumeric(tfQuilometragem.getAmount()) &&
                 DataValidator.verifyNumeric(tfTempoDuracao.getAmount()) &&
                 DataValidator.verifyNumeric(tfValorPassagem.getAmount()) &&

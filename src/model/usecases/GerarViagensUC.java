@@ -27,8 +27,10 @@ public class GerarViagensUC {
         List<Viagem> viagens = new ArrayList<>();
         for (Linha l : linhas){
             Viagem v = new Viagem(data, cidadeOrigem, cidadeDestino, l);
-            this.verifyDisponibility(v);
-            viagens.add(v);
+            if (v.getData() != null) {
+                this.verifyDisponibility(v);
+                viagens.add(v);
+            }
         }
         return viagens;
     }

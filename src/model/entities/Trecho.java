@@ -2,8 +2,6 @@ package model.entities;
 
 import view.util.DataValidator;
 
-import java.text.NumberFormat;
-import java.util.Locale;
 
 public class Trecho {
 

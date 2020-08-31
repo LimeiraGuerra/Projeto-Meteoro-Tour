@@ -88,5 +88,4 @@ public class AutoCompleteComboBoxListener<T> implements EventHandler<KeyEvent> {
 		}
 		moveCaretToPos = false;
 	}
-
 }

@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<?import view.util.sharedCodes.CurrencyField?>
+<?import view.util.sharedCodes.*?>
 
-<?import view.util.sharedCodes.IntegerField?>
-<?import view.util.sharedCodes.DoubleField?>
-<AnchorPane prefHeight="500.0" prefWidth="801.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LinhaController">
+<AnchorPane prefHeight="500.0" prefWidth="801.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LinhaController">
     <TableView fx:id="tabelaLinha" layoutX="14.0" layoutY="29.0" onMouseClicked="#seeLinhadByClick" prefHeight="424.0" prefWidth="414.0">
         <columns>
             <TableColumn fx:id="cNome" prefWidth="240.0" text="Nome" />
@@ -67,13 +66,13 @@
     <Button fx:id="btAdicionarLinha" layoutX="750.0" layoutY="30.0" mnemonicParsing="false" onAction="#addLinha" prefHeight="25.0" prefWidth="37.0" text="OK" />
    <Pane fx:id="paneCriaTrecho" layoutX="442.0" layoutY="44.0" prefHeight="377.0" prefWidth="329.0" style="visibility: false;">
     <children>
-        <TextField fx:id="tfOrigem" alignment="CENTER" layoutX="168.0" layoutY="53.0" />
-        <TextField fx:id="tfDestino" alignment="CENTER" layoutX="168.0" layoutY="93.0" />
-        <DoubleField fx:id="tfQuilometragem" alignment="CENTER" layoutX="168.0" layoutY="134.0" promptText="Km" labelR=" Km"/>
-        <CurrencyField fx:id="tfTaxaEmbarque" alignment="CENTER" layoutX="168.0" layoutY="175.0"/>
-        <CurrencyField fx:id="tfValorSeguro" alignment="CENTER"  layoutX="168.0" layoutY="216.0"/>
-        <CurrencyField fx:id="tfValorPassagem" alignment="CENTER" layoutX="168.0" layoutY="256.0"/>
-        <IntegerField fx:id="tfTempoDuracao" alignment="CENTER" layoutX="168.0" layoutY="298.0" promptText="Minutos" labelR=" Minutos"/>
+         <ComboBox fx:id="cBoxOrigem" editable="true" layoutX="167.0" layoutY="53.0" prefWidth="150.0" />
+         <ComboBox fx:id="cBoxDestino" editable="true" layoutX="167.0" layoutY="93.0" prefWidth="150.0" />
+        <DoubleField fx:id="tfQuilometragem" alignment="CENTER" labelR=" Km" layoutX="168.0" layoutY="134.0" promptText="Km" />
+        <CurrencyField fx:id="tfTaxaEmbarque" alignment="CENTER" layoutX="168.0" layoutY="175.0" />
+        <CurrencyField fx:id="tfValorSeguro" alignment="CENTER" layoutX="168.0" layoutY="216.0" />
+        <CurrencyField fx:id="tfValorPassagem" alignment="CENTER" layoutX="168.0" layoutY="256.0" />
+        <IntegerField fx:id="tfTempoDuracao" alignment="CENTER" labelR=" Minutos" layoutX="168.0" layoutY="298.0" promptText="Minutos" />
         <Label layoutX="40.0" layoutY="302.0" text="Tempo de Duração:" />
         <Label layoutX="40.0" layoutY="179.0" text="Taxa de Embarque:" />
         <Label layoutX="40.0" layoutY="260.0" text="Valor da Passagem:" />

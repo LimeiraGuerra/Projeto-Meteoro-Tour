@@ -26,6 +26,7 @@ import view.util.TipoEspecial;
 import view.util.sharedCodes.AutoCompleteComboBoxListener;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class VendasController {
@@ -52,8 +53,7 @@ public class VendasController {
     private ObservableList<String> cityNames;
 
     public VendasController() {
-
-        this.autoCompleteUC = new AutoCompleteUC(new TrechoLinhaDAO(), new LinhaDAO());
+        this.autoCompleteUC = new AutoCompleteUC(new TrechoLinhaDAO(), null);
         this.gerarViagensUC = new GerarViagensUC(new LinhaDAO(),
                 new TrechoLinhaDAO(),
                 new AssentosTrechoLinhaDAO());
@@ -139,6 +139,7 @@ public class VendasController {
         this.clearViewFromResults();
         TrechoLoader janelaTrecho = new TrechoLoader();
         janelaTrecho.start();
+        this.getCityNames();
     }
 
     public void openLinha(ActionEvent actionEvent) {
@@ -187,7 +188,7 @@ public class VendasController {
     }
 
     private String getValueComboBox(ComboBox<String> comboBox){
-        return comboBox.getSelectionModel().getSelectedItem();
+        return comboBox.getEditor().getText();
     }
 
     private void clearTable(){
@@ -268,7 +269,7 @@ public class VendasController {
     }
 
     public void purchaseClickedSeat(ActionEvent actionEvent) {
-        if (this.selectedViagem != null) {
+        if (this.selectedViagem != null && verifyIfViagemIsExpired()) {
             Button btn = (Button) actionEvent.getSource();
             FinalizacaoVendaLoader janelaFinal;
             if (this.modeReagendamento)
@@ -280,6 +281,18 @@ public class VendasController {
                 else this.markSoldSeat(btn.getId());
             }
         }
+    }
+
+    private boolean verifyIfViagemIsExpired(){
+        if (this.getSystemTime().compareTo(this.selectedViagem.getData()) <= 0) return true;
+        else return openExpiredDialog();
+    }
+
+    private boolean openExpiredDialog(){
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy, HH:mm");
+        this.messageHead = "Viagem selecionada vencida em ".concat(df.format(this.selectedViagem.getData()));
+        this.messageBody = "Deseja continuar com a venda?";
+        return AlertWindow.verificationAlert(this.messageBody, this.messageHead);
     }
 
     private void markSoldSeat(String seatId){
