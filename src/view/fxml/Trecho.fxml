@@ -1,36 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import view.util.sharedCodes.CurrencyField?>
-<?import view.util.sharedCodes.DoubleField?>
-<?import view.util.sharedCodes.IntegerField?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import view.util.sharedCodes.*?>
 
-<AnchorPane prefHeight="500.0" prefWidth="773.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TrechoController">
+<AnchorPane prefHeight="500.0" prefWidth="773.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TrechoController">
    <children>
       <Pane fx:id="paneTrecho" blendMode="SRC_ATOP" layoutX="494.0" layoutY="48.0" prefHeight="451.0" prefWidth="277.0" style="visibility: false;">
          <children>
-            <TextField fx:id="tfOrigem" alignment="CENTER" layoutX="114.0" layoutY="14.0" />
-            <TextField fx:id="tfDestino" alignment="CENTER" layoutX="114.0" layoutY="51.0" />
-            <DoubleField fx:id="tfQuilometragem" alignment="CENTER" layoutX="114.0" layoutY="88.0" promptText="Km" labelR=" Km"/>
-            <CurrencyField fx:id="tfTaxaEmbarque" alignment="CENTER" layoutX="114.0" layoutY="125.0"/>
-            <CurrencyField fx:id="tfValorSeguro" alignment="CENTER"  layoutX="114.0" layoutY="162.0"/>
-            <CurrencyField fx:id="tfValorPassagem" alignment="CENTER" layoutX="114.0" layoutY="199.0"/>
-            <IntegerField fx:id="tfTempoDuracao" alignment="CENTER" layoutX="114.0" layoutY="236.0" promptText="Minutos" labelR=" Minutos"/>
-            <Label layoutX="7.0" layoutY="240.0" text="Tempo de Duração:"/>
-            <Label layoutX="7.0" layoutY="129.0" text="Taxa de Embarque:"/>
-            <Label layoutX="7.0" layoutY="203.0" text="Valor da Passagem:"/>
-            <Label layoutX="7.0" layoutY="166.0" text="Valor do Seguro:"/>
-            <Label layoutX="7.0" layoutY="92.0" text="Quilometragem:"/>
-            <Label layoutX="7.0" layoutY="55.0" text="Cidade de Destino:"/>
-            <Label layoutX="7.0" layoutY="18.0" text="Cidade de Origem:"/>
+            <ComboBox fx:id="cBoxOrigem" editable="true" layoutX="114.0" layoutY="14.0" prefHeight="25.0" prefWidth="149.0" />
+            <ComboBox fx:id="cBoxDestino" editable="true" layoutX="114.0" layoutY="51.0" prefHeight="25.0" prefWidth="149.0" />
+            <DoubleField fx:id="tfQuilometragem" alignment="CENTER" labelR=" Km" layoutX="114.0" layoutY="88.0" promptText="Km" />
+            <CurrencyField fx:id="tfTaxaEmbarque" alignment="CENTER" layoutX="114.0" layoutY="125.0" />
+            <CurrencyField fx:id="tfValorSeguro" alignment="CENTER" layoutX="114.0" layoutY="162.0" />
+            <CurrencyField fx:id="tfValorPassagem" alignment="CENTER" layoutX="114.0" layoutY="199.0" />
+            <IntegerField fx:id="tfTempoDuracao" alignment="CENTER" labelR=" Minutos" layoutX="114.0" layoutY="236.0" promptText="Minutos" />
+            <Label layoutX="7.0" layoutY="240.0" text="Tempo de Duração:" />
+            <Label layoutX="7.0" layoutY="129.0" text="Taxa de Embarque:" />
+            <Label layoutX="7.0" layoutY="203.0" text="Valor da Passagem:" />
+            <Label layoutX="7.0" layoutY="166.0" text="Valor do Seguro:" />
+            <Label layoutX="7.0" layoutY="92.0" text="Quilometragem:" />
+            <Label layoutX="7.0" layoutY="55.0" text="Cidade de Destino:" />
+            <Label layoutX="7.0" layoutY="18.0" text="Cidade de Origem:" />
             <Label fx:id="lbValorTotal" layoutX="6.0" layoutY="273.0" prefHeight="17.0" prefWidth="217.0" />
             <Button fx:id="btSalvaTrecho" layoutX="164.0" layoutY="413.0" mnemonicParsing="false" onAction="#saveOrUpdateTrecho" prefHeight="25.0" prefWidth="98.0" text="Salvar" />
             <Button fx:id="btDeleteTrecho" layoutX="46.0" layoutY="413.0" mnemonicParsing="false" onAction="#deleteTrecho" prefHeight="25.0" prefWidth="101.0" text="Excluir" />

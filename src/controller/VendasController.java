@@ -53,8 +53,7 @@ public class VendasController {
     private ObservableList<String> cityNames;
 
     public VendasController() {
-
-        this.autoCompleteUC = new AutoCompleteUC(new TrechoLinhaDAO(), new LinhaDAO());
+        this.autoCompleteUC = new AutoCompleteUC(new TrechoLinhaDAO(), null);
         this.gerarViagensUC = new GerarViagensUC(new LinhaDAO(),
                 new TrechoLinhaDAO(),
                 new AssentosTrechoLinhaDAO());
@@ -140,6 +139,7 @@ public class VendasController {
         this.clearViewFromResults();
         TrechoLoader janelaTrecho = new TrechoLoader();
         janelaTrecho.start();
+        this.getCityNames();
     }
 
     public void openLinha(ActionEvent actionEvent) {
@@ -188,7 +188,7 @@ public class VendasController {
     }
 
     private String getValueComboBox(ComboBox<String> comboBox){
-        return comboBox.getSelectionModel().getSelectedItem();
+        return comboBox.getEditor().getText();
     }
 
     private void clearTable(){

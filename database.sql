@@ -106,10 +106,8 @@ cidadeOrigem, cidadeDestino, quilometragem, tempoDuracao, valorPassagem, taxaEmb
 
 CREATE VIEW vNomeCidades (nomes) AS
 	SELECT t.cidadeOrigem FROM Trecho t
-	JOIN TrechoLinha tl ON tl.idTrecho = t.id
 	UNION
-	SELECT t.cidadeDestino FROM Trecho t
-	JOIN TrechoLinha tl ON tl.idTrecho = t.id;
+	SELECT t.cidadeDestino FROM Trecho t;
 
 SELECT tl.id, tl.horarioSaida, tl.ordem, tl.dPlus
 FROM  trechoLinha tl JOIN trecho t ON tl.idTrecho = t.id;
