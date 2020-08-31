@@ -89,21 +89,25 @@ public class OnibusController {
 
     private void editOnibus(int index) {
         Onibus selectedBus = onibus.get(index);
+        setOnibusByTextFields(selectedBus);
         if (ifTableNotHaveRenavamOrPlaca(selectedBus)){
-            setOnibusByTextFields(selectedBus);
+            //setOnibusByTextFields(selectedBus);
             ucOnibus.updateOnibus(selectedBus);
             AlertWindow.informationAlerta("Ônibus: \n"+selectedBus+"editado com sucesso", "");
             refreshTable();
             clearTextField();
+            txtFieldRenavam.setDisable(false);
         }else {
-            AlertWindow.errorAlert("Renavam ou placa já cadastrados no sistema", "");
+            AlertWindow.errorAlert("Placa já cadastrada no sistema", "");
+            refreshTable();
+            tabelaOnibus.getSelectionModel().select(index);
+            setTextField();
         }
-        txtFieldRenavam.setDisable(false);
     }
 
     private boolean ifTableNotHaveRenavamOrPlaca(Onibus bus) {
         for (Onibus o: onibus){
-            if (!o.equals(bus) && (o.getRenavam().equals(bus.getRenavam()) || o.getPlaca().equals(bus.getPlaca()))){
+            if (!o.equals(bus) && o.getPlaca().equals(bus.getPlaca())){
                 return false;
             }
         }
@@ -111,8 +115,8 @@ public class OnibusController {
     }
 
     private void setOnibusByTextFields(Onibus bus){
-        bus.setRenavam(txtFieldRenavam.getText());
-        bus.setPlaca(txtFieldPlaca.getText());
+        bus.setRenavam(txtFieldRenavam.getPlainText());
+        bus.setPlaca(txtFieldPlaca.getPlainText());
     }
 
     public void createOnibus(Onibus bus){
@@ -127,8 +131,8 @@ public class OnibusController {
     }
 
     private Onibus newOnibus(){
-        return new Onibus(DataValidator.txtInputVerifier(txtFieldRenavam.getPlainText()),
-                DataValidator.txtInputVerifier(txtFieldPlaca.getPlainText()));
+        return new Onibus(DataValidator.renavamVerifier(txtFieldRenavam.getPlainText()),
+                DataValidator.placaVerifier(txtFieldPlaca.getPlainText()));
     }
 
     private boolean ifTableNotContainsFunc(Onibus bus){

@@ -117,6 +117,20 @@ public class DataValidator {
         return null;
     }
 
+    public static String placaVerifier(String placa){
+        placa = txtInputVerifier(placa);
+        if (placa == null) return placa;
+        if (placa.length() == 7) return placa;
+        return null;
+    }
+
+    public static String renavamVerifier(String renavam){
+        renavam = txtInputVerifier(renavam);
+        if (renavam == null) return renavam;
+        if (renavam.length() == 11) return renavam;
+        return null;
+    }
+
     public static String cpfVerifier(String cpf){
         if (isCpf(cpf))
             return cpf;

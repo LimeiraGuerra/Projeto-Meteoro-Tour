@@ -38,7 +38,7 @@ public class FuncionarioController{
     }
 
     public void bind(){
-        cCPF.setCellValueFactory(new PropertyValueFactory<>("formatedCpf"));
+        cCPF.setCellValueFactory(new PropertyValueFactory<>("cpf"));
         cNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         cRG.setCellValueFactory(new PropertyValueFactory<>("rg"));
         cCargo.setCellValueFactory(new PropertyValueFactory<>("cargo"));
@@ -93,21 +93,29 @@ public class FuncionarioController{
 
     private void editFunc(int index) {
         Funcionario selectedFunc = funcionarios.get(index);
-        if (ifTableNotHaveCpfORg(selectedFunc)){
-            setFuncByTextFields(selectedFunc);
+        setFuncByTextFields(selectedFunc);
+        if (ifTableNotHaveCpfOrRg(selectedFunc)){
             ucFuncionario.updateFunc(selectedFunc);
-            AlertWindow.informationAlerta("Funcionário: \n"+selectedFunc +"editado com sucesso", "");
+            AlertWindow.informationAlerta("Funcionario: \n"+selectedFunc +"editado com sucesso", "");
             refreshTable();
             clearTextField();
+            txtFieldCPF.setDisable(false);
+        }else {
+            AlertWindow.errorAlert("RG já cadastrado no sistema", "");
+            refreshTable();
+            tabelaFunc.getSelectionModel().select(index);
+            setTextField();
         }
-        else {
-            AlertWindow.errorAlert("CPF ou RG já cadastrados no sistema", "");
-        }
-        txtFieldCPF.setDisable(false);
+
     }
 
-    private boolean ifTableNotHaveCpfORg(Funcionario func) {
-        return !funcionarios.contains(func);
+    private boolean ifTableNotHaveCpfOrRg(Funcionario func) {
+        for (Funcionario f : funcionarios){
+            if (!f.equals(func) && f.getRg().equals(func.getRg())){
+                return false;
+            }
+        }
+        return true;
     }
 
     private void setFuncByTextFields(Funcionario func){
@@ -119,7 +127,7 @@ public class FuncionarioController{
     private void createFunc(Funcionario func){
         if (ifTableNotContainsFunc(func)) {
             ucFuncionario.saveFunc(func);
-            AlertWindow.informationAlerta("Funcionário: \n"+ func +"adicionado com sucesso", "Funcionário adicionado");
+            AlertWindow.informationAlerta("Funcionario: \n"+ func +"adicionado com sucesso", "Funcionário adicionado");
             refreshTable();
             clearTextField();
         } else {

@@ -56,17 +56,4 @@ public class Funcionario {
                 "Cargo : " + cargo + '\n';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Funcionario)) return false;
-        Funcionario that = (Funcionario) o;
-        return Objects.equals(getCpf(), that.getCpf()) ||
-                Objects.equals(getRg(), that.getRg());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getCpf(), getRg());
-    }
 }
