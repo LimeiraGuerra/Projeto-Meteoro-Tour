@@ -4,9 +4,6 @@
 # Log file
 *.log
 
-# Binary file
-*.bd
-
 # BlueJ files
 *.ctxt
 
